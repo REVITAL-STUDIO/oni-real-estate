@@ -34,6 +34,9 @@ const config: Config = {
       colors: {
         royal: "#191970",
       },
+      rotate: {
+          '90': '90deg',
+        }
     },
   },
   plugins: [],
