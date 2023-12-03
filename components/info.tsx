@@ -39,19 +39,15 @@ const Info = () => {
         </div>
       </div>
 
-      <div className="w-1/2 h-full bg-[url('/pool.png')] flex flex-col gap-y-16 justify-center items-center">
-        <Link
-          href="/"
-          className="w-64 h-16 bg-opacity-10 hover:bg-opacity-30 transition ease-in duration-75 bg-white bg-blur rounded-lg shadow-lg border border-opacity-30 flex justify-center items-center"
-        >
-          <span className="text-white font-medium">OUR VALUES</span>
-        </Link>
-        <Link
-          href="/"
-          className="w-64 h-16 bg-opacity-10 hover:bg-opacity-30 transition ease-in duration-75 bg-white bg-blur rounded-lg shadow-lg border border-opacity-30 flex justify-center items-center"
-        >
-          <span className="text-white font-medium">OUR TEAM</span>
-        </Link>
+      <div className="w-1/2 h-full bg-[url('/pool.png')] flex  justify-center items-center">
+        <div className="h-5/6 w-5/6 flex flex-col justify-center gap-y-16 items-center">
+          <div className="w-64 h-16 bg-opacity-10 hover:bg-opacity-30 transition ease-in duration-75 bg-white bg-blur rounded-lg shadow-lg border border-opacity-30 flex justify-center items-center">
+            <span className="text-white font-medium">OUR VALUES</span>
+          </div>
+          <div className="w-64 h-16 bg-opacity-10 hover:bg-opacity-30 transition ease-in duration-75 bg-white bg-blur rounded-lg shadow-lg border border-opacity-30 flex justify-center items-center">
+            <span className="text-white font-medium">OUR TEAM</span>
+          </div>
+        </div>
       </div>
     </div>
   );

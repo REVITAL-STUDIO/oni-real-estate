@@ -31,7 +31,7 @@ const Nav = () => {
 
   return (
     <div
-      className={`h-auto w-full flex fixed flex-col items-center ${
+      className={`h-auto w-full flex fixed flex-col items-center transition-colors duration-300 ease-in ${
         color ? "bg-royal" : "bg-white"
       }`}
     >
@@ -44,9 +44,8 @@ const Nav = () => {
       </div>
       <div className="w-full h-12 flex justify-center items-center">
         <ul
-          className={` text-black font-light flex justify-center gap-x-8 sm:gap-x-12 md:gap-x-16 lg:gap-x-28 text-xs uppercase tracking-wider w-auto ${
-            color ? "text-white" : "text-black"
-          }`}
+          className={` text-black font-light flex justify-center gap-x-8 sm:gap-x-12 md:gap-x-16 lg:gap-x-28 text-xs uppercase tracking-wider w-auto   transition-colors duration-300 ease-in
+          ${color ? "text-white" : "text-black"}`}
         >
           <Link href="/">Search</Link>
           <Link href="/">Listing</Link>
