@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 
-@import url("https://use.typekit.net/qbn3imq.css");
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap');
 
 /* :root {
   --foreground-rgb: 0, 0, 0;

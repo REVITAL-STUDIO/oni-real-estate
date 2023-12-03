@@ -1,4 +1,4 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
@@ -19,10 +19,9 @@ const config: Config = {
         300: '300px',
         700: '700px',
       },
-      width:{
-        300: '400px'
-      } 
-      ,
+      width: {
+        300: '400px',
+      },
       screens: {
         xs: "320px",
         sm: "640px",
@@ -35,10 +34,14 @@ const config: Config = {
         royal: "#191970",
       },
       rotate: {
-          '90': '90deg',
-        }
+        '90': '90deg',
+      },
+      fontFamily: {
+        'source': ['Source Serif 4', 'serif'],
+      },
     },
   },
   plugins: [],
-}
-export default config
+};
+
+export default config;

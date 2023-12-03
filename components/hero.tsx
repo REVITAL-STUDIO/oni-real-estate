@@ -40,7 +40,7 @@ const Hero = () => {
             <Image src={Logo2} alt="sub-logo" />
           </div>
           <div className="w-2/3 h-full text-2xl text-center text-white flex justify-center items-center">
-            <h2>Where Houston Finds Homes</h2>
+            <h2 className="font-source">Where Houston Finds Homes</h2>
           </div>
         </div>
         {/* Search Bar */}

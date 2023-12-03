@@ -1,3 +1,4 @@
+import Expert from "@/components/expert";
 import Hero from "@/components/hero";
 import Info from "@/components/info";
 import Nav from "@/components/navbar";
@@ -10,6 +11,7 @@ export default function Home() {
       <Nav />
       <Hero />
       <Info />
+      <Expert />
     </main>
   );
 }

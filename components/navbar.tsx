@@ -35,16 +35,16 @@ const Nav = () => {
         color ? "bg-royal" : "bg-white"
       }`}
     >
-      <div className="w-40 h-28">
+      <div className="w-28 h-20">
         <Image
           src={Logo}
           alt="logo"
           style={{ filter: filter ? "invert(0%)" : "invert(100%)" }}
         />
       </div>
-      <div className="w-full h-40 flex justify-center items-center">
+      <div className="w-full h-12 flex justify-center items-center">
         <ul
-          className={` text-black flex justify-center gap-x-8 sm:gap-x-12 md:gap-x-16 lg:gap-x-28 text-xs uppercase tracking-wider w-auto ${
+          className={` text-black font-light flex justify-center gap-x-8 sm:gap-x-12 md:gap-x-16 lg:gap-x-28 text-xs uppercase tracking-wider w-auto ${
             color ? "text-white" : "text-black"
           }`}
         >
