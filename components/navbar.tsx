@@ -48,7 +48,7 @@ const Nav = () => {
           ${color ? "text-white" : "text-black"}`}
         >
           <Link href="/">Search</Link>
-          <Link href="/">Listing</Link>
+          <Link href="/">Listings</Link>
           <Link href="/">Buyer</Link>
           <Link href="/">Seller</Link>
         </ul>

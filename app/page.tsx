@@ -1,5 +1,6 @@
 import Contact from "@/components/contact";
 import Expert from "@/components/expert";
+import Footer from "@/components/footer";
 import Hero from "@/components/hero";
 import Info from "@/components/info";
 import Nav from "@/components/navbar";
@@ -14,6 +15,7 @@ export default function Home() {
       <Info />
       <Expert />
       <Contact />
+      <Footer />
     </main>
   );
 }
