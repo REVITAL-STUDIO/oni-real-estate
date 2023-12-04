@@ -1,3 +1,4 @@
+import Contact from "@/components/contact";
 import Expert from "@/components/expert";
 import Hero from "@/components/hero";
 import Info from "@/components/info";
@@ -12,6 +13,7 @@ export default function Home() {
       <Hero />
       <Info />
       <Expert />
+      <Contact />
     </main>
   );
 }

@@ -29,12 +29,14 @@ const Info = () => {
             aliquip ex ea commodo consequat."
           </p>
         </div>
-        <div className="w-full h-1/6 flex justify-center bg-black text-white">
+        <div className="w-full h-1/6 flex justify-center bg-white ">
           <ul className="w-full flex items-center justify-center gap-x-16 h-auto">
-            <li className="text-2xl font-regular text-white/50">MONTROSE</li>
-            <li className="text-2xl font-regular text-white/50">KATY</li>
-            <li className="text-2xl font-regular text-white/50">FORT BEND</li>
-            <li className="text-2xl font-regular text-white/50">HEIGHTS</li>
+            <li className="text-2xl font-regular text-gray-800/70">MONTROSE</li>
+            <li className="text-2xl font-regular text-gray-800/70">KATY</li>
+            <li className="text-2xl font-regular text-gray-800/70">
+              FORT BEND
+            </li>
+            <li className="text-2xl font-regular text-gray-800/70">HEIGHTS</li>
           </ul>
         </div>
       </div>

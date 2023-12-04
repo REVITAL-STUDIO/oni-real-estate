@@ -31,7 +31,7 @@ const Nav = () => {
 
   return (
     <div
-      className={`h-auto w-full flex fixed flex-col items-center transition-colors duration-300 ease-in ${
+      className={`h-auto w-full flex fixed z-50 flex-col items-center transition-colors duration-300 ease-in ${
         color ? "bg-royal" : "bg-white"
       }`}
     >
