@@ -59,72 +59,150 @@ const Hero = () => {
           </button>
         </div>
         {/* Dropdown Menu */}
-        <div className="w-5/6 h-2/3 flex justify-center items-center">
-          {/* Min Beds */}
-          <div className="border text-white tracking-wider flex justify-center items-center bg-black w-32 h-16 rounded-lg mx-4">
-            <span>
-              Min Beds
-              <button
-                onClick={toggleDropdown}
-                className=" ml-2 cursor-pointer text-white"
+        <div className="w-5/6 h-2/3  flex justify-evenly items-center ">
+          {/* Beds */}
+          <div className="relative w-32">
+            <button
+              onClick={toggleDropdown}
+              className="ml-0 w-[100%] cursor-pointer text-white"
+            >
+              <div
+                className={`text-center whitespace-nowrap rounded bg-black px-8 pb-2 pt-2.5 text-xs font-light uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] motion-reduce:transition-none dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]`}
               >
-                {isOpen ? (
-                  <FontAwesomeIcon icon={faChevronDown} />
-                ) : (
-                  <FontAwesomeIcon icon={faChevronRight} />
-                )}
-              </button>
-            </span>
+                <span className="font-medium">Beds </span>
+              </div>
+            </button>
+            {isOpen && (
+              <div className="absolute top-full left-0 mt-1 bg-black/50  w-[100%] h-42 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-300 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] motion-reduce:transition-none dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
+                {/* Your dropdown content goes here */}
+                <ul className="text-white text-center font-regular">
+                  <li className="p-2 text-xs hover:bg-royal/40  transition duration-200 ease-in-out">
+                    1
+                  </li>
+                  <li className="p-2 text-xs hover:bg-royal/40  transition duration-200 ease-in-out">
+                    2
+                  </li>
+                  <li className="p-2 text-xs hover:bg-royal/40  transition duration-200 ease-in-out">
+                    3
+                  </li>
+                  <li className="p-2 text-xs hover:bg-royal/40  transition duration-200 ease-in-out">
+                    4
+                  </li>
+                  <li className="p-2 text-xs hover:bg-royal/40  transition duration-200 ease-in-out">
+                    5
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
-          {/* Max Beds */}
-          <div className="border bg-black  text-white tracking-wider flex justify-center items-center w-32 h-16 rounded-lg mx-4">
-            <span>
-              Max Beds
-              <button
-                onClick={toggleDropdown2}
-                className=" ml-2 cursor-pointer text-white"
+          {/* Bathroom */}
+          <div className="relative w-32 h-auto">
+            <button
+              onClick={toggleDropdown2}
+              className="ml-0 w-[100%] cursor-pointer text-white"
+            >
+              <div
+                className={`text-center whitespace-nowrap rounded bg-black px-8 pb-2 pt-2.5 text-xs font-light uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] motion-reduce:transition-none dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]`}
               >
-                {isOpen2 ? (
-                  <FontAwesomeIcon icon={faChevronDown} />
-                ) : (
-                  <FontAwesomeIcon icon={faChevronRight} />
-                )}
-              </button>
-            </span>
+                <span className="font-medium">Baths</span>
+              </div>
+            </button>
+            {isOpen2 && (
+              <div className="absolute top-full left-0 mt-1 bg-black/50  w-[100%] h-42 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-300 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] motion-reduce:transition-none dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
+                {/* Your dropdown content goes here */}
+                <ul className="text-white text-center font-regular">
+                  <li className="p-2 text-xs hover:bg-royal/40  transition duration-200 ease-in-out">
+                    1
+                  </li>
+                  <li className="p-2 text-xs hover:bg-royal/40  transition duration-200 ease-in-out">
+                    2
+                  </li>
+                  <li className="p-2 text-xs hover:bg-royal/40  transition duration-200 ease-in-out">
+                    3
+                  </li>
+                  <li className="p-2 text-xs hover:bg-royal/40  transition duration-200 ease-in-out">
+                    4
+                  </li>
+                  <li className="p-2 text-xs hover:bg-royal/40  transition duration-200 ease-in-out">
+                    5 +
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
           {/* Price */}
-          <div className="border bg-black  text-white tracking-wider flex justify-center items-center w-32 h-16 rounded-lg mx-4">
-            <span>
-              Price
-              <button
-                onClick={toggleDropdown3}
-                className=" ml-2 cursor-pointer text-white"
+          <div className="relative w-44 h-auto">
+            <button
+              onClick={toggleDropdown3}
+              className="ml-0 cursor-pointer w-[100%] text-white"
+            >
+              <div
+                className={`text-center whitespace-nowrap rounded bg-black px-8 pb-2 pt-2.5 text-xs font-light uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] motion-reduce:transition-none dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]`}
               >
-                {isOpen3 ? (
-                  <FontAwesomeIcon icon={faChevronDown} />
-                ) : (
-                  <FontAwesomeIcon icon={faChevronRight} />
-                )}
-              </button>
-            </span>
+                <span className="font-medium">Price</span>
+              </div>
+            </button>
+            {isOpen3 && (
+              <div className="absolute top-full left-0 mt-1 bg-black/50  w-[100%] h-42 shadow-[0_4px_9px_-4px_#3b71ca] transition duration-300 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] motion-reduce:transition-none dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]">
+                {/* Your dropdown content goes here */}
+                <ul className="text-white text-center font-regular">
+                  <li className="p-2 text-xs hover:bg-royal/40  transition duration-200 ease-in-out">
+                    $50,000 - $75,000
+                  </li>
+                  <li className="p-2 text-xs hover:bg-royal/40  transition duration-200 ease-in-out">
+                    $75,000 - $150,000
+                  </li>
+                  <li className="p-2 text-xs hover:bg-royal/40  transition duration-200 ease-in-out">
+                    $150,000 - $300,000
+                  </li>
+                  <li className="p-2 text-xs hover:bg-royal/40  transition duration-200 ease-in-out">
+                    $300,000 - $750,000
+                  </li>
+                  <li className="p-2 text-xs hover:bg-royal/40  transition duration-200 ease-in-out">
+                    $1,000,000 - $5,000,000
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
           {/* Location */}
-          <div className="border bg-black  text-white tracking-wider flex justify-center items-center w-32 h-16 rounded-lg mx-4">
-            <span>
-              Location
-              <button
-                onClick={toggleDropdown4}
-                className=" ml-2 cursor-pointer text-white"
+          <div className="relative w-44 h-auto">
+            <button
+              onClick={toggleDropdown4}
+              className="ml-0 cursor-pointer w-[100%] text-white"
+            >
+              <div
+                className={`text-center whitespace-nowrap rounded bg-black px-8 pb-2 pt-2.5 text-xs font-light uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] motion-reduce:transition-none dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)]`}
               >
-                {isOpen4 ? (
-                  <span className="rotate-90 transition-transform ease-in-out duration-300">
-                    <FontAwesomeIcon icon={faChevronDown} />
-                  </span>
-                ) : (
-                  <FontAwesomeIcon icon={faChevronRight} />
-                )}
-              </button>
-            </span>
+                <span className="font-medium">Location</span>
+              </div>
+            </button>
+            {isOpen4 && (
+              <div
+                className={`absolute top-full left-0 mt-1 bg-black/50 w-[100%] h-42 shadow-[0_4px_9px_-4px_#3b71ca] transition-opacity duration-300 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] motion-reduce:transition-none dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] ${
+                  isOpen4 ? "opacity-100 visible" : "opacity-0 invisible"
+                }`}
+              >
+                {/* Your dropdown content goes here */}
+                <ul className="text-white text-center font-regular uppercase tracking-wide">
+                  <li className="p-2 text-xs hover:bg-royal/40  transition duration-200 ease-in-out">
+                    Montrose
+                  </li>
+                  <li className="p-2 text-xs hover:bg-royal/40  transition duration-200 ease-in-out">
+                    Heights
+                  </li>
+                  <li className="p-2 text-xs hover:bg-royal/40  transition duration-200 ease-in-out">
+                    Katy
+                  </li>
+                  <li className="p-2 text-xs hover:bg-royal/40  transition duration-200 ease-in-out">
+                    Fort Bend
+                  </li>
+                  <li className="p-2 text-xs hover:bg-royal/40  transition duration-200 ease-in-out">
+                    Missouri City
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>

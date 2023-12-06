@@ -1,6 +1,7 @@
 import React from "react";
 import Logo from "../public/logo.png";
 import Image from "next/image";
+import FooterLogo from "../public/rvtl_white.png";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -27,7 +28,7 @@ const Footer = () => {
             ></Image>
           </div>
           {/* Contact & Social Media */}
-          <div className=" w-5/6 h-full  flex flex-wrap">
+          <div className=" w-1/2 h-full  flex flex-wrap">
             <div className="text-white ml-4 w-64 h-fit  flex   flex-col">
               <h2 className="text-xl">CONTACT</h2>
               <p className="font-light">info@oniprofessionals.com</p>
@@ -37,9 +38,9 @@ const Footer = () => {
               <p className="font-light">
                 1234 SANTA MONICA BLVD.,
                 <br></br>
-                PENTHOUSE BEVERLY HILLS,
+                HOUSTON, TX
                 <br></br>
-                CA 12345
+                12345
               </p>
             </div>
             <div className="text-white ml-4 w-fit h-fit  flex   flex-col">
@@ -68,7 +69,7 @@ const Footer = () => {
           </div>
         </div>
         {/* Links */}
-        <div className="w-1/2 h-full  flex justify-center items-center">
+        <div className="w-1/2  border-white h-full flex flex-col justify-evenly items-center">
           <ul className="w-full h-12 text-white text-sm  flex justify-evenly items-center">
             <Link href="/">HOME</Link>
             <Link href="/">SEARCH</Link>
@@ -77,10 +78,44 @@ const Footer = () => {
             <Link href="/">SELLERS</Link>
             <Link href="/">BUYERS</Link>
           </ul>
+          <p className="text-white text-sm  w-11/12 p-4">
+            <span className="text-2xl tracking-wide font-extralight">
+              Oni Professionals
+            </span>{" "}
+            is a full-service, luxury real estate brokerage and lifestyle
+            company that has redefined and modernized the real estate industry.
+            To put it simply, we do things differently. The Agency set out to
+            foster a culture of collaboration in which the collective talents,
+            resources and networks of our world-class team would be behind each
+            of our clients every step of the way. Our spirit of innovation has
+            led the way in the advancement of our industry, and we offer a fresh
+            forward-thinking approach that reaches all corners of the globe. The
+            Agency represents clients worldwide in the residential, new
+            development, resort and luxury leasing industries, with some of the
+            most visible and high-end properties in the country among our vast
+            portfolio
+          </p>
         </div>
       </div>
       {/* Copyright */}
-      <div className="h-50 w-full "></div>
+      <div className="h-75 border-t border-white  w-full flex justify-around items-center">
+        <h2 className="flex items-center w-96  text-white">
+          Powered by{"  "}
+          <Image
+            src={FooterLogo}
+            alt="logo"
+            style={{
+              position: "relative",
+              width: "80px",
+              height: "40px",
+              left: "15px",
+            }}
+          ></Image>
+        </h2>
+        <h2 className="text-white uppercase text-sm tracking-widest">
+          Copyright © 2023
+        </h2>
+      </div>
     </div>
   );
 };
