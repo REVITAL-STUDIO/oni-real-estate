@@ -98,8 +98,8 @@ const Footer = () => {
         </div>
       </div>
       {/* Copyright */}
-      <div className="h-75 border-t border-white  w-full flex justify-around items-center">
-        <h2 className="flex items-center w-96  text-white">
+      <div className="h-75  w-full flex justify-between items-center">
+        <h2 className="flex text-xs uppercase items-center w-96 ml-4 text-white">
           Powered by{"  "}
           <Image
             src={FooterLogo}
@@ -112,8 +112,8 @@ const Footer = () => {
             }}
           ></Image>
         </h2>
-        <h2 className="text-white uppercase text-sm tracking-widest">
-          Copyright © 2023
+        <h2 className="text-white uppercase mr-4 text-xs tracking-widest">
+          Copyright Oni Professionals. All Rights Reserved.
         </h2>
       </div>
     </div>
