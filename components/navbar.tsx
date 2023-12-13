@@ -6,12 +6,11 @@ import Logo from "../public/logo.png";
 import Link from "next/link";
 
 const Nav = () => {
-  //Color change when scrolling
   const [color, setColor] = useState<boolean>(false);
   const [filter, setFilter] = useState<boolean>(false);
 
   const changeColor = () => {
-    if (window.scrollY >= 150) {
+    if (typeof window !== "undefined" && window.scrollY >= 150) {
       setColor(true);
       setFilter(true);
     } else {
@@ -21,48 +20,49 @@ const Nav = () => {
   };
 
   useEffect(() => {
-    window.addEventListener("scroll", changeColor);
+    if (typeof window !== "undefined") {
+      window.addEventListener("scroll", changeColor);
 
-    // Cleanup the event listener when the component is unmounted
-    return () => {
-      window.removeEventListener("scroll", changeColor);
-    };
+      return () => {
+        window.removeEventListener("scroll", changeColor);
+      };
+    }
   }, []);
 
   return (
     <div
-      className={`h-100 w-full flex fixed  z-50 flex-col items-center transition-colors duration-300 ease-in ${
-        color ? "bg-royal" : "bg-white/30"
+      className={`h-100 w-full flex fixed  z-50 flex-col items-center transition-colors duration-300 ease-in-out ${
+        color
+          ? "bg-gradient-to-b from-royal via-royal to-royal/50"
+          : "bg-white/30"
       }`}
     >
       <div className="w-full h-full flex justify-center items-center">
         <ul
-          className={` text-white  font-light h-full flex justify-center items-center gap-x-8 sm:gap-x-12 md:gap-x-16 lg:gap-x-28 text-xs uppercase tracking-wider w-auto transition-colors duration-300 ease-in
+          className={` text-white text-xs font-light h-full flex justify-center items-center gap-x-8 sm:gap-x-12 md:gap-x-16 lg:gap-x-28 tracking-wider w-auto transition-colors duration-300 ease-in
           `}
         >
           <Link
             className={`
-             relative
-             font-regular
-             hover:border-b-2 
-             transition ease-in duration-300
-             ${color ? " hover:border-white" : " hover:border-royal"}
-           `}
+            relative
+            font-regular
+          `}
             href="/"
           >
-            Search
+            <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-0.5 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r before:from-royal before:via-slate-300 before:to-white hover:before:w-full hover:before:opacity-100">
+              Search
+            </span>
           </Link>
           <Link
             className={`
             relative
             font-regular
-            hover:border-b-2 
-            transition ease-in-out duration-300
-            ${color ? " hover:border-white" : " hover:border-royal"}
           `}
             href="/"
           >
-            Listings
+            <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-0.5 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r before:from-royal before:via-slate-300 before:to-white hover:before:w-full hover:before:opacity-100">
+              Listing
+            </span>
           </Link>
           <div
             className="w-28 h-28"
@@ -78,25 +78,23 @@ const Nav = () => {
             className={`
             relative
             font-regular
-            hover:border-b-2 
-            transition ease-in-out duration-300
-            ${color ? " hover:border-white" : " hover:border-royal"}
           `}
             href="/"
           >
-            Buyer
+            <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-0.5 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r before:from-royal before:via-slate-300 before:to-white hover:before:w-full hover:before:opacity-100">
+              Buyer
+            </span>
           </Link>
           <Link
             className={`
             relative
             font-regular
-            hover:border-b-2 
-            transition ease-in-out duration-300
-            ${color ? " hover:border-white" : " hover:border-royal"}
           `}
             href="/"
           >
-            Seller
+            <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-0.5 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r before:from-royal before:via-slate-300 before:to-white hover:before:w-full hover:before:opacity-100">
+              Seller
+            </span>
           </Link>
         </ul>
       </div>

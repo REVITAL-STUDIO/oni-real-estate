@@ -1,8 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
 @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap');
 
 /* :root {
@@ -34,4 +32,32 @@ body {
 
 .animate-float {
   animation: floatUpDown 2s infinite ease-in-out;
+}
+
+/* global.css */
+ 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+    display: none;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    background: #000;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #191970;
+    border-radius: 10px;
+}
+ 
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
