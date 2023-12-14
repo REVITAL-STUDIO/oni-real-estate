@@ -13,7 +13,7 @@ const Info = () => {
 
   return (
     <div className="h-screen w-full flex">
-      <div className="h-full w-1/2">
+      <div className="h-full bg-black w-1/2">
         <div className="w-full h-5/6 bg-royal flex flex-col justify-center  text-white">
           <h3 className="p-2 text-lg font-regular tracking-wider">
             Our Purpose
@@ -65,67 +65,8 @@ const Info = () => {
         </div>
       </div>
 
-      <div className="w-1/2 h-full bg-[url('/pool.png')] flex  justify-center items-center">
-        <div className="h-full w-full  flex flex-col justify-center gap-y-16 items-center">
-          {/* <div
-            className={`w-${expanded ? "5/6" : "96"} h-${
-              expanded ? "3/4" : "64"
-            } bg-opacity-20 hover:bg-opacity-20 shadow-black origin-top transition-all ease-in-out duration-300 bg-white bg-blur rounded-lg shadow-lg flex justify-evenly items-center cursor-pointer`}
-            onClick={handleClick}
-          >
-            <span
-              className={`font-medium text-xl text-white tracking-wider cursor-pointer ${
-                expanded ? "border-b border-white" : ""
-              }`}
-              onClick={handleClick}
-            >
-              OUR PROCESS
-            </span>
-            {expanded && (
-              <div className=" w-1/2 h-full text-white">
-                <ul className="w-full h-full flex justify-evenly flex-col font-medium text-md uppercase">
-                  <li>
-                    <h2 className="text-lg ">Initial Consultation</h2>
-                    <p className="text-xs font-light">
-                      Meet with our experienced real estate agents for a
-                      one-on-one consultation. We'll get to understand your
-                      property needs and financial goals.
-                    </p>
-                  </li>
-                  <li>
-                    <h2 className="text-lg ">Property Search</h2>
-                    <p className="text-xs font-light">
-                      Based on your criteria, we'll curate a list of available
-                      properties that fit your needs and budget.
-                    </p>
-                  </li>
-                  <li>
-                    <h2 className="text-lg ">Virtual or In-person Tours</h2>
-                    <p className="text-xs font-light">
-                      Take a virtual walkthrough or schedule in-person visits to
-                      the properties you're interested in.
-                    </p>
-                  </li>
-                  <li>
-                    <h2 className="text-lg ">Financial Assessment</h2>
-                    <p className="text-xs font-light">
-                      We'll help you get pre-approved for a mortgage and guide
-                      you through the financial nuances of property buying.
-                    </p>
-                  </li>
-                  <li>
-                    <h2 className="text-lg ">Closing the Deal</h2>
-                    <p className="text-xs font-light">
-                      We'll guide you through the legalities, ensure all
-                      paperwork is in order, and happily hand you the keys to
-                      your new home!
-                    </p>
-                  </li>
-                </ul>
-              </div>
-            )}
-          </div> */}
-        </div>
+      <div className="w-1/2 h-full bg-black flex  justify-center items-center">
+        <div className="h-5/6 w-5/6 rounded-3xl bg-[url('/pool.png')] flex flex-col justify-center gap-y-16 items-center animate-float"></div>
       </div>
     </div>
   );

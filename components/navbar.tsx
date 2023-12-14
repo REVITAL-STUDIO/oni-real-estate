@@ -32,14 +32,12 @@ const Nav = () => {
   return (
     <div
       className={`h-100 w-full flex fixed  z-50 flex-col items-center transition-colors duration-300 ease-in-out ${
-        color
-          ? "bg-gradient-to-b from-royal via-royal to-royal/50"
-          : "bg-white/30"
+        color ? "bg-gray-800/70 shadow-md shadow-black" : ""
       }`}
     >
       <div className="w-full h-full flex justify-center items-center">
         <ul
-          className={` text-white text-xs font-light h-full flex justify-center items-center gap-x-8 sm:gap-x-12 md:gap-x-16 lg:gap-x-28 tracking-wider w-auto transition-colors duration-300 ease-in
+          className={` text-white text-xs font-light h-full flex justify-between uppercase tracking-widest items-center gap-x-8 sm:gap-x-12 md:gap-x-16 lg:gap-x-28  w-auto transition-colors duration-300 ease-in
           `}
         >
           <Link
@@ -49,8 +47,8 @@ const Nav = () => {
           `}
             href="/"
           >
-            <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-0.5 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r before:from-royal before:via-slate-300 before:to-white hover:before:w-full hover:before:opacity-100">
-              Search
+            <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-2 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-royal before:via-royal/30 before:to-royal hover:before:w-full hover:before:opacity-100">
+              Agents
             </span>
           </Link>
           <Link
@@ -60,7 +58,7 @@ const Nav = () => {
           `}
             href="/"
           >
-            <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-0.5 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r before:from-royal before:via-slate-300 before:to-white hover:before:w-full hover:before:opacity-100">
+            <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-2 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-royal before:via-royal/30 before:to-royal hover:before:w-full hover:before:opacity-100">
               Listing
             </span>
           </Link>
@@ -81,7 +79,7 @@ const Nav = () => {
           `}
             href="/"
           >
-            <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-0.5 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r before:from-royal before:via-slate-300 before:to-white hover:before:w-full hover:before:opacity-100">
+            <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-2 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-royal before:via-royal/30 before:to-royal hover:before:w-full hover:before:opacity-100">
               Buyer
             </span>
           </Link>
@@ -92,7 +90,7 @@ const Nav = () => {
           `}
             href="/"
           >
-            <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-0.5 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r before:from-royal before:via-slate-300 before:to-white hover:before:w-full hover:before:opacity-100">
+            <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-2 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-royal before:via-royal/30 before:to-royal hover:before:w-full hover:before:opacity-100">
               Seller
             </span>
           </Link>

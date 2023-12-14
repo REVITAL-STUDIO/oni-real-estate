@@ -26,9 +26,9 @@ const Expert = () => {
           pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
           culpa qui officia deserunt mollit anim id est laborum."
         </p>
-        <div className="w-full h-3/4 mt-4 flex items-center justify-end">
-          <div className="w-1/5 h-full bg-royal"></div>
-          <div className="w-4/5 h-full  bg-cover bg-center bg-no-repeat bg-[url('/expert.png')]"></div>
+        <div className="w-full h-3/4 mt-4 flex items-center justify-end animate-float">
+          <div className="w-1/5 h-full relative left-10 rounded-3xl bg-royal"></div>
+          <div className="w-4/5 h-full  bg-cover bg-center z-10  bg-no-repeat bg-[url('/local.png')] rounded-3xl"></div>
         </div>
       </div>
       {/* Testimonials */}

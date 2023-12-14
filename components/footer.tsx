@@ -12,7 +12,7 @@ import {
 
 const Footer = () => {
   return (
-    <div className="w-full h-screen flex flex-col   bg-royal">
+    <div className="w-full h-screen flex flex-col   bg-black">
       {/* links */}
       <div className="w-full h-full flex">
         <div className="w-1/2 h-full flex flex-col ">
@@ -78,7 +78,7 @@ const Footer = () => {
             <Link href="/">SELLERS</Link>
             <Link href="/">BUYERS</Link>
           </ul>
-          <p className="text-white text-sm  w-11/12 p-4">
+          {/* <p className="text-white text-sm  w-11/12 p-4">
             <span className="text-2xl tracking-wide font-extralight">
               Oni Professionals
             </span>{" "}
@@ -94,7 +94,7 @@ const Footer = () => {
             development, resort and luxury leasing industries, with some of the
             most visible and high-end properties in the country among our vast
             portfolio
-          </p>
+          </p> */}
         </div>
       </div>
       {/* Copyright */}
