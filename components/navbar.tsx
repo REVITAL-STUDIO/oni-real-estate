@@ -80,7 +80,7 @@ const Nav = () => {
             href="/"
           >
             <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-2 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-royal before:via-royal/30 before:to-royal hover:before:w-full hover:before:opacity-100">
-              Buyer
+              Buyer/Seller
             </span>
           </Link>
           <Link
@@ -91,7 +91,7 @@ const Nav = () => {
             href="/"
           >
             <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-2 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-royal before:via-royal/30 before:to-royal hover:before:w-full hover:before:opacity-100">
-              Seller
+              Saved Listings
             </span>
           </Link>
         </ul>

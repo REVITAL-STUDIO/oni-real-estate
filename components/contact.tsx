@@ -35,6 +35,7 @@ const Contact = () => {
               icon={faPaperPlane}
               aria-hidden="true"
               className="text-royal"
+              size="lg"
             />
           </button>
         </form>
