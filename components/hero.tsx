@@ -140,19 +140,6 @@ const Hero = () => {
         </div>
         {/* search bar */}
         <div className="flex w-fit h-1/4  rounded-lg items-center justify-center">
-          {/* Search Bar */}
-          {/* <div className="flex w-5/6 items-center justify-center h-full">
-            <form className="w-5/6 h-16 rounded-lg  bg-black flex items-center ">
-              <input
-                className="bg-transparent w-full border-none text-white font-thin text-xl px-8 outline-none"
-                type="text"
-                placeholder="Enter Location"
-              />
-            </form>
-          </div> */}
-          {/* Dropdown Menu */}
-          {/* <div className="w-4/6 p-2 gap-2  h-full flex justify-evenly items-center "></div> */}
-          {/* search button */}
           <div className="p-2">
             <button className="w-52 h-12 shadow-lg bg-gray-600/40 shadow-black  border-2 ml-4 flex items-center justify-center">
               <span className="tracking-wide uppercase font-regular flex gap-x-1 items-center justify-center text-sm text-white">
