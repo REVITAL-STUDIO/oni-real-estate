@@ -104,17 +104,19 @@ const Homes = () => {
             <div className="w-full h-fit ">
               <p className="text-xs ml-4 font-normal">{addresses[index]}</p>
               {/* Boomark */}
-              <button
-                className="w-fit h-8 flex text-right items-center ml-4"
-                onClick={() => handleBookmarkToggle(index)}
-              >
-                <FontAwesomeIcon
-                  className="hover:text-red-500 duration-100"
-                  icon={faBookmark}
-                  size="lg"
-                  style={{ color: isBookmarked(index) ? "red" : "" }}
-                />
-              </button>
+              <div className="w-full flex justify-end">
+                <button
+                  className="w-fit h-8 flex text-right items-center p-4"
+                  onClick={() => handleBookmarkToggle(index)}
+                >
+                  <FontAwesomeIcon
+                    className="hover:text-red-500 duration-100"
+                    icon={faBookmark}
+                    size="lg"
+                    style={{ color: isBookmarked(index) ? "red" : "" }}
+                  />
+                </button>
+              </div>
             </div>
           </div>
         </div>

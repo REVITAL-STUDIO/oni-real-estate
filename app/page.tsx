@@ -13,7 +13,6 @@ export default function Home() {
       <Info />
       <Expert />
       <Contact />
-      <Footer />
     </main>
   );
 }

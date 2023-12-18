@@ -12,7 +12,7 @@ import {
 
 const Footer = () => {
   return (
-    <div className="w-full h-screen flex flex-col   bg-black">
+    <div className="w-full h-screen flex flex-col z-50  bg-black">
       {/* links */}
       <div className="w-full h-full flex">
         <div className="w-1/2 h-full flex flex-col ">

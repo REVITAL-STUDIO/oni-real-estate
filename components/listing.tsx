@@ -176,9 +176,11 @@ const Listing = () => {
                 ? "Price Amount"
                 : selectedPrice.map((p) => p.label).join(", ")}{" "}
             </span>
-            <button onClick={togglePricesDropdown} className="w-1/6">
-              <FontAwesomeIcon icon={faChevronDown} size="sm" />
-            </button>{" "}
+            <div className="w-1/6">
+              <button onClick={togglePricesDropdown}>
+                <FontAwesomeIcon icon={faChevronDown} size="sm" />
+              </button>{" "}
+            </div>
           </div>
           {openDropdown === 1 && (
             <div className="bg-white w-48 h-auto absolute top-full rounded-lg shadow-lg transition-all ease-in-out duration-200">
@@ -201,9 +203,11 @@ const Listing = () => {
             <span className="text-xs w-5/6 text-center">{`${
               selectedBeds || "0"
             }+ Beds`}</span>{" "}
-            <button onClick={toggleBedDropdown} className="w-1/6">
-              <FontAwesomeIcon icon={faChevronDown} size="sm" />
-            </button>{" "}
+            <div className="w-1/6">
+              <button onClick={toggleBedDropdown}>
+                <FontAwesomeIcon icon={faChevronDown} size="sm" />
+              </button>{" "}
+            </div>
           </div>
           {openDropdown === 2 && (
             <div className="bg-white w-48 h-auto absolute top-full rounded-lg shadow-lg transition-all ease-in-out duration-200">
@@ -226,9 +230,11 @@ const Listing = () => {
             <span className="text-xs w-5/6 text-center">{`${
               selectedBaths || "0"
             }+ Baths`}</span>{" "}
-            <button onClick={toggleBathDropdown} className="w-1/6">
-              <FontAwesomeIcon icon={faChevronDown} size="sm" />
-            </button>{" "}
+            <div className="w-1/6">
+              <button onClick={toggleBathDropdown}>
+                <FontAwesomeIcon icon={faChevronDown} size="sm" />
+              </button>{" "}
+            </div>
           </div>
           {openDropdown === 3 && (
             <div className="bg-white w-48 h-auto absolute top-full rounded-lg shadow-lg transition-all ease-in-out duration-200">
@@ -251,9 +257,11 @@ const Listing = () => {
             <span className="text-xs w-5/6 text-center">
               {setLocation.length === 0 ? "City" : setLocation[0].label}
             </span>{" "}
-            <button onClick={toggleLocationDropdown} className="w-1/6">
-              <FontAwesomeIcon icon={faChevronDown} size="sm" />
-            </button>{" "}
+            <div className="w-1/6">
+              <button onClick={toggleLocationDropdown}>
+                <FontAwesomeIcon icon={faChevronDown} size="sm" />
+              </button>{" "}
+            </div>
           </div>
           {openDropdown === 4 && (
             <div className="bg-white w-48 h-auto absolute top-full rounded-lg shadow-lg transition-all ease-in-out duration-200">
