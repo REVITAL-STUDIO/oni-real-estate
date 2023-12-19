@@ -16,6 +16,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@googlemaps/js-api-loader": "^1.16.2",
     "@next/font": "^14.0.3",
+    "@types/googlemaps": "^3.43.3",
     "@types/node": "20.10.2",
     "@types/react": "18.2.39",
     "@types/react-dom": "18.2.17",

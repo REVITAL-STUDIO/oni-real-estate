@@ -60,8 +60,9 @@ const Nav = () => {
               Listing
             </span>
           </Link>
-          <div
+          <Link
             className="w-52 h-28 flex justify-center items-center"
+            href="/"
             style={{
               backgroundSize: "cover",
               backgroundPosition: "center",
@@ -69,7 +70,7 @@ const Nav = () => {
             }}
           >
             <Image src={Logo} alt="logo" className="w-28 h-28" />
-          </div>
+          </Link>
           <Link
             className={`
             relative
