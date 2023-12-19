@@ -1,6 +1,7 @@
 import React from "react";
 import Buyer from "@/components/buyer";
 import Seller from "@/components/seller";
+import Schedule from "@/components/schedule";
 
 export default function Client() {
   return (
@@ -8,6 +9,7 @@ export default function Client() {
       <div className="w-full h-1/6 bg-black"></div>
       <Buyer />
       <Seller />
+      <Schedule />
     </div>
   );
 }
