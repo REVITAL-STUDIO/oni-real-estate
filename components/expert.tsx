@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
-import Local from "../public/expert.png";
+import Local from "public/local.png";
 import {
   faChevronRight,
   faChevronLeft,
@@ -10,81 +10,82 @@ import {
 
 const Expert = () => {
   return (
-    <div className="bg-black h-1300 flex flex-col justify-center items-center w-full">
-      <div className="h-800 w-5/6  flex flex-col items-end justify-around  ">
-        <div className="w-full h-auto flex justify-end">
-          <h2 className="  w-fit p-4 mb-4 rounded-full text-xl uppercase tracking-wider text-white font-medium">
-            Local Expertise
-          </h2>
+    <div className=" h-screen  w-full">
+      {/* Local Support */}
+      <div className="h-1/2 w-full bg-black flex justify-center items-center ">
+        <div className="w-1/2 h-full   ">
+          <Image
+            src={Local}
+            alt="local support"
+            className="w-[100%] h-[100%]"
+          ></Image>
         </div>
-        <p className="text-xs  px-2 w-2/3 text-white text-right">
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum."
-        </p>
-        <div className="w-full h-3/4 mt-4 flex items-center justify-end animate-float">
-          <div className="w-1/5 h-full relative left-10 rounded-3xl bg-royal"></div>
-          <div className="w-4/5 h-full  bg-cover bg-center z-10  bg-no-repeat bg-[url('/local.png')] rounded-3xl"></div>
+        <div className="w-1/2 h-full flex flex-col justify-center items-center">
+          <h2 className="w-5/6 mb-4 text-right text-5xl font-bold uppercase tracking-wider bg-gradient-to-r from-white via-rgba-white-opacity to-pine bg-clip-text text-transparent ">
+            LOCAL EXPERTISE HOUSTON CONNECTED
+          </h2>
+          <p className="text-xs w-5/6 text-white text-right">
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat. Duis aute irure dolor in
+            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+            culpa qui officia deserunt mollit anim id est laborum."
+          </p>
         </div>
       </div>
       {/* Testimonials */}
-      <div className="w-full h-700 flex justify-center items-center">
-        <div className="w-5/6 h-3/4  flex flex-col justify-center items-center">
-          <div className="w-full h-auto ">
-            <h1 className="text-white w-fit  uppercase  font-medium text-2xl">
+      <div className="h-1/2 w-full flex relative ">
+        <div className="w-1/2 h-full  flex justify-center items-center ">
+          <div>
+            <h2 className="text-2xl uppercase font-bold bg-gradient-to-r from-black via-black to-pine bg-clip-text text-transparent">
               Our Stories
-            </h1>
+            </h2>
           </div>
-          <div className=" flex justify-center items-center w-full h-5/6">
-            <div className="w-1/3 h-3/4 relative">
-              <div className="bg-royal rounded-full w-64 h-64 relative right-4 top-0 "></div>
-              <div className=" z-10 rounded-full w-64 h-64 relative left-32 bottom-48 bg-[url('/person.png')] bg-cover shadow-lg shadow-black animate-float"></div>
-              <div className="bg-royal rounded-full w-64 h-64 relative bottom-80 left-4 shadow-2xl shadow-black "></div>
-            </div>
-            <div className="w-2/3 h-full text-white flex flex-col justify-center items-center ">
-              <div className="w-full bg-gradient-to-l from-black via-black to-royal text-right">
-                <p className="italic font-light uppercase text-gray-400">
-                  {" "}
-                  Agent - Maya Peterson
-                </p>
-              </div>
-
-              <p className="px-4 text-sm text-right">
-                “Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-                nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                sunt in culpa qui officia deserunt mollit anim id est laborum.”
-                <br></br>
-                <br></br>- Steven Adams
-              </p>
-            </div>
+          <div className="w-1/2 h-[90%] relative ">
+            <div className="w-[60%] h-[60%] absolute top-[5%] rounded-full shadow-sm shadow-black bg-mint "></div>
+            <div className="w-[60%] h-[60%] absolute z-10 top-[15%] left-36 shadow-lg rounded-full shadow-black bg-[url('/person.png')] bg-cover "></div>
+            <div className="w-[60%] h-[60%] absolute top-[40%] left-10 shadow-sm shadow-black rounded-full  bg-mint "></div>
           </div>
         </div>
-        {/* Forward / Backward buttons */}
-        <div className=" absolute h-auto flex w-full px-4  justify-between items-center">
-          <button
-            className="w-10 h-10   rounded-full flex items-center justify-center transition ease-in duration-800 animate-carousel-left"
-            style={{ top: "50%" }}
-          >
+        <div className="w-1/2 h-full flex justify-center items-center ">
+          <div className="w-5/6 h-1/2 flex flex-col justify-center items-center">
+            <p className="text-black text-xl mb-4 font-bold text-right">
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam."
+            </p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="630"
+              height="19"
+              viewBox="0 0 630 19"
+              fill="none"
+            >
+              <path
+                d="M1.5 17.5C200.333 9.16666 604 -5.00001 628 4.99999"
+                stroke="#97B586"
+                stroke-width="6"
+                stroke-linecap="round"
+              />
+            </svg>
+          </div>
+        </div>
+        <div className="absolute w-full h-8  top-[46%] flex items-center justify-between px-2">
+          <button className="w-8 h-8  ">
+            {" "}
             <FontAwesomeIcon
               icon={faChevronLeft}
-              style={{ color: "#ffffff", fontSize: "16px" }}
+              size="xl"
+              className="text-mint w-8 h-8"
             />
           </button>
-          <button
-            className="w-10 h-10 flex items-center justify-center transition ease-in duration-800 animate-carousel-right"
-            style={{ top: "50%" }}
-          >
+          <button className="w-8 h-8  ">
             <FontAwesomeIcon
               icon={faChevronRight}
-              style={{ color: "#ffffff", fontSize: "16px" }}
+              size="xl"
+              className="text-mint w-8 h-8"
             />
           </button>
         </div>

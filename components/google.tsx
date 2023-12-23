@@ -17,7 +17,7 @@ const Google: React.FC = () => {
       .then((googleAPI) => {
         if (mapContainerRef.current) {
           const map = new googleAPI.maps.Map(mapContainerRef.current, {
-            center: { lat: -34.397, lng: 150.644 },
+            center: { lat: 29.7604, lng: -95.3698 },
             zoom: 8,
           });
         }

@@ -43,6 +43,10 @@ const config: Config = {
       },
       colors: {
         royal: "#191970",
+        mint: "#C8F3B0",
+        mist: "#DDDFDE",
+        smoke: "#C4C4C4",
+        pine: "#C1FF72"
       },
       rotate: {
         '90': '90deg',
