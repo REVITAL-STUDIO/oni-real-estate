@@ -5,7 +5,7 @@ import Real from "public/logo-real.png";
 
 const SubNav = () => {
   return (
-    <div className="w-full h-24 bg-white ">
+    <div className="w-full h-24  bg-white ">
       <div className=" w-full h-full flex justify-between items-center">
         <Link
           className="w-28 h-28 flex justify-center items-center"
@@ -20,7 +20,7 @@ const SubNav = () => {
         </Link>
         <div className="w-1/2 h-24 ">
           <ul
-            className={` text-black text-xs font-regular h-full flex justify-end mr-4 uppercase tracking-widest items-center gap-x-12  w-auto transition-colors duration-300 ease-in
+            className={` text-black text-xs  font-regular h-full flex justify-end mr-4 uppercase tracking-widest items-center gap-x-12  w-auto transition-colors duration-300 ease-in
           `}
           >
             <Link

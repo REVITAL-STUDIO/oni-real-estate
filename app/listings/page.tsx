@@ -5,7 +5,7 @@ import Footer from "@/components/footer";
 
 export default function Listings() {
   return (
-    <div className="bg-royal h-screen w-screen ">
+    <div className="h-screen w-full ">
       <Listing />
       <Mls />
       <Footer />

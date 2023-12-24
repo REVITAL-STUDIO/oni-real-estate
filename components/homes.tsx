@@ -84,6 +84,13 @@ const Homes = () => {
     return bookmarked.includes(index);
   };
 
+  //Open Info Page
+  const [propertyInfo, openPropertyInfo] = useState<false>;
+
+  const handlePropertyInfo = () => {
+    openPropertyInfo((prevOpen) => !prevOpen);
+  };
+
   return (
     <div className="w-2/3 h-full flex gap-4  justify-center flex-wrap overflow-y-auto">
       {homes.map((homesFile, index) => (
