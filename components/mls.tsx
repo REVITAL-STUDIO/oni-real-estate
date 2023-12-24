@@ -5,7 +5,7 @@ import Google from "./google";
 
 const Mls = ({}) => {
   return (
-    <div className="w-full h-3/4 bg-royal/50 flex">
+    <div className="w-full h-full bg-pine flex">
       <Homes />
       <Google />
     </div>

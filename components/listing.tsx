@@ -18,7 +18,11 @@ interface City {
   label: string;
 }
 
-type DropdownId = 1 | 2 | 3 | 4 | null;
+interface Property {
+  label: string;
+}
+
+type DropdownId = 1 | 2 | 3 | 4 | 5 | null;
 
 const Listing = () => {
   //For sale for rent
@@ -49,6 +53,10 @@ const Listing = () => {
 
   const toggleLocationDropdown = () => {
     setOpenDropdown((prev) => (prev === 4 ? null : 4));
+  };
+
+  const togglePropertyDropdown = () => {
+    setOpenDropdown((prev) => (prev === 5 ? null : 5));
   };
 
   //Price
@@ -114,7 +122,7 @@ const Listing = () => {
     { label: "Cinco Ranch" },
   ];
 
-  const initialCity: City = { label: "City" };
+  const initial: City = { label: "City" };
 
   useEffect(() => {
     // Set the initial price
@@ -126,10 +134,31 @@ const Listing = () => {
     };
   }, []);
 
+  //Property
+  const [setProperty, setSelectedProperty] = useState<Property[]>([]);
+  const property: Property[] = [
+    { label: "Duplex" },
+    { label: "Apartment" },
+    { label: "House" },
+    { label: "Condo" },
+  ];
+
+  const initialProperty: Property = { label: "Property" };
+
+  useEffect(() => {
+    // Set the initial price
+    setSelectedLocation([initialProperty]);
+
+    // Cleanup function (if needed)
+    return () => {
+      // Perform any cleanup here if necessary
+    };
+  }, []);
+
   return (
     <div className="w-full flex h-16  bg-white">
       {/* Search Bar */}
-      <form className="w-80 border border-r-black h-16  flex justify-between items-center ">
+      <form className="w-80 border border-r-black h-16 z-50 flex justify-between items-center ">
         <div className="w-6 h-6 ml-4">
           <FontAwesomeIcon icon={faMagnifyingGlass} size="sm" />
         </div>
@@ -167,10 +196,10 @@ const Listing = () => {
         </div>
       </div>
       {/* filters */}
-      <div className="border w-2/3 h-full flex justify-evenly items-center">
+      <div className=" w-2/3 h-full border border-red-500 flex justify-evenly items-center">
         {/* Prices */}
         <div className="relative">
-          <div className="w-48 h-10  border rounded-lg flex justify-around items-center">
+          <div className="w-48 h-10 z-50  rounded-lg flex justify-center items-center">
             <span className="text-xs  w-5/6 text-center">
               {selectedPrice.length === 0
                 ? "Price Amount"
@@ -183,11 +212,11 @@ const Listing = () => {
             </div>
           </div>
           {openDropdown === 1 && (
-            <div className="bg-white w-48 h-auto absolute top-full rounded-lg shadow-lg transition-all ease-in-out duration-200">
+            <div className="bg-white w-48 h-auto absolute top-full z-30 rounded-lg shadow-lg transition-all ease-in-out duration-200">
               {prices.map((price) => (
                 <div
                   key={price.label}
-                  className="p-2 cursor-pointer hover:bg-royal shadow-black hover:rounded-sm hover:text-white tracking-wider text-xs text-center transition ease-in-out duration-150"
+                  className="p-2 cursor-pointer hover:bg-slate-700 shadow-black hover:rounded-sm hover:text-white tracking-wider text-xs text-center transition ease-in-out duration-150"
                   onClick={() => togglePrices(price)}
                 >
                   {price.label}
@@ -198,7 +227,7 @@ const Listing = () => {
         </div>
         {/* Beds */}
         <div className="relative">
-          <div className="w-48 h-10 border rounded-lg flex justify-around items-center">
+          <div className="w-28 h-10 z-50 rounded-lg flex justify-around  items-center">
             {" "}
             <span className="text-xs w-5/6 text-center">{`${
               selectedBeds || "0"
@@ -210,11 +239,11 @@ const Listing = () => {
             </div>
           </div>
           {openDropdown === 2 && (
-            <div className="bg-white w-48 h-auto absolute top-full rounded-lg shadow-lg transition-all ease-in-out duration-200">
+            <div className="bg-white w-28 h-auto absolute top-full z-30 rounded-lg shadow-lg transition-all ease-in-out duration-200">
               {numOfBeds.map((bed) => (
                 <div
                   key={bed}
-                  className="p-2 cursor-pointer hover:bg-royal shadow-black hover:rounded-sm hover:text-white tracking-wider text-xs text-center transition ease-in-out duration-150"
+                  className="p-2 cursor-pointer hover:bg-slate-700 shadow-black hover:rounded-sm hover:text-white tracking-wider text-xs text-center transition ease-in-out duration-150"
                   onClick={() => setSelectedBeds(bed)}
                 >
                   {bed}
@@ -225,7 +254,7 @@ const Listing = () => {
         </div>
         {/* Baths */}
         <div className="relative">
-          <div className="w-48 h-10 border rounded-lg flex justify-around items-center">
+          <div className="w-28 h-10  z-10  rounded-lg flex justify-around items-center">
             {" "}
             <span className="text-xs w-5/6 text-center">{`${
               selectedBaths || "0"
@@ -237,11 +266,11 @@ const Listing = () => {
             </div>
           </div>
           {openDropdown === 3 && (
-            <div className="bg-white w-48 h-auto absolute top-full rounded-lg shadow-lg transition-all ease-in-out duration-200">
+            <div className="bg-white w-28 h-auto absolute z-30 top-full rounded-lg shadow-lg transition-all ease-in-out duration-200">
               {numOfBaths.map((baths) => (
                 <div
                   key={baths}
-                  className="p-2 cursor-pointer hover:bg-royal shadow-black hover:rounded-sm hover:text-white tracking-wider text-xs text-center transition ease-in-out duration-150"
+                  className="p-2 cursor-pointer hover:bg-slate-700 shadow-black hover:rounded-sm hover:text-white tracking-wider text-xs text-center transition ease-in-out duration-150"
                   onClick={() => setSelectedBaths(baths)}
                 >
                   {baths}
@@ -252,7 +281,7 @@ const Listing = () => {
         </div>
         {/* Location */}
         <div className="relative">
-          <div className="w-48 h-10 border rounded-lg flex justify-around items-center">
+          <div className="w-28 h-10 z-10 rounded-lg flex justify-around items-center">
             {" "}
             <span className="text-xs w-5/6 text-center">
               {setLocation.length === 0 ? "City" : setLocation[0].label}
@@ -264,14 +293,43 @@ const Listing = () => {
             </div>
           </div>
           {openDropdown === 4 && (
-            <div className="bg-white w-48 h-auto absolute top-full rounded-lg shadow-lg transition-all ease-in-out duration-200">
+            <div className="bg-white w-28 h-auto absolute z-30 top-full rounded-lg shadow-lg transition-all ease-in-out duration-200">
               {locations.map((location) => (
                 <div
                   key={location.label}
-                  className="p-2 cursor-pointer hover:bg-royal shadow-black hover:rounded-sm hover:text-white tracking-wider text-xs text-center transition ease-in-out duration-150"
+                  className="p-2 cursor-pointer hover:bg-slate-700 shadow-black hover:rounded-sm hover:text-white tracking-wider text-xs text-center transition ease-in-out duration-150"
                   onClick={() => setSelectedLocation([location])}
                 >
                   {location.label}
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+        {/* Property Type */}
+        <div className="relative">
+          <div className="w-28 h-10 z-10 rounded-lg flex justify-around items-center">
+            {" "}
+            <span className="text-xs w-5/6 text-center">
+              {setProperty.length === 0
+                ? "Property Type"
+                : setProperty[0].label}
+            </span>{" "}
+            <div className="w-1/6">
+              <button onClick={toggleLocationDropdown}>
+                <FontAwesomeIcon icon={faChevronDown} size="sm" />
+              </button>{" "}
+            </div>
+          </div>
+          {openDropdown === 5 && (
+            <div className="bg-white w-28 h-auto absolute z-30 top-full rounded-lg shadow-lg transition-all ease-in-out duration-200">
+              {property.map((properties) => (
+                <div
+                  key={properties.label}
+                  className="p-2 cursor-pointer hover:bg-slate-700 shadow-black hover:rounded-sm hover:text-white tracking-wider text-xs text-center transition ease-in-out duration-150"
+                  onClick={() => setSelectedProperty([properties])}
+                >
+                  {properties.label}
                 </div>
               ))}
             </div>

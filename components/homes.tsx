@@ -88,7 +88,7 @@ const Homes = () => {
     <div className="w-2/3 h-full flex gap-4  justify-center flex-wrap overflow-y-auto">
       {homes.map((homesFile, index) => (
         <div
-          className="w-[45%] h-[50%] m-2 shadow-md shadow-black hover:shadow-md hover:shadow-slate-300 transition duration-150 ease-in-out bg-white flex flex-col"
+          className="w-[45%] h-[40%] m-2  shadow-md hover:shadow-lg hover:shadow-slate-300 transition duration-150 ease-in-out bg-white flex flex-col"
           key={index}
         >
           <div className="w-full h-2/3 overflow-hidden">
