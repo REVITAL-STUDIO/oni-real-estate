@@ -3,7 +3,13 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookmark, faBookBookmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBookmark,
+  faBookBookmark,
+  faClose,
+  faXmark,
+  faCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 
 // Homes
@@ -85,14 +91,22 @@ const Homes = () => {
   };
 
   //Open Info Page
-  const [propertyInfo, openPropertyInfo] = useState<false>;
+  const [propertyInfo, openPropertyInfo] = useState(false);
 
   const handlePropertyInfo = () => {
     openPropertyInfo((prevOpen) => !prevOpen);
+
+    // If propertyInfo is open, prevent scrolling by adding a class to the body
+    if (!propertyInfo) {
+      document.body.style.overflow = "hidden";
+    } else {
+      // If propertyInfo is closed, allow scrolling by removing the class
+      document.body.style.overflow = "auto";
+    }
   };
 
   return (
-    <div className="w-2/3 h-full flex gap-4  justify-center flex-wrap overflow-y-auto">
+    <div className="w-[60%] h-full flex gap-4 relative justify-center flex-wrap overflow-y-auto">
       {homes.map((homesFile, index) => (
         <div
           className="w-[45%] h-[40%] m-2  shadow-md hover:shadow-lg hover:shadow-slate-300 transition duration-150 ease-in-out bg-white flex flex-col"
@@ -102,11 +116,15 @@ const Homes = () => {
             <Image src={homesFile} alt="homes" />
           </div>
           {/* Housing Cards */}
-          <div className="w-full h-1/3 flex flex-col justify-around font-medium text-gray-600 ">
+          <div
+            onClick={handlePropertyInfo}
+            className="w-full h-1/3 flex flex-col justify-around font-medium text-gray-600 "
+          >
             <div className="flex w-full  h-fit justify-between">
               <h2 className="text-2xl ml-4">{prices[index]}</h2>
               <p className="text-xs mr-4 font-normal">{`${infoEstate[index].beds} Beds | ${infoEstate[index].baths} Baths |  ${infoEstate[index].sqft} sqft`}</p>
             </div>
+            {propertyInfo}
             {/* address and bookmark */}
             <div className="w-full h-fit ">
               <p className="text-xs ml-4 font-normal">{addresses[index]}</p>
@@ -128,6 +146,23 @@ const Homes = () => {
           </div>
         </div>
       ))}
+      {propertyInfo && (
+        <div className="fixed inset-0 z-10 ">
+          <div className="bg-forest w-full h-full absolute">
+            {/* close button */}
+            <div className="w-full flex justify-end">
+              <button className=" w-fit ">
+                <FontAwesomeIcon className="w-7 h-7" icon={faXmark} size="lg" />
+              </button>
+            </div>
+            <div className="w-full h-[65%] flex flex-col justify-center items-center">
+              <div className="w-2/4 h-3/4 border"></div>
+              <div className="w-full h-24  bg-black/90 border-black mt-4"></div>
+            </div>
+            <div className="w-full h-[35%] bg-black"></div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

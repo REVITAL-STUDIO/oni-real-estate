@@ -163,7 +163,7 @@ const Listing = () => {
   return (
     <div className="w-full flex h-16  bg-white">
       {/* Search Bar */}
-      <form className="w-80 border border-r h-16 z-50 flex justify-between items-center ">
+      <form className="w-80 border border-r h-16 flex justify-between items-center ">
         <div className="w-6 h-6 ml-4">
           <FontAwesomeIcon icon={faMagnifyingGlass} size="sm" />
         </div>
