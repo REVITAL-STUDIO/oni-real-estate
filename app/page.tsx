@@ -5,10 +5,12 @@ import Info from "@/components/info";
 import Footer from "@/components/footer";
 import Image from "next/image";
 import Link from "next/link";
+import Nav from "@/components/navbar";
 
 export default function Home() {
   return (
     <main>
+      <Nav />
       <Hero />
       <Info />
       <Expert />

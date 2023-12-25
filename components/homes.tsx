@@ -90,7 +90,7 @@ const Homes = () => {
     return bookmarked.includes(index);
   };
 
-  //Open Info Page
+  //Open Info Page & close
   const [propertyInfo, openPropertyInfo] = useState(false);
 
   const handlePropertyInfo = () => {
@@ -105,10 +105,15 @@ const Homes = () => {
     }
   };
 
+  const handleClose = () => {
+    openPropertyInfo(false);
+  };
+
   return (
     <div className="w-[60%] h-full flex gap-4 relative justify-center flex-wrap overflow-y-auto">
       {homes.map((homesFile, index) => (
         <div
+          onClick={handlePropertyInfo}
           className="w-[45%] h-[40%] m-2  shadow-md hover:shadow-lg hover:shadow-slate-300 transition duration-150 ease-in-out bg-white flex flex-col"
           key={index}
         >
@@ -116,10 +121,7 @@ const Homes = () => {
             <Image src={homesFile} alt="homes" />
           </div>
           {/* Housing Cards */}
-          <div
-            onClick={handlePropertyInfo}
-            className="w-full h-1/3 flex flex-col justify-around font-medium text-gray-600 "
-          >
+          <div className="w-full h-1/3 flex flex-col justify-around font-medium text-gray-600 ">
             <div className="flex w-full  h-fit justify-between">
               <h2 className="text-2xl ml-4">{prices[index]}</h2>
               <p className="text-xs mr-4 font-normal">{`${infoEstate[index].beds} Beds | ${infoEstate[index].baths} Baths |  ${infoEstate[index].sqft} sqft`}</p>
@@ -147,11 +149,11 @@ const Homes = () => {
         </div>
       ))}
       {propertyInfo && (
-        <div className="fixed inset-0 z-10 ">
+        <div className="fixed inset-0 z-10">
           <div className="bg-forest w-full h-full absolute">
             {/* close button */}
             <div className="w-full flex justify-end">
-              <button className=" w-fit ">
+              <button onClick={handleClose} className=" w-fit ">
                 <FontAwesomeIcon className="w-7 h-7" icon={faXmark} size="lg" />
               </button>
             </div>

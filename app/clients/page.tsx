@@ -6,11 +6,10 @@ import Footer from "@/components/footer";
 
 export default function Client() {
   return (
-    <div className="bg-black h-screen w-screen ">
+    <div className="bg-black h-screen w-full ">
       <Buyer />
       <Seller />
       <Schedule />
-      <Footer />
     </div>
   );
 }

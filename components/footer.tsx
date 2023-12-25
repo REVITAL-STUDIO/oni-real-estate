@@ -12,9 +12,9 @@ import {
 
 const Footer = () => {
   return (
-    <div className="w-full h-screen flex flex-col z-50  bg-black">
+    <div className="w-full h-screen flex flex-col z-50  bg-slate-800">
       {/* links */}
-      <div className="w-full h-full flex">
+      <div className="w-full h-full border-b border-gray-400 flex">
         <div className="w-1/2 h-full flex flex-col ">
           <div className="w-1/4 h-fit">
             <Image
@@ -30,11 +30,11 @@ const Footer = () => {
           {/* Contact & Social Media */}
           <div className=" w-1/2 h-full  flex flex-wrap">
             <div className="text-white ml-4 w-64 h-fit  flex   flex-col">
-              <h2 className="text-xl">CONTACT</h2>
+              <h2 className="text-xl tracking-wide">Contact</h2>
               <p className="font-light">info@oniprofessionals.com</p>
             </div>
             <div className="text-white ml-4 w-64 h-fit flex   flex-col">
-              <h2 className="text-xl">LOCATION</h2>
+              <h2 className="text-xl tracking-wide">Location</h2>
               <p className="font-light">
                 1234 SANTA MONICA BLVD.,
                 <br></br>
@@ -44,22 +44,22 @@ const Footer = () => {
               </p>
             </div>
             <div className="text-white ml-4 w-fit h-fit  flex   flex-col">
-              <h2 className="text-xl">SOCIAL MEDIA</h2>
+              <h2 className="text-xl tracking-wide">Social Media</h2>
               <ul className="w-fit h-fit  flex gap-x-8">
                 <Link
-                  className="text-3xl hover:text-white/50 transition ease-in duration-200"
+                  className="text-xl hover:text-black/50 transition ease-in duration-200"
                   href="/"
                 >
                   <FontAwesomeIcon icon={faInstagram} />
                 </Link>
                 <Link
-                  className="text-3xl hover:text-white/50 transition ease-in duration-200"
+                  className="text-xl hover:text-black/50 transition ease-in duration-200"
                   href="/"
                 >
                   <FontAwesomeIcon icon={faFacebook} />
                 </Link>
                 <Link
-                  className="text-3xl hover:text-white/50 transition ease-in duration-200"
+                  className="text-xl hover:text-black/50 transition ease-in duration-200"
                   href="/"
                 >
                   <FontAwesomeIcon icon={faLinkedin} />
@@ -69,32 +69,25 @@ const Footer = () => {
           </div>
         </div>
         {/* Links */}
-        <div className="w-1/2  border-white h-full flex flex-col justify-evenly items-center">
+        <div className="w-1/2  border-black h-full flex flex-col justify-evenly items-center">
           <ul className="w-full h-12 text-white text-sm  flex justify-evenly items-center">
-            <Link href="/">HOME</Link>
-            <Link href="/">SEARCH</Link>
+            <Link className="hover:text-gray-600" href="/">
+              Home
+            </Link>
+            <Link className="hover:text-gray-600" href="/">
+              Search
+            </Link>
             <div className="border w-16 border-white"></div>
-            <Link href="/">LISTINGS</Link>
-            <Link href="/">SELLERS</Link>
-            <Link href="/">BUYERS</Link>
+            <Link className="hover:text-gray-600" href="/">
+              List
+            </Link>
+            <Link className="hover:text-gray-600" href="/">
+              Sellers
+            </Link>
+            <Link className="hover:text-gray-600" href="/">
+              Buyers
+            </Link>
           </ul>
-          {/* <p className="text-white text-sm  w-11/12 p-4">
-            <span className="text-2xl tracking-wide font-extralight">
-              Oni Professionals
-            </span>{" "}
-            is a full-service, luxury real estate brokerage and lifestyle
-            company that has redefined and modernized the real estate industry.
-            To put it simply, we do things differently. The Agency set out to
-            foster a culture of collaboration in which the collective talents,
-            resources and networks of our world-class team would be behind each
-            of our clients every step of the way. Our spirit of innovation has
-            led the way in the advancement of our industry, and we offer a fresh
-            forward-thinking approach that reaches all corners of the globe. The
-            Agency represents clients worldwide in the residential, new
-            development, resort and luxury leasing industries, with some of the
-            most visible and high-end properties in the country among our vast
-            portfolio
-          </p> */}
         </div>
       </div>
       {/* Copyright */}
@@ -113,7 +106,7 @@ const Footer = () => {
           ></Image>
         </h2>
         <h2 className="text-white uppercase mr-4 text-xs tracking-widest">
-          Copyright Oni Professionals. All Rights Reserved.
+          Copyright Oni Professionals. All Rights Reserved. Private Policy.
         </h2>
       </div>
     </div>

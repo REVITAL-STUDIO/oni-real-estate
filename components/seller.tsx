@@ -4,7 +4,7 @@ import seller from "public/seller.png";
 
 const Seller = () => {
   return (
-    <div className="w-full h-5/6 bg-black flex">
+    <div className="w-full h-5/6 hidden bg-black ">
       {/* Info */}
       <div className="w-1/3 h-full  flex justify-center items-center">
         <div className="w-3/4 h-full ">

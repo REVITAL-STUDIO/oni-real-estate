@@ -79,7 +79,7 @@ const Nav = () => {
             href="/clients"
           >
             <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-2 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-mint before:via-mint/30 before:to-mint hover:before:w-full hover:before:opacity-100">
-              Clients
+              Buy/Sell
             </span>
           </Link>
           <Link

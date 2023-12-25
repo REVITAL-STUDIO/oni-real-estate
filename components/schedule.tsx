@@ -3,7 +3,7 @@ import React from "react";
 const Schedule = () => {
   return (
     <div className="bg-black w-full h-screen">
-      <div className="w-full h-full bg-gradient-to-t from-royal flex flex-col">
+      <div className="w-full h-full bg-gradient-to-t from-mint flex flex-col">
         <div className="w-full h-full ">
           <div className="flex text-white h-5/6 w-full justify-evenly flex-col items-center">
             <p className="">
