@@ -130,18 +130,13 @@ const Hero = () => {
     <div className="h-screen w-full flex justify-center items-center bg-[url('/herosection.png')] bg-cover ">
       <div className=" flex flex-col justify-center items-center w-5/6 h-3/6">
         {/* Logo & Slogan */}
-        <div className="flex w-300 h-1/3 justify-center items-center">
-          <div className="w-5/6 h-fit">
-            <Image src={Logo2} alt="sub-logo" />
-          </div>
-          <div className="w-2/3 h-full text-2xl text-center text-white flex justify-center items-center">
-            <h2 className="font-source">Where Houston Finds Homes</h2>
-          </div>
+        <div className="w-full h-1/4 text-5xl text-center text-white flex justify-center items-center">
+          <h2 className="font-source ">Where Houston Finds Homes</h2>
         </div>
-        {/* search bar */}
+        {/* search  */}
         <div className="flex w-fit h-1/4  rounded-lg items-center justify-center">
           <div className="p-2">
-            <button className="w-52 h-12 shadow-lg bg-gray-600/40 shadow-black  border-2 ml-4 flex items-center justify-center">
+            <button className="w-52 h-12 shadow-lg bg-gray-600/40 shadow-black  border ml-4 flex items-center justify-center">
               <span className="tracking-wide uppercase font-regular flex gap-x-1 items-center justify-center text-sm text-white">
                 Search
               </span>

@@ -6,7 +6,7 @@ import Footer from "@/components/footer";
 
 export default function Client() {
   return (
-    <div className="bg-black h-screen w-full ">
+    <div className="bg-storm h-screen w-full ">
       <Buyer />
       <Seller />
       <Schedule />

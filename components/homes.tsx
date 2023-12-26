@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -93,16 +93,23 @@ const Homes = () => {
   //Open Info Page & close
   const [propertyInfo, openPropertyInfo] = useState(false);
 
-  const handlePropertyInfo = () => {
-    openPropertyInfo((prevOpen) => !prevOpen);
-
+  useEffect(() => {
     // If propertyInfo is open, prevent scrolling by adding a class to the body
-    if (!propertyInfo) {
+    if (propertyInfo) {
       document.body.style.overflow = "hidden";
     } else {
       // If propertyInfo is closed, allow scrolling by removing the class
       document.body.style.overflow = "auto";
     }
+
+    // Cleanup function to reset body overflow when the component unmounts
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [propertyInfo]);
+
+  const handlePropertyInfo = () => {
+    openPropertyInfo((prevOpen) => !prevOpen);
   };
 
   const handleClose = () => {
@@ -113,13 +120,20 @@ const Homes = () => {
     <div className="w-[60%] h-full flex gap-4 relative justify-center flex-wrap overflow-y-auto">
       {homes.map((homesFile, index) => (
         <div
-          onClick={handlePropertyInfo}
-          className="w-[45%] h-[40%] m-2  shadow-md hover:shadow-lg hover:shadow-slate-300 transition duration-150 ease-in-out bg-white flex flex-col"
+          className="w-[45%] h-[40%] m-2  shadow-md hover:shadow-lg hover:shadow-slate-300  bg-white flex flex-col"
           key={index}
         >
-          <div className="w-full h-2/3 overflow-hidden">
-            <Image src={homesFile} alt="homes" />
+          <div
+            onClick={handlePropertyInfo}
+            className="w-full h-2/3 overflow-hidden "
+          >
+            <Image
+              src={homesFile}
+              className="hover:brightness-50 transition duration-200 ease-in-out"
+              alt="homes"
+            />
           </div>
+
           {/* Housing Cards */}
           <div className="w-full h-1/3 flex flex-col justify-around font-medium text-gray-600 ">
             <div className="flex w-full  h-fit justify-between">
@@ -145,26 +159,33 @@ const Homes = () => {
                 </button>
               </div>
             </div>
+            {propertyInfo && (
+              <div className="bg-forest w-full h-full fixed inset-0 z-50">
+                {/* close button */}
+                <div className="w-full flex justify-end transition-opacity ease-in-out duration-300">
+                  <button
+                    className="w-12 h-12 text-black"
+                    onClick={handleClose}
+                  >
+                    <FontAwesomeIcon icon={faClose} size="lg" />
+                  </button>
+                </div>
+                <div className="w-full h-[65%] flex flex-col justify-center items-center transition-height ease-in-out duration-300">
+                  <div className="w-2/4 h-3/4">
+                    <Image
+                      src={homesFile}
+                      className="w-[100%] h-[100%]"
+                      alt="homes"
+                    />
+                  </div>
+                  <div className="w-full h-20  bg-black/90 border-black mt-4"></div>
+                </div>
+                <div className="w-full h-[35%] bg-black transition-height ease-in-out duration-300"></div>
+              </div>
+            )}
           </div>
         </div>
       ))}
-      {propertyInfo && (
-        <div className="fixed inset-0 z-10">
-          <div className="bg-forest w-full h-full absolute">
-            {/* close button */}
-            <div className="w-full flex justify-end">
-              <button onClick={handleClose} className=" w-fit ">
-                <FontAwesomeIcon className="w-7 h-7" icon={faXmark} size="lg" />
-              </button>
-            </div>
-            <div className="w-full h-[65%] flex flex-col justify-center items-center">
-              <div className="w-2/4 h-3/4 border"></div>
-              <div className="w-full h-24  bg-black/90 border-black mt-4"></div>
-            </div>
-            <div className="w-full h-[35%] bg-black"></div>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

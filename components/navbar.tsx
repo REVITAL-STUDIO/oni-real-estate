@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import Logo from "../public/logo.png";
+import Logo from "../public/logo-real.png";
 import Link from "next/link";
 
 const Nav = () => {
@@ -29,7 +29,7 @@ const Nav = () => {
 
   return (
     <div
-      className={`h-100 w-full  flex fixed  z-50 flex-col items-center justify-center transition-all duration-300 ease-in-out ${
+      className={`h-150 w-full  flex fixed  z-50 flex-col items-center justify-center transition-all duration-300 ease-in-out ${
         color ? "" : ""
       } ${disappear ? "opacity-0 pointer-events-none " : " "}`}
     >
@@ -69,7 +69,7 @@ const Nav = () => {
               backgroundRepeat: "no-repeat",
             }}
           >
-            <Image src={Logo} alt="logo" className="w-28 h-28" />
+            <Image src={Logo} alt="logo" className="w-28 h-28 invert" />
           </Link>
           <Link
             className={`
