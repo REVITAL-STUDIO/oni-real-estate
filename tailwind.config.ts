@@ -47,8 +47,9 @@ const config: Config = {
         mist: "#DDDFDE",
         smoke: "#C4C4C4",
         pine: "#C1FF72",
-        forest: "#97B586",
+        forest: "#3E4A37",
         storm: "#D3D3D3",
+        
       },
       rotate: {
         '90': '90deg',
