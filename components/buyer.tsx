@@ -24,7 +24,7 @@ const Buyer = () => {
         </div>
         <div className="h-1/3 w-[90%]  flex justify-between">
           {/* step 1 */}
-          <div className="w-1/4 h-3/4 rounded-2xl shadow-xl hover:shadow-2xl shadow-pine hover:shadow-pine transition duration-200 ease-in-out bg-forest mt-4 flex flex-col justify-center items-center">
+          <div className="w-1/4 h-3/4 rounded-2xl shadow-xl hover:shadow-2xl shadow-pine hover:shadow-pine transition duration-200 ease-in-out bg-forest mt-4 flex flex-col justify-center items-center hover:-translate-y-4 hover:scale-95">
             <ul className="w-5/6 h-42 gap-y-4 flex text-white font-medium flex-col">
               <div className="w-10 h-10 rounded-full border-4 border-pine font-bold flex justify-center items-center">
                 1
@@ -35,7 +35,7 @@ const Buyer = () => {
             </ul>
           </div>
           {/* step 2 */}
-          <div className="w-1/4 h-3/4 rounded-2xl shadow-xl shadow-pine hover:shadow-2xl hover:shadow-pine bg-forest mt-4 flex flex-col justify-center items-center">
+          <div className="w-1/4 h-3/4 rounded-2xl shadow-xl shadow-pine hover:shadow-2xl hover:shadow-pine transition duration-200 ease-in-out bg-forest mt-4 flex flex-col justify-center items-center hover:-translate-y-4 hover:scale-95">
             <ul className="w-5/6 h-42 gap-y-4 flex text-white font-medium flex-col">
               <div className="w-10 h-10 rounded-full border-4 border-pine font-bold flex justify-center items-center">
                 2
@@ -46,7 +46,7 @@ const Buyer = () => {
             </ul>
           </div>
           {/* step 3 */}
-          <div className="w-1/4 h-3/4 rounded-2xl shadow-xl shadow-pine  hover:shadow-2xl hover:shadow-pine bg-forest mt-4 flex flex-col justify-center items-center">
+          <div className="w-1/4 h-3/4 rounded-2xl shadow-xl shadow-pine  hover:shadow-2xl hover:shadow-pine transition duration-200 ease-in-out bg-forest mt-4 flex flex-col justify-center items-center hover:-translate-y-4 hover:scale-95">
             <ul className="w-5/6 h-42 gap-y-4 flex text-white font-medium flex-col">
               <div className="w-10 h-10 rounded-full border-4 border-pine font-bold flex justify-center items-center">
                 3

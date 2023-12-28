@@ -12,8 +12,8 @@ const Nav = () => {
   const changeColor = () => {
     if (typeof window !== "undefined") {
       const scrollY = window.scrollY;
-      setColor(scrollY >= 150);
-      setDisappear(scrollY >= 150);
+      setColor(scrollY >= 100);
+      setDisappear(scrollY >= 100);
     }
   };
 
