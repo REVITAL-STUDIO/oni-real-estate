@@ -12,11 +12,11 @@ import {
 
 const Footer = () => {
   return (
-    <div className="w-full h-screen flex flex-col z-50  bg-white">
+    <div className="w-full h-500 flex flex-col z-50  bg-white">
       {/* links */}
       <div className="w-full h-full border-b border-gray-400 flex">
         <div className="w-1/2 h-full flex flex-col justify-evenly ">
-          <div className="w-1/5 h-fit ml-4">
+          <div className="w-1/6 h-fit ml-4 mt-4">
             <Image
               src={Logo}
               alt="logo"
