@@ -126,40 +126,89 @@ const ProgressBarSvg = (props: SVGProps<SVGSVGElement>) => (
           </g>
         </g>
       </g>
-      <g id="progressBar">
-        <path
-          id="Vector 40"
-          d="M481 187C515.559 209.904 583.619 280.837 579.391 381.342"
-          stroke="#C4C4C4"
-          strokeWidth={15}
-          strokeLinecap="round"
-        />
-        <path
-          id="Vector 42"
-          d="M58.3811 381.351C56.3696 339.94 73.2184 243.09 156.706 186.976"
-          stroke="#C4C4C4"
-          strokeWidth={15}
-          strokeLinecap="round"
-        />
-        <path
-          id="Vector 41"
-          d="M423.911 590.902C387.951 611.535 294.041 640.598 206.084 591.786"
-          stroke="#C4C4C4"
-          strokeWidth={15}
-          strokeLinecap="round"
-        />
-      </g>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640">
+        <g id="progressBarBackground">
+          <path
+            id="Vector 40"
+            d="M481 187C515.559 209.904 583.619 280.837 579.391 381.342"
+            stroke="#C4C4C4"
+            strokeWidth="15"
+            strokeLinecap="round"
+          />
+          <path
+            id="Vector 42"
+            d="M58.3811 381.351C56.3696 339.94 73.2184 243.09 156.706 186.976"
+            stroke="#C4C4C4"
+            strokeWidth="15"
+            strokeLinecap="round"
+          />
+          <path
+            id="Vector 41"
+            d="M423.911 590.902C387.951 611.535 294.041 640.598 206.084 591.786"
+            stroke="#C4C4C4"
+            strokeWidth="15"
+            strokeLinecap="round"
+          />
+        </g>
+
+        <g id="progressBar">
+          <path
+            id="ProgressPath1"
+            d="M481 187C515.559 209.904 583.619 280.837 579.391 381.342"
+            stroke="#C1FF72"
+            strokeWidth="15"
+            strokeLinecap="round"
+          >
+            <animate
+              attributeName="stroke-dasharray"
+              dur="6s"
+              values="0 1000;1000 0"
+              repeatCount="indefinite"
+              begin="0s"
+            />
+          </path>
+          <path
+            id="ProgressPath2"
+            d="M58.3811 381.351C56.3696 339.94 73.2184 243.09 156.706 186.976"
+            stroke="#C1FF72"
+            strokeWidth="15"
+            strokeLinecap="round"
+          >
+            <animate
+              attributeName="stroke-dasharray"
+              dur="6s"
+              values="0 1000;1000 0"
+              repeatCount="indefinite"
+              begin="4s"
+            />
+          </path>
+          <path
+            id="ProgressPath3"
+            d="M423.911 590.902C387.951 611.535 294.041 640.598 206.084 591.786"
+            stroke="#C1FF72"
+            strokeWidth="15"
+            strokeLinecap="round"
+          >
+            <animate
+              attributeName="stroke-dasharray"
+              dur="6s"
+              values="0 1000;1000 0"
+              repeatCount="indefinite"
+              begin="2s"
+            />
+          </path>
+        </g>
+      </svg>
     </g>
     <defs>
       <clipPath id="clip0_1512_47">
         <rect
           width={96.1354}
           height={96.1354}
-          fill="white"
           transform="translate(493.647 453.647)"
         />
       </clipPath>
     </defs>
   </svg>
 );
-export { ProgressBarSvg as ReactComponent };
+export default ProgressBarSvg;
