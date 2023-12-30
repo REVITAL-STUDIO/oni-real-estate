@@ -12,8 +12,8 @@ const Nav = () => {
   const changeColor = () => {
     if (typeof window !== "undefined") {
       const scrollY = window.scrollY;
-      setColor(scrollY >= 100);
-      setDisappear(scrollY >= 100);
+      setColor(scrollY >= 80);
+      setDisappear(scrollY >= 80);
     }
   };
 
@@ -29,13 +29,13 @@ const Nav = () => {
 
   return (
     <div
-      className={`h-150 w-full  flex fixed  z-50 flex-col items-center justify-center transition-all duration-300 ease-in-out ${
+      className={`h-80 w-full flex fixed bg-gradient-to-b from-black via-black/50 to-transparent z-50 flex-col items-center justify-center transition-all duration-300 ease-in-out ${
         color ? "" : ""
       } ${disappear ? "opacity-0 pointer-events-none " : " "}`}
     >
       <div className="w-full h-full flex justify-center items-center">
         <ul
-          className={` text-white text-xs font-light h-full flex justify-around uppercase tracking-widest items-center gap-x-8 sm:gap-x-12 md:gap-x-16 lg:gap-x-28  w-auto transition-colors duration-300 ease-in
+          className={` text-white text-sm font-light h-full flex justify-around uppercase tracking-widest items-center gap-x-8 sm:gap-x-12 md:gap-x-16 lg:gap-x-28  w-auto transition-colors duration-300 ease-in
           `}
         >
           <Link
@@ -44,6 +44,17 @@ const Nav = () => {
             font-regular
           `}
             href="/"
+          >
+            <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-2 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-mint before:via-mint/30 before:to-mint hover:before:w-full hover:before:opacity-100">
+              Home
+            </span>
+          </Link>
+          <Link
+            className={`
+            relative
+            font-regular
+          `}
+            href="/agents"
           >
             <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-2 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-mint before:via-mint/30 before:to-mint hover:before:w-full hover:before:opacity-100">
               Agents
@@ -60,17 +71,7 @@ const Nav = () => {
               Listing
             </span>
           </Link>
-          <Link
-            className="w-52 h-28 flex justify-center items-center"
-            href="/"
-            style={{
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-            }}
-          >
-            <Image src={Logo} alt="logo" className="w-28 h-28 invert" />
-          </Link>
+
           <Link
             className={`
             relative

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import Logo2 from "../public/logo2.png";
+import Logo2 from "../public/logo-real.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBed,
@@ -130,18 +130,8 @@ const Hero = () => {
     <div className="h-screen w-full flex justify-center items-center bg-[url('/herosection.png')] bg-cover ">
       <div className=" flex flex-col justify-center items-center w-5/6 h-3/6">
         {/* Logo & Slogan */}
-        <div className="w-full h-1/4 text-5xl text-center text-white flex justify-center items-center">
-          <h2 className="font-source ">Where Houston Finds Homes</h2>
-        </div>
-        {/* search  */}
-        <div className="flex w-fit h-1/4  rounded-lg items-center justify-center">
-          <div className="p-2">
-            <button className="w-52 h-12 shadow-lg bg-gray-600/40 shadow-black  border ml-4 flex items-center justify-center">
-              <span className="tracking-wide uppercase font-regular flex gap-x-1 items-center justify-center text-sm text-white">
-                Search
-              </span>
-            </button>
-          </div>
+        <div className="w-full h-full  text-center text-white flex justify-center items-center">
+          <Image src={Logo2} alt="logo" className="w-56 h-auto invert" />
         </div>
       </div>
     </div>

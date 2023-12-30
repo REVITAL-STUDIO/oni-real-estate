@@ -58,6 +58,21 @@ const config: Config = {
       fontFamily: {
         'source': ['Source Serif 4', 'serif'],
       },
+      animation: {
+        fillProgressBar: 'fillProgressBar 3s ease-out', // Adjust duration and easing function as needed
+      },
+      keyframes: {
+        fillProgressBar: {
+          '0%': {
+            width: '0',
+           
+          },
+          '100%': {
+            width: '100%',
+            
+          },
+        },
+      },
     },
   },
   plugins: [],

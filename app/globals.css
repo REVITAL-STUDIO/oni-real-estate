@@ -2,23 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&display=swap');
-
-
-
-@keyframes floatUpDown {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.animate-float {
-  animation: floatUpDown 2s infinite ease-in-out;
-}
-
-/* global.css */
  
  
 /* width */
@@ -34,7 +17,7 @@
  
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #ffffff;
+    background: #C1FF72;
     border-radius: 10px;
 }
  
@@ -43,14 +26,7 @@
     background: #555;
 }
 
-@keyframes progressAnimation {
-  0% {
-    width: 0;
-  }
-  100% {
-    width: 100%;
-  }
-}
+
 
 
 
