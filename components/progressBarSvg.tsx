@@ -28,7 +28,7 @@ const ProgressBarSvg = () => {
       {icons.map((iconObj, index) => (
         <div
           key={index}
-          className={`w-36 h-36 absolute text-forest ${
+          className={`w-36 h-36 absolute z-50 text-forest ${
             index === progress ? "top-0" : "bottom-32"
           } ${
             index === 0
@@ -36,20 +36,40 @@ const ProgressBarSvg = () => {
               : index === icons.length - 1
               ? "left-6"
               : "right-6"
-          } rounded-full bg-white flex justify-center items-center shadow-xl`}
+          } rounded-full bg-mint flex justify-center items-center shadow-xl`}
         >
           <FontAwesomeIcon icon={iconObj.icon} className="w-16 h-16" />
         </div>
       ))}
       {/* Progression Bar */}
-      <div className="w-5/6 h-5/6  shadow-xl shadow-white rounded-full flex justify-center items-center">
+      <div className="w-[90%] h-[90%] border-mist  flex justify-center items-center">
         {/* Progress */}
         <div
           className={`w-[${
             (progress + 1) * 33
-          }%] w-[85%] h-[85%] rounded-full border-mint bg-forest border-8 flex justify-center items-center transition-all duration-1000 ease-out animate-fillProgressBar`}
+          }%] w-[75%] h-[75%] rounded-full relative border-pine bg-smoke border-8 box-shadow-inset flex justify-center items-center transition-all duration-1000 ease-out `}
         >
-          <span className="font-medium text-2xl text-center text-white w-3/4">
+          <svg
+            width="100%"
+            height="100%"
+            viewBox="0 0 1089 1089"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="absolute"
+          >
+            <circle
+              id="Ellipse 42"
+              cx="544.5"
+              cy="544.5"
+              r="444.5"
+              stroke="#3E4A37"
+              stroke-width="100"
+              strokeDasharray="100%"
+              strokeDashoffset="100%"
+            />
+          </svg>
+
+          <span className="font-medium text-2xl text-center text-forest w-3/4">
             {icons[progress]?.text}
           </span>
         </div>
