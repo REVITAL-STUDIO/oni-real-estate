@@ -10,10 +10,10 @@ import ProgressBarSvg from "./progressBarSvg";
 
 const Seller = () => {
   return (
-    <div className="w-full h-full flex bg-storm">
+    <div className="w-full h-full flex bg-white">
       {/* Image */}
       <div className="w-1/2 flex flex-col justify-center items-center">
-        <h2 className="uppercase text-6xl font-regular text-forest text-left w-5/6">
+        <h2 className="uppercase text-6xl mb-4 font-regular text-forest font-bold text-left w-5/6">
           Seller Process
         </h2>
         <div className="w-5/6 h-11/12 flex flex-col gap-y-8 justify-evenly  items-center">

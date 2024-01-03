@@ -15,35 +15,36 @@ const Contact = () => {
             Get in Touch and Start Saving Time Today.
           </h2>
           <input
-            className="bg-transparent m-2 p-2 w-full  border-b border-white shadow-lg  text-white font-medium text-xs outline-none"
+            className=" m-2 p-2 w-3/4  border h-12 border-white shadow-lg  text-white font-medium text-xs  bg-gray-700 rounded-full"
             type="text"
             placeholder="NAME"
           />
           <input
-            className="bg-transparent m-2 p-2 w-full border-b border-white shadow-lg  text-white font-medium text-xs outline-none"
+            className=" m-2 p-2 w-3/4 border h-12 border-white shadow-lg  text-white font-medium text-xs  bg-gray-700 rounded-full"
             type="text"
             placeholder="PHONE"
           />
           <input
-            className="bg-transparent m-2 p-2 w-full border-b border-white  shadow-lg  text-white font-medium text-xs outline-none"
+            className=" m-2 p-2 w-3/4 border h-12 border-white  shadow-lg  text-white font-medium text-xs  bg-gray-700 rounded-full"
             type="text"
             placeholder="EMAIL"
           />
           <input
-            className="bg-transparent m-2 p-2 w-full border-b border-white  shadow-lg  text-white font-medium text-xs outline-none"
+            className=" m-2 p-2 w-3/4 border h-12 border-white  shadow-lg  text-white font-medium text-xs  bg-gray-700 rounded-full"
             type="phone"
             placeholder="(XXX)-XXX-XXXX"
           />
           <button
             type="submit"
-            className="text-black text-lg shadow-xl  shadow-black cursor-pointer mt-8 tracking-wide bg-white  w-12 h-12 rounded-full"
+            className="text-black text-lg shadow-xl flex justify-center items-center shadow-black cursor-pointer mt-8 tracking-wide bg-white  w-3/4 h-20 rounded-full"
           >
             <FontAwesomeIcon
               icon={faPaperPlane}
               aria-hidden="true"
-              className="text-pine w-6 h-6"
+              className="text-pine w-6 h-6 mr-2"
               size="lg"
-            />
+            />{" "}
+            <h2 className="font-bold">Sign Up.</h2>
           </button>
         </form>
         <div className="bg-mint w-1/2 h-3/4  ">

@@ -42,7 +42,7 @@ const ProgressBarSvg = () => {
         </div>
       ))}
       {/* Progression Bar */}
-      <div className="w-[90%] h-[90%] border-mist  flex justify-center items-center">
+      <div className="w-[90%] h-[90%]  flex justify-center items-center">
         {/* Progress */}
         <div
           className={`w-[${
@@ -55,17 +55,15 @@ const ProgressBarSvg = () => {
             viewBox="0 0 1089 1089"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="absolute"
+            className="absolute transform -rotate-90"
           >
             <circle
-              id="Ellipse 42"
               cx="544.5"
               cy="544.5"
               r="444.5"
               stroke="#3E4A37"
               stroke-width="100"
-              strokeDasharray="100%"
-              strokeDashoffset="100%"
+              className="progress-circle animate-progressAnimation"
             />
           </svg>
 
