@@ -1,4 +1,3 @@
-import SubNav from "@/components/nav";
 import Nav from "@/components/navbar";
 import React from "react";
 
@@ -9,7 +8,7 @@ export default function ClientsLayout({
 }) {
   return (
     <>
-      <SubNav />
+      <Nav />
       <main>{children}</main>
     </>
   );

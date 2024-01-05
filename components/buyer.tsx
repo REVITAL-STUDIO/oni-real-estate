@@ -10,9 +10,9 @@ const Buyer = () => {
   return (
     <div className="w-full h-full bg-white  flex flex-col">
       {/* Buyer Process */}
-      <div className="w-full   h-full flex flex-col justify-center items-center">
-        <div className="w-[90%] mb-4 flex items-center justify-between">
-          <h2 className="uppercase text-forest text-6xl font-bold bottom-0 font-regular w-2/4">
+      <div className="w-full  h-full flex flex-col justify-center items-center">
+        <div className="w-[90%] mb-4 flex flex-col  justify-between">
+          <h2 className="uppercase text-black text-6xl font-bold bottom-0 font-regular w-2/4">
             Buyer Process
           </h2>
           <h2 className="text-xl text-forest font-medium">
@@ -30,11 +30,14 @@ const Buyer = () => {
           {/* step 1 */}
           <div className="w-1/4 h-3/4 rounded-2xl  hover:shadow-2xl  hover:shadow-white transition duration-200 ease-in-out  mt-4 flex flex-col justify-center items-center hover:translate-y-4 hover:scale-105">
             <ul className="w-5/6 h-42 gap-y-4 flex items-center text-black font-medium flex-col">
-              <div className="w-full h-10 text-forest  font-bold flex  items-center">
+              <div className="w-full h-10 text-forest  font-bold flex justify-center items-center">
                 <h1 className="text-xl border-4 border-pine rounded-full w-8 h-8 flex justify-center items-center">
                   1
                 </h1>
-                <h2 className="text-4xl border-b-4 border-pine"> Analyze</h2>
+                <h2 className="text-4xl border-b-4 border-pine ml-4">
+                  {" "}
+                  Analyze
+                </h2>
               </div>
               <li>Select a Real Estate Agent</li>
               <li>Obtain Financial Pre-approval</li>
@@ -44,11 +47,14 @@ const Buyer = () => {
           {/* step 2 */}
           <div className="w-1/4 h-3/4 rounded-2xl   hover:shadow-2xl hover:shadow-white transition duration-200 ease-in-out  mt-4 flex flex-col justify-center items-center hover:translate-y-4 hover:scale-105">
             <ul className="w-5/6 h-42 gap-y-4 flex items-center  text-black font-medium flex-col">
-              <div className="w-full h-10 text-forest  font-bold flex  items-center">
+              <div className="w-full h-10 text-forest  font-bold flex justify-center items-center">
                 <h1 className="text-xl border-4 border-pine rounded-full w-8 h-8 flex justify-center items-center">
                   2
                 </h1>
-                <h2 className="text-4xl border-b-4 border-pine"> Finance</h2>
+                <h2 className="text-4xl border-b-4 border-pine ml-4">
+                  {" "}
+                  Finance
+                </h2>
               </div>
               <li>Select View Properties</li>
               <li>Write an Offer to Purchase</li>
@@ -58,11 +64,14 @@ const Buyer = () => {
           {/* step 3 */}
           <div className="w-1/4 h-3/4 rounded-2xl    hover:shadow-2xl hover:shadow-white transition duration-200 ease-in-out   mt-4 flex flex-col justify-center items-center hover:translate-y-4 hover:scale-105">
             <ul className="w-5/6 h-42 gap-y-4 flex items-center text-black font-medium flex-col">
-              <div className="w-full h-10 text-forest  font-bold flex  items-center">
+              <div className="w-full h-10 text-forest text-center font-bold flex justify-center items-center">
                 <h1 className="text-xl border-4 border-pine rounded-full w-8 h-8 flex justify-center items-center">
                   3
                 </h1>
-                <h2 className="text-4xl border-b-4 border-pine"> Approve</h2>
+                <h2 className="text-4xl border-b-4 border-pine ml-4">
+                  {" "}
+                  Approve
+                </h2>
               </div>
               <li>Negotiation</li>
               <li>Home Inspection</li>

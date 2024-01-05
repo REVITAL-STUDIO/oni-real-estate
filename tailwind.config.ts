@@ -73,6 +73,9 @@ const config: Config = {
           },
         },
       },
+      boxShadow: {
+        'custom': '0px 0px 10px 10px rgba(0,0,0,0.68) ',
+      },
     },
   },
   plugins: [],

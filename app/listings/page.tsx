@@ -6,6 +6,7 @@ import Footer from "@/components/footer";
 export default function Listings() {
   return (
     <div className="h-screen w-full ">
+      <div className="w-full h-[10%]"></div>
       <Listing />
       <Mls />
       <Footer />

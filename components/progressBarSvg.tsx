@@ -5,6 +5,7 @@ import {
   faKey,
   faLayerGroup,
 } from "@fortawesome/free-solid-svg-icons";
+import { motion } from "framer-motion";
 
 const ProgressBarSvg = () => {
   const [progress, setProgress] = useState<number>(0);
@@ -21,37 +22,53 @@ const ProgressBarSvg = () => {
     },
   ];
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress((prev) => (prev + 1) % icons.length);
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="relative w-full h-[90%] flex justify-center items-center">
+    <div className="relative w-full h-[90%] flex justify-center items-center transition-all ease-in-out duration-300">
       {/* house cards */}
 
       {icons.map((iconObj, index) => (
-        <div
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }} // Added initial values for opacity and scale
+          animate={{ opacity: 1, scale: 1 }} // Added animate values for opacity and scale
+          transition={{ duration: 0.5, ease: "easeInOut" }}
           key={index}
-          className={`w-36 h-36 absolute z-50 text-forest ${
-            index === progress ? "top-0" : "bottom-32"
+          className={`w-36 h-36 absolute z-50 bottom-32 rounded-full bg-mint flex justify-center items-center  ${
+            index === progress
+              ? "shadow-pine/50 shadow-custom transition-all duration-300 ease-in-out"
+              : ""
           } ${
             index === 0
-              ? "shadow-md shadow-white"
+              ? "top-0"
               : index === icons.length - 1
-              ? "left-6"
-              : "right-6"
-          } rounded-full bg-mint flex justify-center items-center shadow-xl`}
+              ? "left-12"
+              : "right-12"
+          }`}
         >
           <FontAwesomeIcon icon={iconObj.icon} className="w-16 h-16" />
-        </div>
+        </motion.div>
       ))}
       {/* Progression Bar */}
       <div className="w-[90%] h-[90%]  flex justify-center items-center">
         {/* Progress */}
-        <div
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }} // Added initial values for opacity and scale
+          animate={{ opacity: 1, scale: 1 }} // Added animate values for opacity and scale
+          transition={{ duration: 0.5, ease: "easeInOut" }}
           className={`w-[${
             (progress + 1) * 33
-          }%] w-[75%] h-[75%] rounded-full relative border-pine bg-smoke border-8 box-shadow-inset flex justify-center items-center transition-all duration-1000 ease-out `}
+          }%] w-[75%] h-[75%] rounded-full relative border-pine bg-forest/75 border-8 box-shadow-inset flex justify-center items-center transition-all duration-1000 ease-out `}
         >
           <svg
-            width="100%"
-            height="100%"
+            width="110%"
+            height="110%"
             viewBox="0 0 1089 1089"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -61,16 +78,21 @@ const ProgressBarSvg = () => {
               cx="544.5"
               cy="544.5"
               r="444.5"
-              stroke="#3E4A37"
+              stroke="#FFFFFF"
               stroke-width="100"
               className="progress-circle animate-progressAnimation"
             />
           </svg>
 
-          <span className="font-medium text-2xl text-center text-forest w-3/4">
+          <motion.span
+            className="font-regular text-lg text-center text-white w-2/3 "
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeInOut" }}
+          >
             {icons[progress]?.text}
-          </span>
-        </div>
+          </motion.span>
+        </motion.div>
       </div>
     </div>
   );
