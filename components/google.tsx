@@ -28,7 +28,7 @@ const Google: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-1/2 h-full">
+    <div className="w-full h-[20%]">
       <div ref={mapContainerRef} style={{ height: "100%" }}></div>
     </div>
   );

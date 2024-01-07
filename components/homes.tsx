@@ -117,75 +117,80 @@ const Homes = () => {
   };
 
   return (
-    <div className="w-[60%] h-full flex gap-4 relative justify-center flex-wrap overflow-y-auto">
-      {homes.map((homesFile, index) => (
-        <div
-          className="w-[45%] h-[40%] m-2  shadow-md hover:shadow-lg hover:shadow-slate-300  bg-white flex flex-col"
-          key={index}
-        >
+    <div className="w-full h-1600   ">
+      <div className="w-fit h-16 flex justify-center items-center m-4  tracking-wide text-4xl ">
+        <h2>Available Properties</h2>
+      </div>
+      <div className="flex relative justify-center items-center gap-8 flex-wrap w-full h-3/4">
+        {homes.map((homesFile, index) => (
           <div
-            onClick={handlePropertyInfo}
-            className="w-full h-2/3 overflow-hidden "
+            className="w-[40%] h-[38%] m-2  shadow-md hover:shadow-lg hover:shadow-slate-300  bg-white flex flex-col"
+            key={index}
           >
-            <Image
-              src={homesFile}
-              className="hover:brightness-50 transition duration-200 ease-in-out"
-              alt="homes"
-            />
-          </div>
+            <div
+              onClick={handlePropertyInfo}
+              className="w-full h-2/3 overflow-hidden "
+            >
+              <Image
+                src={homesFile}
+                className="hover:contrast-50 transition duration-300 ease-in-out"
+                alt="homes"
+              />
+            </div>
 
-          {/* Housing Cards */}
-          <div className="w-full h-1/3 flex flex-col justify-around font-medium text-gray-600 ">
-            <div className="flex w-full  h-fit justify-between">
-              <h2 className="text-2xl ml-4">{prices[index]}</h2>
-              <p className="text-xs mr-4 font-normal">{`${infoEstate[index].beds} Beds | ${infoEstate[index].baths} Baths |  ${infoEstate[index].sqft} sqft`}</p>
-            </div>
-            {propertyInfo}
-            {/* address and bookmark */}
-            <div className="w-full h-fit ">
-              <p className="text-xs ml-4 font-normal">{addresses[index]}</p>
-              {/* Boomark */}
-              <div className="w-full flex justify-end">
-                <button
-                  className="w-fit h-8 flex text-right items-center p-4"
-                  onClick={() => handleBookmarkToggle(index)}
-                >
-                  <FontAwesomeIcon
-                    className="hover:text-red-500 duration-100"
-                    icon={faBookmark}
-                    size="lg"
-                    style={{ color: isBookmarked(index) ? "red" : "" }}
-                  />
-                </button>
+            {/* Housing Cards */}
+            <div className="w-full h-1/3 flex flex-col justify-around font-medium text-gray-600 ">
+              <div className="flex w-full  h-fit justify-between">
+                <h2 className="text-2xl ml-4">{prices[index]}</h2>
+                <p className="text-xs mr-4 font-normal">{`${infoEstate[index].beds} Beds | ${infoEstate[index].baths} Baths |  ${infoEstate[index].sqft} sqft`}</p>
               </div>
-            </div>
-            {propertyInfo && (
-              <div className="bg-forest w-full h-full fixed inset-0 z-50">
-                {/* close button */}
-                <div className="w-full flex justify-end transition-opacity ease-in-out duration-300">
+              {propertyInfo}
+              {/* address and bookmark */}
+              <div className="w-full h-fit ">
+                <p className="text-xs ml-4 font-normal">{addresses[index]}</p>
+                {/* Boomark */}
+                <div className="w-full flex justify-end">
                   <button
-                    className="w-12 h-12 text-black"
-                    onClick={handleClose}
+                    className="w-fit h-8 flex text-right items-center p-4"
+                    onClick={() => handleBookmarkToggle(index)}
                   >
-                    <FontAwesomeIcon icon={faClose} size="lg" />
+                    <FontAwesomeIcon
+                      className="hover:text-red-500 duration-100"
+                      icon={faBookmark}
+                      size="lg"
+                      style={{ color: isBookmarked(index) ? "red" : "" }}
+                    />
                   </button>
                 </div>
-                <div className="w-full h-[65%] flex flex-col justify-center items-center transition-height ease-in-out duration-300">
-                  <div className="w-2/4 h-3/4">
-                    <Image
-                      src={homesFile}
-                      className="w-[100%] h-[100%]"
-                      alt="homes"
-                    />
-                  </div>
-                  <div className="w-full h-20  bg-black/90 border-black mt-4"></div>
-                </div>
-                <div className="w-full h-[35%] bg-black transition-height ease-in-out duration-300"></div>
               </div>
-            )}
+              {propertyInfo && (
+                <div className="bg-forest w-full h-full fixed inset-0 z-50">
+                  {/* close button */}
+                  <div className="w-full flex justify-end transition-opacity ease-in-out duration-300">
+                    <button
+                      className="w-12 h-12 text-black"
+                      onClick={handleClose}
+                    >
+                      <FontAwesomeIcon icon={faClose} size="lg" />
+                    </button>
+                  </div>
+                  <div className="w-full h-[65%] flex flex-col justify-center items-center transition-height ease-in-out duration-300">
+                    <div className="w-2/4 h-3/4">
+                      <Image
+                        src={homesFile}
+                        className="w-[100%] h-[100%]"
+                        alt="homes"
+                      />
+                    </div>
+                    <div className="w-full h-20  bg-black/90 border-black mt-4"></div>
+                  </div>
+                  <div className="w-full h-[35%] bg-black transition-height ease-in-out duration-300"></div>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,13 +1,18 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Logo from "public/logo-real.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleXmark,
+  faMobile,
+  faPaperPlane,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Schedule = () => {
+  //Open and Close Scheduling
   const [openSchedule, isOpenSchedule] = useState(false);
 
   const handleOpen = () => {
@@ -19,6 +24,8 @@ const Schedule = () => {
     isOpenSchedule(false);
     document.body.style.overflow = "visible"; // Enable scrolling
   };
+
+  //SVG Progression animation
 
   return (
     <div className="bg-storm w-full h-screen">
@@ -52,12 +59,21 @@ const Schedule = () => {
               d="M77.5691 83.8777V99.8993C77.5691 101.302 77.0119 102.647 76.0201 103.639C75.0282 104.631 73.683 105.188 72.2803 105.188H40.5476C39.1449 105.188 37.7996 104.631 36.8078 103.639C35.816 102.647 35.2588 101.302 35.2588 99.8993V25.8561C35.2588 24.4535 35.816 23.1082 36.8078 22.1164C37.7996 21.1246 39.1449 20.5673 40.5476 20.5673H44.1228C46.3365 17.8885 48.8977 15.517 51.7386 13.5156H40.5476C37.2746 13.5156 34.1358 14.8158 31.8215 17.1301C29.5072 19.4444 28.207 22.5832 28.207 25.8561V99.8993C28.207 106.711 33.7356 112.24 40.5476 112.24H72.2803C75.5532 112.24 78.6921 110.94 81.0064 108.625C83.3207 106.311 84.6208 103.172 84.6208 99.8993V82.5732C82.3157 83.2253 79.955 83.662 77.5691 83.8777ZM45.8363 94.6105C45.8363 93.6753 46.2078 92.7785 46.869 92.1173C47.5303 91.4561 48.4271 91.0846 49.3622 91.0846H63.4657C64.4008 91.0846 65.2976 91.4561 65.9588 92.1173C66.62 92.7785 66.9915 93.6753 66.9915 94.6105C66.9915 95.5456 66.62 96.4424 65.9588 97.1036C65.2976 97.7649 64.4008 98.1363 63.4657 98.1363H49.3622C48.4271 98.1363 47.5303 97.7649 46.869 97.1036C46.2078 96.4424 45.8363 95.5456 45.8363 94.6105ZM74.0432 76.9811C82.4593 76.9811 90.5306 73.6379 96.4817 67.6868C102.433 61.7358 105.776 53.6644 105.776 45.2484C105.776 36.8323 102.433 28.761 96.4817 22.8099C90.5306 16.8589 82.4593 13.5156 74.0432 13.5156C65.6272 13.5156 57.5558 16.8589 51.6048 22.8099C45.6537 28.761 42.3105 36.8323 42.3105 45.2484C42.3105 53.6644 45.6537 61.7358 51.6048 67.6868C57.5558 73.6379 65.6272 76.9811 74.0432 76.9811ZM90.643 37.1671L69.4878 58.3223C69.1603 58.6506 68.7712 58.9111 68.3429 59.0889C67.9145 59.2666 67.4553 59.3581 66.9915 59.3581C66.5277 59.3581 66.0685 59.2666 65.6402 59.0889C65.2118 58.9111 64.8227 58.6506 64.4952 58.3223L57.4435 51.2706C57.1157 50.9427 56.8556 50.5536 56.6782 50.1252C56.5008 49.6969 56.4095 49.2379 56.4095 48.7742C56.4095 48.3106 56.5008 47.8516 56.6782 47.4233C56.8556 46.9949 57.1157 46.6058 57.4435 46.2779C58.1055 45.6159 59.0035 45.2439 59.9398 45.2439C60.4034 45.2439 60.8625 45.3352 61.2908 45.5127C61.7191 45.6901 62.1083 45.9501 62.4361 46.2779L66.9915 50.8404L85.6504 32.1745C86.3124 31.5124 87.2104 31.1405 88.1467 31.1405C89.083 31.1405 89.9809 31.5124 90.643 32.1745C91.3051 32.8366 91.677 33.7345 91.677 34.6708C91.677 35.6071 91.3051 36.505 90.643 37.1671Z"
               fill="#000000"
             />
-            <circle
+            <motion.circle
               cx="138.623"
               cy="62.9947"
               r="8.78276"
               stroke="black"
-              stroke-width="5"
+              strokeWidth="5"
+              animate={{
+                scale: [1, 1.5, 1], // Example animation, you can customize this
+                opacity: [1, 0.5, 1], // Yet another example animation
+                fill: "#3E4A37",
+              }}
+              transition={{
+                loop: Infinity,
+                duration: 0.5, // Adjust the duration as needed
+              }}
             />
             <circle
               cx="180.934"
@@ -129,45 +145,111 @@ const Schedule = () => {
           </svg>
         </div>
         <div className="h-1/4 w-full flex justify-center items-center">
-          <button
+          <motion.button
             onClick={handleOpen}
-            className=" backdrop-filter border-white border bg-pine/75   backdrop-blur-md shadow-md shadow-black transition ease-in-out duration-300 rounded-full w-36 h-36"
+            className=" backdrop-filter pulse-btn font-bold bg-black text-white text-xs  uppercase tracking-widest backdrop-blur-md shadow-lg shadow-black transition ease-in-out duration-300 rounded-full w-36 h-36"
+            whileHover={{ scale: 1.1 }}
           >
-            <span className="text-black text-xs font-medium uppercase  tracking-wider">
-              Schedule
-            </span>
-          </button>
-          {openSchedule && (
-            <div className="fixed inset-0 z-50">
-              <div
-                className="w-full h-full bg-white/80
-              flex justify-center items-center"
+            Schedule
+          </motion.button>
+          <AnimatePresence>
+            {openSchedule && (
+              <motion.div
+                initial={{ opacity: 0, y: -100 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -100 }}
+                transition={{ ease: "easeInOut", duration: 0.5 }}
+                className="fixed inset-0 z-50"
               >
-                <section className="w-1/4 h-3/4 backdrop-blur bg-forest/80  rounded-2xl shadow-xl">
-                  <button
-                    onClick={handleClose}
-                    className="w-12   h-12 flex justify-center items-center"
-                  >
-                    <FontAwesomeIcon
-                      icon={faCircleXmark}
-                      className="w-6 h-6 text-white"
-                    />
-                  </button>
-                  <div className="w-full h-[95%]  flex flex-col justify-evenly items-center">
-                    <Image
-                      src={Logo}
-                      alt="company logo"
-                      className="w-1/3 invert "
-                    />
-                    <h2 className="text-2xl font-bold text-white">
-                      Let's Talk.
-                    </h2>
-                    <div className="w-full h-3/5 "></div>
-                  </div>
-                </section>
-              </div>
-            </div>
-          )}
+                <div
+                  className="w-full h-full bg-white/80
+              flex justify-center items-center"
+                >
+                  <section className="w-1/4 h-3/4 backdrop-blur bg-black/50  rounded-2xl shadow-xl">
+                    <button
+                      onClick={handleClose}
+                      className="w-12   h-12 flex justify-center items-center"
+                    >
+                      <FontAwesomeIcon
+                        icon={faCircleXmark}
+                        className="w-6 h-6 text-white shadow-lg"
+                      />
+                    </button>
+                    <div className="w-full h-[95%] flex flex-col justify-center items-center">
+                      <Image
+                        src={Logo}
+                        alt="company logo"
+                        className="w-1/3 invert "
+                      />
+                      <h2 className="text-2xl mt-4 font-bold text-pine">
+                        Let's Talk.
+                      </h2>
+                      {/* Schedule */}
+                      <div className="w-full h-3/5 flex justify-evenly items-center flex-col">
+                        {/* Form */}
+                        <form className="bg-transparent rounded  w-3/4 h-2/3 ">
+                          {" "}
+                          {/* Name */}
+                          <div className="mb-4">
+                            <label
+                              className="block text-white text-sm font-medium mb-2"
+                              placeholder="name"
+                            >
+                              Name
+                            </label>
+                            <input
+                              className="shadow appearance-none bg-transparent border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                              id="username"
+                              type="text"
+                              placeholder="Name"
+                            />
+                          </div>
+                          {/* Submission Field */}
+                          <div className="mb-4">
+                            <label
+                              className="block text-white text-sm font-medium mb-2"
+                              placeholder="name"
+                            >
+                              Message
+                            </label>
+                            <textarea
+                              className="shadow appearance-none bg-transparent border rounded w-full py-6 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+                              id="message"
+                              placeholder="Type your message here..."
+                              rows="1" // You can adjust the number of rows as needed
+                            ></textarea>
+                            <div className="mt-2 h-1/5 w-full flex justify-center items-center ">
+                              <button
+                                className="w-2/4 h-2/4 border rounded-full text-pine font-bold"
+                                type="submit"
+                              >
+                                Submit.
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                        {/* Phone and Email */}
+                        <div className="w-full h-1/5  flex justify-evenly items-center">
+                          <div className="w-20 h-20 border-4 border-pine rounded-full shadow-lg flex justify-center items-center">
+                            <FontAwesomeIcon
+                              icon={faMobile}
+                              className="w-8  h-8 text-white"
+                            />
+                          </div>
+                          <div className="w-20 h-20 border-4 border-pine rounded-full shadow-lg flex justify-center items-center">
+                            <FontAwesomeIcon
+                              icon={faPaperPlane}
+                              className="w-8  h-8 text-white"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </div>

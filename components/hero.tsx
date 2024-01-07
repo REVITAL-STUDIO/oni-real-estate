@@ -3,15 +3,6 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Logo2 from "../public/logo-real.png";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faBed,
-  faBath,
-  faMoneyBillWave,
-  faLocationDot,
-  faMagnifyingGlass,
-} from "@fortawesome/free-solid-svg-icons";
-import HeroSection from "../public/herosection.jpeg";
 
 type BedType = number;
 type BathType = number;

@@ -5,9 +5,9 @@ import Google from "./google";
 
 const Mls = ({}) => {
   return (
-    <div className="w-full h-full bg-gradient-to-t from-smoke via-mist to-white flex">
-      <Homes />
+    <div className="w-full h-2000 ">
       <Google />
+      <Homes />
     </div>
   );
 };
