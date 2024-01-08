@@ -40,31 +40,6 @@ const Info = () => {
             </span>
           </p>
         </div>
-        <div className="w-full h-1/6  hidden bg-white ">
-          <ul className="w-full flex items-center justify-center  h-auto">
-            <li className="text-xs hover:bg-black hover:w-full  transition-all ease-in duration-100 hover:text-white  flex justify-center items-center h-full  w-1/2 uppercase font-regular text-black">
-              Cinco Ranch
-            </li>{" "}
-            <li className="text-xs hover:bg-black hover:w-full  transition-all ease-in duration-100 hover:text-white   flex justify-center items-center h-full  w-1/2 uppercase font-regular text-black">
-              Fort Bend
-            </li>{" "}
-            <li className="text-xs hover:bg-black hover:w-full  transition-all ease-in duration-100 hover:text-white   flex justify-center items-center h-full  w-1/2 uppercase font-regular text-black">
-              Katy
-            </li>{" "}
-            <li className="text-xs hover:bg-black hover:w-full  transition-all ease-in duration-100 hover:text-white   flex justify-center items-center h-full  w-1/2 uppercase font-regular text-black">
-              Heights
-            </li>{" "}
-            <li className="text-xs hover:bg-black hover:w-full  transition-all ease-in duration-100 hover:text-white   flex justify-center items-center h-full  w-1/2 uppercase font-regular text-black">
-              Missouri City
-            </li>{" "}
-            <li className="text-xs hover:bg-black hover:w-full  transition-all ease-in duration-100 hover:text-white   flex justify-center items-center h-full  w-1/2 uppercase font-regular text-black">
-              Montrose
-            </li>{" "}
-            <li className="text-xs hover:bg-black hover:w-full  transition-all ease-in duration-100 hover:text-white   flex justify-center items-center h-full  w-1/2 uppercase font-regular text-black">
-              Pearland
-            </li>{" "}
-          </ul>
-        </div>
       </div>
 
       <div className="w-1/2 h-full bg-mint to-mint flex  justify-center items-center">

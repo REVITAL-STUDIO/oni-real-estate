@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHandshake,
   faKey,
-  faLayerGroup,
+  faPerson,
 } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "framer-motion";
 
@@ -17,7 +17,7 @@ const ProgressBarSvg = () => {
     },
     { icon: faKey, text: "Agent will owe the buyer fiduciary duties. " },
     {
-      icon: faLayerGroup,
+      icon: faPerson,
       text: "Agent is responsible for providing all material facts so the buyer can make an informed and educated decision.",
     },
   ];

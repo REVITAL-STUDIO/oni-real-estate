@@ -6,7 +6,7 @@ import Image from "next/image";
 import Logo from "public/logo-real.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCircleXmark,
+  faClose,
   faMobile,
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
@@ -155,9 +155,9 @@ const Schedule = () => {
           <AnimatePresence>
             {openSchedule && (
               <motion.div
-                initial={{ opacity: 0, y: -100 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -100 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
                 transition={{ ease: "easeInOut", duration: 0.5 }}
                 className="fixed inset-0 z-50"
               >
@@ -165,14 +165,20 @@ const Schedule = () => {
                   className="w-full h-full bg-white/80
               flex justify-center items-center"
                 >
-                  <section className="w-1/4 h-3/4 backdrop-blur bg-black/50  rounded-2xl shadow-xl">
+                  <motion.section
+                    initial={{ opacity: 0, y: -100 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -100 }}
+                    transition={{ ease: "easeInOut", duration: 0.5 }}
+                    className="w-1/4 h-3/4 backdrop-blur bg-black/50  rounded-2xl shadow-xl"
+                  >
                     <button
                       onClick={handleClose}
                       className="w-12   h-12 flex justify-center items-center"
                     >
                       <FontAwesomeIcon
-                        icon={faCircleXmark}
-                        className="w-6 h-6 text-white shadow-lg"
+                        icon={faClose}
+                        className="w-6 h-6 text-white "
                       />
                     </button>
                     <div className="w-full h-[95%] flex flex-col justify-center items-center">
@@ -245,7 +251,7 @@ const Schedule = () => {
                         </div>
                       </div>
                     </div>
-                  </section>
+                  </motion.section>
                 </div>
               </motion.div>
             )}

@@ -5,13 +5,12 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBookmark,
-  faBookBookmark,
+  faShareNodes,
   faClose,
-  faXmark,
-  faCircle,
+  faMobile,
+  faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
-import Link from "next/link";
-
+import { AnimatePresence, motion } from "framer-motion";
 // Homes
 import home1 from "public/home1.jpg";
 import home2 from "public/home2.jpg";
@@ -19,31 +18,21 @@ import home3 from "public/home3.jpeg";
 import home4 from "public/home4.jpg";
 import home5 from "public/home5.jpeg";
 import home6 from "public/home6.jpeg";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 // Home Info
 
 type Bookmark = 1 | 2 | 3 | 4 | 5 | 6 | null;
 
-interface RealEstate {
-  id: number;
-  address: string;
-  price: number; // Use a specific type for price if it's always a number
-  bed: number; // Use a specific type for bed if it's always a number
-  bath: number; // Use a specific type for bath if it's always a number
-  sqft: number; // Use a specific type for sqft if it's always a number
+interface InfoEstate {
+  beds: number;
+  baths: number;
+  sqft: number;
 }
 
 const Homes = () => {
-  const homes = [home1, home2, home3, home4, home5, home6];
-
-  const [realEstate, setRealEstate] = useState<RealEstate>({
-    address: "",
-    price: 0,
-    bed: 0,
-    bath: 0,
-    sqft: 0,
-    id: 0,
-  });
+  //homes
+  const homes: StaticImport[] = [home1, home2, home3, home4, home5, home6];
 
   //addresses
   const addresses = [
@@ -57,9 +46,9 @@ const Homes = () => {
 
   //prices
   const prices = [
-    "$500,000",
-    "$800,000",
-    "$600,000",
+    "$3,000,000",
+    "$1,800,000",
+    "$1,600,000",
     "$350,000",
     "$1,500,000",
     "$2,000,000",
@@ -67,13 +56,30 @@ const Homes = () => {
 
   //Detailed Info
   const infoEstate = [
-    { beds: 5, baths: 3, sqft: 8500 },
+    { beds: 5, baths: 3, sqft: 30000 },
     { beds: 4, baths: 2, sqft: 10000 },
-    { beds: 6, baths: 4, sqft: 7500 },
-    { beds: 3, baths: 2, sqft: 12000 },
-    { beds: 4, baths: 3, sqft: 13000 },
-    { beds: 5, baths: 4, sqft: 15000 },
+    { beds: 6, baths: 4, sqft: 2000 },
+    { beds: 3, baths: 2, sqft: 7500 },
+    { beds: 4, baths: 3, sqft: 40000 },
+    { beds: 5, baths: 4, sqft: 28000 },
   ];
+
+  const [selectedImage, setSelectedImage] = useState<StaticImport | null>(null);
+  const [selectedAddress, setSelectedAddress] = useState<string | null>(null);
+  const [selectedPrices, setSelectedPrices] = useState<string | null>(null);
+  const [selectedInfo, setSelectedInfo] = useState<InfoEstate | null>(null);
+
+  const handlePropertyInfo = (index: number) => {
+    setSelectedImage(homes[index]);
+    setSelectedAddress(addresses[index]);
+    setSelectedPrices(prices[index]);
+    setSelectedInfo(infoEstate[index]);
+    openPropertyInfo((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = () => {
+    openPropertyInfo(false);
+  };
 
   //bookmark items
   const [bookmarked, setBookmark] = useState<number[]>([]);
@@ -108,85 +114,165 @@ const Homes = () => {
     };
   }, [propertyInfo]);
 
-  const handlePropertyInfo = () => {
-    openPropertyInfo((prevOpen) => !prevOpen);
-  };
-
-  const handleClose = () => {
-    openPropertyInfo(false);
-  };
-
   return (
     <div className="w-full h-1600   ">
       <div className="w-fit h-16 flex justify-center items-center m-4  tracking-wide text-4xl ">
         <h2>Available Properties</h2>
       </div>
-      <div className="flex relative justify-center items-center gap-8 flex-wrap w-full h-3/4">
+      <div className="flex relative justify-center  items-center gap-8 flex-wrap w-full h-3/4">
         {homes.map((homesFile, index) => (
           <div
-            className="w-[40%] h-[38%] m-2  shadow-md hover:shadow-lg hover:shadow-slate-300  bg-white flex flex-col"
+            className="w-[40%] h-[35%] m-2  shadow-md  bg-white flex flex-col"
             key={index}
           >
             <div
-              onClick={handlePropertyInfo}
-              className="w-full h-2/3 overflow-hidden "
+              onClick={() => handlePropertyInfo(index)}
+              className="w-full h-2/3 overflow-hidden relative cursor-pointer"
+              style={{ position: "relative" }}
             >
-              <Image
-                src={homesFile}
-                className="hover:contrast-50 transition duration-300 ease-in-out"
-                alt="homes"
-              />
-            </div>
-
-            {/* Housing Cards */}
-            <div className="w-full h-1/3 flex flex-col justify-around font-medium text-gray-600 ">
-              <div className="flex w-full  h-fit justify-between">
-                <h2 className="text-2xl ml-4">{prices[index]}</h2>
-                <p className="text-xs mr-4 font-normal">{`${infoEstate[index].beds} Beds | ${infoEstate[index].baths} Baths |  ${infoEstate[index].sqft} sqft`}</p>
+              <Image src={homesFile} className="rounded-lg" alt="homes" />
+              <div className="absolute w-full h-full bg-black/50  opacity-0 duration-300 flex justify-center items-center hover:opacity-100 hover:rounded-t-lg hover:flex top-0 ease-in-out hover:justify-center hover:items-center">
+                <p className="text-white text-xl font-regular underline underline-offset-8		">
+                  View Home
+                </p>
               </div>
-              {propertyInfo}
-              {/* address and bookmark */}
-              <div className="w-full h-fit ">
-                <p className="text-xs ml-4 font-normal">{addresses[index]}</p>
+            </div>
+            {/* Housing Cards */}
+            <div className="w-full h-1/4 flex flex-col justify-around font-medium text-gray-600 ">
+              <div className="flex flex-col w-fit h-full justify-center ml-4 ">
+                <h2 className="text-xl font-medium mt-4">{addresses[index]}</h2>
+                <p className="text-xs  font-normal mt-4">{`${infoEstate[index].beds} Beds | ${infoEstate[index].baths} Baths |  ${infoEstate[index].sqft} sqft`}</p>
                 {/* Boomark */}
-                <div className="w-full flex justify-end">
+                <div className="w-full flex mt-4">
                   <button
-                    className="w-fit h-8 flex text-right items-center p-4"
+                    className="w-fit h-8 flex text-right  items-center"
                     onClick={() => handleBookmarkToggle(index)}
                   >
                     <FontAwesomeIcon
-                      className="hover:text-red-500 duration-100"
+                      className="hover:text-forest text-black duration-100"
                       icon={faBookmark}
+                      size="lg"
+                      style={{ color: isBookmarked(index) ? "red" : "" }}
+                    />
+                  </button>
+                  <button
+                    className="w-fit h-8 flex text-right ml-4 items-center"
+                    onClick={() => handleBookmarkToggle(index)}
+                  >
+                    <FontAwesomeIcon
+                      className="hover:text-forest text-black duration-100"
+                      icon={faShareNodes}
                       size="lg"
                       style={{ color: isBookmarked(index) ? "red" : "" }}
                     />
                   </button>
                 </div>
               </div>
-              {propertyInfo && (
-                <div className="bg-forest w-full h-full fixed inset-0 z-50">
-                  {/* close button */}
-                  <div className="w-full flex justify-end transition-opacity ease-in-out duration-300">
-                    <button
-                      className="w-12 h-12 text-black"
-                      onClick={handleClose}
+              {/* address and bookmark */}
+              <AnimatePresence>
+                {propertyInfo && (
+                  <div className="fixed inset-0 z-50">
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ ease: "easeInOut", duration: 0.5 }}
+                      className="bg-white/40 w-full h-full flex justify-center items-center relative"
                     >
-                      <FontAwesomeIcon icon={faClose} size="lg" />
-                    </button>
+                      <button
+                        onClick={handleClose}
+                        className="w-fit h-fit absolute top-2 right-5"
+                      >
+                        <FontAwesomeIcon
+                          className="hover:text-black/50 text-black duration-100"
+                          icon={faClose}
+                          size="lg"
+                        />
+                      </button>
+                      <motion.section
+                        initial={{ opacity: 0, y: -100 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -100 }}
+                        transition={{ ease: "easeInOut", duration: 0.5 }}
+                        className="w-5/6 h-5/6 bg-black/75 rounded-2xl shadow-xl flex flex-col justify-evenly items-center"
+                      >
+                        {/* Home and Description */}
+                        <div className="w-full h-3/5 flex justify-around items-center">
+                          <div className="w-3/5 h-full shadow-lg shadow-pine/20 rounded-lg ">
+                            <Image
+                              src={
+                                selectedImage !== null
+                                  ? selectedImage
+                                  : "/default-image-url.jpg"
+                              }
+                              className="rounded-lg w-[100%] h-[100%] brightness-90"
+                              alt="homes"
+                            />
+                          </div>
+                          <div className="w-1/5 h-full text-white">
+                            <h2 className="text-2xl tracking-wide text-pine">
+                              Description
+                            </h2>
+                            <p className="text-xs mt-4">
+                              Lorem ipsum dolor sit amet, consectetur adipiscing
+                              elit, sed do eiusmod tempor incididunt ut labore
+                              et dolore magna aliqua. Ut enim ad minim veniam,
+                              quis nostrud exercitation ullamco laboris nisi ut
+                              aliquip ex ea commodo consequat. Duis aute irure
+                              dolor in reprehenderit in voluptate velit esse
+                              cillum dolore eu fugiat nulla pariatur. Excepteur
+                              sint occaecat cupidatat non proident, sunt in
+                              culpa qui officia deserunt mollit anim id est
+                              laborum.
+                            </p>
+                            <h2 className="text-lg text-white font-extralight mt-4">
+                              {selectedAddress}
+                            </h2>
+                            <p className="text-lg text-white font-extralight mt-4">
+                              {selectedInfo
+                                ? `${selectedInfo.beds} Beds | ${selectedInfo.baths} Baths | ${selectedInfo.sqft} sqft`
+                                : "No information available"}
+                            </p>{" "}
+                            {/* Phone and Email */}
+                            <div className="w-full h-1/5  flex  items-center">
+                              <button className="w-16 h-16 border-4 border-pine rounded-full shadow-lg flex justify-center items-center">
+                                <FontAwesomeIcon
+                                  icon={faMobile}
+                                  className="w-6  h-6 text-white"
+                                />
+                              </button>
+                              <button className="w-16 h-16 ml-4 border-4 border-pine rounded-full shadow-lg flex justify-center items-center">
+                                <FontAwesomeIcon
+                                  icon={faPaperPlane}
+                                  className="w-6  h-6 text-white"
+                                />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        {/* Card Info */}
+                        <div className="w-full h-1/5 bg-black/75 flex shadow-lg">
+                          <div className="w-1/3 h-full text-white flex justify-center item-center border-r border-white/30">
+                            <div className="w-full flex flex-col justify-center items-center">
+                              <div className="w-fit">
+                                <h2 className=" font-medium text-pine tracking-wide text-4xl">
+                                  {selectedPrices}
+                                </h2>
+                              </div>
+                            </div>
+                          </div>
+                          {/* slideshow */}
+                          <section className="w-2/3 h-full flex justify-center items-center">
+                            <section className="w-5/6 h-3/4">
+                              <div className="h-full w-1/4 border"></div>
+                            </section>
+                          </section>
+                        </div>
+                      </motion.section>
+                    </motion.div>
                   </div>
-                  <div className="w-full h-[65%] flex flex-col justify-center items-center transition-height ease-in-out duration-300">
-                    <div className="w-2/4 h-3/4">
-                      <Image
-                        src={homesFile}
-                        className="w-[100%] h-[100%]"
-                        alt="homes"
-                      />
-                    </div>
-                    <div className="w-full h-20  bg-black/90 border-black mt-4"></div>
-                  </div>
-                  <div className="w-full h-[35%] bg-black transition-height ease-in-out duration-300"></div>
-                </div>
-              )}
+                )}
+              </AnimatePresence>
             </div>
           </div>
         ))}
