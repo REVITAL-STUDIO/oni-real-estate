@@ -12,10 +12,13 @@ const Buyer = () => {
       {/* Buyer Process */}
       <div className="w-full  h-full flex flex-col justify-center items-center">
         <div className="w-[90%] mb-4 flex flex-col  justify-between">
-          <h2 className="uppercase text-black text-6xl font-bold bottom-0 font-regular w-2/4">
+          <h2
+            className="uppercase text-black text-5xl font-regular bottom-0 font-cinzel w-2/4"
+            style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)" }}
+          >
             Buyer Process
           </h2>
-          <h2 className="text-xl text-forest font-medium">
+          <h2 className="text-xl text-forest font-montserrat font-medium">
             We Know the Ropes, Let Us Guide You to your Dream Home.
           </h2>
         </div>
@@ -29,8 +32,11 @@ const Buyer = () => {
         <div className="h-1/3 w-[90%]  flex justify-between">
           {/* step 1 */}
           <div className="w-1/4 h-3/4 rounded-2xl  hover:shadow-2xl  hover:shadow-white transition duration-200 ease-in-out  mt-4 flex flex-col justify-center items-center hover:translate-y-4 hover:scale-105">
-            <ul className="w-5/6 h-42 gap-y-4 flex items-center text-black font-medium flex-col">
-              <div className="w-full h-10 text-forest  font-bold flex justify-center items-center">
+            <ul className="w-5/6 h-42 gap-y-4 flex font-montserrat  items-center text-black font-medium flex-col">
+              <div
+                className="w-full h-10  text-forest font-cinzel  font-regular flex justify-center items-center"
+                style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)" }}
+              >
                 <h1 className="text-xl border-4 border-pine rounded-full w-8 h-8 flex justify-center items-center">
                   1
                 </h1>
@@ -46,8 +52,11 @@ const Buyer = () => {
           </div>
           {/* step 2 */}
           <div className="w-1/4 h-3/4 rounded-2xl   hover:shadow-2xl hover:shadow-white transition duration-200 ease-in-out  mt-4 flex flex-col justify-center items-center hover:translate-y-4 hover:scale-105">
-            <ul className="w-5/6 h-42 gap-y-4 flex items-center  text-black font-medium flex-col">
-              <div className="w-full h-10 text-forest  font-bold flex justify-center items-center">
+            <ul className="w-5/6 h-42 gap-y-4 flex items-center font-montserrat   text-black font-medium flex-col">
+              <div
+                className="w-full h-10 text-forest  font-cinzel font-regular flex justify-center items-center"
+                style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)" }}
+              >
                 <h1 className="text-xl border-4 border-pine rounded-full w-8 h-8 flex justify-center items-center">
                   2
                 </h1>
@@ -63,8 +72,11 @@ const Buyer = () => {
           </div>
           {/* step 3 */}
           <div className="w-1/4 h-3/4 rounded-2xl    hover:shadow-2xl hover:shadow-white transition duration-200 ease-in-out   mt-4 flex flex-col justify-center items-center hover:translate-y-4 hover:scale-105">
-            <ul className="w-5/6 h-42 gap-y-4 flex items-center text-black font-medium flex-col">
-              <div className="w-full h-10 text-forest text-center font-bold flex justify-center items-center">
+            <ul className="w-5/6 h-42 gap-y-4 flex items-center font-montserrat  text-black font-medium flex-col">
+              <div
+                className="w-full h-10 text-forest font-cinzel  text-center font-regular flex justify-center items-center"
+                style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)" }}
+              >
                 <h1 className="text-xl border-4 border-pine rounded-full w-8 h-8 flex justify-center items-center">
                   3
                 </h1>

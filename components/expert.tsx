@@ -22,10 +22,16 @@ const Expert = () => {
           ></Image>
         </div>
         <div className="w-1/2 h-full flex flex-col bg-white justify-center items-center">
-          <h2 className="w-5/6 mb-4 font-cinzel text-right text-5xl font-extrabold uppercase tracking-wider text-black ">
+          <h2
+            className="w-5/6 mb-4 font-cinzel text-right text-5xl font-regular uppercase tracking-wider text-black "
+            style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.2)" }}
+          >
             LOCAL EXPERTISE HOUSTON CONNECTED
           </h2>
-          <p className="text-md w-5/6 text-black font-montserrat tracking-wide text-right">
+          <p
+            className="text-md w-5/6 text-black font-montserrat tracking-wide text-right"
+            style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.2)" }}
+          >
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -50,9 +56,12 @@ const Expert = () => {
       </div>
       {/* Testimonials */}
       <div className="h-1/2 w-full bg-mint flex relative ">
-        <div className="w-full h-full  flex  items-center ">
+        <div className="w-full h-full  flex  items-center relative">
           <div className="flex  h-1/2 justify-center items-center ml-4  ">
-            <h2 className="text-5xl w-[50%] font-cinzel uppercase font-extrabold text-black">
+            <h2
+              className="text-5xl w-[50%] font-cinzel uppercase font-regular text-black"
+              style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.2)" }}
+            >
               Property Management at it's finest, and a Group you can Trust
             </h2>
             <Image
@@ -61,6 +70,9 @@ const Expert = () => {
               alt="oni property management"
             />
           </div>
+          <button className="text-xl underline-offset-8 underline w-fit h-fit absolute font-montserrat left-36 top-3/4">
+            Learn More.
+          </button>
         </div>
       </div>
     </div>

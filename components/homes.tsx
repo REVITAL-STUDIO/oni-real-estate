@@ -117,7 +117,12 @@ const Homes = () => {
   return (
     <div className="w-full h-1600   ">
       <div className="w-fit h-16 flex justify-center items-center m-4  tracking-wide text-4xl ">
-        <h2>Available Properties</h2>
+        <h2
+          className="font-cinzel"
+          style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)" }}
+        >
+          Available Properties
+        </h2>
       </div>
       <div className="flex relative justify-center  items-center gap-8 flex-wrap w-full h-3/4">
         {homes.map((homesFile, index) => (
@@ -132,7 +137,7 @@ const Homes = () => {
             >
               <Image src={homesFile} className="rounded-lg" alt="homes" />
               <div className="absolute w-full h-full bg-black/50  opacity-0 duration-300 flex justify-center items-center hover:opacity-100 hover:rounded-t-lg hover:flex top-0 ease-in-out hover:justify-center hover:items-center">
-                <p className="text-white text-xl font-regular underline underline-offset-8		">
+                <p className="text-white text-xl font-regular font-montserrat underline underline-offset-8		">
                   View Home
                 </p>
               </div>
@@ -140,8 +145,10 @@ const Homes = () => {
             {/* Housing Cards */}
             <div className="w-full h-1/4 flex flex-col justify-around font-medium text-gray-600 ">
               <div className="flex flex-col w-fit h-full justify-center ml-4 ">
-                <h2 className="text-xl font-medium mt-4">{addresses[index]}</h2>
-                <p className="text-xs  font-normal mt-4">{`${infoEstate[index].beds} Beds | ${infoEstate[index].baths} Baths |  ${infoEstate[index].sqft} sqft`}</p>
+                <h2 className="text-xl font-montserrat  font-medium mt-4">
+                  {addresses[index]}
+                </h2>
+                <p className="text-xs font-montserrat   font-normal mt-4">{`${infoEstate[index].beds} Beds | ${infoEstate[index].baths} Baths |  ${infoEstate[index].sqft} sqft`}</p>
                 {/* Boomark */}
                 <div className="w-full flex mt-4">
                   <button
@@ -210,10 +217,10 @@ const Homes = () => {
                             />
                           </div>
                           <div className="w-1/5 h-full text-white">
-                            <h2 className="text-2xl tracking-wide text-pine">
+                            <h2 className="text-2xl font-montserrat tracking-wide text-pine">
                               Description
                             </h2>
-                            <p className="text-xs mt-4">
+                            <p className="text-xs mt-2 font-montserrat">
                               Lorem ipsum dolor sit amet, consectetur adipiscing
                               elit, sed do eiusmod tempor incididunt ut labore
                               et dolore magna aliqua. Ut enim ad minim veniam,
@@ -225,10 +232,10 @@ const Homes = () => {
                               culpa qui officia deserunt mollit anim id est
                               laborum.
                             </p>
-                            <h2 className="text-lg text-white font-extralight mt-4">
+                            <h2 className="text-lg text-white montserrat font-extralight mt-4">
                               {selectedAddress}
                             </h2>
-                            <p className="text-lg text-white font-extralight mt-4">
+                            <p className="text-lg text-white montserrat font-extralight mt-4">
                               {selectedInfo
                                 ? `${selectedInfo.beds} Beds | ${selectedInfo.baths} Baths | ${selectedInfo.sqft} sqft`
                                 : "No information available"}
@@ -255,7 +262,13 @@ const Homes = () => {
                           <div className="w-1/3 h-full text-white flex justify-center item-center border-r border-white/30">
                             <div className="w-full flex flex-col justify-center items-center">
                               <div className="w-fit">
-                                <h2 className=" font-medium text-pine tracking-wide text-4xl">
+                                <h2
+                                  className=" font-extralight text-pine font-montserrat tracking-wide text-4xl "
+                                  style={{
+                                    textShadow:
+                                      "0px 4px 4px rgba(0, 0, 0, 0.3)",
+                                  }}
+                                >
                                   {selectedPrices}
                                 </h2>
                               </div>

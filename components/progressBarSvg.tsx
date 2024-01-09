@@ -85,10 +85,11 @@ const ProgressBarSvg = () => {
           </svg>
 
           <motion.span
-            className="font-regular text-lg text-center text-white w-2/3 "
+            className="font-regular text-lg text-center font-montserrat  text-white w-2/3 "
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
+            style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)" }}
           >
             {icons[progress]?.text}
           </motion.span>

@@ -28,7 +28,10 @@ const Seller = () => {
       {/* Image */}
       <div className="w-1/2 flex flex-col justify-center items-center">
         <div className="w-fit ml-4 mb-4 flex flex-col justify-center items-center ">
-          <span className="uppercase text-black text-6xl font-bold bottom-0 font-regular w-full">
+          <span
+            className="uppercase text-black text-5xl font-cinzel font-regular bottom-0 font-regular w-full"
+            style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)" }}
+          >
             {text.split("").map((char, index) => (
               <motion.span
                 key={index}
@@ -41,7 +44,7 @@ const Seller = () => {
               </motion.span>
             ))}
           </span>
-          <span className="text-lg text-forest w-full font-medium">
+          <span className="text-lg text-forest w-full font-montserrat  font-medium">
             Achieve Your Home Selling Goals with Us – Where Expertise Meets
             Results.
           </span>
