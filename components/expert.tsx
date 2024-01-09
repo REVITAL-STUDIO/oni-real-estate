@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Local from "public/local.png";
-import OniManagement from "public/vector-house.svg";
+import OniManagement from "public/ONIT-LOGO.png";
 import {
   faChevronRight,
   faChevronLeft,
@@ -22,10 +22,10 @@ const Expert = () => {
           ></Image>
         </div>
         <div className="w-1/2 h-full flex flex-col bg-white justify-center items-center">
-          <h2 className="w-5/6 mb-4 text-right text-5xl font-bold uppercase tracking-wider text-black ">
+          <h2 className="w-5/6 mb-4 font-cinzel text-right text-5xl font-extrabold uppercase tracking-wider text-black ">
             LOCAL EXPERTISE HOUSTON CONNECTED
           </h2>
-          <p className="text-sm w-5/6 text-black text-right">
+          <p className="text-md w-5/6 text-black font-montserrat tracking-wide text-right">
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -50,24 +50,16 @@ const Expert = () => {
       </div>
       {/* Testimonials */}
       <div className="h-1/2 w-full bg-mint flex relative ">
-        <div className="w-1/3 h-full  flex  items-center ">
-          <div className="flex flex-col h-1/2 justify-evenly ml-4  ">
-            <h2 className="text-5xl w-[100%]  uppercase font-bold text-black">
-              Property Management at it's finest
+        <div className="w-full h-full  flex  items-center ">
+          <div className="flex  h-1/2 justify-center items-center ml-4  ">
+            <h2 className="text-5xl w-[50%] font-cinzel uppercase font-extrabold text-black">
+              Property Management at it's finest, and a Group you can Trust
             </h2>
-            <button className="border-b border-black w-fit">
-              Find Out More
-            </button>
-          </div>
-        </div>
-        <div className="w-2/3 h-full flex justify-center items-center ">
-          <div className="w-5/6 h-1/2 flex flex-col justify-center items-center">
-            {/* <Image src={OniManagement} alt="oni property management" /> */}
-            <p className="text-black text-xl mb-4 font-bold text-center">
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam."
-            </p>
+            <Image
+              className="w-1/3"
+              src={OniManagement}
+              alt="oni property management"
+            />
           </div>
         </div>
       </div>

@@ -13,6 +13,10 @@ const config: Config = {
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+      fontFamily: {
+        cinzel: ['Cinzel', 'sans-serif'],
+        montserrat: [ 'Montserrat', 'sans-serif'],
+      },
       height: {
         40: '40px',
         50: '50px',
@@ -56,9 +60,6 @@ const config: Config = {
       },
       rotate: {
         '90': '90deg',
-      },
-      fontFamily: {
-        'source': ['Source Serif 4', 'serif'],
       },
       animation: {
         fillProgressBar: 'fillProgressBar 3s ease-out', // Adjust duration and easing function as needed
