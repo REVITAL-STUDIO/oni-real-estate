@@ -15,8 +15,8 @@ const Footer = () => {
     <div className="w-full h-500 flex flex-col z-50  bg-shadow">
       {/* links */}
       <div className="w-full h-full border-b border-gray-400 flex">
-        <div className="w-1/2 h-full flex flex-col justify-evenly ">
-          <div className="w-1/6 h-fit ml-4 mt-4">
+        <div className="w-1/2 h-full border hidden flex flex-col justify-evenly ">
+          <div className="w-1/6 h-fit ml-4 mt-4 hidden xl:visible">
             <Image
               src={Logo}
               alt="logo"
@@ -27,64 +27,62 @@ const Footer = () => {
             ></Image>
           </div>
           {/* Contact & Social Media */}
-          <div className=" w-1/2 h-3/4  items-center flex flex-wrap">
-            <div className="text-white ml-4 w-64 h-fit  flex   flex-col">
-              <h2 className="text-xl tracking-wide">Contact</h2>
-              <p className="font-light">info@oniprofessionals.com</p>
-            </div>
-            <div className="text-white ml-4 w-64 h-fit flex   flex-col">
-              <h2 className="text-xl tracking-wide">Location</h2>
-              <p className="font-light">
-                1234 SANTA MONICA BLVD.,
-                <br></br>
-                HOUSTON, TX
-                <br></br>
-                12345
+          <div className=" w-1/2 h-3/4  items-center flex flex-col justify-evenly hidden">
+            <div className="text-white ml-4 w-full h-fit border flex flex-col">
+              <h2 className="text-sm tracking-wide font-cinzel font-medium ">
+                Contact
+              </h2>
+              <p className="font-light text-xs font-montserrat">
+                info@oniprofessionals.com
               </p>
             </div>
-            <div className="text-white ml-4 w-fit h-fit  flex   flex-col">
-              <h2 className="text-xl tracking-wide">Social Media</h2>
-              <ul className="w-fit h-fit  flex gap-x-8">
-                <Link
-                  className="text-md hover:text-white/50 transition ease-in duration-200"
-                  href="/"
-                >
-                  Instagram
-                </Link>
-                <Link
-                  className="text-md hover:text-white/50 transition ease-in duration-200"
-                  href="/"
-                >
-                  Facebook
-                </Link>
-                <Link
-                  className="text-md hover:text-white/50 transition ease-in duration-200"
-                  href="/"
-                >
-                  LinkedIn
-                </Link>
-              </ul>
+            <div className="text-white ml-4 w-full h-fit flex  border flex-col hidden">
+              <h2 className="text-sm tracking-wide font-cinzel font-medium">
+                Location
+              </h2>
+              <p className="font-light text-xs font-montserrat w-full">
+                1234 SANTA MONICA BLVD., HOUSTON, TX 12345
+              </p>
             </div>
+            <ul className="w-full h-fit flex flex-col text-white hidden">
+              <h2 className="text-sm tracking-wide font-cinzel font-medium">
+                Social Media
+              </h2>
+              <Link
+                className="text-xs font-montserrat hover:text-white/50 transition ease-in duration-200"
+                href="/"
+              >
+                Instagram
+              </Link>
+              <Link
+                className="text-xs font-montserrat hover:text-white/50 transition ease-in duration-200"
+                href="/"
+              >
+                Facebook
+              </Link>
+              <Link
+                className="text-xs font-montserrat hover:text-white/50 transition ease-in duration-200"
+                href="/"
+              >
+                LinkedIn
+              </Link>
+            </ul>
           </div>
         </div>
         {/* Links */}
-        <div className="w-1/2  border-white h-full flex flex-col justify-evenly items-center">
-          <ul className="w-full h-12 text-white text-sm  flex justify-evenly items-center">
+        <div>
+          <ul className="w-full h-full text-white text-md flex flex-col justify-center gap-y-4 font-montserrat ml-4">
             <Link className="hover:text-gray-600" href="/">
               Home
             </Link>
             <Link className="hover:text-gray-600" href="/">
-              Search
-            </Link>
-            <div className="border w-16 border-white"></div>
-            <Link className="hover:text-gray-600" href="/">
-              List
+              Properties
             </Link>
             <Link className="hover:text-gray-600" href="/">
-              Sellers
+              Ownership
             </Link>
             <Link className="hover:text-gray-600" href="/">
-              Buyers
+              Saved
             </Link>
           </ul>
         </div>

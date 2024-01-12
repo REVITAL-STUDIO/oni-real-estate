@@ -8,45 +8,45 @@ import realEstate from "public/teaser.jpeg";
 
 const Contact = () => {
   return (
-    <div className="h-700 w-full bg-[url('/contact.png')] bg-cover flex justify-center items-center">
-      <div className="flex w-full h-[90%] justify-evenly items-center">
-        <form className="flex flex-col  shadow-xl w-[30%] h-full  justify-center ">
+    <div className="h-700 w-full bg-[url('/contact.png')] bg-cover bg-center flex justify-center items-center">
+      <div className="flex w-full h-[100%] justify-center xl:justify-between items-center">
+        <form className="flex flex-col shadow-xl xl:w-[30%] w-full h-full  justify-center items-center">
           <h2
-            className=" uppercase  text-4xl  font-cinzel  relative top-2 font-regular bg-gradient-to-b from-white via-white to-pine bg-clip-text text-transparent p-3 tracking-wide"
+            className=" uppercase  xl:text-4xl text-2xl text-center  font-cinzel  relative top-2 font-regular bg-gradient-to-b from-white via-white to-pine bg-clip-text text-transparent p-3 tracking-wide"
             style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.2)" }}
           >
             Get in Touch and Start Saving Time Today.
           </h2>
           <label
-            className="block text-white font-montserrat ml-2  text-sm font-medium mb-2"
+            className="block text-white font-montserrat ml-2 w-3/4 text-sm font-medium mb-2"
             placeholder="name"
           >
             Name
           </label>
           <input
-            className=" m-2 p-2 w-3/4  border h-12 border-white shadow-lg  text-white font-medium text-sm  bg-gray-400/30 rounded-xl"
+            className=" m-2 p-2 w-3/4  border h-12 border-white shadow-lg  text-white font-medium text-sm  bg-gray-400/30 rounded-md"
             type="text"
             placeholder="Name"
           />
           <label
-            className="block text-white font-montserrat ml-2  text-sm font-medium mb-2"
+            className="block text-white font-montserrat ml-2 w-3/4 text-sm font-medium mb-2"
             placeholder="Phone"
           >
             Phone
           </label>
           <input
-            className=" m-2 p-2 w-3/4  border h-12 border-white shadow-lg  text-white font-medium text-sm  bg-gray-400/30 rounded-xl"
+            className=" m-2 p-2 w-3/4  border h-12 border-white shadow-lg  text-white font-medium text-sm  bg-gray-400/30 rounded-md"
             type="text"
             placeholder="Phone"
           />
           <label
-            className="block text-white font-montserrat ml-2  text-sm font-medium mb-2"
+            className="block text-white font-montserrat ml-2 w-3/4 text-sm font-medium mb-2"
             placeholder="Email"
           >
             Email
           </label>
           <input
-            className="  m-2 p-2 w-3/4  border h-12 border-white shadow-lg  text-white font-medium text-sm  bg-gray-400/30 rounded-xl"
+            className="  m-2 p-2 w-3/4  border h-12 border-white shadow-lg  text-white font-medium text-sm  bg-gray-400/30 rounded-md"
             type="text"
             placeholder="Email"
           />
@@ -64,7 +64,7 @@ const Contact = () => {
             <h2 className="font-bold text-white">Sign Up.</h2>
           </button>
         </form>
-        <div className="bg-mint w-1/2 h-3/4  rounded-lg">
+        <div className="bg-mint w-1/2 h-3/4 hidden xl:visible  rounded-lg">
           <Image
             src={realEstate}
             alt="contact"
