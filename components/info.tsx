@@ -2,16 +2,12 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import Pool from "public/pool.png";
+import Pool from "public/Houston-home.jpeg";
 
 type expandId = 1 | 2 | null;
 
 const Info = () => {
   const [expanded, setExpanded] = useState(false);
-
-  const handleClick = () => {
-    setExpanded(!expanded);
-  };
 
   return (
     <div className="h-screen w-full flex flex-col">
@@ -31,23 +27,18 @@ const Info = () => {
             >
               It's the little things
             </h3>
-            <p
-              className="text-sm font-montserrat tracking-wide text-left p-4"
-              style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.2)" }}
-            >
+            <p className="text-xs w-full font-medium font-montserrat tracking-wide text-left p-4">
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea"
+              enim ad minim veniam,"
             </p>
           </div>
           {/* Mobile Responsive */}
-          <div className="h-1/2 w-5/6 p-4 flex rounded-lg justify-center items-center ">
-            <Image
-              src={Pool}
-              alt="pool-image"
-              className="rounded-lg w-[100%] h-[100%]"
-            />
+          <div className="h-1/2 w-[95%] rounded-lg shadow-xl flex justify-center items-center overflow-hidden relative">
+            <Image src={Pool} alt="pool-image" className="w-[100%] h-[100%]" />
+            <button className="absolute bg-gray-700/60 text-white font-bold text-sm hover:bg-white hover:text-black transition-all duration-300 ease-in-out font-montserrat bottom-4 left-2 p-4 rounded-full border border-white ">
+              View Properties
+            </button>
           </div>
         </div>
       </div>

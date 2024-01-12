@@ -61,7 +61,7 @@ const Contact = () => {
               className="text-pine w-6 h-6 mr-2"
               size="lg"
             />{" "}
-            <h2 className="font-bold text-white">Sign Up.</h2>
+            <h2 className="font-bold text-white text-sm">Sign Up</h2>
           </button>
         </form>
         <div className="bg-mint w-1/2 h-3/4 hidden xl:visible  rounded-lg">

@@ -6,6 +6,7 @@ import Footer from "@/components/footer";
 import Image from "next/image";
 import Link from "next/link";
 import Nav from "@/components/navbar";
+import Onit from "@/components/onit";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <Hero />
       <Info />
       <Expert />
+      <Onit />
       <Contact />
       <Footer />
     </main>
