@@ -16,18 +16,18 @@ const Info = () => {
           <div>
             <h1
               className="uppercase font-cinzel flex items-center font-regular p-4 mt-4 text-4xl xl:text-5xl  text-black  tracking-wider"
-              style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.3)" }}
+              style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)" }}
             >
               Our Purpose{" "}
               <div className="w-36 ml-4 h-0 border-2 border-white"></div>
             </h1>
             <h3
-              className="p-4 text-lg font-cinzel font-medium tracking-wider"
+              className="p-4 text-xl font-cinzel font-medium tracking-widest"
               style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)" }}
             >
               It's the little things
             </h3>
-            <p className="text-xs w-full font-medium font-montserrat tracking-wide text-left p-4">
+            <p className="text-xs w-full font-medium font-montserrat tracking-wide text-left p-4 leading-4">
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
               enim ad minim veniam,"

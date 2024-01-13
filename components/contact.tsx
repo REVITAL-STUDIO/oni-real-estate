@@ -12,7 +12,7 @@ const Contact = () => {
       <div className="flex w-full h-[100%] justify-center xl:justify-between items-center">
         <form className="flex flex-col shadow-xl xl:w-[30%] w-full h-full  justify-center items-center">
           <h2
-            className=" uppercase  xl:text-4xl text-2xl text-center  font-cinzel  relative top-2 font-regular bg-gradient-to-b from-white via-white to-pine bg-clip-text text-transparent p-3 tracking-wide"
+            className=" uppercase  xl:text-4xl text-2xl text-center  font-cinzel  relative top-0 font-regular bg-gradient-to-b from-white via-white to-pine bg-clip-text text-transparent p-4 tracking-wide"
             style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.2)" }}
           >
             Get in Touch and Start Saving Time Today.

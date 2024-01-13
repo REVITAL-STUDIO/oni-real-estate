@@ -12,11 +12,11 @@ const Expert = () => {
         <div className="w-full h-1/4 flex flex-col bg-white justify-center items-end">
           <h2
             className="xl:w-5/6 w-full text-right font-cinzel p-4 text-2xl xl:text-5xl font-regular uppercase tracking-wide text-black "
-            style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.2)" }}
+            style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)" }}
           >
             LOCAL EXPERTISE <span className="font-bold">HOUSTON CONNECTED</span>
           </h2>
-          <p className="text-xs p-4 text-black/80 font-montserrat font-medium tracking-wide text-right">
+          <p className="text-xs p-4 text-black/80 font-montserrat leading-4 font-medium tracking-wide text-right">
             Empowering Your Real Estate Journey with Unmatched Local Insight and
             Houston Connectivity. Navigate the Market Confidently with Our
             Expertise.
