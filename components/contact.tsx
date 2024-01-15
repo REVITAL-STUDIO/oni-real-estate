@@ -9,51 +9,51 @@ import realEstate from "public/teaser.jpeg";
 const Contact = () => {
   return (
     <div className="h-700 w-full bg-[url('/contact.png')] bg-cover bg-center flex justify-center items-center">
-      <div className="flex w-full h-[100%] justify-center xl:justify-between items-center">
+      <div className="flex w-full h-[100%] justify-center xl:justify-evenly items-center">
         <form className="flex flex-col shadow-xl xl:w-[30%] w-full h-full  justify-center items-center">
           <h2
-            className=" uppercase  xl:text-4xl text-2xl text-center  font-cinzel  relative top-0 font-regular bg-gradient-to-b from-white via-white to-pine bg-clip-text text-transparent p-4 tracking-wide"
+            className=" uppercase md:text-4xl text-2xl text-center  font-cinzel  relative top-0 font-regular bg-gradient-to-b from-white via-white to-pine bg-clip-text text-transparent p-4 tracking-wide"
             style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.2)" }}
           >
             Get in Touch and Start Saving Time Today.
           </h2>
           <label
-            className="block text-white font-montserrat ml-2 w-3/4 text-sm font-medium mb-2"
+            className="block text-white font-montserrat ml-2 w-3/4 md:w-1/2 xl:w-3/4  text-sm font-medium mb-2"
             placeholder="name"
           >
             Name
           </label>
           <input
-            className=" m-2 p-2 w-3/4  border h-12 border-white shadow-lg  text-white font-medium text-sm  bg-gray-400/30 rounded-md"
+            className=" m-2 p-2 w-3/4  border h-12 border-white shadow-lg md:w-1/2 text-white xl:w-3/4  font-medium text-sm  bg-gray-400/30 rounded-md"
             type="text"
             placeholder="Name"
           />
           <label
-            className="block text-white font-montserrat ml-2 w-3/4 text-sm font-medium mb-2"
+            className="block text-white font-montserrat ml-2 w-3/4 text-sm md:w-1/2 font-medium mb-2 xl:w-3/4 "
             placeholder="Phone"
           >
             Phone
           </label>
           <input
-            className=" m-2 p-2 w-3/4  border h-12 border-white shadow-lg  text-white font-medium text-sm  bg-gray-400/30 rounded-md"
+            className=" m-2 p-2 w-3/4  border h-12 border-white shadow-lg md:w-1/2 text-white font-medium text-sm  bg-gray-400/30 rounded-md xl:w-3/4 "
             type="text"
             placeholder="Phone"
           />
           <label
-            className="block text-white font-montserrat ml-2 w-3/4 text-sm font-medium mb-2"
+            className="block text-white font-montserrat ml-2 w-3/4 text-sm md:w-1/2 font-medium mb-2 xl:w-3/4 "
             placeholder="Email"
           >
             Email
           </label>
           <input
-            className="  m-2 p-2 w-3/4  border h-12 border-white shadow-lg  text-white font-medium text-sm  bg-gray-400/30 rounded-md"
+            className="  m-2 p-2 w-3/4  border h-12 border-white shadow-lg md:w-1/2 text-white font-medium text-sm  bg-gray-400/30 rounded-md xl:w-3/4 "
             type="text"
             placeholder="Email"
           />
 
           <button
             type="submit"
-            className="text-black text-lg shadow-xl flex justify-center items-center shadow-black cursor-pointer mt-8 tracking-wide bg-forest/75  w-3/4 h-16 rounded-full"
+            className="text-black text-lg shadow-xl flex justify-center items-center shadow-black cursor-pointer mt-8 tracking-wide bg-forest/75 md:w-1/2 xl:w-3/4 w-3/4 h-16 rounded-full"
           >
             <FontAwesomeIcon
               icon={faPaperPlane}
@@ -64,7 +64,7 @@ const Contact = () => {
             <h2 className="font-bold text-white text-sm">Sign Up</h2>
           </button>
         </form>
-        <div className="bg-mint w-1/2 h-3/4 hidden xl:visible  rounded-lg">
+        <div className="bg-mint w-1/2 h-3/4 hidden xl:flex  rounded-lg">
           <Image
             src={realEstate}
             alt="contact"

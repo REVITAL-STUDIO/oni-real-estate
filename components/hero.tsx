@@ -32,8 +32,8 @@ const Hero = () => {
   };
 
   return (
-    <div className="h-screen w-full flex  justify-center items-center bg-[url('/herosection.png')] bg-cover bg-center">
-      <div className=" flex flex-col justify-center items-center w-5/6 h-2/6 ">
+    <div className="h-screen w-full flex  justify-center items-center bg-[url('/houston.jpg')] bg-cover bg-center">
+      <div className=" flex flex-col justify-center items-center w-5/6 h-2/6">
         {/* Logo & Slogan */}
         <motion.div
           variants={variants}
@@ -41,16 +41,20 @@ const Hero = () => {
           animate="visible"
           className="w-fit h-fit text-center text-white flex justify-center items-center"
         >
-          <Image src={Logo2} alt="logo" className="w-52 h-auto invert" />
+          <Image
+            src={Logo2}
+            alt="logo"
+            className="w-52 md:w-80 h-auto invert"
+          />
         </motion.div>
         <motion.div
           variants={textVariants}
           initial="hidden"
           animate="visible"
-          className="w-3/4 h-1/2 justify-center items-center flex"
+          className="w-3/4 md:w-full h-1/2 justify-center items-center flex"
         >
           <h2
-            className="text-white text-center font-cinzel text-2xl lg:text-4xl tracking-wider"
+            className="text-white text-center font-cinzel text-2xl md:text-4xl tracking-wider"
             style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.3)" }}
           >
             Where Houston finds Homes
