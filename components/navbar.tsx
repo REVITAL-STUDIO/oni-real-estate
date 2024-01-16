@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
+import Logo from "public/logo-real.png";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 
 const Nav = () => {
@@ -40,6 +42,9 @@ const Nav = () => {
 
   const toggleButton = () => {
     setOpenMenu((prev) => !prev);
+
+    // Toggle scrolling based on the openMenu state
+    document.body.style.overflow = !openMenu ? "hidden" : "auto";
   };
 
   return (
@@ -98,7 +103,7 @@ const Nav = () => {
         {/* Mobile Button */}
         <button
           onClick={toggleButton}
-          className="w-12 h-12 flex flex-col relative justify-center items-center rounded-full bg-black space-x-reverse xl:hidden z-10"
+          className="w-12 h-12 flex flex-col relative justify-center items-center rounded-full  space-x-reverse xl:hidden z-10"
         >
           <span
             className={`block w-3/4 my-0.5 border border-white ${
@@ -125,29 +130,42 @@ const Nav = () => {
         <AnimatePresence>
           {openMenu && (
             <motion.div
-              initial={{ opacity: 0, x: 100 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 100 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               transition={{ ease: "easeInOut", duration: 0.5 }}
-              className="xl:hidden absolute top-0  right-0 bottom-0 flex justify-end items-center w-3/4 rounded-tl-3xl rounded-bl-3xl h-screen bg-black drop-shadow-xl "
+              className="xl:hidden absolute top-0  right-0 bottom-0 flex justify-center items-center w-full  h-screen bg-white/75  "
             >
-              <ul
-                className={`text-right gap-y-12 h-fit font-cinzel
-          `}
+              <motion.div
+                initial={{ opacity: 0, x: 100 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 100 }}
+                transition={{ ease: "easeInOut", duration: 0.5 }}
+                className="xl:hidden absolute top-0  right-0 bottom-0 flex justify-end items-center w-3/4 rounded-tl-3xl rounded-bl-3xl h-screen bg-shadow shadow-xl "
               >
-                <li className="relative hover:text-gray-500 p-4 text-2xl md:text-4xl tracking-wider font-extralight">
-                  <Link href="/">Home</Link>
-                </li>
-                <li className="relative hover:text-gray-500 p-4 text-2xl md:text-4xl tracking-wider font-extralight">
-                  <Link href="/listings">Properties</Link>
-                </li>
-                <li className="relative hover:text-gray-500 p-4 text-2xl md:text-4xl tracking-wider font-extralight">
-                  <Link href="/clients">Ownership</Link>
-                </li>
-                <li className="relative hover:text-gray-500 p-4 text-2xl md:text-4xl tracking-wider font-extralight">
-                  <Link href="/">Saved</Link>
-                </li>
-              </ul>
+                <ul
+                  className={`text-right gap-y-12 h-fit font-cinzel w-full 
+          `}
+                >
+                  <div className="absolute w-1/2 h-10 top-5 left-6 flex">
+                    <div className="w-10 h-10 rounded-full absolute left-3 bg-pine shadow-lg"></div>
+                    <div className="w-10 h-10 rounded-full bg-forest shadow-lg"></div>
+                    <div className="w-10 h-10 rounded-full bg-mint absolute left-6 shadow-lg"></div>
+                  </div>
+                  <li className="relative text-right hover:text-gray-500 w-full p-4 text-2xl md:text-4xl tracking-wider font-extralight flex items-center justify-end">
+                    <Link href="/">Home</Link>
+                  </li>
+                  <li className="relative text-right hover:text-gray-500 p-4 text-2xl md:text-4xl tracking-wider font-extralight flex items-center justify-end">
+                    <Link href="/listings">Properties</Link>
+                  </li>
+                  <li className="relative text-right hover:text-gray-500 p-4 text-2xl md:text-4xl tracking-wider font-extralight flex items-center justify-end">
+                    <Link href="/clients">Ownership</Link>
+                  </li>
+                  <li className="relative hover:text-gray-500 p-4 text-2xl md:text-4xl tracking-wider font-extralight flex items-center justify-end">
+                    <Link href="/">Saved</Link>
+                  </li>
+                </ul>
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>

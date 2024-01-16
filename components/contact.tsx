@@ -4,73 +4,96 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
+import logo from "public/logo-real.png";
+import contact from "public/contact.png";
 import realEstate from "public/teaser.jpeg";
 
 const Contact = () => {
   return (
-    <div className="h-700 w-full bg-[url('/contact.png')] bg-cover bg-center flex justify-center items-center">
-      <div className="flex w-full h-[100%] justify-center xl:justify-evenly items-center">
-        <form className="flex flex-col shadow-xl xl:w-[30%] w-full h-full  justify-center items-center">
-          <h2
-            className=" uppercase md:text-4xl text-2xl text-center  font-cinzel  relative top-0 font-regular bg-gradient-to-b from-white via-white to-pine bg-clip-text text-transparent p-4 tracking-wide"
-            style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.2)" }}
-          >
-            Get in Touch and Start Saving Time Today.
+    <div className="h-700 w-full flex flex-col xl:flex-row">
+      <div className="xl:w-1/4 xl:h-full w-full h-1/4 bg-[url('/houston-contact.jpeg')] brightness-90 bg-cover bg-center saturate-0"></div>
+      <div className="xl:w-3/4 xl:h-full w-full h-3/4 bg-forest flex flex-col justify-center items-center relative font-montserrat">
+        <Image
+          src={logo}
+          alt="oni logo"
+          className="w-1/2 h-auto opacity-10  absolute 	"
+        ></Image>
+        <div className="w-3/4 font-cinzel text-4xl text-white my-2">
+          <h2 className="w-1/3 relative left-8 text-white hidden md:block mb-4">
+            Get in touch with us
           </h2>
-          <label
-            className="block text-white font-montserrat ml-2 w-3/4 md:w-1/2 xl:w-3/4  text-sm font-medium mb-2"
-            placeholder="name"
-          >
-            Name
-          </label>
-          <input
-            className=" m-2 p-2 w-3/4  border h-12 border-white shadow-lg md:w-1/2 text-white xl:w-3/4  font-medium text-sm  bg-gray-400/30 rounded-md"
-            type="text"
-            placeholder="Name"
-          />
-          <label
-            className="block text-white font-montserrat ml-2 w-3/4 text-sm md:w-1/2 font-medium mb-2 xl:w-3/4 "
-            placeholder="Phone"
-          >
-            Phone
-          </label>
-          <input
-            className=" m-2 p-2 w-3/4  border h-12 border-white shadow-lg md:w-1/2 text-white font-medium text-sm  bg-gray-400/30 rounded-md xl:w-3/4 "
-            type="text"
-            placeholder="Phone"
-          />
-          <label
-            className="block text-white font-montserrat ml-2 w-3/4 text-sm md:w-1/2 font-medium mb-2 xl:w-3/4 "
-            placeholder="Email"
-          >
-            Email
-          </label>
-          <input
-            className="  m-2 p-2 w-3/4  border h-12 border-white shadow-lg md:w-1/2 text-white font-medium text-sm  bg-gray-400/30 rounded-md xl:w-3/4 "
-            type="text"
-            placeholder="Email"
-          />
-
-          <button
-            type="submit"
-            className="text-black text-lg shadow-xl flex justify-center items-center shadow-black cursor-pointer mt-8 tracking-wide bg-forest/75 md:w-1/2 xl:w-3/4 w-3/4 h-16 rounded-full"
-          >
-            <FontAwesomeIcon
-              icon={faPaperPlane}
-              aria-hidden="true"
-              className="text-pine w-6 h-6 mr-2"
-              size="lg"
-            />{" "}
-            <h2 className="font-bold text-white text-sm">Sign Up</h2>
-          </button>
-        </form>
-        <div className="bg-mint w-1/2 h-3/4 hidden xl:flex  rounded-lg">
-          <Image
-            src={realEstate}
-            alt="contact"
-            className="w-[100%] h-[100%] shadow-lg rounded-lg"
-          />
         </div>
+        <form className="w-5/6 h-3/4 flex items-center justify-center flex-col rounded-lg  gap-x-4  z-10">
+          <div className="w-full flex flex-wrap justify-center gap-x-4 h-3/4 ">
+            <div className="flex flex-col w-2/5">
+              <label htmlFor="firstName" className="my-2 text-white">
+                First Name
+              </label>
+              <input
+                typeof="firstName"
+                className="h-12 xl:h-16 border bg-transparent p-2 xl:p-4 rounded-sm text-white"
+                placeholder="First Name"
+              ></input>
+            </div>
+            <div className="flex flex-col w-2/5">
+              <label htmlFor="lastName" className="my-2 text-white">
+                Last Name
+              </label>
+              <input
+                typeof="lastName"
+                className="h-12 xl:h-16  border bg-transparent p-2 xl:p-4rounded-sm text-white"
+                placeholder="Last Name"
+              ></input>
+            </div>
+            <div className="flex flex-col w-2/5">
+              <label htmlFor="email" className="my-2 text-white">
+                Email
+              </label>
+              <input
+                typeof="email"
+                className="h-12 xl:h-16 border bg-transparent p-2 xl:p-4rounded-sm text-white"
+                placeholder="Email"
+              ></input>
+            </div>
+            <div className="flex flex-col w-2/5">
+              <label htmlFor="phone" className="my-2 text-white">
+                Phone
+              </label>
+              <input
+                typeof="phone"
+                className="h-12 xl:h-16 border bg-transparent p-2 xl:p-4 rounded-sm text-white"
+                placeholder="Phone"
+              ></input>
+            </div>
+            <div className="flex flex-col w-[82%]">
+              <label htmlFor="message" className="my-2 text-white">
+                Message
+              </label>
+              <textarea
+                typeof="message"
+                className="h-24 xl:h-32 border bg-transparent p-2 xl:p-4 rounded-sm text-white"
+                placeholder="Message"
+              ></textarea>
+            </div>
+          </div>
+          <div className="w-5/6 xl:h-1/4 h-1/2 flex flex-col gap-y-4 justify-center my-8">
+            <button
+              type="submit"
+              className="xl:w-1/2 w-3/4 h-auto my-2 ml-1 p-2 xl:p-4 border bg-forest text-white rounded-md "
+            >
+              Send message{" "}
+              <FontAwesomeIcon
+                icon={faPaperPlane}
+                size="sm"
+                className="text-pine ml-2 w-4 h-4"
+              />
+            </button>
+            <p className="xl:w-3/4 w-full text-sm xl:text-md text-white font-montserrat tracking-wide">
+              Please do not hesitate to contact us directly. Alternatively, you
+              can send us a message by filling out the form.
+            </p>
+          </div>
+        </form>
       </div>
     </div>
   );

@@ -56,6 +56,7 @@ const config: Config = {
         pine: "#C1FF72",
         forest: "#3E4A37",
         storm: "#D3D3D3",
+        mellow: "#5D5D5D",
         shadow: "#363636"
         
       },
