@@ -9,15 +9,15 @@ import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
 const Onit = () => {
   return (
     <div className="h-400 w-full flex">
-      <div className="w-1/3 h-full bg-pine flex justify-center flex-col items-center">
+      <div className="xl:w-1/3 w-1/2 h-full bg-pine flex justify-center flex-col items-center">
         <h1 className="font-montserrat text-2xl">
-          Meet <span className="text-6xl font-cinzel">Onit</span>
+          Meet <span className="md:text-6xl text-4xl font-cinzel">Onit</span>
         </h1>
         <button className="mt-4 text-base font-montserrat w-32 h-12 border rounded-2xl border-black">
           Explore
         </button>
       </div>
-      <div className="w-2/3 h-full bg-[url('/neighborhood.jpg')] bg-cover bg-center  flex justify-center items-center">
+      <div className="xl:w-2/3 w-1/2 h-full bg-[url('/neighborhood.jpg')] bg-cover bg-center  flex justify-center items-center">
         <svg
           width="380"
           height="312"

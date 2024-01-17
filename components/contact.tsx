@@ -19,7 +19,7 @@ const Contact = () => {
           className="w-1/2 h-auto opacity-10  absolute 	"
         ></Image>
         <div className="w-3/4 font-cinzel text-4xl text-white my-2">
-          <h2 className="w-1/3 relative left-8 text-white hidden md:block mb-4">
+          <h2 className="w-1/3 relative left-8 text-white hidden xl:block mb-4">
             Get in touch with us
           </h2>
         </div>

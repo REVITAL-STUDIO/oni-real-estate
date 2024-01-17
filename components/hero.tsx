@@ -32,7 +32,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="h-screen w-full flex  justify-center items-center bg-[url('/houston.jpg')] bg-cover bg-center">
+    <div className="h-screen w-full flex  justify-center items-center bg-[url('/new-background.jpg')] bg-cover bg-center">
       <div className=" flex flex-col justify-center items-center w-5/6 h-2/6">
         {/* Logo & Slogan */}
         <motion.div

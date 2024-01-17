@@ -38,6 +38,14 @@ const Footer = () => {
             </div>
             <div className="text-white/75 text-center w-full h-fit flex flex-col tracking-wider">
               <h2 className="text-md tracking-wider font-cinzel font-medium p-4">
+                Phone
+              </h2>
+              <p className="font-light text-sm font-montserrat w-full">
+                +1 (281) 123-4567
+              </p>
+            </div>
+            <div className="text-white/75 text-center w-full h-fit flex flex-col tracking-wider">
+              <h2 className="text-md tracking-wider font-cinzel font-medium p-4">
                 Location
               </h2>
               <p className="font-light text-sm font-montserrat w-full">
