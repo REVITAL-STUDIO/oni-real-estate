@@ -8,15 +8,22 @@ import { faArrowRightLong } from "@fortawesome/free-solid-svg-icons";
 
 const Onit = () => {
   return (
-    <div className="h-screen w-full bg-gradient-to-b from-white via-mint/50 to-mint/50 flex justify-evenly items-center">
-      <div className="w-full h-full flex flex-col xl:flex-row justify-center items-center">
+    <div className="h-400 w-full flex">
+      <div className="w-1/3 h-full bg-pine flex justify-center flex-col items-center">
+        <h1 className="font-montserrat text-2xl">
+          Meet <span className="text-6xl font-cinzel">Onit</span>
+        </h1>
+        <button className="mt-4 text-base font-montserrat w-32 h-12 border rounded-2xl border-black">
+          Explore
+        </button>
+      </div>
+      <div className="w-2/3 h-full bg-[url('/neighborhood.jpg')] bg-cover bg-center  flex justify-center items-center">
         <svg
           width="380"
           height="312"
           viewBox="0 0 380 312"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="hidden md:block"
         >
           <g id="Group 34" filter="url(#filter0_d_1679_89)">
             <circle
@@ -230,22 +237,6 @@ const Onit = () => {
             </filter>
           </defs>
         </svg>
-        <div className="xl:w-1/2 xl:h-2/5 w-3/4 flex flex-col justify-evenly items-center">
-          <h2 className="font-cinzel text-xl xl:text-2xl">
-            Meet <span className="text-6xl xl:text-8xl">Onit</span>
-          </h2>
-          <p className="font-montserrat leading-8 text-xs xl:text-lg                                     font-medium text-black/75 text-center w-full xl:p-2">
-            We understand that each property is unique, and we tailor our
-            management approach to meet the specific needs of every client. Our
-            goal is not just to manage properties but to enhance their overall
-            value over time. Entrust your real estate investments to us, and
-            experience the seamless, professional, and results-driven real
-            estate management services you deserve.
-          </p>
-          <button className="w-40 h-20 p-4 text-sm mt-4 border-2 border-white font-medium rounded-lg tracking-wider font-montserrat">
-            Explore
-          </button>
-        </div>
       </div>
     </div>
   );
