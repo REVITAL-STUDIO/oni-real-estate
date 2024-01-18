@@ -161,7 +161,7 @@ const Listing = () => {
   }, []);
 
   return (
-    <div className="w-full flex h-16 font-montserrat bg-white">
+    <div className="w-full xl:flex h-16 hidden  font-montserrat bg-white">
       {/* Search Bar */}
       <form className="w-80 border border-r h-16 flex justify-between items-center ">
         <div className="w-6 h-6 ml-4">

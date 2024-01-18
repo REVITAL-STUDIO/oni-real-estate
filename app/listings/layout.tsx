@@ -8,7 +8,6 @@ export default function ClientsLayout({
 }) {
   return (
     <>
-      <Nav />
       <main>{children}</main>
     </>
   );

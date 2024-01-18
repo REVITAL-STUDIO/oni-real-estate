@@ -115,19 +115,11 @@ const Homes = () => {
   }, [propertyInfo]);
 
   return (
-    <div className="w-full h-1600   ">
-      <div className="w-fit h-16 flex justify-center items-center m-4  tracking-wide text-4xl ">
-        <h2
-          className="font-cinzel"
-          style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)" }}
-        >
-          Available Properties
-        </h2>
-      </div>
-      <div className="flex relative justify-center  items-center gap-8 flex-wrap w-full h-3/4">
+    <div className="w-full h-screen border border-red-600">
+      <div className="flex relative justify-evenly items-center flex-wrap w-full h-full border border-blue-600">
         {homes.map((homesFile, index) => (
           <div
-            className="w-[40%] h-[35%] m-2  shadow-md  bg-white flex flex-col"
+            className="w-[40%] h-[40%]  shadow-md  bg-white flex flex-col"
             key={index}
           >
             <div
