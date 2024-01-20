@@ -10,13 +10,13 @@ const Info = () => {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="h-screen w-full xl:h-1000 flex flex-col lg:flex-row bg-gradient-to-b from-white/20 via-mint/50 to-white">
+    <div className="h-screen w-full xl:h-1000 flex flex-col lg:flex-row bg-eggshell">
       <div className="h-full w-full xl:w-1/2 relative e ">
         <div className="w-full h-full  flex flex-col xl:justify-start items-center  text-black">
           <div className="w-full h-1/2 flex flex-col justify-center">
-            <h1 className=" font-cinzel flex items-center font-regular p-4 mt-4 text-3xl md:text-5xl  text-black  tracking-wider">
+            <h1 className=" font-agrandir tracking-wider flex items-center font-regular p-4 mt-4 text-3xl md:text-6xl  text-black  ">
               Our Purpose{" "}
-              <div className="xl:w-36 md:w-3/4 ml-4 h-0 border-2 border-white"></div>
+              <div className="xl:w-36 md:w-3/4 ml-4 h-0 border-4 border-pine"></div>
             </h1>
             <h3 className="p-4 text-xl font-cinzel font-medium tracking-widest text-black/75">
               It's the little things
@@ -122,7 +122,7 @@ const Info = () => {
               </p>
             </div>
           </div>
-          <button className="absolute xl:w-3/4 w-5/6  h-16  text-black font-light tracking-wider text-sm  transition-all duration-300 ease-in-out font-montserrat bottom-[0%] bg-white xl:left-4  bg-opacity-20 backdrop-blur-5 border border-opacity-30 border-black/50 rounded-2xl shadow-sm p-4">
+          <button className="absolute xl:w-3/4 w-5/6  h-16  text-black font-light tracking-wider text-base  transition-all duration-300 ease-in-out font-montserrat bottom-[0%] bg-white xl:left-4  bg-opacity-20 backdrop-blur-5 border border-opacity-30 border-black/50 rounded-2xl shadow-sm p-4">
             View Properties
           </button>
           {/* Mobile Responsive */}

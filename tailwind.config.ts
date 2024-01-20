@@ -16,6 +16,10 @@ const config: Config = {
       fontFamily: {
         cinzel: ['Cinzel', 'sans-serif'],
         montserrat: [ 'Montserrat', 'sans-serif'],
+        helsa: [ 'Helsa', 'sans-serif'],
+        agrandir: [ 'Agrandir', 'sans-serif'],
+        times: [ 'Times', 'sans-serif'],
+        bodoni:['Bodoni', 'sans-serif']
       },
       height: {
         40: '40px',
@@ -59,7 +63,8 @@ const config: Config = {
         forest: "#3E4A37",
         storm: "#D3D3D3",
         mellow: "#5D5D5D",
-        shadow: "#363636"
+        shadow: "#363636",
+        eggshell: "#f0ead6"
         
       },
       rotate: {

@@ -28,8 +28,8 @@ const Footer = () => {
               ></Image>
             </div>
             {/* Contact & Social Media */}
-            <div className="text-white/75 w-full  h-fit text-center justify-center items-center  flex flex-col">
-              <h2 className="text-md tracking-wider font-cinzel font-medium p-4">
+            <div className="text-white/75 w-full  h-fit  justify-center items-center  flex flex-col">
+              <h2 className="text-md tracking-wider font-agrandir font-medium p-4">
                 Contact
               </h2>
               <p className="font-light text-sm font-montserrat tracking-wider">
@@ -37,7 +37,7 @@ const Footer = () => {
               </p>
             </div>
             <div className="text-white/75 text-center w-full h-fit flex flex-col tracking-wider">
-              <h2 className="text-md tracking-wider font-cinzel font-medium p-4">
+              <h2 className="text-md tracking-wider font-agrandir font-medium p-4">
                 Phone
               </h2>
               <p className="font-light text-sm font-montserrat w-full">
@@ -45,7 +45,7 @@ const Footer = () => {
               </p>
             </div>
             <div className="text-white/75 text-center w-full h-fit flex flex-col tracking-wider">
-              <h2 className="text-md tracking-wider font-cinzel font-medium p-4">
+              <h2 className="text-md tracking-wider font-agrandir font-medium p-4">
                 Location
               </h2>
               <p className="font-light text-sm font-montserrat w-full">

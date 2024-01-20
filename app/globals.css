@@ -6,6 +6,10 @@
     width: 10px;
     height: 5px;
 }
+
+@import './font.css';
+
+
  
 /* Track */
 ::-webkit-scrollbar-track {

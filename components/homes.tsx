@@ -12,8 +12,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { AnimatePresence, motion } from "framer-motion";
 // Homes
-import home1 from "public/home1.jpg";
-import home2 from "public/home2.jpg";
+import home1 from "public/home1.webp";
+import home2 from "public/home2.jpeg";
 import home3 from "public/home3.jpeg";
 import home4 from "public/home4.jpg";
 import home5 from "public/home5.jpeg";
@@ -38,7 +38,7 @@ const Homes = () => {
   const addresses = [
     "123 Pinecrest Drive, Cinco Ranch, TX 77001",
     "456 Oakridge Lane, Houston, TX 77002",
-    "789 Meadowbrook Avenue, Houston, TX 77003",
+    "101 Riverbend Road, Missouri City, TX 77004",
     "101 Riverbend Road, Missouri City, TX 77004",
     "202 Sunset Boulevard, Pearland, TX 77005",
     "303 Lakeside Drive, Richmond, TX 77006",
@@ -115,29 +115,35 @@ const Homes = () => {
   }, [propertyInfo]);
 
   return (
-    <div className="w-full h-screen border border-red-600">
-      <div className="flex relative justify-evenly items-center flex-wrap w-full h-full border border-blue-600">
+    <div>
+      <div className="w-fit h-1/2 border">
+        <h1 className="p-4 my-4 font-cinzel text-4xl">Available Properties</h1>
+      </div>
+      <div className="flex justify-evenly items-center flex-wrap gap-y-4 w-full h-full">
         {homes.map((homesFile, index) => (
           <div
-            className="w-[40%] h-[40%]  shadow-md  bg-white flex flex-col"
+            className=" border border-red-500 shadow-md w-[40%] flex flex-col "
             key={index}
           >
             <div
               onClick={() => handlePropertyInfo(index)}
-              className="w-full h-2/3 overflow-hidden relative cursor-pointer"
-              style={{ position: "relative" }}
+              className=" relative border-4 border-green-500 w-[100%] "
             >
-              <Image src={homesFile} className="rounded-lg" alt="homes" />
-              <div className="absolute w-full h-full bg-black/50  opacity-0 duration-300 flex justify-center items-center hover:opacity-100 hover:rounded-t-lg hover:flex top-0 ease-in-out hover:justify-center hover:items-center">
-                <p className="text-white text-xl font-regular font-montserrat underline underline-offset-8		">
+              <Image
+                src={homesFile}
+                className=" w-[100%] object-cover rounded-tr-lg rounded-tl-lg"
+                alt="homes"
+              />
+              <div className="absolute w-full h-full bg-black/50 opacity-0 duration-300 flex justify-center items-center hover:opacity-100 hover:rounded-t-lg hover:flex top-0 ease-in-out hover:justify-center hover:items-center">
+                <p className="text-white text-xl font-regular font-montserrat underline underline-offset-8">
                   View Home
                 </p>
               </div>
             </div>
             {/* Housing Cards */}
-            <div className="w-full h-1/4 flex flex-col justify-around font-medium text-gray-600 ">
+            <div className="w-full h-[25%] flex flex-col border font-medium text-gray-600 ">
               <div className="flex flex-col w-fit h-full justify-center ml-4 ">
-                <h2 className="text-xl font-montserrat  font-medium mt-4">
+                <h2 className="text-md font-montserrat  font-medium mt-4">
                   {addresses[index]}
                 </h2>
                 <p className="text-xs font-montserrat   font-normal mt-4">{`${infoEstate[index].beds} Beds | ${infoEstate[index].baths} Baths |  ${infoEstate[index].sqft} sqft`}</p>

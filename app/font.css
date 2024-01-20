@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'helsa';
+    src: url('/fonts/demo-helsa-display-regular.otf') format('opentype');    
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'agrandir';
+    src: url('/fonts/PPAgrandir-Regular.otf') format('opentype');    
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'times';
+    src: url('/fonts/times new roman.ttf') format('truetype');    
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'Bodoni';
+    src: url('/fonts/BodoniFLF-Roman.ttf') format('truetype');    
+    font-weight: normal;
+    font-style: normal;
+  }

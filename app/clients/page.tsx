@@ -7,7 +7,7 @@ import Nav from "@/components/navbar";
 
 export default function Client() {
   return (
-    <div className="bg-white h-screen w-full ">
+    <div className="bg-eggshell h-screen w-full ">
       <Nav />
       <div className="w-full h-[10%]"></div>
       <Buyer />

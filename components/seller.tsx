@@ -10,72 +10,38 @@ import ProgressBarSvg from "./progressBarSvg";
 import { motion, useAnimation } from "framer-motion";
 
 const Seller = () => {
-  const text = "Seller Process";
-
-  const variants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-      },
-    },
-  };
-
   return (
-    <div className="w-full h-full flex bg-white">
-      {/* Image */}
-      <div className="w-1/2 flex flex-col justify-center items-center">
-        <div className="w-fit ml-4 mb-4 flex flex-col justify-center items-center ">
-          <span
-            className="uppercase text-black text-5xl font-cinzel font-regular bottom-0 font-regular w-full"
-            style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.1)" }}
-          >
-            {text.split("").map((char, index) => (
-              <motion.span
-                key={index}
-                variants={variants}
-                initial="hidden"
-                animate="visible"
-                transition={{ delay: index * 1 }}
-              >
-                {char}
-              </motion.span>
-            ))}
-          </span>
-          <span className="text-lg text-forest w-full font-montserrat  font-medium">
-            Achieve Your Home Selling Goals with Us – Where Expertise Meets
-            Results.
-          </span>
-        </div>
-        <div className="w-5/6 h-11/12 flex flex-col gap-y-8 justify-evenly  items-center">
-          <motion.div className="w-2/3 h-2/4 relative right-24">
-            <Image
-              src={seller1}
-              alt="home"
-              className="h-48 w-96 object-cover rounded-lg brightness-90 contrast-75 shadow-lg shadow-mint"
-            />
-          </motion.div>
-          <motion.div className="w-2/3 h-2/4 relative left-20">
-            <Image
-              src={seller2}
-              alt="home"
-              className="h-48 w-96 object-cover rounded-lg brightness-90	contrast-75	shadow-lg shadow-mint"
-            />
-          </motion.div>
-          <motion.div className="w-2/3 h-2/4 relative right-24">
-            <Image
-              src={seller3}
-              alt="home"
-              className="h-48 w-96 object-cover rounded-lg brightness-90 contrast-75	shadow-lg shadow-mint"
-            />
-          </motion.div>
-        </div>
-      </div>
+    <div className="w-full h-full flex bg-eggshell">
       {/* Info */}
-      <div className="w-1/2 h-full flex justify-center items-center">
-        <ProgressBarSvg />
+      <div className="w-2/5 flex flex-col justify-end items-start">
+        <h2 className="p-4 text-6xl">Why Choose Us?</h2>
+        <p className="font-montserrat p-4 text-black/60">
+          We understand that selling your home is a significant milestone, and
+          we're here to ensure that you not only achieve but surpass your
+          selling goals. Our team of seasoned real estate experts combines
+          unparalleled expertise with a track record of delivering exceptional
+          results.
+          <br></br>
+          <br></br>
+          Selling a home involves various complexities. Our comprehensive
+          support includes handling paperwork, coordinating inspections, and
+          guiding you through each phase of the transaction. We're with you from
+          listing to closing.
+        </p>
+      </div>
+      {/* Image */}
+      <div className="w-3/5 flex justify-center items-start ">
+        <div className="w-full h-full bg-[url('/interior.jpg')] bg-cover bg-center rounded-tl-xl rounded-bl-xl flex flex-col items-end">
+          <h2 className="text-7xl text-mint font-agrandir text-right p-4">
+            Seller Process
+          </h2>
+          <p className="text-right w-5/6 text-white text-base p-4 text-montserrat tracking-wider">
+            Our in-depth knowledge of the local real estate market empowers us
+            to provide accurate pricing strategies. We analyze trends and
+            leverage our understanding of the area to maximize the value of your
+            property.
+          </p>
+        </div>
       </div>
     </div>
   );

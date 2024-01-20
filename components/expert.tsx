@@ -6,12 +6,12 @@ import Local from "public/new-content.jpg";
 
 const Expert = () => {
   return (
-    <div className=" h-screen w-full xl:h-1300 bg-gradient-to-b from-white/20 via-mint/50 to-white">
+    <div className=" h-screen w-full xl:h-1300 bg-eggshell">
       {/* Local Support */}
       <div className="h-full w-full  flex flex-col justify-center items-center xl:flex-row">
         {/* Flex-row */}
         <div className="w-full xl:w-1/2 h-3/4  xl:h-full hidden xl:flex xl:flex-col xl:justify-evenly items-center">
-          <h2 className="md:w-full  w-3/4  font-cinzel p-4 text-2xl md:text-5xl font-regular uppercase tracking-wide text-black ">
+          <h2 className="  w-full  font-agrandir p-4 text-2xl md:text-6xl font-regular uppercase tracking-wide text-black ">
             LOCAL EXPERTISE HOUSTON CONNECTED
           </h2>
           <div className="w-full h-1/2 relative p-4 bottom-24">
@@ -25,7 +25,7 @@ const Expert = () => {
         {/* Local Expertise */}
         <div className="w-full h-1/4 xl:h-5/6  xl:w-1/2 flex items-center flex-col justify-center xl:justify-evenly  xl:items-end  relative">
           {/* Mobille Responsive */}
-          <h2 className="md:w-full xl:hidden text-right font-cinzel p-4 text-2xl md:text-5xl font-regular uppercase tracking-wide text-black ">
+          <h2 className="md:w-full xl:hidden text-right font-bodoni p-4 text-2xl md:text-5xl uppercase tracking-wide text-black ">
             LOCAL EXPERTISE HOUSTON CONNECTED
           </h2>
           <p className="text-base md:text-lg xl:w-full  p-4 text-black/75 mt-2 font-montserrat leading-6 font-regular tracking-wide text-right relative xl:top-24">
@@ -50,7 +50,7 @@ const Expert = () => {
               </li>
             </div>
           </ul>
-          <button className="absolute xl:w-3/4 w-5/6 h-16 hidden xl:block text-black font-light tracking-wider text-sm  transition-all duration-300 ease-in-out font-montserrat -bottom-2 xl:bottom-0 bg-white xl:right-4 bg-opacity-20 backdrop-blur-5 border border-opacity-30 border-black/50 rounded-2xl shadow-sm p-4">
+          <button className="absolute xl:w-3/4 w-5/6 h-16 hidden xl:block text-black font-light tracking-wider text-base  transition-all duration-300 ease-in-out font-montserrat -bottom-2 xl:bottom-0 bg-white xl:right-4 bg-opacity-20 backdrop-blur-5 border border-opacity-30 border-black/50 rounded-2xl shadow-sm p-4">
             For Owners
           </button>
         </div>
