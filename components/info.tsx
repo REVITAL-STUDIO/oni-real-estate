@@ -16,7 +16,6 @@ const Info = () => {
           <div className="w-full h-1/2 flex flex-col justify-center">
             <h1 className=" font-agrandir tracking-wider flex items-center font-regular p-4 mt-4 text-3xl md:text-6xl  text-black  ">
               Our Purpose{" "}
-              <div className="xl:w-36 md:w-3/4 ml-4 h-0 border-4 border-pine"></div>
             </h1>
             <h3 className="p-4 text-xl font-cinzel font-medium tracking-widest text-black/75">
               It's the little things

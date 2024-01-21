@@ -10,11 +10,11 @@ const Buyer = () => {
     <div className="w-full  bg-eggshell ">
       {/* Buyer Process */}
       <div className="w-full h-700 flex flex-col justify-center ">
-        <div className="w-[95%] xl:h-4/5 h-1/5 flex flex-col gap-x-2 justify-center bg-[url('/family.png')] bg-cover bg-center rounded-tr-xl rounded-br-xl shadow-xl">
-          <div className="text-7xl p-4 font-agrandir w-full text-mint">
+        <div className="w-[95%] h-4/5 flex flex-col gap-x-2 justify-center bg-[url('/family.png')] bg-cover bg-center rounded-tr-xl rounded-br-xl shadow-xl">
+          <div className="md:text-7xl text-5xl p-4 font-agrandir w-full text-mint">
             Buyer Process
           </div>
-          <h2 className="md:text-base w-3/4 text-white font-montserrat font-medium tracking-widest  p-4">
+          <h2 className="md:text-base w-3/4 text-sm text-white font-montserrat font-medium tracking-widest  p-4">
             We Know the Ropes, Let Us Guide You to your Dream Home. Our
             dedicated team is committed to guiding you through every step of the
             home buying process. From understanding your unique preferences to
@@ -25,12 +25,12 @@ const Buyer = () => {
       </div>
       <div className="w-full h-screen ">
         {/* Analyze */}
-        <div className="w-[100%] h-full  flex relative">
-          <div className="w-1/2 h-3/4 flex flex-col justify-evenly items-center">
-            <h2 className="font-agrandir text-6xl tracking-wider font-bold">
+        <div className="w-[100%] xl:w-[95%] h-full border  flex flex-col xl:flex-row relative">
+          <div className="xl:w-3/4 w-full xl:h-3/4 h-1/3 flex xl:flex-col justify-around xl:items-center px-4">
+            <h2 className="font-agrandir text-5xl md:text-6xl mb-4 tracking-wider font-bold">
               Analyze
             </h2>
-            <div className="rounded-full bg-forest h-96 w-96 drop-shadow-lg flex justify-center items-center pulse-btn">
+            <div className="rounded-full bg-forest xl:h-96 xl:w-96 h-44 w-44 drop-shadow-lg flex justify-center items-center pulse-btn">
               <svg
                 width="254"
                 height="254"
@@ -61,18 +61,18 @@ const Buyer = () => {
               </svg>
             </div>
           </div>
-          <div className="w-1/2 h-5/6 flex flex-col justify-end">
-            <h1 className="mb-4 text-6xl font-montserrat text-black font-bold tracking-wide">
+          <div className="xl:w-1/2 w-full xl:h-5/6 h-full flex flex-col justify-evenly  xl:justify-end">
+            <h1 className="p-4 xl:p-0 xl:mb-4 text-2xl xl:text-6xl font-montserrat text-black font-bold tracking-wide">
               All in the Details.
             </h1>{" "}
-            <p className="mb-4 text-montserrat font-regular tracking-wider text-black/60 w-5/6">
+            <p className="p-4 xl:p-0 xl:mb-4 text-sm xl:text-base text-montserrat font-regular tracking-wider text-black/60 w-5/6">
               Leveraging decades of industry experience, our real estate
               expertise allows us to create unique opportunities and deliver
               exceptional value. Our dedicated development team manages projects
               from concept to completion, ensuring collaboration with
               consultants, local stakeholders, and government entities.{" "}
             </p>
-            <ul className="w-3/4 h-1/3 flex flex-col justify-around text-xl font-cinzel tracking-wider">
+            <ul className="w-3/4 xl:h-2/5 h-1/2 flex flex-col justify-around text-sm xl:text-xl font-montserrat tracking-wider p-4 xl:p-0 xl:mb-4">
               <li className="border-t border-b border-black py-4">
                 Select your Real Estate Agent
               </li>
@@ -85,11 +85,11 @@ const Buyer = () => {
             </ul>
           </div>
           {/* Next Button */}
-          <button className="absolute top-1/2 right-4 w-16 h-16 p-4 rounded-full border border-black flex justify-center items-center">
+          <button className="absolute top-1/2  right-4 w-12 h-12 xl:w-16 xl:h-16 p-4 rounded-full border border-black flex justify-center items-center">
             <FontAwesomeIcon
               icon={faChevronRight}
               size="lg"
-              className="w-8 h-8"
+              className="md:w-8 md:h-8 w-6 h-6"
             />
           </button>
         </div>

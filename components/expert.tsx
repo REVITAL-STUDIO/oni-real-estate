@@ -25,7 +25,7 @@ const Expert = () => {
         {/* Local Expertise */}
         <div className="w-full h-1/4 xl:h-5/6  xl:w-1/2 flex items-center flex-col justify-center xl:justify-evenly  xl:items-end  relative">
           {/* Mobille Responsive */}
-          <h2 className="md:w-full xl:hidden text-right font-bodoni p-4 text-2xl md:text-5xl uppercase tracking-wide text-black ">
+          <h2 className="md:w-full xl:hidden text-right font-agrandir p-4 text-2xl md:text-5xl uppercase tracking-wide text-black ">
             LOCAL EXPERTISE HOUSTON CONNECTED
           </h2>
           <p className="text-base md:text-lg xl:w-full  p-4 text-black/75 mt-2 font-montserrat leading-6 font-regular tracking-wide text-right relative xl:top-24">
