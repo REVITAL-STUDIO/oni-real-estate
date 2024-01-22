@@ -65,3 +65,16 @@
   .menu-link:hover {
     color: #00ffcc; /* Change this to your desired hover color */
   }
+
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 12px; /* Adjust the width as needed */
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }

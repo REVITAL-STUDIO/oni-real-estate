@@ -26,11 +26,11 @@ const Buyer = () => {
       <div className="w-full h-screen ">
         {/* Analyze */}
         <div className="w-[100%] xl:w-[95%] h-full border  flex flex-col xl:flex-row relative">
-          <div className="xl:w-3/4 w-full xl:h-3/4 h-1/3 flex xl:flex-col justify-around xl:items-center px-4">
-            <h2 className="font-agrandir text-5xl md:text-6xl mb-4 tracking-wider font-bold">
+          <div className="xl:w-1/2 w-full xl:h-3/4 h-1/3 flex xl:flex-col xl:justify-around justify-between items-center px-4">
+            <h2 className="font-agrandir text-4xl md:text-6xl lg:8xl mb-4 tracking-wider font-bold">
               Analyze
             </h2>
-            <div className="rounded-full bg-forest xl:h-96 xl:w-96 h-44 w-44 drop-shadow-lg flex justify-center items-center pulse-btn">
+            <div className="rounded-full bg-forest md:h-96 md:w-96  h-44 w-44 drop-shadow-lg flex justify-center items-center pulse-btn">
               <svg
                 width="254"
                 height="254"
@@ -61,18 +61,18 @@ const Buyer = () => {
               </svg>
             </div>
           </div>
-          <div className="xl:w-1/2 w-full xl:h-5/6 h-full flex flex-col justify-evenly  xl:justify-end">
-            <h1 className="p-4 xl:p-0 xl:mb-4 text-2xl xl:text-6xl font-montserrat text-black font-bold tracking-wide">
+          <div className="xl:w-1/2 w-full xl:h-5/6 h-full flex flex-col justify-evenly  xl:justify-end ">
+            <h1 className="p-4 xl:p-0 xl:mb-4 text-2xl md:text-4xl lg:text-6xl xl:text-4xl font-montserrat text-black font-medium tracking-wide">
               All in the Details.
             </h1>{" "}
-            <p className="p-4 xl:p-0 xl:mb-4 text-sm xl:text-base text-montserrat font-regular tracking-wider text-black/60 w-5/6">
+            <p className="p-4 xl:p-0 xl:mb-4 text-sm  md:text-lg lg:text-2xl xl:text-base text-montserrat font-regular tracking-wider text-black/60 w-5/6">
               Leveraging decades of industry experience, our real estate
               expertise allows us to create unique opportunities and deliver
               exceptional value. Our dedicated development team manages projects
               from concept to completion, ensuring collaboration with
               consultants, local stakeholders, and government entities.{" "}
             </p>
-            <ul className="w-3/4 xl:h-2/5 h-1/2 flex flex-col justify-around text-sm xl:text-xl font-montserrat tracking-wider p-4 xl:p-0 xl:mb-4">
+            <ul className="w-3/4 xl:h-2/5 h-1/2 flex flex-col justify-around text-sm md:text-base lg:text-xl font-montserrat tracking-wider p-4 xl:p-0 xl:mb-4">
               <li className="border-t border-b border-black py-4">
                 Select your Real Estate Agent
               </li>
@@ -85,11 +85,11 @@ const Buyer = () => {
             </ul>
           </div>
           {/* Next Button */}
-          <button className="absolute top-1/2  right-4 w-12 h-12 xl:w-16 xl:h-16 p-4 rounded-full border border-black flex justify-center items-center">
+          <button className="absolute top-1/2 hover:bg-forest hover:text-pine duration-200 ease-in-out right-4 w-12 h-12 xl:w-16 xl:h-16 p-4 rounded-full border border-black flex justify-center items-center">
             <FontAwesomeIcon
               icon={faChevronRight}
               size="lg"
-              className="md:w-8 md:h-8 w-6 h-6"
+              className="md:w-8 md:h-8 w-6 h-6 "
             />
           </button>
         </div>

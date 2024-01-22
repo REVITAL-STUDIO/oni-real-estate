@@ -115,63 +115,36 @@ const Homes = () => {
   }, [propertyInfo]);
 
   return (
-    <div>
-      <div className="w-fit h-1/2 border">
-        <h1 className="p-4 my-4 font-cinzel text-4xl">Available Properties</h1>
+    <div className="w-3/5 h-full flex flex-col items-center overflow-y-auto custom-scrollbar">
+      <div className="font-agrandir h-1/6 text-black w-[95%] flex items-center ">
+        <h2 className="p-4 text-4xl border-b border-black tracking-wide">
+          Available Properties
+        </h2>
       </div>
-      <div className="flex justify-evenly items-center flex-wrap gap-y-4 w-full h-full">
+      <div className="flex flex-wrap justify-around gap-y-4 w-full h-2/3 p-4">
         {homes.map((homesFile, index) => (
-          <div
-            className=" border border-red-500 shadow-md w-[40%] flex flex-col "
-            key={index}
-          >
+          <div className="w-[50%] flex flex-col p-4" key={index}>
             <div
               onClick={() => handlePropertyInfo(index)}
-              className=" relative border-4 border-green-500 w-[100%] "
+              className=" relative  w-[100%] my-4"
             >
               <Image
                 src={homesFile}
-                className=" w-[100%] object-cover rounded-tr-lg rounded-tl-lg"
+                className=" w-[100%] object-cover rounded-lg brightness-90 shadow-md"
                 alt="homes"
               />
-              <div className="absolute w-full h-full bg-black/50 opacity-0 duration-300 flex justify-center items-center hover:opacity-100 hover:rounded-t-lg hover:flex top-0 ease-in-out hover:justify-center hover:items-center">
+              <div className="absolute w-full h-full bg-black/50 opacity-0 duration-300 flex justify-center items-center hover:opacity-100 hover:rounded-lg hover:flex top-0 ease-in-out hover:justify-center hover:items-center">
                 <p className="text-white text-xl font-regular font-montserrat underline underline-offset-8">
                   View Home
                 </p>
               </div>
             </div>
             {/* Housing Cards */}
-            <div className="w-full h-[25%] flex flex-col border font-medium text-gray-600 ">
-              <div className="flex flex-col w-fit h-full justify-center ml-4 ">
-                <h2 className="text-md font-montserrat  font-medium mt-4">
+            <div className="w-full  flex flex-col font-medium text-gray-600 ">
+              <div className="flex flex-col w-fit justify-center  ">
+                <h2 className="text-sm font-montserrat font-regular mt-4">
                   {addresses[index]}
                 </h2>
-                <p className="text-xs font-montserrat   font-normal mt-4">{`${infoEstate[index].beds} Beds | ${infoEstate[index].baths} Baths |  ${infoEstate[index].sqft} sqft`}</p>
-                {/* Boomark */}
-                <div className="w-full flex mt-4">
-                  <button
-                    className="w-fit h-8 flex text-right  items-center"
-                    onClick={() => handleBookmarkToggle(index)}
-                  >
-                    <FontAwesomeIcon
-                      className="hover:text-forest text-black duration-100"
-                      icon={faBookmark}
-                      size="lg"
-                      style={{ color: isBookmarked(index) ? "red" : "" }}
-                    />
-                  </button>
-                  <button
-                    className="w-fit h-8 flex text-right ml-4 items-center"
-                    onClick={() => handleBookmarkToggle(index)}
-                  >
-                    <FontAwesomeIcon
-                      className="hover:text-forest text-black duration-100"
-                      icon={faShareNodes}
-                      size="lg"
-                      style={{ color: isBookmarked(index) ? "red" : "" }}
-                    />
-                  </button>
-                </div>
               </div>
               {/* address and bookmark */}
               <AnimatePresence>

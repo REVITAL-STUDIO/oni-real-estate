@@ -4,6 +4,7 @@ import Footer from "@/components/footer";
 import Google from "@/components/google";
 import Homes from "@/components/homes";
 import Nav from "@/components/navbar";
+import MLS from "@/components/mls";
 
 export default function Listings() {
   return (
@@ -11,8 +12,9 @@ export default function Listings() {
       <Nav />
       <div className="w-full h-[10%]"></div>
       <Listing />
-      <Google />
-      <Homes />
+      <div className="w-full h-[5%]"></div>
+
+      <MLS />
       <Footer />
     </div>
   );

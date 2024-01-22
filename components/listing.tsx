@@ -162,56 +162,37 @@ const Listing = () => {
 
   return (
     <div className="w-full xl:flex h-16 hidden  font-montserrat bg-white">
-      {/* Search Bar */}
-      <form className="w-80 border border-r h-16 flex justify-between items-center ">
-        <div className="w-6 h-6 ml-4">
-          <FontAwesomeIcon icon={faMagnifyingGlass} size="sm" />
-        </div>
-
-        <input
-          className="bg-transparent w-full ml-2 text-black font-thin text-md flex justify-center items-center  outline-none"
-          type="text"
-          placeholder="Address, City, Neighborhood"
-        />
-      </form>
       {/* Toggle Button RENT and SALE */}
-      <div className="w-80 border-r border flex justify-center items-center transition-all">
-        <div className="w-2/3 h-11 relative bg-gray-600 rounded-full text-xs flex justify-around items-center shadow-sm shadow-black">
+      <div className="w-80  flex justify-center items-center transition-all">
+        <div className="w-2/3 h-11 relative  text-lg uppercase tracking-wider flex justify-around items-center ">
           <span
-            className={`text-white cursor-pointer ${
-              selectedOption === "For Sale" ? "font-bold z-10 " : ""
+            className={`text-gray-500/50 cursor-pointer ${
+              selectedOption === "For Sale" ? "font-bold z-10 text-black" : ""
             }`}
             onClick={() => handleOptionClick("For Sale")}
           >
-            For Sale
+            Sale
           </span>
           <span
-            className={`text-white cursor-pointer ${
-              selectedOption === "For Rent" ? "font-bold z-10 " : ""
+            className={`text-gray-500/50 cursor-pointer ${
+              selectedOption === "For Rent" ? "font-bold z-10 text-black" : ""
             }`}
             onClick={() => handleOptionClick("For Rent")}
           >
-            For Rent
+            Rent
           </span>
           <div
-            className="w-[50%] h-11 shadow-md bg-black absolute rounded-full top-1/2 transform -translate-y-1/2
+            className="w-[50%] h-11  border-b border-black absolute  top-1/2 transform -translate-y-1/2
                       duration-200 ease-in"
             style={{ left: selectedOption === "For Rent" ? "50%" : "0%" }}
           />
         </div>
       </div>
       {/* filters */}
-      <div className=" w-2/3 h-full border  flex justify-evenly items-center">
+      <div className=" w-2/3 h-full  flex justify-evenly items-center">
         {/* Prices */}
         <div className="relative">
           <div className="w-56 h-10 z-50 shadow-md rounded-lg flex justify-center items-center">
-            <div className="w-1/6 ml-2">
-              <FontAwesomeIcon
-                icon={faDollarSign}
-                size="sm"
-                className="text-black"
-              />
-            </div>
             <span className="text-xs  w-[100%] text-center">
               {selectedPrice.length === 0
                 ? "Price Amount"
@@ -274,9 +255,6 @@ const Listing = () => {
         {/* Baths */}
         <div className="relative">
           <div className="w-32 h-10  z-10 shadow-lg  rounded-lg flex justify-center items-center">
-            <div className="w-1/6 ml-2">
-              <FontAwesomeIcon icon={faBath} className="text-black" />
-            </div>
             <span className="text-xs w-5/6 text-center">{`${
               selectedBaths || "0"
             }+ Baths`}</span>{" "}
@@ -303,13 +281,6 @@ const Listing = () => {
         {/* Location */}
         <div className="relative">
           <div className="w-32 h-10 shadow-lg z-10 rounded-lg flex justify-center items-center">
-            <div className="w-1/6 ml-2">
-              <FontAwesomeIcon
-                icon={faLocationPin}
-                size="sm"
-                className="text-black"
-              />
-            </div>
             <span className="text-xs w-5/6 text-center">
               {setLocation.length === 0 ? "City" : setLocation[0].label}
             </span>{" "}
@@ -336,9 +307,6 @@ const Listing = () => {
         {/* Property Type */}
         <div className="relative">
           <div className="w-32 h-10 z-10 rounded-lg flex shadow-lg justify-around items-center">
-            <div className="w-1/6 ml-2">
-              <FontAwesomeIcon icon={faCity} />
-            </div>
             <span className="text-xs w-5/6 text-center">
               {setProperty.length === 0 ? "Property" : setProperty[0].label}
             </span>{" "}

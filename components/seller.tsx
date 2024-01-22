@@ -15,7 +15,7 @@ const Seller = () => {
       {/* Info */}
       <div className="xl:w-2/5 w-1/3 flex flex-col justify-end items-start">
         <h2 className="p-4 text-2xl md:text-6xl">Why Choose Us?</h2>
-        <p className="font-montserrat p-4 text-black/60 text-xs font-medium xl:text-base">
+        <p className="font-montserrat p-4 text-black/60 text-xs md:text-sm lg:text-lg font-medium xl:text-base">
           We understand that selling your home is a significant milestone, and
           we're here to ensure that you not only achieve but surpass your
           selling goals. Our team of seasoned real estate experts combines
@@ -37,7 +37,7 @@ const Seller = () => {
           <h2 className="xl:text-7xl text-5xl text-mint font-agrandir text-right p-4">
             Seller Process
           </h2>
-          <p className="text-right w-5/6 text-white text-sm md:text-base p-4 text-montserrat tracking-wider">
+          <p className="text-right w-5/6 text-white text-sm md:text-xl p-4 text-montserrat tracking-wider">
             Our in-depth knowledge of the local real estate market empowers us
             to provide accurate pricing strategies. We analyze trends and
             leverage our understanding of the area to maximize the value of your

@@ -59,11 +59,7 @@ const Nav = () => {
         animate="visible"
         className="w-full m-auto flex justify-between items-center p-4 text-white"
       >
-        <Link
-          href="/"
-          className="font-cinzel text-4xl md:text-5xl"
-          style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.3)" }}
-        >
+        <Link href="/" className="font-agrandir text-4xl md:text-5xl">
           Oni
         </Link>
         <ul
@@ -134,17 +130,17 @@ const Nav = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ ease: "easeInOut", duration: 0.5 }}
-              className="xl:hidden absolute top-0  right-0 bottom-0 flex justify-center items-center w-full  h-screen bg-white/75  "
+              className="xl:hidden absolute top-0  right-0 bottom-0 flex justify-center items-center w-full  h-screen bg-forest  "
             >
               <motion.div
                 initial={{ opacity: 0, x: 100 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 100 }}
                 transition={{ ease: "easeInOut", duration: 0.5 }}
-                className="xl:hidden absolute top-0  right-0 bottom-0 flex justify-end items-center w-3/4 rounded-tl-3xl rounded-bl-3xl h-screen bg-shadow shadow-xl "
+                className="xl:hidden absolute top-0  right-0 bottom-0 flex justify-end items-center w-full rounded-tl-full  h-screen bg-black shadow-xl "
               >
                 <ul
-                  className={`text-right gap-y-12 h-fit font-cinzel w-full 
+                  className={`text-right gap-y-12 h-fit font-agrandir w-full 
           `}
                 >
                   <div className="absolute w-1/2 h-10 top-5 left-6 flex">
@@ -152,16 +148,16 @@ const Nav = () => {
                     <div className="w-10 h-10 rounded-full bg-forest shadow-lg"></div>
                     <div className="w-10 h-10 rounded-full bg-mint absolute left-6 shadow-lg"></div>
                   </div>
-                  <li className="relative text-right hover:text-gray-500 w-full p-4 text-2xl md:text-4xl tracking-wider font-extralight flex items-center justify-end">
+                  <li className="relative text-right hover:text-gray-500 w-full p-4 text-2xl md:text-4xl tracking-wide uppercase font-extralight flex items-center justify-end">
                     <Link href="/">Home</Link>
                   </li>
-                  <li className="relative text-right hover:text-gray-500 p-4 text-2xl md:text-4xl tracking-wider font-extralight flex items-center justify-end">
+                  <li className="relative text-right hover:text-gray-500 p-4 text-2xl md:text-4xl tracking-wide uppercase font-extralight flex items-center justify-end">
                     <Link href="/listings">Properties</Link>
                   </li>
-                  <li className="relative text-right hover:text-gray-500 p-4 text-2xl md:text-4xl tracking-wider font-extralight flex items-center justify-end">
+                  <li className="relative text-right hover:text-gray-500 p-4 text-2xl md:text-4xl tracking-wide uppercase font-extralight flex items-center justify-end">
                     <Link href="/clients">Ownership</Link>
                   </li>
-                  <li className="relative hover:text-gray-500 p-4 text-2xl md:text-4xl tracking-wider font-extralight flex items-center justify-end">
+                  <li className="relative hover:text-gray-500 p-4 text-2xl md:text-4xl tracking-wide uppercase font-extralight flex items-center justify-end">
                     <Link href="/">Saved</Link>
                   </li>
                 </ul>
