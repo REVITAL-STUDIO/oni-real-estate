@@ -10,9 +10,10 @@ export default function Listings() {
   return (
     <div className="h-screen w-full bg-white">
       <Nav />
-      <div className="w-full h-[10%]"></div>
+      <div className="w-full h-[15%]"></div>
+
       <Listing />
-      <div className="w-full h-[5%]"></div>
+      <div className="w-full h-[5%] hidden xl:block"></div>
 
       <MLS />
       <Footer />

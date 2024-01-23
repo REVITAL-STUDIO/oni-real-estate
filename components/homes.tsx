@@ -38,8 +38,8 @@ const Homes = () => {
   const addresses = [
     "123 Pinecrest Drive, Cinco Ranch, TX 77001",
     "456 Oakridge Lane, Houston, TX 77002",
-    "101 Riverbend Road, Missouri City, TX 77004",
-    "101 Riverbend Road, Missouri City, TX 77004",
+    "3015 Flatbend Road, Cypress, TX 77004",
+    "1012 Riverbend Road, Missouri City, TX 77004",
     "202 Sunset Boulevard, Pearland, TX 77005",
     "303 Lakeside Drive, Richmond, TX 77006",
   ];
@@ -56,12 +56,12 @@ const Homes = () => {
 
   //Detailed Info
   const infoEstate = [
-    { beds: 5, baths: 3, sqft: 30000 },
-    { beds: 4, baths: 2, sqft: 10000 },
+    { beds: 5, baths: 3, sqft: 3500 },
+    { beds: 4, baths: 2, sqft: 5000 },
     { beds: 6, baths: 4, sqft: 2000 },
     { beds: 3, baths: 2, sqft: 7500 },
-    { beds: 4, baths: 3, sqft: 40000 },
-    { beds: 5, baths: 4, sqft: 28000 },
+    { beds: 4, baths: 3, sqft: 4000 },
+    { beds: 5, baths: 4, sqft: 3000 },
   ];
 
   const [selectedImage, setSelectedImage] = useState<StaticImport | null>(null);
@@ -115,18 +115,13 @@ const Homes = () => {
   }, [propertyInfo]);
 
   return (
-    <div className="w-3/5 h-full flex flex-col items-center overflow-y-auto custom-scrollbar">
-      <div className="font-agrandir h-1/6 text-black w-[95%] flex items-center ">
-        <h2 className="p-4 text-4xl border-b border-black tracking-wide">
-          Available Properties
-        </h2>
-      </div>
-      <div className="flex flex-wrap justify-around gap-y-4 w-full h-2/3 p-4">
+    <div className="w-full xl:w-3/5 h-full flex flex-col items-center overflow-y-auto custom-scrollbar">
+      <div className="flex flex-wrap justify-around gap-y-4 w-full  p-4">
         {homes.map((homesFile, index) => (
-          <div className="w-[50%] flex flex-col p-4" key={index}>
+          <div className="xl:w-[50%] w-[100%] flex flex-col p-4" key={index}>
             <div
               onClick={() => handlePropertyInfo(index)}
-              className=" relative  w-[100%] my-4"
+              className=" relative w-[100%] my-4"
             >
               <Image
                 src={homesFile}
@@ -140,11 +135,12 @@ const Homes = () => {
               </div>
             </div>
             {/* Housing Cards */}
-            <div className="w-full  flex flex-col font-medium text-gray-600 ">
-              <div className="flex flex-col w-fit justify-center  ">
-                <h2 className="text-sm font-montserrat font-regular mt-4">
+            <div className="w-full h-1/2 flex flex-col font-medium text-gray-600 ">
+              <div className="flex flex-col justify-center p-4">
+                <h2 className="text-base font-montserrat font-regular mt-4 w-3/5">
                   {addresses[index]}
                 </h2>
+                <p className="font-light text-sm">{`${infoEstate[index].beds} beds | ${infoEstate[index].baths} baths |  ${infoEstate[index].sqft} sqft`}</p>
               </div>
               {/* address and bookmark */}
               <AnimatePresence>
@@ -155,14 +151,14 @@ const Homes = () => {
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
                       transition={{ ease: "easeInOut", duration: 0.5 }}
-                      className="bg-white/40 w-full h-full flex justify-center items-center relative"
+                      className="bg-eggshell w-full h-full flex justify-center items-center relative"
                     >
                       <button
                         onClick={handleClose}
                         className="w-fit h-fit absolute top-2 right-5"
                       >
                         <FontAwesomeIcon
-                          className="hover:text-black/50 text-black duration-100"
+                          className="hover:text-black/50 text-white duration-100"
                           icon={faClose}
                           size="lg"
                         />
@@ -172,26 +168,29 @@ const Homes = () => {
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -100 }}
                         transition={{ ease: "easeInOut", duration: 0.5 }}
-                        className="w-5/6 h-5/6 bg-black/75 rounded-2xl shadow-xl flex flex-col justify-evenly items-center"
+                        className="w-5/6 h-5/6 bg-white rounded-2xl shadow-md flex flex-col justify-evenly items-center"
                       >
                         {/* Home and Description */}
-                        <div className="w-full h-3/5 flex justify-around items-center">
-                          <div className="w-3/5 h-full shadow-lg shadow-pine/20 rounded-lg ">
+                        <div className="w-full h-full flex flex-col xl:flex-row justify-around items-center">
+                          <div className="w-1/2 h-5/6 rounded-lg p-4 ">
                             <Image
                               src={
                                 selectedImage !== null
                                   ? selectedImage
                                   : "/default-image-url.jpg"
                               }
-                              className="rounded-lg w-[100%] h-[100%] brightness-90"
+                              className="rounded-lg w-[100%] h-[100%] brightness-90 shadow-md object-cover"
                               alt="homes"
                             />
                           </div>
-                          <div className="w-1/5 h-full text-white">
-                            <h2 className="text-2xl font-montserrat tracking-wide text-pine">
-                              Description
+                          <div className="w-2/5 h-5/6 text-black">
+                            <h2 className="text-xl font-agrandir tracking-wider ">
+                              Resident Information
                             </h2>
-                            <p className="text-xs mt-2 font-montserrat">
+                            <h2 className=" font-light text-pine font-montserrat tracking-wide text-4xl py-2">
+                              {selectedPrices}
+                            </h2>
+                            <p className="text-xs tracking-wider font-montserrat font-regular text-justify w-3/4 py-2">
                               Lorem ipsum dolor sit amet, consectetur adipiscing
                               elit, sed do eiusmod tempor incididunt ut labore
                               et dolore magna aliqua. Ut enim ad minim veniam,
@@ -203,55 +202,28 @@ const Homes = () => {
                               culpa qui officia deserunt mollit anim id est
                               laborum.
                             </p>
-                            <h2 className="text-lg text-white montserrat font-extralight mt-4">
+                            <h2 className="text-xs xl:text-base font-montserrat font-regular py-4">
                               {selectedAddress}
                             </h2>
-                            <p className="text-lg text-white montserrat font-extralight mt-4">
+                            <p className="text-base font-montserrat font-extralight py-4">
                               {selectedInfo
                                 ? `${selectedInfo.beds} Beds | ${selectedInfo.baths} Baths | ${selectedInfo.sqft} sqft`
                                 : "No information available"}
                             </p>{" "}
                             {/* Phone and Email */}
-                            <div className="w-full h-1/5  flex  items-center">
-                              <button className="w-16 h-16 border-4 border-pine rounded-full shadow-lg flex justify-center items-center">
-                                <FontAwesomeIcon
-                                  icon={faMobile}
-                                  className="w-6  h-6 text-white"
-                                />
+                            <div className="w-full h-1/6  flex  items-center">
+                              <button className="w-1/2 h-12 border border-border rounded-xl shadow-md flex justify-center items-center">
+                                Contact Us.
                               </button>
-                              <button className="w-16 h-16 ml-4 border-4 border-pine rounded-full shadow-lg flex justify-center items-center">
-                                <FontAwesomeIcon
-                                  icon={faPaperPlane}
-                                  className="w-6  h-6 text-white"
-                                />
-                              </button>
+                            </div>
+                            <div className="w-full h-1/5 bg-black flex shadow-lg">
+                              <section className="w-full flex items-center ">
+                                <div className="h-full w-2/5 border border-red-600"></div>
+                              </section>
                             </div>
                           </div>
                         </div>
                         {/* Card Info */}
-                        <div className="w-full h-1/5 bg-black/75 flex shadow-lg">
-                          <div className="w-1/3 h-full text-white flex justify-center item-center border-r border-white/30">
-                            <div className="w-full flex flex-col justify-center items-center">
-                              <div className="w-fit">
-                                <h2
-                                  className=" font-extralight text-pine font-montserrat tracking-wide text-4xl "
-                                  style={{
-                                    textShadow:
-                                      "0px 4px 4px rgba(0, 0, 0, 0.3)",
-                                  }}
-                                >
-                                  {selectedPrices}
-                                </h2>
-                              </div>
-                            </div>
-                          </div>
-                          {/* slideshow */}
-                          <section className="w-2/3 h-full flex justify-center items-center">
-                            <section className="w-5/6 h-3/4">
-                              <div className="h-full w-1/4 border"></div>
-                            </section>
-                          </section>
-                        </div>
                       </motion.section>
                     </motion.div>
                   </div>

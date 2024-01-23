@@ -4,7 +4,10 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "public/logo-real.png";
+import mobileLogo from "public/oni-moon.png";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 const Nav = () => {
   const [color, setColor] = useState<boolean>(false);
@@ -60,10 +63,14 @@ const Nav = () => {
         className="w-full m-auto flex justify-between items-center p-4 text-white"
       >
         <Link href="/" className="font-agrandir text-4xl md:text-5xl">
-          Oni
+          <Image
+            src={mobileLogo}
+            alt="oni real estate logo"
+            className="invert w-16"
+          />
         </Link>
         <ul
-          className={` text-white text-xs hidden  font-light font-montserrat h-full xl:flex justify-around uppercase tracking-widest items-center   w-auto transition-colors duration-300 ease-in
+          className={` text-white text-sm hidden  font-light font-montserrat h-full xl:flex justify-around uppercase tracking-widest items-center   w-auto transition-colors duration-300 ease-in
           `}
         >
           <li className="relative p-4">
@@ -109,12 +116,7 @@ const Nav = () => {
             }`}
           ></span>
           <span
-            className={`block w-1/2 my-0.5 border border-white ${
-              openMenu ? "hidden" : ""
-            } transition-opacity duration-300 ease-in-out relative top-0.5`}
-          ></span>
-          <span
-            className={`block w-1/4 my-0.5 border border-white ${
+            className={`block w-3/4 my-0.5 border border-white ${
               openMenu
                 ? "-rotate-45 w-3/4 absolute top-2/5 transition-transform duration-300 ease-in-out"
                 : "transition-transform duration-300 ease-in-out relative top-0.5"
@@ -130,37 +132,56 @@ const Nav = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ ease: "easeInOut", duration: 0.5 }}
-              className="xl:hidden absolute top-0  right-0 bottom-0 flex justify-center items-center w-full  h-screen bg-forest  "
+              className="xl:hidden absolute top-0  right-0 bottom-0  flex justify-center items-center w-full  h-screen bg-mist  "
             >
               <motion.div
-                initial={{ opacity: 0, x: 100 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 100 }}
-                transition={{ ease: "easeInOut", duration: 0.5 }}
-                className="xl:hidden absolute top-0  right-0 bottom-0 flex justify-end items-center w-full rounded-tl-full  h-screen bg-black shadow-xl "
+                initial={{ opacity: 0, y: -100 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -100 }}
+                transition={{ ease: "easeInOut", duration: 0.2 }}
+                className="xl:hidden absolute top-0   right-0 bottom-0 w-full h-screen bg-black shadow-xl "
               >
+                <Image
+                  src={mobileLogo}
+                  alt="oni real estate logo"
+                  className="invert w-24 p-4"
+                />
                 <ul
-                  className={`text-right gap-y-12 h-fit font-agrandir w-full 
+                  className={` gap-y-4  flex flex-col justify-center font-agrandir w-full h-1/2
           `}
                 >
-                  <div className="absolute w-1/2 h-10 top-5 left-6 flex">
-                    <div className="w-10 h-10 rounded-full absolute left-3 bg-pine shadow-lg"></div>
-                    <div className="w-10 h-10 rounded-full bg-forest shadow-lg"></div>
-                    <div className="w-10 h-10 rounded-full bg-mint absolute left-6 shadow-lg"></div>
-                  </div>
-                  <li className="relative text-right hover:text-gray-500 w-full p-4 text-2xl md:text-4xl tracking-wide uppercase font-extralight flex items-center justify-end">
-                    <Link href="/">Home</Link>
+                  <li className="relative   w-full p-4 text-lg md:text-4xl tracking-wider font-extralight  ">
+                    <Link href="/" className="w-full flex justify-between">
+                      Home <FontAwesomeIcon icon={faAngleRight} />
+                    </Link>
                   </li>
-                  <li className="relative text-right hover:text-gray-500 p-4 text-2xl md:text-4xl tracking-wide uppercase font-extralight flex items-center justify-end">
-                    <Link href="/listings">Properties</Link>
+                  <li className="relative  flex justify-between  w-full p-4 text-lg md:text-4xl tracking-wider font-extralight  ">
+                    <Link href="/" className="w-full flex justify-between">
+                      Saved <FontAwesomeIcon icon={faAngleRight} />
+                    </Link>
                   </li>
-                  <li className="relative text-right hover:text-gray-500 p-4 text-2xl md:text-4xl tracking-wide uppercase font-extralight flex items-center justify-end">
-                    <Link href="/clients">Ownership</Link>
+                  <li className="relative  flex justify-between  w-full p-4 text-lg md:text-4xl tracking-wider font-extralight  ">
+                    <Link
+                      href="/clients"
+                      className="w-full flex justify-between"
+                    >
+                      Ownership <FontAwesomeIcon icon={faAngleRight} />
+                    </Link>
                   </li>
-                  <li className="relative hover:text-gray-500 p-4 text-2xl md:text-4xl tracking-wide uppercase font-extralight flex items-center justify-end">
-                    <Link href="/">Saved</Link>
+                  <li className="relative  flex justify-between  w-full p-4 text-lg md:text-4xl tracking-wider font-extralight  ">
+                    <Link
+                      href="/listings"
+                      className="w-full flex justify-between"
+                    >
+                      Properties <FontAwesomeIcon icon={faAngleRight} />
+                    </Link>
                   </li>
                 </ul>
+                <div className="w-full flex justify-center items-center">
+                  <button className="font-agrandir w-3/4 h-1/3 bg-white text-black border border-white p-4 text-lg rounded-xl">
+                    Contact Us.
+                  </button>
+                </div>
               </motion.div>
             </motion.div>
           )}
