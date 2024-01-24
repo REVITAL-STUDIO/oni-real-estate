@@ -66,37 +66,37 @@ const Nav = () => {
           <Image
             src={mobileLogo}
             alt="oni real estate logo"
-            className="invert w-16"
+            className="invert w-20"
           />
         </Link>
         <ul
-          className={` text-white text-sm hidden  font-light font-montserrat h-full xl:flex justify-around uppercase tracking-widest items-center   w-auto transition-colors duration-300 ease-in
+          className={` text-white text-sm hidden  font-light font-montserrat h-full xl:flex justify-between uppercase tracking-widest items-center gap-x-8  w-auto transition-colors duration-300 ease-in
           `}
         >
           <li className="relative p-4">
             <Link href="/">
-              <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-8 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-mint before:via-mint/30 before:to-mint hover:before:w-full hover:before:opacity-100">
+              <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-10 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-white before:via-white/30 before:to-white hover:before:w-full hover:before:opacity-100">
                 Home
               </span>
             </Link>
           </li>
           <li className="relative p-4">
             <Link href="/listings">
-              <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-8 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-mint before:via-mint/30 before:to-mint hover:before:w-full hover:before:opacity-100">
+              <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-10 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-white before:via-white/30 before:to-white hover:before:w-full hover:before:opacity-100">
                 Properties
               </span>
             </Link>
           </li>
           <li className="relative p-4">
             <Link href="/clients">
-              <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-8 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-mint before:via-mint/30 before:to-mint hover:before:w-full hover:before:opacity-100">
+              <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-10 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-white before:via-white/30 before:to-white hover:before:w-full hover:before:opacity-100">
                 Ownership
               </span>
             </Link>
           </li>
           <li className="relative p-4">
             <Link href="/">
-              <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-8 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-mint before:via-mint/30 before:to-mint hover:before:w-full hover:before:opacity-100">
+              <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-10 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-white before:via-white/30 before:to-white hover:before:w-full hover:before:opacity-100">
                 Saved
               </span>
             </Link>
