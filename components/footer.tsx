@@ -29,26 +29,26 @@ const Footer = () => {
             </div>
             {/* Contact & Social Media */}
             <div className="text-white/75 w-full  h-fit    flex flex-col">
-              <h2 className="text-md tracking-wider font-agrandir font-medium p-4">
+              <h2 className="text-md tracking-wider md:text-xl font-agrandir font-medium p-4">
                 Contact
               </h2>
-              <p className="font-light text-sm font-montserrat tracking-wider px-4">
+              <p className="font-light text-sm font-montserrat md:text-xl tracking-wider px-4">
                 info@oniprofessionals.com
               </p>
             </div>
             <div className="text-white/75 w-full h-fit flex flex-col tracking-wider">
-              <h2 className="text-md tracking-wider font-agrandir font-medium p-4">
+              <h2 className="text-md tracking-wider font-agrandir md:text-xl font-medium p-4">
                 Phone
               </h2>
-              <p className="font-light text-sm font-montserrat w-full px-4">
+              <p className="font-light text-sm font-montserrat md:text-xl w-full px-4">
                 +1 (281) 123-4567
               </p>
             </div>
             <div className="text-white/75 w-full h-fit flex flex-col tracking-wider">
-              <h2 className="text-md tracking-wider font-agrandir font-medium p-4">
+              <h2 className="text-md tracking-wider font-agrandir md:text-xl font-medium p-4">
                 Location
               </h2>
-              <p className="font-light text-sm font-montserrat w-full px-4">
+              <p className="font-light text-sm font-montserrat md:text-xl w-full px-4">
                 1234 SANTA MONICA BLVD., HOUSTON, TX 12345
               </p>
             </div>

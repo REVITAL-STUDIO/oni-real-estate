@@ -11,10 +11,8 @@ export default function Listings() {
     <div className="h-screen w-full bg-white">
       <Nav />
       <div className="w-full h-[15%]"></div>
-
       <Listing />
       <div className="w-full h-[5%] hidden xl:block"></div>
-
       <MLS />
       <Footer />
     </div>
