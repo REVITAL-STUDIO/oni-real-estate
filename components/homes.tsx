@@ -76,10 +76,19 @@ const Homes = () => {
   };
 
   //Save Property
-  const [saveProp, savePropInfo] = useState(false);
+  const [saveProp, setSaveProp] = useState<boolean[]>([]);
 
-  const handleSavedToggle = () => {
-    savePropInfo((prev) => !prev);
+  // Function to handle the click event on a button to toggle save state
+  const handleSavedToggle = (index: number) => {
+    // Update the saveProp array
+    setSaveProp((prevSaveProp) => {
+      // Create a copy of the current saveProp array
+      const newSaveProp = [...prevSaveProp];
+      // Toggle the saved state of the item at the clicked index
+      newSaveProp[index] = !newSaveProp[index];
+      // Return the updated array, which will become the new state
+      return newSaveProp;
+    });
   };
 
   //Open Info Page & close
@@ -128,11 +137,11 @@ const Homes = () => {
                 </h2>
                 <p className="font-light p-2 text-sm">{`${infoEstate[index].beds} beds | ${infoEstate[index].baths} baths |  ${infoEstate[index].sqft} sqft`}</p>
                 <button
-                  onClick={handleSavedToggle}
+                  onClick={() => handleSavedToggle(index)}
                   className="w-20 h-10 font-agrandir tracking-wide flex justify-evenly items-center p-2"
                 >
                   <span>
-                    {saveProp ? (
+                    {saveProp[index] ? (
                       <FontAwesomeIcon
                         icon={faCheck}
                         size="lg"
@@ -146,7 +155,7 @@ const Homes = () => {
                       />
                     )}
                   </span>
-                  <span>{saveProp ? "Saved" : "Save"}</span>
+                  <span>{saveProp[index] ? "Saved" : "Save"}</span>
                 </button>
               </div>
               {/* address and bookmark */}
