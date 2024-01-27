@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import GoogleIcon from "public/google.png";
+import FacebookIcon from "public/facebook.png";
 import Logo from "public/logo-real.png";
 import mobileLogo from "public/oni-moon.png";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
@@ -45,10 +47,26 @@ const Nav = () => {
 
   const toggleButton = () => {
     setOpenMenu((prev) => !prev);
-
-    // Toggle scrolling based on the openMenu state
-    document.body.style.overflow = !openMenu ? "hidden" : "auto";
   };
+
+  //Log in page
+
+  const [openLogin, setOpenLogin] = useState(false);
+
+  const toggleLogin = () => {
+    setOpenLogin(!openLogin);
+  };
+
+  // Set overflow property when component mounts and unmounts
+  useEffect(() => {
+    document.body.style.overflow = openLogin ? "hidden" : "auto";
+    document.body.style.overflow = openMenu ? "hidden" : "auto";
+
+    // Cleanup function
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [openLogin, openMenu]);
 
   return (
     <div
@@ -70,7 +88,7 @@ const Nav = () => {
           />
         </Link>
         <ul
-          className={` text-white text-sm hidden  font-light font-montserrat h-full xl:flex justify-between uppercase tracking-widest items-center gap-x-8  w-auto transition-colors duration-300 ease-in
+          className={` text-white text-sm hidden  font-light font-montserrat h-full xl:flex justify-between  tracking-widest items-center gap-x-8  w-auto transition-colors duration-300 ease-in
           `}
         >
           <li className="relative p-4">
@@ -95,11 +113,11 @@ const Nav = () => {
             </Link>
           </li>
           <li className="relative p-4">
-            <Link href="/">
+            <button onClick={toggleLogin}>
               <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-10 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-white before:via-white/30 before:to-white hover:before:w-full hover:before:opacity-100">
-                Saved
+                Login
               </span>
-            </Link>
+            </button>
           </li>
         </ul>
 
@@ -156,8 +174,8 @@ const Nav = () => {
                     </Link>
                   </li>
                   <li className="relative  flex justify-between  w-full p-4 text-lg md:text-4xl tracking-wider font-extralight  ">
-                    <Link href="/" className="w-full flex justify-between">
-                      Saved <FontAwesomeIcon icon={faAngleRight} />
+                    <Link href="/login" className="w-full flex justify-between">
+                      Login <FontAwesomeIcon icon={faAngleRight} />
                     </Link>
                   </li>
                   <li className="relative  flex justify-between  w-full p-4 text-lg md:text-4xl tracking-wider font-extralight  ">
@@ -187,6 +205,106 @@ const Nav = () => {
           )}
         </AnimatePresence>
       </motion.div>
+
+      {/* Login Action */}
+      {openLogin && (
+        <div className=" fixed top-0 left-0 bg-black/75 w-full h-full">
+          {/* Close Button */}
+          <div className="flex justify-end w-full">
+            <button
+              onClick={() => setOpenLogin(false)}
+              className="w-8 h-8 flex flex-col relative justify-center items-center rounded-full  space-x-reverse  z-10"
+            >
+              <span
+                className={`block w-3/4 my-0.5 border absolute border-white rotate-45 transition-transform `}
+              ></span>
+              <span
+                className={`block w-3/4 my-0.5 border absolute border-white -rotate-45 transition-transform `}
+              ></span>
+            </button>
+          </div>
+          {/* Sign In/ Log In form */}
+          <div className="w-full h-full flex justify-center items-center">
+            <div className="bg-white w-1/2 h-3/4 rounded-xl shadow-lg flex flex-col items-center">
+              <div className="w-3/4 h-1/5 flex  items-center">
+                <h2 className="text-4xl font-bold p-4 tracking-wide font-agrandir">
+                  Sign in
+                </h2>
+              </div>
+              {/* Form */}
+              <form className="w-3/4 h-[85%] flex flex-col font-agrandir items-center ">
+                {/* Email */}
+                <div className="flex flex-col w-4/5">
+                  <label className="py-2">Email</label>
+                  <input
+                    className="p-2 rounded-lg text-black bg-slate-400/10"
+                    type="text"
+                    id="Email"
+                    name="Email"
+                    placeholder="Email"
+                  />
+                </div>
+                {/* Password */}
+                <div className="flex flex-col w-4/5">
+                  <label className="py-2">Password</label>
+                  <input
+                    className="p-2 rounded-lg text-black bg-slate-400/10"
+                    type="text"
+                    id="Password"
+                    name="Password"
+                    placeholder="Password"
+                  />
+                </div>
+                {/* Log In Button */}
+                <div className="flex flex-col justify-evenly w-4/5 h-1/2 my-4">
+                  <button className="p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide">
+                    Login
+                  </button>
+                  <button className="p-2 border border-black to-mint text-base text-black rounded-full tracking-wide">
+                    Register
+                  </button>
+                  <button className="tracking-wide p-2 w-fit flex justify-center items-center">
+                    Forgot Password?
+                  </button>
+                </div>
+              </form>
+              {/* Other sign in options */}
+              <div className="w-3/4 h-2/5 flex flex-col items-center ">
+                {/* or */}
+                <div className="flex items-center w-3/4 h-fit ">
+                  <hr className="flex-grow border-t-2 border-gray-300"></hr>
+                  <span className="mx-4 uppercase text-sm text-gray-300">
+                    or
+                  </span>
+                  <hr className="flex-grow border-t-2 border-gray-300"></hr>
+                </div>
+                {/* Sign In Options Google and Facebook */}
+                <div className="h-3/5 w-3/4 ">
+                  <button className="w-full my-2 p-4 flex items-center justify-center bg-black text-white text-sm rounded-2xl">
+                    <Image
+                      src={GoogleIcon}
+                      alt="google icon"
+                      className="w-5 mr-4"
+                    />
+                    Sign in with Google
+                  </button>
+                  <button className="w-full my-2 p-4 flex items-center justify-center bg-black text-white text-sm rounded-2xl">
+                    <Image
+                      src={FacebookIcon}
+                      alt="facebook icon"
+                      className="w-5 mr-4"
+                    />
+                    Sign in with Facebook
+                  </button>
+                  <div>
+                    <h2></h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
