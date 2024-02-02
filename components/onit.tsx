@@ -17,7 +17,7 @@ const Onit = () => {
           Explore
         </button>
       </div>
-      <div className="xl:w-2/3 w-1/2 h-full bg-[url('/neighborhood.jpg')] bg-cover bg-center  flex justify-center items-center">
+      <div className="xl:w-2/3 w-1/2 h-full bg-[url('/neighborhood2.jpg')] bg-cover bg-bottom  flex justify-center items-center">
         <svg
           width="380"
           height="312"

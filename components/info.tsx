@@ -2,7 +2,9 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import Pool from "public/Houston-home.jpeg";
+import Pool from "public/iStock-1453183714.jpg";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 type expandId = 1 | 2 | null;
 
@@ -10,7 +12,7 @@ const Info = () => {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <div className="h-screen w-full xl:h-1000 flex flex-col lg:flex-row bg-eggshell">
+    <div className="h-screen w-full xl:h-1000 flex flex-col lg:flex-row bg-eggshell ">
       <div className="h-full w-full xl:w-1/2 relative e ">
         <div className="w-full h-full  flex flex-col xl:justify-start items-center  text-black">
           <div className="w-full h-1/2 flex flex-col justify-center">
@@ -121,8 +123,11 @@ const Info = () => {
               </p>
             </div>
           </div>
-          <button className="absolute xl:w-3/4 w-5/6  h-16  text-black font-light tracking-wider text-base  transition-all duration-300 ease-in-out font-montserrat bottom-[0%] bg-white xl:left-4  bg-opacity-20 backdrop-blur-5 border border-opacity-30 border-black/50 rounded-2xl shadow-sm p-4">
-            View Properties
+          <button className="absolute xl:w-1/3 w-5/6  h-16 hover:bg-black hover:text-white text-black font-light tracking-wider text-base flex justify-center items-center transition-all duration-300 ease-in-out font-montserrat bottom-[0%] bg-white xl:left-4  bg-opacity-20 backdrop-blur-5 border border-opacity-30 border-black/50 rounded-2xl shadow-sm p-4  group">
+            <span>View Properties </span>
+            <span className="relative left-1 bottom-3 transfrom -rotate-45 flex items-center justify-start w-12 h-12 duration-300 transform translate-y-0 group-hover:-translate-y-[10%] group-hover:translate-x-[25%] group-hover:opacity-100 ease">
+              <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
+            </span>
           </button>
           {/* Mobile Responsive */}
           <div className="h-2/5 w-[100%] rounded-lg md:mt-4 flex justify-center items-center overflow-hidden relative xl:hidden p-4">
@@ -135,8 +140,8 @@ const Info = () => {
         </div>
       </div>
 
-      <div className="xl:w-1/2 w-full h-full hidden xl:flex  justify-center xl:items-end">
-        <div className="md:h-3/4 md:w-5/6  flex rounded-lg flex-col  justify-center items-center overflow-hidden relative">
+      <div className="xl:w-1/2 w-full h-full hidden xl:flex justify-center xl:items-end">
+        <div className="md:h-3/4 md:w-[90%]  flex rounded-lg flex-col  justify-center items-center overflow-hidden relative left-4">
           <Image
             src={Pool}
             alt="pool-image"

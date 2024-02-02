@@ -72,7 +72,7 @@ const Buyer = () => {
               from concept to completion, ensuring collaboration with
               consultants, local stakeholders, and government entities.{" "}
             </p>
-            <ul className="w-3/4 xl:h-2/5 h-1/2 flex flex-col justify-around text-sm md:text-base lg:text-xl font-montserrat tracking-wider p-4 xl:p-0 xl:mb-4">
+            <ul className="w-3/4 xl:h-2/5 h-1/2 flex flex-col justify-around text-sm md:text-base  font-montserrat tracking-wider p-4 xl:p-0 xl:mb-4">
               <li className="border-t border-b border-black py-4">
                 Select your Real Estate Agent
               </li>
