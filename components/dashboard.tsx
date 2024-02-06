@@ -2,11 +2,12 @@
 
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Link from "next/link";
 import {
   faPenToSquare,
   faCheck,
-  faCircleMinus,
-  faEye,
+  faPlus,
+  faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import Image from "next/image";
@@ -39,12 +40,8 @@ const Dashboard = () => {
   const [openMenu, setOpenMenu] = useState(false);
 
   const handleToggleMenu = () => {
-    setOpenMenu((prev) => !prev);
+    setOpenMenu((prevView) => !prevView);
   };
-
-  //Saved Listings
-  //homes
-  const homes: StaticImport[] = [home1, home2, home3, home4, home5, home6];
 
   //addresses
   const addresses = [
@@ -57,101 +54,197 @@ const Dashboard = () => {
   ];
 
   //viewhome
+  const [viewHome, setViewHome] = useState(false);
 
-  const [viewHome, openViewHome] = useState(false);
+  const toggleViewHome = () => {
+    setViewHome(!viewHome);
+  };
 
-  const toggleViewHome = () => {(
-    
-  )}
+  //Saved Listings
+  //homes
+  const [homes, setHomes] = useState<StaticImport[]>([
+    home1,
+    home2,
+    home3,
+    home4,
+    home5,
+    home6,
+  ]);
+  //deleting homes
+  const removeProperty = (index: number) => {
+    console.log("Removing property at index:", index);
+    const updatedHomes = [...homes];
+    updatedHomes.splice(index, 1);
+    setHomes(updatedHomes);
+    console.log("Updated Homes:", updatedHomes);
+  };
 
   return (
     <div className="w-full h-screen flex justify-center items-center">
       <div className="w-[90%] h-5/6 bg-mist/20  shadow-lg rounded-2xl flex">
         {/* Profile */}
-        <div className=" w-1/3 h-full flex justify-center items-center">
-          {/* Profile Circle */}
-          <div className="w-full h-[90%] flex justify-center">
-            <div className="w-3/5 h-3/6 rounded-2xl bg-white shadow-md  flex flex-col  items-center">
-              <div className="w-5/6 h-1/6 flex items-center justify-between">
-                <h2 className="  font-medium font-agrandir tracking-wider">
-                  Profile
-                </h2>
-                <button
-                  onClick={handleToggleMenu}
-                  className="w-8 h-8 hover:bg-gray-200/20 rounded-full shadow-md flex justify-center items-center transition duration-200 ease-in-out"
-                >
-                  <FontAwesomeIcon
-                    icon={faPenToSquare}
-                    size="lg"
-                    className="w-5 h-5 text-black"
-                  />
-                </button>
-              </div>
-              {/* Profile Picture */}
-              <div className="w-full h-2/3 flex justify-center items-center">
-                <div className="w-44 h-44 border-4 border-mint inset-0 relative rounded-2xl flex justify-center items-center">
-                  <div className="w-36 h-36 bg-eggshell inset-0 rounded-2xl shadow-md flex justify-center items-center">
-                    <h2 className="text-5xl text-white font-montserrat">D</h2>
-                  </div>
-                  <div className="absolute w-7 h-7 bg-blue-500 shadow-sm left-0 bottom-0 rounded-full flex justify-center items-center">
-                    <FontAwesomeIcon
-                      icon={faCheck}
-                      size="sm"
-                      className="w-4  h-4 text-white"
-                    />
-                  </div>
-                </div>
-              </div>
-              {/* Username */}
-              <div className="w-full h-1/5   flex justify-center items-center">
-                <h2 className="font-agrandir text-lg tracking-wider">
-                  {profile.name}
-                </h2>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* Saved Listing */}
-        <div className=" w-2/3 h-full flex justify-center items-center">
-          <div className="w-[95%] h-[90%] rounded-2xl bg-white shadow-md ">
-            <section className="w-full h-1/6">
-              <h2 className="p-4 font-agrandir">Saved Listings</h2>
-            </section>
-            <div className="w-full h-5/6 flex flex-col items-center overflow-y-scroll">
-              {homes.map((savedHomes, index) => (
-                <div
-                  key={index}
-                  className="w-5/6 relative h-1/4 rounded-2xl my-4 hover:scale-105 hover:translate-x-4 shadow-mint/50 shadow-md transition duration-150 ease-in-out"
-                >
-                  <Image
-                    src={savedHomes}
-                    className=" w-[100%] h-[100%]  object-cover rounded-lg brightness-50 contrast-125 shadow-md"
-                    alt="homes"
-                  />
-                  <div className="absolute top-1/2 w-full flex justify-between">
-                    <h2 className=" font-montserrat w-1/3 text-white px-4">
-                      {addresses[index]}
+        <AnimatePresence>
+          {viewHome ? (
+            ""
+          ) : (
+            <motion.div
+              key="profile"
+              className=" w-1/3 h-full flex justify-center items-center "
+            >
+              {/* Profile Circle */}
+              <div className="w-full h-[90%] flex justify-center">
+                <div className="w-3/5 h-3/6 rounded-2xl bg-white shadow-md  flex flex-col  items-center">
+                  <div className="w-5/6 h-1/6 flex items-center justify-between">
+                    <h2 className="  font-medium font-agrandir tracking-wider">
+                      Profile
                     </h2>
-                    <div className="w-1/6 flex justify-evenly">
-                      <button className="w-10 h-10">
+                    <button
+                      onClick={handleToggleMenu}
+                      className="w-8 h-8 hover:bg-gray-200/20 rounded-full shadow-md flex justify-center items-center transition duration-200 ease-in-out"
+                    >
+                      <FontAwesomeIcon
+                        icon={faPenToSquare}
+                        size="lg"
+                        className="w-5 h-5 text-black"
+                      />
+                    </button>
+                  </div>
+                  {/* Profile Picture */}
+                  <div className="w-full h-2/3 flex justify-center items-center">
+                    <div className="w-44 h-44 relative rounded-2xl flex justify-center items-center">
+                      <div className="w-36 h-36 bg-eggshell inset-0 rounded-2xl shadow-md flex justify-center items-center">
+                        <h2 className="text-5xl text-white font-montserrat">
+                          D
+                        </h2>
+                      </div>
+                      <div className="absolute w-7 h-7 bg-blue-500 shadow-sm left-0 bottom-0 rounded-full flex justify-center items-center">
                         <FontAwesomeIcon
-                          className="w-5 h-5 text-white"
-                          icon={faEye}
+                          icon={faCheck}
+                          size="sm"
+                          className="w-4  h-4 text-white"
                         />
-                      </button>
-                      <button className="w-10 h-10 relative">
-                        <FontAwesomeIcon
-                          className="w-5 h-5 text-red-600"
-                          icon={faCircleMinus}
-                        />
-                      </button>
+                      </div>
                     </div>
                   </div>
+                  {/* Username */}
+                  <div className="w-full h-1/5   flex justify-center items-center">
+                    <h2 className="font-agrandir text-lg tracking-wider">
+                      {profile.name}
+                    </h2>
+                  </div>
                 </div>
-              ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        {/* Saved Listing */}
+        <AnimatePresence>
+          <motion.div className=" w-2/3 h-full flex justify-center items-center ">
+            <div className="w-[95%] h-[90%] rounded-2xl bg-white shadow-md ">
+              <section className="w-full h-1/6">
+                <h2 className="p-4 font-agrandir">Saved Listings</h2>
+              </section>
+              <ul className="w-full h-5/6 flex flex-col items-center overflow-y-scroll">
+                {homes.length === 0 ? (
+                  <div className="w-full h-5/6 flex flex-col justify-evenly items-center">
+                    <p>There's nothing currently in your Saved Listings.</p>
+                    <Link
+                      className="w-44 h-44 bg-slate-100/50 shadow-lg rounded-2xl flex justify-center items-center hover:shadow-mint hover:shadow-2xl hover:scale-110 transition duration-300 ease-in-out"
+                      href="/listings"
+                    >
+                      <FontAwesomeIcon
+                        icon={faPlus}
+                        className="w-24 h-24 text-gray-400"
+                        size="lg"
+                      />
+                    </Link>
+                  </div>
+                ) : (
+                  homes.map((savedHomes, index) => (
+                    <li
+                      key={index}
+                      className="w-5/6 relative h-1/4 rounded-2xl my-4 hover:scale-105 hover:translate-x-4 shadow-mint/50 shadow-md transition duration-150 ease-in-out"
+                    >
+                      <Image
+                        src={savedHomes}
+                        className=" w-[100%] h-[100%]  object-cover rounded-lg brightness-50 contrast-125 shadow-md"
+                        alt="homes"
+                      />
+                      <div className="absolute top-1/2 w-full flex justify-between">
+                        <h2 className=" font-montserrat w-1/3 text-white px-4">
+                          {addresses[index]}
+                        </h2>
+                        <div className="w-1/6 flex justify-evenly">
+                          <button
+                            onClick={toggleViewHome}
+                            className="w-10 h-10 flex justify-center items-center"
+                          >
+                            <svg
+                              width="25"
+                              height="25"
+                              viewBox="0 0 25 25"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M3.125 13.5415C6.875 5.20817 18.125 5.20817 21.875 13.5415"
+                                stroke="white"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                              <path
+                                d="M12.5 17.708C12.0896 17.708 11.6833 17.6272 11.3041 17.4701C10.925 17.3131 10.5805 17.0829 10.2903 16.7927C10.0001 16.5025 9.76992 16.158 9.61288 15.7789C9.45583 15.3998 9.375 14.9934 9.375 14.583C9.375 14.1726 9.45583 13.7663 9.61288 13.3871C9.76992 13.008 10.0001 12.6635 10.2903 12.3733C10.5805 12.0831 10.925 11.8529 11.3041 11.6959C11.6833 11.5388 12.0896 11.458 12.5 11.458C13.3288 11.458 14.1237 11.7872 14.7097 12.3733C15.2958 12.9593 15.625 13.7542 15.625 14.583C15.625 15.4118 15.2958 16.2067 14.7097 16.7927C14.1237 17.3788 13.3288 17.708 12.5 17.708Z"
+                                stroke="white"
+                                stroke-width="1.5"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
+                          </button>
+
+                          <button
+                            onClick={() => removeProperty(index)}
+                            className="w-10 h-10 flex justify-center items-center"
+                          >
+                            <svg
+                              width="25"
+                              height="25"
+                              viewBox="0 0 25 25"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M8.59375 11.7188H16.4062C16.6135 11.7188 16.8122 11.8011 16.9587 11.9476C17.1052 12.0941 17.1875 12.2928 17.1875 12.5C17.1875 12.7072 17.1052 12.9059 16.9587 13.0524C16.8122 13.1989 16.6135 13.2812 16.4062 13.2812H8.59375C8.38655 13.2812 8.18784 13.1989 8.04132 13.0524C7.89481 12.9059 7.8125 12.7072 7.8125 12.5C7.8125 12.2928 7.89481 12.0941 8.04132 11.9476C8.18784 11.8011 8.38655 11.7188 8.59375 11.7188Z"
+                                fill="#FF0000"
+                              />
+                              <path
+                                d="M12.5 21.875C13.7311 21.875 14.9502 21.6325 16.0877 21.1614C17.2251 20.6902 18.2586 19.9997 19.1291 19.1291C19.9997 18.2586 20.6902 17.2251 21.1614 16.0877C21.6325 14.9502 21.875 13.7311 21.875 12.5C21.875 11.2689 21.6325 10.0498 21.1614 8.91234C20.6902 7.77492 19.9997 6.74142 19.1291 5.87087C18.2586 5.00032 17.2251 4.30977 16.0877 3.83863C14.9502 3.36749 13.7311 3.125 12.5 3.125C10.0136 3.125 7.62903 4.11272 5.87087 5.87087C4.11272 7.62903 3.125 10.0136 3.125 12.5C3.125 14.9864 4.11272 17.371 5.87087 19.1291C7.62903 20.8873 10.0136 21.875 12.5 21.875ZM12.5 23.4375C9.59919 23.4375 6.8172 22.2852 4.76602 20.234C2.71484 18.1828 1.5625 15.4008 1.5625 12.5C1.5625 9.59919 2.71484 6.8172 4.76602 4.76602C6.8172 2.71484 9.59919 1.5625 12.5 1.5625C15.4008 1.5625 18.1828 2.71484 20.234 4.76602C22.2852 6.8172 23.4375 9.59919 23.4375 12.5C23.4375 15.4008 22.2852 18.1828 20.234 20.234C18.1828 22.2852 15.4008 23.4375 12.5 23.4375Z"
+                                fill="#FF0000"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    </li>
+                  ))
+                )}
+              </ul>
             </div>
-          </div>
-        </div>
+            {/* House details */}
+          </motion.div>
+          {viewHome && (
+            <div className="w-1/3 h-full  flex flex-col justify-center gap-y-4 items-center">
+              <div className="border-2 border-blue-400 w-full h-2/5"></div>
+              <button className="xl:w-1/2 w-5/6 hidden  h-16 hover:bg-black hover:text-white text-black font-light tracking-wider text-base xl:flex justify-center items-center transition-all duration-300 ease-in-out font-montserrat bottom-[0%] bg-white xl:right-4  bg-opacity-20 backdrop-blur-5 border border-opacity-30 border-black/50 rounded-2xl shadow-sm p-4  group">
+                <span>View Home</span>
+                <span className="relative left-1 bottom-3 transfrom -rotate-45 flex items-center justify-start w-12 h-12 duration-300 transform translate-y-0 group-hover:-translate-y-[10%] group-hover:translate-x-[25%] group-hover:opacity-100 ease">
+                  <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
+                </span>
+              </button>
+            </div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Handling Opening Menu */}
@@ -272,3 +365,6 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+function setHomes(newHomes: StaticImport[]) {
+  throw new Error("Function not implemented.");
+}
