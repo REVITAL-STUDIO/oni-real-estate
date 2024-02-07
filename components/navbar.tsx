@@ -1,5 +1,5 @@
 "use client";
-
+import { signIn, useSession } from "next-auth/react";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,8 +10,12 @@ import mobileLogo from "public/oni-moon.png";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
-
+import { useRouter } from "next/navigation";
+import { IoIosClose } from "react-icons/io";
 const Nav = () => {
+  const { data: session } = useSession();
+
+  const router = useRouter();
   const [color, setColor] = useState<boolean>(false);
   const [disappear, setDisappear] = useState<boolean>(false);
 
@@ -53,6 +57,7 @@ const Nav = () => {
   const [openLogin, setOpenLogin] = useState(false);
 
   const toggleLogin = () => {
+    setIsRegisterError(false);
     setOpenLogin(!openLogin);
   };
 
@@ -69,7 +74,91 @@ const Nav = () => {
   const [showSignUpForm, setSignUpForm] = useState(false);
 
   const toggleSignUp = () => {
+    setIsLoginError(false);
     setSignUpForm((prev) => !prev);
+  };
+
+  const [signInData, setSignInData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [errorMsg, setErrorMsg] = useState(
+    "A network issue occured. Please check your internet connection and try again."
+  );
+  const [isLoginError, setIsLoginError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [registerData, setRegisterData] = useState({
+    email: "",
+    password: "",
+  });
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isRegisterError, setIsRegisterError] = useState(false);
+
+  const signInUser: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setIsLoginError(false);
+    signIn("credentials", { ...signInData, redirect: false }).then(
+      (callback) => {
+        if (callback?.error) {
+          setErrorMsg(callback.error);
+          setIsLoginError(true);
+        }
+
+        if (callback?.ok && !callback.error) {
+          // go to listings page
+          router.push("/listings");
+        }
+        setIsLoading(false);
+        toggleLogin();
+      }
+    );
+  };
+
+  const registerUser: React.MouseEventHandler<HTMLButtonElement> = async (
+    e
+  ) => {
+    e.preventDefault();
+    setIsRegisterError(false);
+    setIsLoading(true);
+    try {
+      if (registerData.password != confirmPassword) {
+        setErrorMsg("Passwords do not Match");
+        throw new Error("Passwords do not match");
+      }
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(registerData),
+        }
+      );
+      if (!response.ok) {
+        if (response.status == 400) {
+          setErrorMsg("Email already in use!");
+        } else {
+          setErrorMsg("An unexpected error ocurred please try again.");
+        }
+        throw new Error(
+          `HTTP Error: Error creating user status ${response.status}`
+        );
+      }
+      setRegisterData({ email: "", password: "" });
+      setConfirmPassword("");
+      router.push("/listings");
+    } catch (error) {
+      setIsRegisterError(true);
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+      toggleSignUp();
+    }
   };
 
   return (
@@ -259,17 +348,15 @@ const Nav = () => {
                     transition={{ duration: 0.5, ease: "easeInOut" }}
                     className="w-3/4 h-[85%] text-sm flex flex-col font-agrandir items-center "
                   >
-                    {/* Name */}
-                    <div className="flex flex-col w-4/5">
-                      <label className="py-2">Name</label>
-                      <input
-                        className="p-2 rounded-lg text-black bg-slate-400/10"
-                        type="text"
-                        id="Name"
-                        name="Name"
-                        placeholder="Name"
-                      />
-                    </div>
+                    {isRegisterError && (
+                      <div className="p-[1rem] bg-red-100 flex gap-[3rem] items-center rounded-lg mb-[2rem]">
+                        <p className="text-red-400">{errorMsg}</p>
+                        <IoIosClose
+                          className=" text-red-300 h-[2rem] w-[2rem] hover:cursor-pointer"
+                          onClick={() => setIsRegisterError(false)}
+                        />
+                      </div>
+                    )}
 
                     {/* Email */}
                     <div className="flex flex-col w-4/5">
@@ -280,6 +367,14 @@ const Nav = () => {
                         id="Email"
                         name="Email"
                         placeholder="Email"
+                        required
+                        value={registerData.email}
+                        onChange={(e) =>
+                          setRegisterData({
+                            ...registerData,
+                            email: e.target.value,
+                          })
+                        }
                       />
                     </div>
                     {/* Password */}
@@ -287,10 +382,18 @@ const Nav = () => {
                       <label className="py-2">Password</label>
                       <input
                         className="p-2 rounded-lg text-black bg-slate-400/10"
-                        type="text"
+                        type="password"
                         id="Password"
                         name="Password"
                         placeholder="Password"
+                        required
+                        value={registerData.password}
+                        onChange={(e) =>
+                          setRegisterData({
+                            ...registerData,
+                            password: e.target.value,
+                          })
+                        }
                       />
                     </div>
                     {/* Confirm Password */}
@@ -298,16 +401,24 @@ const Nav = () => {
                       <label className="py-2">Confirm Password</label>
                       <input
                         className="p-2 rounded-lg text-black bg-slate-400/10"
-                        type="text"
-                        id="Password"
-                        name="Password"
+                        type="password"
+                        id="confirm-password"
+                        name="confirm-assword"
                         placeholder="Password"
+                        required
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                       />
                     </div>
                     {/* Log In Button */}
                     <div className="flex flex-col justify-evenly w-4/5 h-1/2 my-4">
-                      <button className="p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide">
-                        Sign Up
+                      <button
+                        onClick={registerUser}
+                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${
+                          isLoading ? "opacity-75" : "opacity-100"
+                        }`}
+                      >
+                        {isLoading ? "Loading..." : "Sign Up"}
                       </button>
                       <p className="text-xs p-2">
                         By Clicking Sign Up, you agree to the Private Policy and
@@ -324,6 +435,16 @@ const Nav = () => {
                     transition={{ duration: 0.5, ease: "easeInOut" }}
                     className="w-3/4 h-[85%] text-sm flex flex-col font-agrandir items-center "
                   >
+                    {isLoginError && (
+                      <div className="p-[1rem] bg-red-100 flex gap-[3rem] items-center rounded-lg mb-[2rem]">
+                        <p className="text-red-400">{errorMsg}</p>
+                        <IoIosClose
+                          className=" text-red-300 h-[2rem] w-[2rem] hover:cursor-pointer"
+                          onClick={() => setIsLoginError(false)}
+                        />
+                      </div>
+                    )}
+
                     {/* Email */}
                     <div className="flex flex-col w-4/5">
                       <label className="py-2">Email</label>
@@ -333,6 +454,15 @@ const Nav = () => {
                         id="Email"
                         name="Email"
                         placeholder="Email"
+                        autoComplete="email"
+                        required
+                        value={signInData.email}
+                        onChange={(e) =>
+                          setSignInData({
+                            ...signInData,
+                            email: e.target.value,
+                          })
+                        }
                       />
                     </div>
                     {/* Password */}
@@ -340,16 +470,30 @@ const Nav = () => {
                       <label className="py-2">Password</label>
                       <input
                         className="p-2 rounded-lg text-black bg-slate-400/10"
-                        type="text"
+                        type="password"
                         id="Password"
                         name="Password"
                         placeholder="Password"
+                        required
+                        value={signInData.password}
+                        onChange={(e) =>
+                          setSignInData({
+                            ...signInData,
+                            password: e.target.value,
+                          })
+                        }
                       />
                     </div>
                     {/* Log In Button */}
                     <div className="flex flex-col justify-evenly w-4/5 h-1/2 my-4">
-                      <button className="p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide">
-                        Login
+                      <button
+                        disabled={isLoading}
+                        onClick={signInUser}
+                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${
+                          isLoading ? "opacity-75" : "opacity-100"
+                        }`}
+                      >
+                        {isLoading ? "Loading..." : "Login"}
                       </button>
                       <button
                         onClick={toggleSignUp}
@@ -357,9 +501,12 @@ const Nav = () => {
                       >
                         Register
                       </button>
-                      <button className="tracking-wide p-2 w-fit flex justify-center items-center">
+                      <a
+                        href="/forgot-password"
+                        className="tracking-wide p-2 w-fit flex justify-center items-center"
+                      >
                         Forgot Password?
-                      </button>
+                      </a>
                     </div>
                   </motion.form>
                 )}
@@ -377,7 +524,10 @@ const Nav = () => {
                   {/* Sign In Options Google and Facebook */}
 
                   <div className="h-3/5 w-3/4 ">
-                    <button className="w-full my-2 p-4 flex items-center justify-center bg-black text-white text-sm rounded-2xl">
+                    <button
+                      onClick={() => signIn("google")}
+                      className="w-full my-2 p-4 flex items-center justify-center bg-black text-white text-sm rounded-2xl"
+                    >
                       <Image
                         src={GoogleIcon}
                         alt="google icon"
@@ -385,7 +535,10 @@ const Nav = () => {
                       />
                       Sign in with Google
                     </button>
-                    <button className="w-full my-2 p-4 flex items-center justify-center bg-black text-white text-sm rounded-2xl">
+                    <button
+                      onClick={() => signIn("facebook")}
+                      className="w-full my-2 p-4 flex items-center justify-center bg-black text-white text-sm rounded-2xl"
+                    >
                       <Image
                         src={AppleIcon}
                         alt="facebook icon"

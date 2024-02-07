@@ -4,6 +4,9 @@ import type { Metadata } from "next";
 import Nav from "@/components/navbar";
 import Footer from "@/components/footer";
 import { Cinzel, Montserrat } from "next/font/google";
+import Provider from "@/components/Provider";
+import { EdgeStoreProvider } from '../lib/edgestore';
+import ToasterProvider from "@/components/ToasterProvider";
 
 // Define metadata for the page
 export const metadata: Metadata = {
@@ -33,8 +36,15 @@ export default function RootLayout({
         ></link>
       </head>
       <body>
-        {/* Render the child components */}
-        {children}
+        <Provider>
+          <EdgeStoreProvider>
+            <main className="grow">
+              {/* Render the child components */}
+              <ToasterProvider />
+              {children}
+            </main>
+          </EdgeStoreProvider>
+        </Provider>
       </body>
     </html>
   );
