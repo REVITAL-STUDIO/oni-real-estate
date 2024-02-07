@@ -11,7 +11,7 @@ import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
-const Nav = () => {
+const NavPages = () => {
   const [color, setColor] = useState<boolean>(false);
   const [disappear, setDisappear] = useState<boolean>(false);
 
@@ -19,7 +19,7 @@ const Nav = () => {
     if (typeof window !== "undefined") {
       const scrollY = window.scrollY;
       setColor(scrollY >= 80);
-      setDisappear(scrollY >= 80);
+      setDisappear(scrollY >= 20);
     }
   };
 
@@ -35,10 +35,10 @@ const Nav = () => {
 
   //menu animation
   const variants = {
-    hidden: { opacity: 0, y: 0, transition: { delay: 3 } },
+    hidden: { opacity: 0, y: 0 },
     visible: {
       opacity: 1,
-      transition: { delay: 2.5 },
+      transition: { delay: 1.5 },
     },
   };
 
@@ -74,7 +74,7 @@ const Nav = () => {
 
   return (
     <div
-      className={`h-80 w-full flex fixed bg-gradient-to-b from-black/50 via-black/30 to-transparent z-50 flex-col items-center justify-center transition-all duration-300 ease-in-out ${
+      className={`h-100 w-full flex fixed  z-50 flex-col items-center justify-center transition-all duration-300 ease-in-out ${
         color ? "" : ""
       } ${disappear ? "opacity-0 pointer-events-none " : " "}`}
     >
@@ -88,37 +88,37 @@ const Nav = () => {
           <Image
             src={Logo}
             alt="oni real estate logo"
-            className="invert w-32 p-4 relative top-4"
+            className=" w-24 relative top-4"
           />
         </Link>
         <ul
-          className={` text-white text-sm hidden uppercase font-light font-montserrat h-full xl:flex justify-between  tracking-widest items-center gap-x-8  w-auto transition-colors duration-300 ease-in
+          className={` text-black text-sm hidden uppercase font-regular font-montserrat h-full xl:flex justify-between  tracking-widest items-center gap-x-8  w-auto transition-colors duration-300 ease-in
           `}
         >
           <li className="relative p-4">
             <Link href="/">
-              <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-10 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-white before:via-white/30 before:to-white hover:before:w-full hover:before:opacity-100">
+              <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-10 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-black before:via-white/30 before:to-black hover:before:w-full hover:before:opacity-100">
                 Home
               </span>
             </Link>
           </li>
           <li className="relative p-4">
             <Link href="/listings">
-              <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-10 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-white before:via-white/30 before:to-white hover:before:w-full hover:before:opacity-100">
+              <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-10 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-black before:via-white/30 before:to-black hover:before:w-full hover:before:opacity-100">
                 Properties
               </span>
             </Link>
           </li>
           <li className="relative p-4">
             <Link href="/owners">
-              <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-10 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-white before:via-white/30 before:to-white hover:before:w-full hover:before:opacity-100">
+              <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-10 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-black before:via-white/30 before:to-black hover:before:w-full hover:before:opacity-100">
                 Ownership
               </span>
             </Link>
           </li>
           <li className="relative p-4">
             <button onClick={toggleLogin}>
-              <span className="inline-block uppercase transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-10 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-white before:via-white/30 before:to-white hover:before:w-full hover:before:opacity-100">
+              <span className="inline-block uppercase transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-10 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-black before:via-white/30 before:to-black hover:before:w-full hover:before:opacity-100">
                 Login
               </span>
             </button>
@@ -131,16 +131,16 @@ const Nav = () => {
           className="w-12 h-12 flex flex-col relative justify-center items-center rounded-full  space-x-reverse xl:hidden z-10"
         >
           <span
-            className={`block w-3/4 my-0.5 border border-white ${
+            className={`block w-3/4 my-0.5 border border-black ${
               openMenu
-                ? "rotate-45 transition-transform duration-300 ease-in-out"
-                : "transition-transform duration-300 ease-in-out relative top-0.5"
+                ? "rotate-45 transition-transform duration-300 ease-in-out border-white"
+                : "transition-transform duration-300 ease-in-out relative top-0.5 "
             }`}
           ></span>
           <span
-            className={`block w-3/4 my-0.5 border border-white ${
+            className={`block w-3/4 my-0.5 border border-black ${
               openMenu
-                ? "-rotate-45 w-3/4 absolute top-2/5 transition-transform duration-300 ease-in-out"
+                ? "-rotate-45 w-3/4 absolute top-2/5 transition-transform duration-300 ease-in-out border-white"
                 : "transition-transform duration-300 ease-in-out relative top-0.5"
             }`}
           ></span>
@@ -417,4 +417,4 @@ const Nav = () => {
   );
 };
 
-export default Nav;
+export default NavPages;

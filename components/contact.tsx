@@ -5,8 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import logo from "public/logo-real.png";
-import contact from "public/contact.png";
-import realEstate from "public/teaser.jpeg";
 
 const Contact = () => {
   return (
