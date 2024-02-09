@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import FileUpload from "@/components/FileUpload";
 import { useEdgeStore } from "@/lib/edgestore";
 import toast from "react-hot-toast";
+import Nav from "@/components/navbar";
+import { IoIosClose } from "react-icons/io";
 
 interface Listing {
     id: number;
@@ -22,7 +24,7 @@ const EditListing = ({ params }: { params: { listingId: string } }) => {
     const [initialFiles, setInitialFiles] = useState<File[]>([]);
     let initialUrls: string[] = []
     let imageUrls: string[] = []
-    const [fetchedListingData, setFetchedListingData ] = useState(false)
+    const [fetchedListingData, setFetchedListingData] = useState(false)
     const [listingData, setListingData] = useState({
         address: '',
         description: '',
@@ -31,9 +33,12 @@ const EditListing = ({ params }: { params: { listingId: string } }) => {
         area: 0,
         price: 0
     })
+    const [errorMsg, setErrorMsg] = useState("A network issue occured. Please check your internet connection and try again.")
+    const [isError, setIsError] = useState(false)
+    const [isSuccess, setIsSuccess] = useState(false)
 
     useEffect(() => {
-            fetchListingData();
+        fetchListingData();
     }, [params.listingId]);
 
 
@@ -56,10 +61,10 @@ const EditListing = ({ params }: { params: { listingId: string } }) => {
             setListingData({ address: listing.address, description: listing.description, beds: listing.beds, baths: listing.baths, area: listing.area, price: listing.price })
             let files = await Promise.all(listing.pictures.map(async (url) => {
                 return await urlToFile(url);
-              }));
-              initialUrls = listing.pictures
-              setInitialFiles(files)
-              setFetchedListingData(true)
+            }));
+            initialUrls = listing.pictures
+            setInitialFiles(files)
+            setFetchedListingData(true)
         } catch (error) {
             console.log(error)
         }
@@ -81,8 +86,8 @@ const EditListing = ({ params }: { params: { listingId: string } }) => {
         }
     }
 
-     //function to delete listing images from cloud storage
-     const deleteFiles = async (urls: string[]) => {
+    //function to delete listing images from cloud storage
+    const deleteFiles = async (urls: string[]) => {
         urls.forEach(async (imageUrl) => {
             await edgestore.publicFiles.delete({
                 url: imageUrl,
@@ -100,10 +105,11 @@ const EditListing = ({ params }: { params: { listingId: string } }) => {
         const blob = await response.blob();
         const filename = url.substring(url.lastIndexOf('/') + 1);
         return new File([blob], filename, { type: blob.type });
-      };
+    };
 
     const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
+        setIsError(false)
         console.log("########## HANDLE SUBMIT FUNCTION CALLED AND IN FUNCITON SCOPE")
         try {
             await uploadFiles()
@@ -113,7 +119,7 @@ const EditListing = ({ params }: { params: { listingId: string } }) => {
                 console.log("###################### IMAGE URLS ARRAY: ", imageUrls)
                 //creating listingdata to be sent to server to create listing 
                 let data = { ...listingData, pictures: imageUrls }
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/${parseInt(params.listingId,10)}`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/${parseInt(params.listingId, 10)}`, {
                     method: 'PUT',
                     headers: {
                         "Content-Type": "application/json",
@@ -121,9 +127,9 @@ const EditListing = ({ params }: { params: { listingId: string } }) => {
                     body: JSON.stringify(data),
                 })
                 if (!response.ok) {
-                    toast.error('Error in creating Listing... please try again')
+                    setErrorMsg('Error in saving listing Changes... please try again')
                     await deleteFiles(imageUrls)
-                    throw new Error(`HTTP ERROR - Error creating Listing. Status: ${response.status}`)
+                    throw new Error(`HTTP ERROR - Error editing Listing. Status: ${response.status}`)
                 }
 
                 //deleting the images that were once used for the listing in the cloud
@@ -132,14 +138,14 @@ const EditListing = ({ params }: { params: { listingId: string } }) => {
 
 
             } catch (error) {
-                toast.error('There was an error creating the Listing. Please try again.')
+                setIsError(true)
                 console.error('NETWORK ERROR - Unable to reach the server or network issue. Error Message: ', error)
                 await deleteFiles(imageUrls)
             }
-            toast.success('Listing successfully saved!')
-
+            setIsSuccess(true)
         }
         catch (error) {
+            setIsError(true)
             toast.error('There was an error updating the Listing. Please try again.')
             console.error('NETWORK ERROR - Unable to upload listing files to the cloud, listing was not created')
             await deleteFiles(imageUrls)
@@ -153,83 +159,94 @@ const EditListing = ({ params }: { params: { listingId: string } }) => {
     }
 
     return (
-
-        <div className="min-h-screen flex justify-center items-center">
-            <form onSubmit={handleSubmit} className="w-[50%]">
-                <div>
-                    <label>Address</label>
-                    <input
-                        name="address"
-                        type="text"
-                        required
-                        value={listingData.address}
-                        onChange={e => setListingData({ ...listingData, address: e.target.value })}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
+        <div className="font-agrandir">
+            <Nav />
+            <div className="flex flex-col  justify-end md:justify-center items-center min-h-screen">
+                <div className="bg-[#F7F7F7] flex justify-center items-center mt-[8rem] md:mt-[1rem]  w-full md:w-[90%] md:py-[6rem] rounded-md">
+                    {isSuccess && <div className="p-[1rem] bg-green-100 flex gap-3 items-center rounded-lg mb-[2rem]"><p className="text-green-700">Saved Listing changes.</p><IoIosClose className=" text-green-500 h-[2rem] w-[2rem] hover:cursor-pointer" onClick={() => setIsSuccess(false)} /></div>}
+                    {isError && <div className="p-[1rem] bg-red-100 flex gap-3 items-center rounded-lg mb-[2rem] "><p className="text-red-400">{errorMsg}</p><IoIosClose className=" text-red-300 h-[2rem] w-[2rem] hover:cursor-pointer" onClick={() => setIsError(false)} /></div>}
+                    <div className="relative flex flex-col gap-12 bg-white w-[90%] md:w-[70%] items-center justify-center md:flex-row md:py-[3rem] rounded-3xl shadow-md">
+                        <h1 className="absolute top-[10%] right-[10%] text-4xl "> Create a Listing</h1>
+                        <form onSubmit={handleSubmit} className="w-[85%] md:w-[40%] flex flex-col gap-4">
+                            <div>
+                                <label>Address</label>
+                                <input
+                                    name="address"
+                                    type="text"
+                                    required
+                                    value={listingData.address}
+                                    onChange={e => setListingData({ ...listingData, address: e.target.value })}
+                                    className="block w-full border-0 py-3 px-3 text-gray-900 shadow-sm  placeholder:text-gray-400 bg-[#ECECEC]  focus:outline-none sm:text-sm "
+                                />
+                            </div>
+                            <div>
+                                <label>Description</label>
+                                <input
+                                    name="description"
+                                    type="text"
+                                    required
+                                    value={listingData.description}
+                                    onChange={e => setListingData({ ...listingData, description: e.target.value })}
+                                    className="block w-full border-0 py-3 px-3 text-gray-900 shadow-sm  placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm "
+                                />
+                            </div>
+                            <div>
+                                <label># Beds</label>
+                                <input
+                                    name="description"
+                                    type="number"
+                                    required
+                                    value={listingData.beds}
+                                    onChange={e => setListingData({ ...listingData, beds: parseInt(e.target.value, 10) })}
+                                    className="block w-[60%] border-0 py-3 px-3 text-gray-900 shadow-sm  placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm "
+                                />
+                            </div>
+                            <div>
+                                <label># Baths</label>
+                                <input
+                                    name="baths"
+                                    type="number"
+                                    required
+                                    value={listingData.baths}
+                                    onChange={e => setListingData({ ...listingData, baths: parseInt(e.target.value, 10) })}
+                                    className="block w-[60%] border-0 py-3 px-3 text-gray-900 shadow-sm  placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm "
+                                />
+                            </div>
+                            <div>
+                                <label>Area</label>
+                                <input
+                                    name="description"
+                                    type="number"
+                                    required
+                                    value={listingData.area}
+                                    onChange={e => setListingData({ ...listingData, area: parseInt(e.target.value, 10) })}
+                                    className="block w-[60%] border-0 py-3 px-3 text-gray-900 shadow-sm  placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm "
+                                />
+                            </div>
+                            <div>
+                                <label>Price</label>
+                                <input
+                                    name="description"
+                                    type="number"
+                                    required
+                                    value={listingData.price}
+                                    onChange={e => setListingData({ ...listingData, price: parseInt(e.target.value, 10) })}
+                                    className="block w-[60%] border-0 py-3 px-3 text-gray-900 shadow-sm  placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm "
+                                />
+                            </div>
+                        </form>
+                        <div className="md:w-[45%] md:mt-[12%]">
+                            <p>photos</p>
+                            <FileUpload onFilesSelected={handleFilesSelected} />
+                        </div>
+                    </div>
+                    <a href="" className="absolute top-[15%] right-[8%] hover:text-xl active:text-[#999999] ">Cancel</a>
+                    <button className="absolute bottom-[6%] right-[8%] text-xl hover:text-2xl active:text-[#999999] ">Create</button>
                 </div>
-                <div>
-                    <label>Description</label>
-                    <input
-                        name="description"
-                        type="text"
-                        required
-                        value={listingData.description}
-                        onChange={e => setListingData({ ...listingData, description: e.target.value })}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                </div>
-                <div>
-                    <label># Beds</label>
-                    <input
-                        name="description"
-                        type="number"
-                        required
-                        value={listingData.beds}
-                        onChange={e => setListingData({ ...listingData, beds: parseInt(e.target.value, 10) })}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                </div>
-                <div>
-                    <label># Baths</label>
-                    <input
-                        name="baths"
-                        type="number"
-                        required
-                        value={listingData.baths}
-                        onChange={e => setListingData({ ...listingData, baths: parseInt(e.target.value, 10) })}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                </div>
-                <div>
-                    <label>Area</label>
-                    <input
-                        name="description"
-                        type="number"
-                        required
-                        value={listingData.area}
-                        onChange={e => setListingData({ ...listingData, area: parseInt(e.target.value, 10) })}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                </div>
-                <div>
-                    <label>Price</label>
-                    <input
-                        name="description"
-                        type="number"
-                        required
-                        value={listingData.price}
-                        onChange={e => setListingData({ ...listingData, price: parseInt(e.target.value, 10) })}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                </div>
-                <div className=" mx-auto my-auto">
-                    <FileUpload onFilesSelected={handleFilesSelected} initialFiles={initialFiles} />
-                </div>
-                <button type="submit" className="bg-green-300 rounded p-2">Save Listing</button>
-            </form>
-
-
+            </div>
+            {/* <button type="submit" className="bg-green-300 rounded p-2">Create Listing</button> */}
         </div>
+
     )
 }
 
