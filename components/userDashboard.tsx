@@ -81,7 +81,7 @@ const Dashboard = () => {
 
   return (
     <div className="w-full h-screen flex justify-center items-center">
-      <div className="w-[90%] h-5/6 bg-mist/20  shadow-lg rounded-2xl flex">
+      <div className="w-[90%] h-5/6 bg-eggshell  shadow-lg rounded-2xl flex">
         {/* Profile */}
         <AnimatePresence>
           {viewHome ? (
