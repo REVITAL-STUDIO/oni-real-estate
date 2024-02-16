@@ -11,48 +11,46 @@ datasource db {
 }
 
 model User {
-  id String  @id @default(uuid()) @map("_id") @db.Uuid
-  name String?
-  email String @unique
-  image String?
-  passwordHash String
-  role         String   @default("user") // user default role, can change to admin
-  favoriteListingsIds Int[] @default([])
-  hashedResetToken String? @unique
-  resetTokenExpiry DateTime?
-  createdAt DateTime @default(now())
-  updatedAt DateTime? @updatedAt
-  account Account[]
+  id                  String    @id @default(uuid()) @map("_id") @db.Uuid
+  name                String?
+  email               String    @unique
+  image               String?
+  passwordHash        String
+  role                String    @default("user") // user default role, can change to admin
+  favoriteListingsIds Int[]     @default([])
+  hashedResetToken    String?   @unique
+  resetTokenExpiry    DateTime?
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime? @updatedAt
+  account             Account[]
 }
 
 model Account {
-  id String @id @default(uuid()) @map("_id") @db.Uuid
-  userId String @db.Uuid 
-  type String
-  provider String
+  id                String  @id @default(uuid()) @map("_id") @db.Uuid
+  userId            String  @db.Uuid
+  type              String
+  provider          String
   providerAccountId String
-  refresh_token String? 
-  access_token String? 
-  expires_at Int?
-  token_type String?
-  scope String?
-  id_token String?
-  session_state String?
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   @@unique([provider, providerAccountId])
 }
 
-
-
 model Listing {
-  id      Int      @id @default(autoincrement())
-  address String
+  id          Int      @id @default(autoincrement())
+  address     String
   description String
-  pictures String[]
-  beds Int 
-  baths Int
-  area Int 
-  price Int
+  pictures    String[]
+  beds        Int
+  baths       Int
+  area        Int
+  price       Int
 }
-

@@ -1,10 +1,8 @@
 import { NextResponse } from "next/server";
-
 import { prisma } from "@/lib/database/client";
 
 //api route for retrieving all listings
 export async function GET() {
-
     try {
         const listings = await prisma.listing.findMany({
             select: {
@@ -26,7 +24,6 @@ export async function GET() {
         console.error("Error fetching listings:", error);
         return NextResponse.json({ error: "Failed to fetch listings" }, { status: 500 });
     }
-
 }
 
 interface deleteRequestBody {

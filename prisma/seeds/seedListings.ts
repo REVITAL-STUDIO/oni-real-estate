@@ -1,4 +1,4 @@
-import { prisma } from "@/database/client";
+import { prisma } from "@/lib/database/client";
 
 async function seedListings() {
   await prisma.listing.create({
@@ -7,9 +7,9 @@ async function seedListings() {
       description: 'A stunning home with a great view.',
       beds: 5,
       baths: 3,
-      area: 30000,
+      area: 3500,
       price: 3000000,
-      pictures: ['public/home1.jpg'], 
+      pictures: ['public/home1.webp'], 
     },
   });
 
@@ -20,9 +20,9 @@ async function seedListings() {
        exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse`,
       beds: 4,
       baths: 2,
-      area: 10000,
+      area: 5000,
       price: 1800000,
-      pictures: ['public/home2.jpg'], 
+      pictures: ['public/home2.jpeg'], 
 
     },
   });
@@ -34,7 +34,7 @@ async function seedListings() {
       exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse`,      
       beds: 6,
       baths: 4,
-      area: 10000,
+      area: 2000,
       price: 1600000,
       pictures: ['public/home3.jpeg'], 
 
@@ -48,7 +48,7 @@ async function seedListings() {
       exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse`,     
       beds: 3,
       baths: 2,
-      area: 2000,
+      area: 7500,
       price: 350000,
       pictures: ['public/home4.jpg'], 
 
@@ -62,7 +62,7 @@ async function seedListings() {
       exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse`,     
       beds: 4,
       baths: 3,
-      area: 2000,
+      area: 4000,
       price: 1500000,
       pictures: ['public/home5.jpeg'], 
 
@@ -76,7 +76,7 @@ async function seedListings() {
       exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse`,     
       beds: 5,
       baths: 2,
-      area: 28000,
+      area: 3000,
       price: 2000000,
       pictures: ['public/home6.jpeg'], 
 

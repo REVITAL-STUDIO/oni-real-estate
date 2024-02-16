@@ -1,11 +1,144 @@
-import React from "react";
-import Image from "next/image";
-import buy from "public/buyer.png";
-import walking from "public/walking-real-estate.webp";
+"use client";
+
+import React, { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Buyer = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const slides = [
+    {
+      icon: (
+        <svg
+          width="250"
+          height="250"
+          viewBox="0 0 370 370"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-[125px] h-[125px] md:w-[250px] md:h-[250px]"
+        >
+          <path
+            d="M53.9583 208.125V238.958C53.9583 255.313 60.4553 270.998 72.0201 282.563C83.5848 294.128 99.27 300.625 115.625 300.625C127.891 300.625 139.655 295.752 148.329 287.078C157.002 278.405 161.875 266.641 161.875 254.375V215.833C161.875 209.7 164.311 203.818 168.648 199.481C172.985 195.144 178.867 192.708 185 192.708C191.133 192.708 197.015 195.144 201.352 199.481C205.689 203.818 208.125 209.7 208.125 215.833V254.375C208.125 266.641 212.998 278.405 221.671 287.078C230.345 295.752 242.109 300.625 254.375 300.625C270.73 300.625 286.415 294.128 297.98 282.563C309.545 270.998 316.042 255.313 316.042 238.958V208.125"
+            stroke="white"
+            stroke-width="5"
+            stroke-linecap="round"
+          />
+          <path
+            d="M161.875 208.125H53.9583L97.9883 76.0348C98.6933 73.9216 99.8077 71.968 101.268 70.2857C102.728 68.6033 104.505 67.2251 106.498 66.2298C109.084 64.9368 111.957 64.3262 114.845 64.4561C117.733 64.586 120.54 65.4521 122.999 66.972C125.459 68.492 127.488 70.6154 128.896 73.1406C130.303 75.6658 131.042 78.5088 131.042 81.3998V84.7915M208.125 208.125H316.042L272.012 76.0348C271.307 73.9216 270.192 71.968 268.732 70.2857C267.272 68.6033 265.495 67.2251 263.502 66.2298C260.916 64.9368 258.043 64.3262 255.155 64.4561C252.267 64.586 249.46 65.4521 247.001 66.972C244.541 68.492 242.512 70.6154 241.104 73.1406C239.697 75.6658 238.958 78.5088 238.958 81.3998V84.7915"
+            stroke="white"
+            stroke-width="5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      ),
+      info: [
+        "Select your Real Estate Agent",
+        "Obtain Financial Pre-Approval",
+        "Analyze needs with Buyer Consultation",
+      ],
+      name: "Analyze",
+      paragraph:
+        "Leveraging decades of industry experience, our real estate expertise allows us to create unique opportunities and deliver exceptional value. Our dedicated development team manages projects from concept to completion, ensuring collaboration with consultants, local stakeholders, and government entities.",
+      title: "All in the Details",
+    },
+    {
+      icon: (
+        <svg
+          width="250"
+          height="250"
+          viewBox="0 0 370 370"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-[125px] h-[125px] md:w-[250px] md:h-[250px]"
+        >
+          <path
+            d="M77.0833 323.75C68.6042 323.75 61.3481 320.733 55.315 314.7C49.2819 308.667 46.2603 301.406 46.25 292.917V77.0833C46.25 68.6042 49.2717 61.3481 55.315 55.315C61.3583 49.2819 68.6144 46.2603 77.0833 46.25H292.917C301.396 46.25 308.657 49.2717 314.7 55.315C320.744 61.3583 323.76 68.6144 323.75 77.0833H200.417C182.174 77.0833 167.338 82.8029 155.909 94.2421C144.48 105.681 138.76 120.517 138.75 138.75V231.25C138.75 249.493 144.47 264.334 155.909 275.773C167.348 287.213 182.184 292.927 200.417 292.917H323.75C323.75 301.396 320.733 308.657 314.7 314.7C308.667 320.744 301.406 323.76 292.917 323.75H77.0833ZM200.417 262.083C191.937 262.083 184.681 259.067 178.648 253.034C172.615 247.001 169.594 239.739 169.583 231.25V138.75C169.583 130.271 172.605 123.015 178.648 116.982C184.692 110.949 191.948 107.927 200.417 107.917H308.333C316.812 107.917 324.074 110.938 330.117 116.982C336.16 123.025 339.177 130.281 339.167 138.75V231.25C339.167 239.729 336.15 246.99 330.117 253.034C324.084 259.077 316.823 262.094 308.333 262.083H200.417ZM246.667 208.125C253.347 208.125 258.872 205.941 263.24 201.573C267.608 197.205 269.792 191.681 269.792 185C269.792 178.319 267.608 172.795 263.24 168.427C258.872 164.059 253.347 161.875 246.667 161.875C239.986 161.875 234.462 164.059 230.094 168.427C225.726 172.795 223.542 178.319 223.542 185C223.542 191.681 225.726 197.205 230.094 201.573C234.462 205.941 239.986 208.125 246.667 208.125Z"
+            fill="white"
+          />
+        </svg>
+      ),
+      info: [
+        "Select / View Properties",
+        "Write an Offer to Purchase",
+        "Secure Financing",
+      ],
+      name: "Finance",
+      paragraph:
+        "From selecting and viewing properties to crafting a compelling offer to purchase, we guide our clients through each stage with expertise and care. Our dedicated team ensures that securing financing is a seamless process, leveraging our extensive network and resources to find the best options tailored to our clients' needs. By your side, you can trust in our commitment to simplifying the complexities of real estate transactions, making your experience both rewarding and stress-free.",
+      title: "Selection to Finance",
+    },
+
+    {
+      icon: (
+        <svg
+          width="250"
+          height="250"
+          viewBox="0 0 333 287"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-[125px] h-[125px] md:w-[250px] md:h-[250px]"
+        >
+          <g filter="url(#filter0_d_1999_14)">
+            <path
+              d="M189.833 262.75V237.312C189.833 235.257 190.219 233.268 190.99 231.346C191.76 229.424 192.917 227.687 194.458 226.135L275.01 145.969C277.323 143.656 279.892 141.986 282.719 140.958C285.545 139.93 288.371 139.417 291.198 139.417C294.281 139.417 297.236 139.997 300.062 141.159C302.889 142.32 305.458 144.052 307.771 146.354L322.031 160.614C324.087 162.927 325.695 165.496 326.857 168.323C328.018 171.149 328.594 173.976 328.583 176.802C328.583 179.628 328.069 182.522 327.042 185.482C326.014 188.442 324.344 191.073 322.031 193.375L241.865 273.542C240.323 275.083 238.591 276.239 236.669 277.01C234.747 277.781 232.753 278.167 230.687 278.167H205.25C200.882 278.167 197.223 276.692 194.273 273.742C191.324 270.792 189.844 267.128 189.833 262.75ZM291.198 191.833L305.458 176.802L291.198 162.542L276.552 177.187L291.198 191.833ZM35.6666 247.333C27.1874 247.333 19.9313 244.317 13.8983 238.284C7.8652 232.251 4.84353 224.989 4.83325 216.5V31.4998C4.83325 23.0207 7.85492 15.7646 13.8983 9.7315C19.9416 3.69845 27.1977 0.676782 35.6666 0.666504H115.448C119.559 0.666504 123.48 1.43734 127.211 2.97901C130.942 4.52067 134.215 6.7047 137.031 9.53108L159 31.4998H282.333C290.812 31.4998 298.074 34.5215 304.117 40.5648C310.16 46.6082 313.177 53.8643 313.167 62.3332V94.3228C313.167 98.9478 311.301 102.673 307.57 105.5C303.839 108.326 299.538 109.354 294.667 108.583H290.427C283.233 108.583 276.49 109.868 270.2 112.437C263.91 115.007 258.191 118.861 253.042 124L167.865 209.177C165.038 212.003 162.854 215.282 161.312 219.013C159.771 222.744 159 226.659 159 230.76V231.917C159 236.285 157.52 239.949 154.56 242.909C151.6 245.869 147.941 247.343 143.583 247.333H35.6666Z"
+              fill="white"
+            />
+          </g>
+          <defs>
+            <filter
+              id="filter0_d_1999_14"
+              x="0.833252"
+              y="0.666504"
+              width="331.75"
+              height="285.5"
+              filterUnits="userSpaceOnUse"
+              color-interpolation-filters="sRGB"
+            >
+              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feColorMatrix
+                in="SourceAlpha"
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                result="hardAlpha"
+              />
+              <feOffset dy="4" />
+              <feGaussianBlur stdDeviation="2" />
+              <feComposite in2="hardAlpha" operator="out" />
+              <feColorMatrix
+                type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"
+              />
+              <feBlend
+                mode="normal"
+                in2="BackgroundImageFix"
+                result="effect1_dropShadow_1999_14"
+              />
+              <feBlend
+                mode="normal"
+                in="SourceGraphic"
+                in2="effect1_dropShadow_1999_14"
+                result="shape"
+              />
+            </filter>
+          </defs>
+        </svg>
+      ),
+      info: ["Negotiation", "Home Inspection", "Accept Contract"],
+      name: "Let's Deal",
+      paragraph:
+        "Our experienced team works tirelessly to advocate for our clients, striving to achieve the best possible outcomes. Prior to finalizing any agreement, we conduct meticulous home inspections, ensuring our clients are fully informed about the condition of the property. Once all parties are satisfied, we facilitates the smooth acceptance of contracts, ensuring a seamless transition to the next phase of the transaction. Trust us to navigate you through negotiation, home inspection, and contract acceptance with professionalism and expertise.",
+      title: "Negotiation to Contract Approval",
+    },
+  ];
+
+  const toggleSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  };
+
+  const currentSlidePick = slides[currentSlide];
+
   return (
     <div className="w-full  bg-eggshell ">
       {/* Buyer Process */}
@@ -24,68 +157,47 @@ const Buyer = () => {
         </div>
       </div>
       <div className="w-full h-screen ">
-        {/* Analyze */}
-        <div className="w-[100%] xl:w-[95%] h-full border  flex flex-col xl:flex-row relative">
-          <div className="xl:w-1/2 w-full xl:h-3/4 h-1/3 flex xl:flex-col xl:justify-around justify-between items-center px-4">
-            <h2 className="font-agrandir text-4xl md:text-6xl lg:8xl mb-4 tracking-wider font-bold">
-              Analyze
-            </h2>
-            <div className="rounded-full bg-forest md:h-96 md:w-96  h-44 w-44 drop-shadow-lg flex justify-center items-center pulse-btn">
-              <svg
-                width="254"
-                height="254"
-                viewBox="0 0 254 254"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="p-4"
-              >
-                <g id="lets-icons:glasses">
-                  <g id="Group">
-                    <path
-                      id="Vector"
-                      d="M31.75 148.166V158.75C31.75 169.977 36.2101 180.745 44.1491 188.684C52.0882 196.623 62.8558 201.083 74.0833 201.083C82.504 201.083 90.5797 197.738 96.534 191.784C102.488 185.829 105.833 177.754 105.833 169.333V158.75C105.833 153.136 108.063 147.752 112.033 143.783C116.002 139.813 121.386 137.583 127 137.583C132.614 137.583 137.998 139.813 141.967 143.783C145.937 147.752 148.167 153.136 148.167 158.75V169.333C148.167 177.754 151.512 185.829 157.466 191.784C163.42 197.738 171.496 201.083 179.917 201.083C191.144 201.083 201.912 196.623 209.851 188.684C217.79 180.745 222.25 169.977 222.25 158.75V148.166"
-                      stroke="white"
-                      stroke-width="5"
-                      stroke-linecap="round"
-                    />
-                    <path
-                      id="Vector_2"
-                      d="M148.167 148.167H222.25L193.94 63.2353C191.823 56.8853 186.372 52.2286 179.779 51.128C177.192 50.6959 174.542 50.8328 172.013 51.529C169.484 52.2251 167.137 53.464 165.136 55.1592C163.134 56.8545 161.526 58.9655 160.423 61.3454C159.321 63.7252 158.75 66.3168 158.75 68.9397V74.0832M105.833 148.167H31.75L60.0604 63.2353C62.1771 56.8853 67.6275 52.2286 74.2209 51.128C76.808 50.6959 79.4582 50.8328 81.9871 51.529C84.516 52.2251 86.8628 53.464 88.8643 55.1592C90.8657 56.8545 92.4738 58.9655 93.5766 61.3454C94.6794 63.7252 95.2505 66.3168 95.25 68.9397V74.0832"
-                      stroke="white"
-                      stroke-width="5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </g>
-                </g>
-              </svg>
-            </div>
-          </div>
-          <div className="xl:w-1/2 w-full xl:h-5/6 h-full flex flex-col justify-evenly  xl:justify-end ">
-            <h1 className="p-4 xl:p-0 xl:mb-4 text-2xl md:text-4xl lg:text-6xl xl:text-4xl font-montserrat text-black font-medium tracking-wide">
-              All in the Details.
-            </h1>{" "}
-            <p className="p-4 xl:p-0 xl:mb-4 text-sm  md:text-lg lg:text-2xl xl:text-base text-montserrat font-regular tracking-wider text-black/60 w-5/6">
-              Leveraging decades of industry experience, our real estate
-              expertise allows us to create unique opportunities and deliver
-              exceptional value. Our dedicated development team manages projects
-              from concept to completion, ensuring collaboration with
-              consultants, local stakeholders, and government entities.{" "}
-            </p>
-            <ul className="w-3/4 xl:h-2/5 h-1/2 flex flex-col justify-around text-sm md:text-base  font-montserrat tracking-wider p-4 xl:p-0 xl:mb-4">
-              <li className="border-t border-b border-black py-4">
-                Select your Real Estate Agent
-              </li>
-              <li className="border-t border-b border-black py-4">
-                Select / View Properties
-              </li>
-              <li className="border-t border-b border-black py-4">
-                Analyze needs with Buyer Consultation
-              </li>
-            </ul>
-          </div>
+        {/* Slides */}
+
+        <div className="w-[100%] xl:w-[95%] h-full  relative">
+          <motion.div
+            key={currentSlide}
+            initial={{ opacity: 0, x: 200 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -100 }}
+            transition={{ ease: "easeInOut", duration: 1 }}
+            className="w-full h-full flex flex-col xl:flex-row overflow-hidden"
+          >
+            <motion.div className="xl:w-1/2 w-full xl:h-3/4 h-1/3 flex xl:flex-col xl:justify-around justify-start items-center px-4">
+              <h2 className="font-agrandir text-2xl md:text-6xl lg:8xl mb-4 pr-4 tracking-wider font-bold">
+                {currentSlidePick.name}
+              </h2>
+              <div className="rounded-full bg-forest md:h-96 md:w-96 h-48 w-48 drop-shadow-lg flex justify-center items-center pulse-btn">
+                {currentSlidePick.icon}
+              </div>
+            </motion.div>
+            <motion.div className="xl:w-1/2 w-full xl:h-5/6 h-full flex flex-col justify-evenly  xl:justify-end ">
+              <h1 className="p-4 xl:p-0 xl:mb-4 text-2xl md:text-4xl lg:text-6xl xl:text-4xl font-montserrat text-black font-medium tracking-wide">
+                {currentSlidePick.title}
+              </h1>{" "}
+              <p className="p-4 xl:p-0 xl:mb-4 text-sm  md:text-lg lg:text-2xl xl:text-base text-montserrat font-regular tracking-wider text-black/60 w-5/6">
+                {currentSlidePick.paragraph}
+              </p>
+              <ul className="w-3/4 xl:h-2/5 h-1/2 flex flex-col justify-around text-sm md:text-base  font-montserrat tracking-wider p-4 xl:p-0 xl:mb-4">
+                {currentSlidePick.info.map((item, index) => (
+                  <li key={index} className="border-t border-black py-4">
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          </motion.div>
+
           {/* Next Button */}
-          <button className="absolute top-1/2 hover:bg-forest hover:text-pine duration-200 ease-in-out right-4 w-12 h-12 xl:w-16 xl:h-16 p-4 rounded-full border border-black flex justify-center items-center">
+          <button
+            onClick={toggleSlide}
+            className="absolute top-1/2 hover:bg-forest hover:text-pine duration-200 ease-in-out right-4 w-12 h-12 xl:w-16 xl:h-16 p-4 rounded-full border border-black flex justify-center items-center"
+          >
             <FontAwesomeIcon
               icon={faChevronRight}
               size="lg"

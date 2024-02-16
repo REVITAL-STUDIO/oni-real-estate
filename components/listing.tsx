@@ -2,15 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faMagnifyingGlass,
-  faChevronDown,
-  faLocationPin,
-  faDollarSign,
-  faBed,
-  faBath,
-  faCity,
-} from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 type BedType = number;
 type BathType = number;

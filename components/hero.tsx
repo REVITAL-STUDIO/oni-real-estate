@@ -32,20 +32,16 @@ const Hero = () => {
   };
 
   return (
-    <div className="h-screen w-full flex  justify-center items-center bg-[url('/new-background.jpg')] bg-cover bg-center contrast-125">
-      <div className=" flex  justify-center items-center w-5/6 h-2/6">
+    <div className="h-screen w-full flex  justify-center items-center bg-[url('/aerial-houston.jpg')] bg-cover ">
+      <div className=" flex   justify-center items-center w-5/6 h-2/6">
         {/* Logo & Slogan */}
         <motion.div
           variants={variants}
           initial="hidden"
           animate="visible"
-          className="w-1/2 h-fit text-center text-white flex justify-center items-center"
+          className="w-3/4 md:w-1/2 h-fit text-center text-white flex justify-center items-center"
         >
-          <Image
-            src={Logo2}
-            alt="logo"
-            className="w-52 md:w-80 h-auto invert"
-          />
+          <Image src={Logo2} alt="logo" className="w-96 h-auto invert" />
         </motion.div>
         <motion.div
           variants={textVariants}
@@ -54,10 +50,10 @@ const Hero = () => {
           className="w-1/2 h-1/2 justify-center items-center flex"
         >
           <h2
-            className="text-white text-center font-agrandir text-2xl md:text-4xl tracking-wider"
+            className="text-white text-center font-agrandir font-medium text-base md:text-4xl tracking-wider "
             style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.3)" }}
           >
-            Where Houston finds Homes
+            Where Houston finds Homes.
           </h2>
         </motion.div>
       </div>

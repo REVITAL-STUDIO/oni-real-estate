@@ -9,8 +9,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 type expandId = 1 | 2 | null;
 
 const Info = () => {
-  const [expanded, setExpanded] = useState(false);
-
   return (
     <div className="h-screen w-full xl:h-1000 flex flex-col lg:flex-row bg-eggshell ">
       <div className="h-full w-full xl:w-1/2 relative e ">

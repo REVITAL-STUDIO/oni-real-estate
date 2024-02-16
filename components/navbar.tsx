@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import { IoIosClose } from "react-icons/io";
+
 const Nav = () => {
   const { data: session } = useSession();
 
@@ -70,6 +71,7 @@ const Nav = () => {
       document.body.style.overflow = "auto";
     };
   }, [openLogin, openMenu]);
+
   //show sign up form
   const [showSignUpForm, setSignUpForm] = useState(false);
 
@@ -181,7 +183,7 @@ const Nav = () => {
           />
         </Link>
         <ul
-          className={` text-white text-sm hidden uppercase font-light font-montserrat h-full xl:flex justify-between  tracking-widest items-center gap-x-8  w-auto transition-colors duration-300 ease-in
+          className={` text-white font-medium  text-sm hidden uppercase  font-montserrat h-full xl:flex justify-between  tracking-widest items-center gap-x-8  w-auto transition-colors duration-300 ease-in
           `}
         >
           <li className="relative p-4">
@@ -258,7 +260,7 @@ const Nav = () => {
                   className="invert w-24 p-4"
                 />
                 <ul
-                  className={` gap-y-4  flex flex-col justify-center font-agrandir w-full h-1/2
+                  className={` gap-y-4 font-medium  flex flex-col justify-center font-agrandir w-full h-1/2
           `}
                 >
                   <li className="relative   w-full p-4 text-lg md:text-4xl tracking-wider font-extralight  ">
@@ -349,10 +351,10 @@ const Nav = () => {
                     className="w-3/4 h-[85%] text-sm flex flex-col font-agrandir items-center "
                   >
                     {isRegisterError && (
-                      <div className="p-[1rem] bg-red-100 flex gap-[3rem] items-center rounded-lg mb-[2rem]">
+                      <div className="p-[1rem] bg-red-100 flex gap-[1rem] items-center justify-center rounded-lg mb-[2rem]">
                         <p className="text-red-400">{errorMsg}</p>
                         <IoIosClose
-                          className=" text-red-300 h-[2rem] w-[2rem] hover:cursor-pointer"
+                          className=" text-red-300 h-[1rem] w-[1rem] hover:cursor-pointer"
                           onClick={() => setIsRegisterError(false)}
                         />
                       </div>

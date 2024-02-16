@@ -1,5 +1,5 @@
 require('dotenv').config();
-import { prisma } from "@/database/client";
+import { prisma } from "@/lib/database/client";
 
 const bcrypt = require('bcrypt');
 

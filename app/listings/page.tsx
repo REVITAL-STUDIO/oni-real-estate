@@ -1,9 +1,6 @@
 import React from "react";
 import Listing from "@/components/listing";
 import Footer from "@/components/footer";
-import Google from "@/components/google";
-import Homes from "@/components/homes";
-import Nav from "@/components/navbar";
 import MLS from "@/components/mls";
 import NavPages from "@/components/nav";
 

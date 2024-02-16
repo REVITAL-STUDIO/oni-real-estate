@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,7 +11,10 @@ import home3 from "public/home3.jpeg";
 import home4 from "public/home4.jpg";
 import home5 from "public/home5.jpeg";
 import home6 from "public/home6.jpeg";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import {
+  StaticImageData,
+  StaticImport,
+} from "next/dist/shared/lib/get-img-props";
 
 // Home Info
 
@@ -24,9 +26,58 @@ interface InfoEstate {
   sqft: number;
 }
 
+interface Listing {
+  id: number;
+  address: string;
+  description: string;
+  pictures: string[];
+  beds: number;
+  baths: number;
+  area: number;
+  price: number;
+}
+
+async function getListing() {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  if (!res.ok) {
+    throw new Error("Failed to fetch listings");
+  }
+  return res.json();
+}
+
 const Homes = () => {
-  //homes
-  const homes: StaticImport[] = [home1, home2, home3, home4, home5, home6];
+  //Retrieving Homes from DB
+  const [homes, setHomes] = useState([
+    home1,
+    home2,
+    home3,
+    home4,
+    home5,
+    home6,
+  ]);
+
+  //Fetching all listings
+
+  useEffect(() => {
+    const fetchListing = async () => {
+      try {
+        const data = await getListing();
+        console.log(data);
+        setHomes(data);
+      } catch (error) {
+        console.error("Error Fetching Listings", error);
+      }
+    };
+    fetchListing();
+  }, []);
 
   //addresses
   const addresses = [
@@ -75,7 +126,7 @@ const Homes = () => {
     openPropertyInfo(false);
   };
 
-  //Save Property
+  //Favorite Listing
   const [saveProp, setSaveProp] = useState<boolean[]>([]);
 
   // Function to handle the click event on a button to toggle save state
@@ -90,6 +141,9 @@ const Homes = () => {
       return newSaveProp;
     });
   };
+
+  //Fetching saved Listings
+  useEffect(() => {});
 
   //Open Info Page & close
   const [propertyInfo, openPropertyInfo] = useState(false);
@@ -112,14 +166,14 @@ const Homes = () => {
   return (
     <div className="w-full xl:w-3/5 h-full flex flex-col items-center overflow-y-auto custom-scrollbar">
       <div className="flex flex-wrap justify-around gap-y-4 w-full  p-4">
-        {homes.map((homesFile, index) => (
+        {homes.map((home, index) => (
           <div className="xl:w-[50%] w-[100%] flex flex-col p-4" key={index}>
             <div
               onClick={() => handlePropertyInfo(index)}
               className=" relative w-[100%] my-4"
             >
               <Image
-                src={homesFile}
+                src={home}
                 className=" w-[100%] object-cover rounded-lg brightness-90 shadow-md"
                 alt="homes"
               />
@@ -135,7 +189,7 @@ const Homes = () => {
                 <h2 className="text-base font-montserrat font-regular p-2 w-3/5">
                   {addresses[index]}
                 </h2>
-                <p className="font-light p-2 text-sm">{`${infoEstate[index].beds} beds | ${infoEstate[index].baths} baths |  ${infoEstate[index].sqft} sqft`}</p>
+                {/* <p className="font-light p-2 text-sm">{`${infoEstate[index].beds} beds | ${infoEstate[index].baths} baths |  ${infoEstate[index].sqft} sqft`}</p> */}
                 <button
                   onClick={() => handleSavedToggle(index)}
                   className="w-20 h-10 font-agrandir tracking-wide flex justify-evenly items-center p-2"
@@ -200,13 +254,13 @@ const Homes = () => {
                             />
                           </div>
                           <div className="xl:w-2/5 w-full h-full xl:h-5/6 text-white">
-                            <h2 className="text-3xl xl:text-5xl px-4 text-white font-agrandir font-regular">
+                            <h2 className="text-3xl xl:text-5xl  text-white font-agrandir font-regular">
                               {selectedAddress}
                             </h2>
-                            <h2 className=" px-4 py-2 font-montserrat text-pine font-bold tracking-wide text-2xl xl:text-4xl ">
+                            <h2 className="  py-2 font-montserrat text-pine font-bold tracking-wide text-2xl xl:text-4xl ">
                               {selectedPrices}
                             </h2>
-                            <p className="text-xs px-4 tracking-wider md:flex font-montserrat font-regular text-justify xl:w-3/4 py-2">
+                            <p className="text-xs tracking-wider md:flex font-montserrat font-regular text-justify xl:w-3/4 py-2">
                               Lorem ipsum dolor sit amet, consectetur adipiscing
                               elit, sed do eiusmod tempor incididunt ut labore
                               et dolore magna aliqua. Ut enim ad minim veniam,
@@ -218,7 +272,7 @@ const Homes = () => {
                               culpa qui officia deserunt mollit anim id est
                               laborum.
                             </p>
-                            <p className="text-base font-montserrat font-regular p-4">
+                            <p className="text-base font-montserrat font-regular py-4">
                               {selectedInfo
                                 ? `${selectedInfo.beds} Beds | ${selectedInfo.baths} Baths | ${selectedInfo.sqft} sqft`
                                 : "No information available"}
