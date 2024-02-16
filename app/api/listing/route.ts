@@ -62,7 +62,6 @@ interface postRequestBody {
 // api handler for creating a new listing
 export async function POST(request: Request) {
     const body: postRequestBody = await request.json();
-    console.log("################### picture urls: ", body.pictures);
     try {
         const newListing = await prisma.listing.create({
             data: {
