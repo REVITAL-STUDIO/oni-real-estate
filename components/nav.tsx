@@ -74,7 +74,7 @@ const NavPages = () => {
 
   return (
     <div
-      className={`h-100 w-full flex fixed  z-50 flex-col items-center justify-center transition-all duration-300 ease-in-out ${
+      className={`h-100 w-full flex fixed  flex-col items-center justify-center transition-all duration-300 ease-in-out ${
         color ? "" : ""
       } ${disappear ? "opacity-0 pointer-events-none " : " "}`}
     >
@@ -92,7 +92,7 @@ const NavPages = () => {
           />
         </Link>
         <ul
-          className={` text-black text-sm hidden uppercase font-regular font-montserrat h-full xl:flex justify-between  tracking-widest items-center gap-x-8  w-auto transition-colors duration-300 ease-in
+          className={` text-black font-medium text-sm hidden uppercase font-regular font-montserrat h-full xl:flex justify-between  tracking-widest items-center gap-x-8  w-auto transition-colors duration-300 ease-in
           `}
         >
           <li className="relative p-4">

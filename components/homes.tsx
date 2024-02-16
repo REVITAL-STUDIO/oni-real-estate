@@ -37,6 +37,7 @@ interface Listing {
   price: number;
 }
 
+//Fetching listings
 async function getListing() {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing`,
@@ -51,6 +52,30 @@ async function getListing() {
     throw new Error("Failed to fetch listings");
   }
   return res.json();
+}
+
+//Adding Save Homes
+async function saveListing(listingData: string) {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites/route.ts`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          body: JSON.stringify(listingData),
+        }),
+      }
+    );
+    if (!res.ok) {
+      throw new Error("Failed to add listing");
+    }
+  } catch (error) {
+    console.error("Error saving listing:", error);
+    throw error;
+  }
 }
 
 const Homes = () => {
@@ -129,21 +154,30 @@ const Homes = () => {
   //Favorite Listing
   const [saveProp, setSaveProp] = useState<boolean[]>([]);
 
-  // Function to handle the click event on a button to toggle save state
-  const handleSavedToggle = (index: number) => {
-    // Update the saveProp array
-    setSaveProp((prevSaveProp) => {
-      // Create a copy of the current saveProp array
-      const newSaveProp = [...prevSaveProp];
-      // Toggle the saved state of the item at the clicked index
+  // Function to handle the click event on a button to toggle save
+  const handleSavedToggle = async (index: number) => {
+    try {
+      // Toggle the save state of the item at the clicked index
+      const newSaveProp = [...saveProp];
       newSaveProp[index] = !newSaveProp[index];
-      // Return the updated array, which will become the new state
-      return newSaveProp;
-    });
+      setSaveProp(newSaveProp);
+
+      // Save or remove the listing from favorites based on the current state
+      const data = await saveListing();
+      setSaveProp(data);
+      // Log the updated saveProp array
+      console.log(saveProp, "It's working");
+    } catch (error) {
+      console.error(
+        "Can't save listing.. Refresh Page or Check your Connection",
+        error
+      );
+    }
   };
 
-  //Fetching saved Listings
-  useEffect(() => {});
+  useEffect(() => {
+    console.log(saveProp, "It's working");
+  }, [saveProp]);
 
   //Open Info Page & close
   const [propertyInfo, openPropertyInfo] = useState(false);
@@ -189,7 +223,7 @@ const Homes = () => {
                 <h2 className="text-base font-montserrat font-regular p-2 w-3/5">
                   {addresses[index]}
                 </h2>
-                {/* <p className="font-light p-2 text-sm">{`${infoEstate[index].beds} beds | ${infoEstate[index].baths} baths |  ${infoEstate[index].sqft} sqft`}</p> */}
+                <p className="font-light p-2 text-sm">{`${infoEstate[index].beds} beds | ${infoEstate[index].baths} baths |  ${infoEstate[index].sqft} sqft`}</p>
                 <button
                   onClick={() => handleSavedToggle(index)}
                   className="w-20 h-10 font-agrandir tracking-wide flex justify-evenly items-center p-2"

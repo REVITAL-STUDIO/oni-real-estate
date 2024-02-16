@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import Image from "next/image";
@@ -16,6 +18,7 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import CreateListing from "./create-listing";
 
 const AdminDashboard = () => {
   //Saved Listings
@@ -32,6 +35,21 @@ const AdminDashboard = () => {
     "202 Sunset Boulevard, Pearland, TX 77005",
     "303 Lakeside Drive, Richmond, TX 77006",
   ];
+
+  //Opening Add lisitng form
+  const [addHomes, setAddHomes] = useState(false);
+
+  const toggleAddHomes = () => {
+    setAddHomes((prev) => !prev);
+  };
+
+  useEffect(() => {
+    document.body.style.overflow = addHomes ? "hidden" : "auto";
+    // Cleanup function
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [addHomes]);
 
   return (
     <div className="w-full h-screen flex justify-center items-center">
@@ -107,7 +125,7 @@ const AdminDashboard = () => {
                       Charles Thomas
                     </span>
                   </div>
-                  <div className="w-1/2 h-full flex justify-end gap-x-2 items-center">
+                  <div className="w-1/2 h-full flex justify-end items-center">
                     <button className="w-5 h-5 px-4">
                       <FontAwesomeIcon className="w-5 h-5" icon={faPhone} />{" "}
                     </button>
@@ -140,7 +158,10 @@ const AdminDashboard = () => {
             <h2 className="p-4  left-0 font-agrandir font-medium tracking-wider">
               Listings
             </h2>
-            <button className="p-4 h-8 w-32 text-white bg-black shadow-lg rounded-full relative right-4 flex justify-evenly items-center text-xs">
+            <button
+              onClick={toggleAddHomes}
+              className="p-4 h-8 w-32 text-white bg-black shadow-lg rounded-full relative right-4 flex justify-evenly items-center text-xs"
+            >
               <FontAwesomeIcon icon={faPlus} className="w-4 h-4" /> add listing
             </button>
           </div>
@@ -148,7 +169,7 @@ const AdminDashboard = () => {
             {homes.map((homesFile, index) => (
               <div
                 key={index}
-                className="w-3/4 h-20 bg-white rounded-2xl relative  shadow-lg float-right flex justify-between mb-8"
+                className="w-3/4 h-28 bg-white rounded-2xl relative  shadow-lg float-right flex justify-between mb-8"
               >
                 <Image
                   src={homesFile}
@@ -159,8 +180,8 @@ const AdminDashboard = () => {
                   <span className="px-4 font-montserrat text-white text-sm w-1/4">
                     {addresses[index]}
                   </span>
-                  <div className="w-1/4 h-full flex justify-end items-center right-0 ">
-                    <button className=" p-4 tracking-wider font-montserrat  rounded-full  text-xs">
+                  <div className="w-1/4 h-full flex justify-end relative items-center right-2 ">
+                    <button className=" p-4 tracking-wider font-montserrat hover:bg-white/40 hover:shadow-md  flex justify-center items-center rounded-full  text-xs">
                       <svg
                         width="25"
                         height="25"
@@ -184,7 +205,7 @@ const AdminDashboard = () => {
                         />
                       </svg>
                     </button>
-                    <button className=" p-4 tracking-wider font-montserrat  rounded-full  text-xs">
+                    <button className=" p-4 tracking-wider font-montserrat hover:bg-white/40 hover:shadow-md rounded-full  text-xs">
                       <svg
                         width="24"
                         height="24"
@@ -208,7 +229,7 @@ const AdminDashboard = () => {
                         />
                       </svg>
                     </button>
-                    <button className=" p-4 tracking-wider font-montserrat  rounded-full  text-xs">
+                    <button className=" p-4 tracking-wider font-montserrat hover:bg-white/40 hover:shadow-md rounded-full  text-xs">
                       <svg
                         width="24"
                         height="24"
@@ -228,6 +249,25 @@ const AdminDashboard = () => {
             ))}
           </div>
         </div>
+
+        {/* Opening Add Homes */}
+        {addHomes && (
+          <div className="fixed left-0 top-0 bg-black/90 w-full h-full z-20">
+            <button
+              onClick={toggleAddHomes}
+              className="absolute right-2 top-2 p-4 flex justify-center items-center z-50"
+            >
+              <span
+                className={`block w-3/4 my-0.5 border absolute border-white rotate-45 transition-transform `}
+              ></span>
+              <span
+                className={`block w-3/4 my-0.5 border absolute border-white -rotate-45 transition-transform `}
+              ></span>
+            </button>
+
+            <CreateListing />
+          </div>
+        )}
       </div>
     </div>
   );
