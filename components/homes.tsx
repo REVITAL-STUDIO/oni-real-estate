@@ -52,7 +52,7 @@ async function getListing() {
 }
 
 //Adding Save Homes
-async function saveListing() {
+async function saveListing(email: string, listingId: number, index: number) {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites/route.ts`,
@@ -61,6 +61,7 @@ async function saveListing() {
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({ email, listingId }),
       }
     );
     if (!res.ok) {
@@ -149,12 +150,20 @@ const Homes = () => {
   const [saveProp, setSaveProp] = useState<boolean[]>([]);
 
   // Function to handle the click event on a button to toggle save
-  const handleSavedToggle = async ({ email, listingId }) => {
+  const handleSavedToggle = async (
+    index: number,
+    email: string,
+    listingId: number
+  ) => {
     try {
       // Toggle the save state of the item at the clicked index
       const newSaveProp = [...saveProp];
       newSaveProp[index] = !newSaveProp[index];
-      await saveListing({ email, listingId });
+
+      const email = "";
+      const listingId = 1;
+
+      await saveListing(email, listingId, index);
       setSaveProp(newSaveProp);
 
       // Log the updated saveProp array
@@ -214,7 +223,7 @@ const Homes = () => {
                 </h2>
                 <p className="font-light p-2 text-sm">{`${infoEstate[index].beds} beds | ${infoEstate[index].baths} baths |  ${infoEstate[index].sqft} sqft`}</p>
                 <button
-                  onClick={() => handleSavedToggle(index)}
+                  onClick={() => handleSavedToggle(index, email, listingId)}
                   className="w-20 h-10 font-agrandir tracking-wide flex justify-evenly items-center p-2"
                 >
                   <span>
