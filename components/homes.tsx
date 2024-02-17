@@ -43,9 +43,6 @@ async function getListing() {
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing`,
     {
       method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
     }
   );
   if (!res.ok) {
@@ -55,7 +52,7 @@ async function getListing() {
 }
 
 //Adding Save Homes
-async function saveListing(listingData: string) {
+async function saveListing() {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites/route.ts`,
@@ -64,9 +61,6 @@ async function saveListing(listingData: string) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          body: JSON.stringify(listingData),
-        }),
       }
     );
     if (!res.ok) {
@@ -155,23 +149,18 @@ const Homes = () => {
   const [saveProp, setSaveProp] = useState<boolean[]>([]);
 
   // Function to handle the click event on a button to toggle save
-  const handleSavedToggle = async (index: number) => {
+  const handleSavedToggle = async ({ email, listingId }) => {
     try {
       // Toggle the save state of the item at the clicked index
       const newSaveProp = [...saveProp];
       newSaveProp[index] = !newSaveProp[index];
+      await saveListing({ email, listingId });
       setSaveProp(newSaveProp);
 
-      // Save or remove the listing from favorites based on the current state
-      const data = await saveListing();
-      setSaveProp(data);
       // Log the updated saveProp array
-      console.log(saveProp, "It's working");
+      console.log("Listing added to favorites successfully!");
     } catch (error) {
-      console.error(
-        "Can't save listing.. Refresh Page or Check your Connection",
-        error
-      );
+      console.error("Error adding listing to favorites:", error);
     }
   };
 
