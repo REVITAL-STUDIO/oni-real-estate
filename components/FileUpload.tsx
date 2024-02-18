@@ -5,18 +5,18 @@ import Delete from "../public/delete.svg";
 import Image from "next/image";
 
 interface fileUploadProps {
-  onFilesSelected: (files: File[]) => void;
+  onFilesSelected: (files: FileExtended[]) => void,
   initialFiles?: File[];
+
 }
 
-const FileUpload: React.FC<fileUploadProps> = ({
-  onFilesSelected,
-  initialFiles,
-}) => {
-  const [selectedFiles, setSelectedFiles] = useState<File[]>(
-    initialFiles || []
-  );
-  console.log("In File Upload Selected Files ############## ", selectedFiles);
+interface FileExtended extends File {
+  url?: string
+
+}
+
+const FileUpload: React.FC<fileUploadProps> = ({ onFilesSelected, initialFiles }) => {
+  const [selectedFiles, setSelectedFiles] = useState<FileExtended[]>(initialFiles || []);
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setSelectedFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
   }, []);
@@ -56,13 +56,13 @@ const FileUpload: React.FC<fileUploadProps> = ({
         </button>
       </div>
       <div>
-        <div className="grid grid-cols-3 gap-2 py-4">
+        <div className="grid grid-cols-3 gap-2 py-4 max-h-[12rem] overflow-y-auto px-2">
           {" "}
           {/* Grid container with 3 columns and gap */}
           {selectedFiles.map((file) => (
             <div
               key={file.name}
-              className="relative  w-5/6 h-44 group transition-transform duration-300 hover:scale-110"
+              className="relative  w-[90%] h-[6rem] group transition-transform duration-300 hover:scale-110"
             >
               {" "}
               {/* Use key for optimization */}

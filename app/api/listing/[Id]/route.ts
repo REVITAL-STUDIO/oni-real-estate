@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { prisma } from "@/lib/database/client";
 
-//api route for retrieving all listings
+//api route for retrieving a listing by id
 export async function GET(request: Request, { params }: { params: { Id: string } }) {
     try {
         const listing = await prisma.listing.findUnique({

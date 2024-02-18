@@ -45,8 +45,8 @@ model Account {
 }
 
 model Listing {
-  id          Int      @id @default(autoincrement())
-  address     String
+  id      Int      @id @default(autoincrement())
+  address String @unique
   description String
   pictures    String[]
   beds        Int

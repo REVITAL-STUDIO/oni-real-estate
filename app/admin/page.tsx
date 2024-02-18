@@ -9,7 +9,6 @@ export default function AdminPage() {
       <NavPages />
       <div className="w-full h-[5%]"></div>
       <AdminDashboard />
-      <Footer />
     </div>
   );
 }

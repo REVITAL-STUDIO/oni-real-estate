@@ -26,21 +26,19 @@ export async function GET() {
     }
 }
 
-interface deleteRequestBody {
-    id: number
-}
+
 
 //api handler for deleting a listing
 export async function DELETE(request: Request) {
-    const body: deleteRequestBody = await request.json();
+    const listingId = await request.json();
 
     try {
-        const delteListing = await prisma.listing.delete({
+        const deleteListing = await prisma.listing.delete({
             where: {
-                id: body.id
+                id: listingId
             }
         });
-        return NextResponse.json(null, { status: 204 });
+        return NextResponse.json({ message: "Listing deleted successfully" }, { status: 200 });
 
     } catch (error) {
         console.error("Error deleting Listing from database:", error);
@@ -63,6 +61,17 @@ interface postRequestBody {
 export async function POST(request: Request) {
     const body: postRequestBody = await request.json();
     try {
+
+        //checking if a listing with address exists in db
+        const listingExist = await prisma.listing.findMany({
+            where: {
+                address: body.address
+            }
+        })
+        if (listingExist.length > 0) {
+            return NextResponse.json({ error: "A listing with given address already exists" }, { status: 400 });
+        }
+
         const newListing = await prisma.listing.create({
             data: {
                 id: body.id,
@@ -75,6 +84,7 @@ export async function POST(request: Request) {
                 price: body.price
             }
         })
+
         return NextResponse.json(newListing, { status: 200 });
 
     } catch (error) {

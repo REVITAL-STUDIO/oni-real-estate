@@ -17,13 +17,16 @@ interface Listing {
     price: number;
 }
 
+interface FileExtended extends File {
+    url?: string
 
-const EditListing = ({ params }: { params: { listingId: string } }) => {
+}
+
+const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
     const { edgestore } = useEdgeStore();
-    const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-    const [initialFiles, setInitialFiles] = useState<File[]>([]);
-    let initialUrls: string[] = []
-    let imageUrls: string[] = []
+    const [selectedFiles, setSelectedFiles] = useState<FileExtended[]>([]);
+    const [initialFiles, setInitialFiles] = useState<FileExtended[]>([]);
+    const [initialUrls, setInitialUrls] = useState<string[]>([])
     const [fetchedListingData, setFetchedListingData] = useState(false)
     const [listingData, setListingData] = useState({
         address: '',
@@ -39,19 +42,19 @@ const EditListing = ({ params }: { params: { listingId: string } }) => {
 
     useEffect(() => {
         fetchListingData();
-    }, [params.listingId]);
+    }, [listingId]);
 
 
     // Fetch listing data based on ID
     const fetchListingData = async () => {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/${parseInt(params.listingId, 10)}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/${listingId}`, {
                 method: 'GET',
                 headers: {
                     "Content-Type": "application/json",
                 }
             });
-            if (!response) {
+            if (!response.ok) {
                 throw new Error("Error retrieving listing infromation")
             }
 
@@ -59,117 +62,142 @@ const EditListing = ({ params }: { params: { listingId: string } }) => {
             const listing: Listing = await response.json()
             //populating listing data from retrieved listing
             setListingData({ address: listing.address, description: listing.description, beds: listing.beds, baths: listing.baths, area: listing.area, price: listing.price })
+
+
             let files = await Promise.all(listing.pictures.map(async (url) => {
                 return await urlToFile(url);
             }));
-            initialUrls = listing.pictures
+            setInitialUrls(listing.pictures)
             setInitialFiles(files)
+            setSelectedFiles(files)
             setFetchedListingData(true)
         } catch (error) {
-            console.log(error)
+            console.log("Error Fetching Listing Data: ", error)
         }
     };
 
     //function to upload listing images to cloud storage
-    const uploadFiles = async () => {
-
-        for (const file of selectedFiles) {
+    // returns an array of newly uploaded files urls
+    const uploadFiles = async (files: FileExtended[]) => {
+        let fileUrls = []
+        for (const file of files) {
             const res = await edgestore.publicFiles.upload({
                 file
             });
-            console.log("##### upload image object: ", res);
-            console.log("##### upload image object URL: ", res.url);
 
-
-            //storing url to picture file stored in cloud
-            imageUrls.push(res.url);
+            fileUrls.push(res.url)
         }
+
+        return fileUrls
     }
 
     //function to delete listing images from cloud storage
     const deleteFiles = async (urls: string[]) => {
-        urls.forEach(async (imageUrl) => {
-            await edgestore.publicFiles.delete({
-                url: imageUrl,
-            });
-        })
+        for (const url of urls) {
+            try {
+                await edgestore.publicFiles.delete({
+                    url: url,
+                });
+            } catch (error) {
+                console.error(error, " Error deleting image: ", url)
+            }
+        }
     }
 
     const handleFilesSelected = (files: File[]) => {
         setSelectedFiles(files);
-        console.log("File array: ", files)
     };
 
     const urlToFile = async (url: string) => {
         const response = await fetch(url);
         const blob = await response.blob();
         const filename = url.substring(url.lastIndexOf('/') + 1);
-        return new File([blob], filename, { type: blob.type });
+        let file: FileExtended = new File([blob], filename, { type: blob.type });
+        file.url = url;
+        return file
     };
 
-    const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
+    const getFilesToDelete = () => {
+        let urlsInSelected = selectedFiles.map((file) => {
+            if (file.url) {
+                return file.url
+            }
+        })
+        let filesToDelete = initialFiles.filter(file => !urlsInSelected.includes(file.url))
+        return filesToDelete
+    }
+
+    const saveListing: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
         e.preventDefault();
         setIsError(false)
-        console.log("########## HANDLE SUBMIT FUNCTION CALLED AND IN FUNCITON SCOPE")
+        //added files don't have a url yet
+        let filesToUpload = selectedFiles.filter(file => !file.url)
+        let newUrls: string[] = []
+        let filesToDelete = getFilesToDelete()
+        let urlsToDelete: any[] = filesToDelete.map(file => file.url)
+        let urlsToStore: any[] = initialUrls
+
         try {
-            await uploadFiles()
-
-            try {
-                //storing cloud stored image urls to listingdata 
-                console.log("###################### IMAGE URLS ARRAY: ", imageUrls)
-                //creating listingdata to be sent to server to create listing 
-                let data = { ...listingData, pictures: imageUrls }
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/${parseInt(params.listingId, 10)}`, {
-                    method: 'PUT',
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data),
-                })
-                if (!response.ok) {
-                    setErrorMsg('Error in saving listing Changes... please try again')
-                    await deleteFiles(imageUrls)
-                    throw new Error(`HTTP ERROR - Error editing Listing. Status: ${response.status}`)
-                }
-
-                //deleting the images that were once used for the listing in the cloud
-                const urlsToDelete = initialUrls.filter(url => !imageUrls.includes(url));
-                deleteFiles(urlsToDelete)
-
-
-            } catch (error) {
-                setIsError(true)
-                console.error('NETWORK ERROR - Unable to reach the server or network issue. Error Message: ', error)
-                await deleteFiles(imageUrls)
+            if (filesToUpload.length > 0) {
+                //uploading the newly added files and adding there urls to urlsToStore
+                newUrls = await uploadFiles(filesToUpload)
+                newUrls.forEach(url => urlsToStore.push(url));
             }
+
+            if (filesToDelete.length > 0) {
+                //removing the urls of the deleted files from urlsToStore
+                urlsToStore = urlsToStore.filter(url => !urlsToDelete.includes(url))
+                await deleteFiles(urlsToDelete)
+            }
+
+            //storing cloud stored image urls to listingdata 
+            //creating listingdata to be sent to server to create listing 
+            let data = { ...listingData, pictures: urlsToStore }
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/${listingId}`, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            })
+            if (!response.ok) {
+                setErrorMsg('Error in saving listing Changes... please try again')
+                //revert changes made in cloud storage if saving fails
+                if (filesToUpload.length > 0) {
+                    await deleteFiles(newUrls)
+                }
+                if(filesToDelete.length > 0){
+                    await uploadFiles(filesToDelete)
+                }
+                throw new Error(`HTTP ERROR - Error editing Listing. Status: ${response.status}`)
+            }
+
             setIsSuccess(true)
         }
         catch (error) {
             setIsError(true)
             toast.error('There was an error updating the Listing. Please try again.')
             console.error('NETWORK ERROR - Unable to upload listing files to the cloud, listing was not created')
-            await deleteFiles(imageUrls)
         }
 
     }
 
     if (!fetchedListingData) {
         // Data is still loading, you can show a loading indicator or return null
-        return <div>Loading...</div>;
+        return <div className="flex justify-center items-center min-h-screen text-white">Loading...</div>;
     }
 
     return (
         <div className="font-agrandir">
-            <Nav />
             <div className="flex flex-col  justify-end md:justify-center items-center min-h-screen">
-                <div className="bg-[#F7F7F7] flex justify-center items-center mt-[8rem] md:mt-[1rem]  w-full md:w-[90%] md:py-[6rem] rounded-md">
+                <div className="bg-[#F7F7F7] flex flex-col justify-center items-center mt-[8rem] md:mt-[0rem]  w-full md:w-[90%] md:py-[1rem] rounded-md ">
                     {isSuccess && <div className="p-[1rem] bg-green-100 flex gap-3 items-center rounded-lg mb-[2rem]"><p className="text-green-700">Saved Listing changes.</p><IoIosClose className=" text-green-500 h-[2rem] w-[2rem] hover:cursor-pointer" onClick={() => setIsSuccess(false)} /></div>}
                     {isError && <div className="p-[1rem] bg-red-100 flex gap-3 items-center rounded-lg mb-[2rem] "><p className="text-red-400">{errorMsg}</p><IoIosClose className=" text-red-300 h-[2rem] w-[2rem] hover:cursor-pointer" onClick={() => setIsError(false)} /></div>}
-                    <div className="relative flex flex-col gap-12 bg-white w-[90%] md:w-[70%] items-center justify-center md:flex-row md:py-[3rem] rounded-3xl shadow-md">
-                        <h1 className="absolute top-[10%] right-[10%] text-4xl "> Create a Listing</h1>
-                        <form onSubmit={handleSubmit} className="w-[85%] md:w-[40%] flex flex-col gap-4">
+                    <div className="relative flex flex-col gap-12 bg-white w-[90%] md:w-[70%] items-center justify-center md:flex-row md:py-[3rem] rounded-3xl shadow-md max-h-[680px]">
+                        <h1 className="absolute top-[10%] right-[10%] text-4xl ">Edit Listing</h1>
+                        <form className="w-[85%] md:w-[40%] flex flex-col gap-4">
                             <div>
-                                <label>Address</label>
+                                <label className="py-2">Address</label>
                                 <input
                                     name="address"
                                     type="text"
@@ -180,7 +208,7 @@ const EditListing = ({ params }: { params: { listingId: string } }) => {
                                 />
                             </div>
                             <div>
-                                <label>Description</label>
+                                <label className="py-2">Description</label>
                                 <input
                                     name="description"
                                     type="text"
@@ -191,7 +219,7 @@ const EditListing = ({ params }: { params: { listingId: string } }) => {
                                 />
                             </div>
                             <div>
-                                <label># Beds</label>
+                                <label className="py-2"># Beds</label>
                                 <input
                                     name="description"
                                     type="number"
@@ -202,7 +230,7 @@ const EditListing = ({ params }: { params: { listingId: string } }) => {
                                 />
                             </div>
                             <div>
-                                <label># Baths</label>
+                                <label className="py-2"># Baths</label>
                                 <input
                                     name="baths"
                                     type="number"
@@ -213,7 +241,7 @@ const EditListing = ({ params }: { params: { listingId: string } }) => {
                                 />
                             </div>
                             <div>
-                                <label>Area</label>
+                                <label className="py-2">Area</label>
                                 <input
                                     name="description"
                                     type="number"
@@ -224,7 +252,7 @@ const EditListing = ({ params }: { params: { listingId: string } }) => {
                                 />
                             </div>
                             <div>
-                                <label>Price</label>
+                                <label className="py-2">Price</label>
                                 <input
                                     name="description"
                                     type="number"
@@ -234,17 +262,20 @@ const EditListing = ({ params }: { params: { listingId: string } }) => {
                                     className="block w-[60%] border-0 py-3 px-3 text-gray-900 shadow-sm  placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm "
                                 />
                             </div>
+                            <button
+                                onClick={saveListing}
+                                className="p-4 text-white text-sm tracking-wider font-montserrat mt-4 bg-forest w-fit rounded-xl hover:opacity-80 hover:shadow-lg active:opacity-100"
+                            >
+                                Save changes
+                            </button>
                         </form>
                         <div className="md:w-[45%] md:mt-[12%]">
                             <p>photos</p>
-                            <FileUpload onFilesSelected={handleFilesSelected} />
+                            <FileUpload onFilesSelected={handleFilesSelected} initialFiles={initialFiles} />
                         </div>
                     </div>
-                    <a href="" className="absolute top-[15%] right-[8%] hover:text-xl active:text-[#999999] ">Cancel</a>
-                    <button className="absolute bottom-[6%] right-[8%] text-xl hover:text-2xl active:text-[#999999] ">Create</button>
                 </div>
             </div>
-            {/* <button type="submit" className="bg-green-300 rounded p-2">Create Listing</button> */}
         </div>
 
     )

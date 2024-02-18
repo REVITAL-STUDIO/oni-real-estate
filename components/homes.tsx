@@ -37,19 +37,7 @@ interface Listing {
   price: number;
 }
 
-//Fetching listings
-async function getListing() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing`,
-    {
-      method: "GET",
-    }
-  );
-  if (!res.ok) {
-    throw new Error("Failed to fetch listings");
-  }
-  return res.json();
-}
+
 
 //Adding Save Homes
 async function saveListing(email: string, listingId: number, index: number) {
@@ -74,6 +62,35 @@ async function saveListing(email: string, listingId: number, index: number) {
 }
 
 const Homes = () => {
+  //will contain array of listings data retrieved from db
+  const [listings, setListings] = useState<Listing[]>([]);
+  //used to display loading state to user when fetching listings 
+  const [loading, setLoading] = useState(true);
+  // used to display an error message to user if failed to fetch listings
+  const [error, setError] = useState<string | null>(null);
+  // variable to keep track of which listing user selects to view
+  const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
+
+
+  // Fetch listings and update the state
+  const fetchListings = async () => {
+    try {
+      //requet to get listing data from api
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing`, { method: 'GET' });
+      const data: Listing[] = await response.json();
+      //setting listings data to Listings state variable
+      setListings(data);
+      console.log("Data:", data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setError("Error")
+    } finally {
+      setLoading(false);
+      console.log("Listings", listings)
+    }
+
+  };
+
   //Retrieving Homes from DB
   const [homes, setHomes] = useState([
     home1,
@@ -84,19 +101,10 @@ const Homes = () => {
     home6,
   ]);
 
-  //Fetching all listings
 
+  // use effect so that listing data is fetched as component is loaded
   useEffect(() => {
-    const fetchListing = async () => {
-      try {
-        const data = await getListing();
-        console.log(data);
-        setHomes(data);
-      } catch (error) {
-        console.error("Error Fetching Listings", error);
-      }
-    };
-    fetchListing();
+    fetchListings();
   }, []);
 
   //addresses
@@ -132,13 +140,10 @@ const Homes = () => {
   const [selectedImage, setSelectedImage] = useState<StaticImport | null>(null);
   const [selectedAddress, setSelectedAddress] = useState<string | null>(null);
   const [selectedPrices, setSelectedPrices] = useState<string | null>(null);
-  const [selectedInfo, setSelectedInfo] = useState<InfoEstate | null>(null);
 
-  const handlePropertyInfo = (index: number) => {
-    setSelectedImage(homes[index]);
-    setSelectedAddress(addresses[index]);
-    setSelectedPrices(prices[index]);
-    setSelectedInfo(infoEstate[index]);
+  const handlePropertyInfo = (listing: Listing) => {
+    //the listing to show in the property info page
+    setSelectedListing(listing);
     openPropertyInfo((prevOpen) => !prevOpen);
   };
 
@@ -195,20 +200,36 @@ const Homes = () => {
     };
   }, [propertyInfo]);
 
+  if (loading) {
+    return (<p>Loading properties...</p>)
+  }
+
+  if (error) {
+    return (<div>
+      <p>Oops! Something went wrong. Please try again.</p>
+      <button onClick={fetchListings}>Retry</button>
+    </div>)
+  }
+
   return (
     <div className="w-full xl:w-3/5 h-full flex flex-col items-center overflow-y-auto custom-scrollbar">
       <div className="flex flex-wrap justify-around gap-y-4 w-full  p-4">
-        {homes.map((home, index) => (
-          <div className="xl:w-[50%] w-[100%] flex flex-col p-4" key={index}>
+        {listings.map((listing) => (
+          <div className="xl:w-[50%] w-[100%] flex flex-col p-4 " key={listing.id}>
             <div
-              onClick={() => handlePropertyInfo(index)}
-              className=" relative w-[100%] my-4"
+              onClick={() => handlePropertyInfo(listing)}
+              className=" relative w-[100%] my-4 hover:cursor-pointer"
             >
-              <Image
-                src={home}
-                className=" w-[100%] object-cover rounded-lg brightness-90 shadow-md"
-                alt="homes"
-              />
+              <div className="w-full h-full ">
+                <Image
+                  src={listing.pictures[0]}
+                  className=" w-[100%] object-cover rounded-lg brightness-90 shadow-md"
+                  alt="homes"
+                  width={1}
+                  height={1}
+                  layout='responsive'
+                />
+              </div>
               <div className="absolute w-full h-full bg-black/50 opacity-0 duration-300 flex justify-center items-center hover:opacity-100 hover:rounded-lg hover:flex top-0 ease-in-out hover:justify-center hover:items-center">
                 <p className="text-white text-xl font-regular font-montserrat underline underline-offset-8">
                   View Home
@@ -219,14 +240,14 @@ const Homes = () => {
             <div className="w-full h-1/2 flex flex-col justify-evenly font-medium text-gray-600 ">
               <div className="flex flex-col justify-center">
                 <h2 className="text-base font-montserrat font-regular p-2 w-3/5">
-                  {addresses[index]}
+                  {listing.address}
                 </h2>
-                <p className="font-light p-2 text-sm">{`${infoEstate[index].beds} beds | ${infoEstate[index].baths} baths |  ${infoEstate[index].sqft} sqft`}</p>
+                <p className="font-light p-2 text-sm">{`${listing.beds} beds | ${listing.baths} baths |  ${listing.area} sqft`}</p>
                 <button
-                  onClick={() => handleSavedToggle(index, email, listingId)}
+                  // onClick={() => handleSavedToggle(index, email, listingId)}
                   className="w-20 h-10 font-agrandir tracking-wide flex justify-evenly items-center p-2"
                 >
-                  <span>
+                  {/* <span>
                     {saveProp[index] ? (
                       <FontAwesomeIcon
                         icon={faCheck}
@@ -241,7 +262,7 @@ const Homes = () => {
                       />
                     )}
                   </span>
-                  <span>{saveProp[index] ? "Saved" : "Save"}</span>
+                  <span>{saveProp[index] ? "Saved" : "Save"}</span> */}
                 </button>
               </div>
               {/* address and bookmark */}
@@ -277,36 +298,30 @@ const Homes = () => {
                           <div className="xl:w-1/2 w-[95%]  xl:h-5/6 h-1/2 rounded-lg p-4 ">
                             <Image
                               src={
-                                selectedImage !== null
-                                  ? selectedImage
+                                selectedListing?.pictures[0] !== null
+                                  ? `${selectedListing?.pictures[0]}`
                                   : "/default-image-url.jpg"
                               }
+                              width={1}
+                              height={1}
+                              layout="responsive"
                               className="rounded-lg w-[100%] h-[100%] brightness-90 object-cover"
                               alt="homes"
                             />
                           </div>
                           <div className="xl:w-2/5 w-full h-full xl:h-5/6 text-white">
                             <h2 className="text-3xl xl:text-5xl  text-white font-agrandir font-regular">
-                              {selectedAddress}
+                              {selectedListing?.address}
                             </h2>
                             <h2 className="  py-2 font-montserrat text-pine font-bold tracking-wide text-2xl xl:text-4xl ">
-                              {selectedPrices}
+                              {selectedListing?.price?.toLocaleString('en-US', { style: 'currency', currency: 'USD',  maximumFractionDigits: 0 },)}
                             </h2>
                             <p className="text-xs tracking-wider md:flex font-montserrat font-regular text-justify xl:w-3/4 py-2">
-                              Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit, sed do eiusmod tempor incididunt ut labore
-                              et dolore magna aliqua. Ut enim ad minim veniam,
-                              quis nostrud exercitation ullamco laboris nisi ut
-                              aliquip ex ea commodo consequat. Duis aute irure
-                              dolor in reprehenderit in voluptate velit esse
-                              cillum dolore eu fugiat nulla pariatur. Excepteur
-                              sint occaecat cupidatat non proident, sunt in
-                              culpa qui officia deserunt mollit anim id est
-                              laborum.
+                              {selectedListing?.description}
                             </p>
                             <p className="text-base font-montserrat font-regular py-4">
-                              {selectedInfo
-                                ? `${selectedInfo.beds} Beds | ${selectedInfo.baths} Baths | ${selectedInfo.sqft} sqft`
+                              {selectedListing
+                                ? `${selectedListing?.beds} Beds | ${selectedListing?.baths} Baths | ${selectedListing?.area} sqft`
                                 : "No information available"}
                             </p>{" "}
                             {/* Phone and Email */}
