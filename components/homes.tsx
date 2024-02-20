@@ -4,29 +4,11 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faClose, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { AnimatePresence, motion } from "framer-motion";
-// Homes
-import home1 from "public/home1.webp";
-import home2 from "public/home2.jpeg";
-import home3 from "public/home3.jpeg";
-import home4 from "public/home4.jpg";
-import home5 from "public/home5.jpeg";
-import home6 from "public/home6.jpeg";
-import {
-  StaticImageData,
-  StaticImport,
-} from "next/dist/shared/lib/get-img-props";
 
 // Home Info
 
-type Bookmark = 1 | 2 | 3 | 4 | 5 | 6 | null;
-
-interface InfoEstate {
-  beds: number;
-  baths: number;
-  sqft: number;
-}
-
 interface Listing {
+  index: number;
   id: number;
   address: string;
   description: string;
@@ -37,109 +19,46 @@ interface Listing {
   price: number;
 }
 
-
-
-//Adding Save Homes
-async function saveListing(email: string, listingId: number, index: number) {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites/route.ts`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, listingId }),
-      }
-    );
-    if (!res.ok) {
-      throw new Error("Failed to add listing");
-    }
-  } catch (error) {
-    console.error("Error saving listing:", error);
-    throw error;
-  }
+interface SavedListing {
+  email: string;
+  listingId: number;
 }
 
 const Homes = () => {
   //will contain array of listings data retrieved from db
   const [listings, setListings] = useState<Listing[]>([]);
-  //used to display loading state to user when fetching listings 
+  //used to display loading state to user when fetching listings
   const [loading, setLoading] = useState(true);
   // used to display an error message to user if failed to fetch listings
   const [error, setError] = useState<string | null>(null);
   // variable to keep track of which listing user selects to view
   const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
 
-
   // Fetch listings and update the state
   const fetchListings = async () => {
     try {
-      //requet to get listing data from api
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing`, { method: 'GET' });
+      //request to get listing data from api
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing`,
+        { method: "GET" }
+      );
       const data: Listing[] = await response.json();
       //setting listings data to Listings state variable
       setListings(data);
       console.log("Data:", data);
     } catch (error) {
       console.error("Error fetching data:", error);
-      setError("Error")
+      setError("Error");
     } finally {
       setLoading(false);
-      console.log("Listings", listings)
+      console.log("Listings", listings);
     }
-
   };
-
-  //Retrieving Homes from DB
-  const [homes, setHomes] = useState([
-    home1,
-    home2,
-    home3,
-    home4,
-    home5,
-    home6,
-  ]);
-
 
   // use effect so that listing data is fetched as component is loaded
   useEffect(() => {
     fetchListings();
   }, []);
-
-  //addresses
-  const addresses = [
-    "123 Pinecrest Drive, Cinco Ranch, TX 77001",
-    "456 Oakridge Lane, Houston, TX 77002",
-    "3015 Flatbend Road, Cypress, TX 77004",
-    "1012 Riverbend Road, Missouri City, TX 77004",
-    "202 Sunset Boulevard, Pearland, TX 77005",
-    "303 Lakeside Drive, Richmond, TX 77006",
-  ];
-
-  //prices
-  const prices = [
-    "$3,000,000",
-    "$1,800,000",
-    "$1,600,000",
-    "$350,000",
-    "$1,500,000",
-    "$2,000,000",
-  ];
-
-  //Detailed Info
-  const infoEstate = [
-    { beds: 5, baths: 3, sqft: 3500 },
-    { beds: 4, baths: 2, sqft: 5000 },
-    { beds: 6, baths: 4, sqft: 2000 },
-    { beds: 3, baths: 2, sqft: 7500 },
-    { beds: 4, baths: 3, sqft: 4000 },
-    { beds: 5, baths: 4, sqft: 3000 },
-  ];
-
-  const [selectedImage, setSelectedImage] = useState<StaticImport | null>(null);
-  const [selectedAddress, setSelectedAddress] = useState<string | null>(null);
-  const [selectedPrices, setSelectedPrices] = useState<string | null>(null);
 
   const handlePropertyInfo = (listing: Listing) => {
     //the listing to show in the property info page
@@ -151,36 +70,59 @@ const Homes = () => {
     openPropertyInfo(false);
   };
 
+  //Saved Listing Function
+
   //Favorite Listing
-  const [saveProp, setSaveProp] = useState<boolean[]>([]);
+  const [saveProp, setSaveProp] = useState<SavedListing[]>([]);
 
-  // Function to handle the click event on a button to toggle save
-  const handleSavedToggle = async (
-    index: number,
-    email: string,
-    listingId: number
-  ) => {
+  const sendFavListing = async (updatedSaveProp: SavedListing[]) => {
     try {
-      // Toggle the save state of the item at the clicked index
-      const newSaveProp = [...saveProp];
-      newSaveProp[index] = !newSaveProp[index];
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updatedSaveProp), // Pass the array of updated saved listings
+        }
+      );
 
-      const email = "";
-      const listingId = 1;
-
-      await saveListing(email, listingId, index);
-      setSaveProp(newSaveProp);
-
-      // Log the updated saveProp array
-      console.log("Listing added to favorites successfully!");
+      if (response.ok) {
+        const saveData: SavedListing[] = await response.json();
+        // Update state with the received data
+        setSaveProp(saveData);
+        console.log("Property:", saveData);
+      } else {
+        console.error("Failed to update favorites");
+        // Handle non-OK response
+      }
     } catch (error) {
-      console.error("Error adding listing to favorites:", error);
+      console.error("Error updating favorites", error);
+      // Handle error
     }
   };
 
-  useEffect(() => {
-    console.log(saveProp, "It's working");
-  }, [saveProp]);
+  const toggleSavedListing = (saveList: SavedListing) => {
+    try {
+      // Check if the listing is already saved
+      const isSaved = saveProp.some(
+        (item) => item.listingId === saveList.listingId
+      );
+
+      // If the listing is already saved, remove it; otherwise, add it
+      const updatedSaveProp = isSaved
+        ? saveProp.filter((item) => item.listingId !== saveList.listingId)
+        : [...saveProp, saveList];
+
+      // Update the saveProp state with the updated list of saved listings
+      setSaveProp(updatedSaveProp);
+
+      // Call sendFavListing after the state has been updated
+      sendFavListing(updatedSaveProp);
+    } catch (error) {
+      console.error("Error toggling saved status", error);
+      // Handle error
+    }
+  };
 
   //Open Info Page & close
   const [propertyInfo, openPropertyInfo] = useState(false);
@@ -201,21 +143,30 @@ const Homes = () => {
   }, [propertyInfo]);
 
   if (loading) {
-    return (<p>Loading properties...</p>)
+    return (
+      <div className="w-3/5 h-full flex justify-center items-center">
+        <p>Loading properties...</p>
+      </div>
+    );
   }
 
   if (error) {
-    return (<div>
-      <p>Oops! Something went wrong. Please try again.</p>
-      <button onClick={fetchListings}>Retry</button>
-    </div>)
+    return (
+      <div className="w-3/5 h-full flex justify-center items-center">
+        <p>Oops! Something went wrong. Please try again.</p>
+        <button onClick={fetchListings}>Retry</button>
+      </div>
+    );
   }
 
   return (
     <div className="w-full xl:w-3/5 h-full flex flex-col items-center overflow-y-auto custom-scrollbar">
       <div className="flex flex-wrap justify-around gap-y-4 w-full  p-4">
         {listings.map((listing) => (
-          <div className="xl:w-[50%] w-[100%] flex flex-col p-4 " key={listing.id}>
+          <div
+            className="xl:w-[50%] w-[100%] flex flex-col p-4 "
+            key={listing.id}
+          >
             <div
               onClick={() => handlePropertyInfo(listing)}
               className=" relative w-[100%] my-4 hover:cursor-pointer"
@@ -227,7 +178,7 @@ const Homes = () => {
                   alt="homes"
                   width={1}
                   height={1}
-                  layout='responsive'
+                  layout="responsive"
                 />
               </div>
               <div className="absolute w-full h-full bg-black/50 opacity-0 duration-300 flex justify-center items-center hover:opacity-100 hover:rounded-lg hover:flex top-0 ease-in-out hover:justify-center hover:items-center">
@@ -243,27 +194,30 @@ const Homes = () => {
                   {listing.address}
                 </h2>
                 <p className="font-light p-2 text-sm">{`${listing.beds} beds | ${listing.baths} baths |  ${listing.area} sqft`}</p>
-                <button
-                  // onClick={() => handleSavedToggle(index, email, listingId)}
-                  className="w-20 h-10 font-agrandir tracking-wide flex justify-evenly items-center p-2"
-                >
-                  {/* <span>
-                    {saveProp[index] ? (
-                      <FontAwesomeIcon
-                        icon={faCheck}
-                        size="lg"
-                        className="w-4 h-4 text-pine"
-                      />
-                    ) : (
-                      <FontAwesomeIcon
-                        icon={faPlus}
-                        size="lg"
-                        className="w-4 h-4 text-black"
-                      />
-                    )}
-                  </span>
-                  <span>{saveProp[index] ? "Saved" : "Save"}</span> */}
-                </button>
+                {saveProp.map((saveList) => (
+                  <button
+                    key={saveList.listingId} // Ensure to provide a unique key when mapping over an array
+                    onClick={() => toggleSavedListing(saveList)} // Pass both index and saveList
+                    className="w-20 h-10 font-agrandir tracking-wide flex justify-evenly items-center p-2"
+                  >
+                    <span>
+                      {saveList.email ? ( // Assuming saveList has a property 'saved' indicating if it's saved
+                        <FontAwesomeIcon
+                          icon={faCheck}
+                          size="lg"
+                          className="w-4 h-4 text-pine px-2"
+                        />
+                      ) : (
+                        <FontAwesomeIcon
+                          icon={faPlus}
+                          size="lg"
+                          className="w-4 h-4 text-black px-2"
+                        />
+                      )}
+                    </span>
+                    <span>{saveList.email ? "Saved" : "Save"}</span>
+                  </button>
+                ))}
               </div>
               {/* address and bookmark */}
               <AnimatePresence>
@@ -314,7 +268,11 @@ const Homes = () => {
                               {selectedListing?.address}
                             </h2>
                             <h2 className="  py-2 font-montserrat text-pine font-bold tracking-wide text-2xl xl:text-4xl ">
-                              {selectedListing?.price?.toLocaleString('en-US', { style: 'currency', currency: 'USD',  maximumFractionDigits: 0 },)}
+                              {selectedListing?.price?.toLocaleString("en-US", {
+                                style: "currency",
+                                currency: "USD",
+                                maximumFractionDigits: 0,
+                              })}
                             </h2>
                             <p className="text-xs tracking-wider md:flex font-montserrat font-regular text-justify xl:w-3/4 py-2">
                               {selectedListing?.description}

@@ -8,7 +8,7 @@ export default function Listings() {
   return (
     <div className="h-screen w-full bg-white">
       <NavPages />
-      <div className="w-full h-[25%]"></div>
+      <div className="w-full h-[20%]"></div>
       <Listing />
       <div className="w-full h-[5%] hidden xl:block"></div>
       <MLS />
