@@ -8,7 +8,7 @@ export default function UserPage() {
   return (
     <div className="h-screen w-full">
       <NavPages />
-      <div className="w-full h-[8%]"></div>
+      <div className="w-full h-[5%]"></div>
       <Dashboard />
       <Footer />
     </div>

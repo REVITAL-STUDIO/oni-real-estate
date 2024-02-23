@@ -11,16 +11,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import Image from "next/image";
-import home1 from "public/home1.webp";
-import home2 from "public/home2.jpeg";
-import home3 from "public/home3.jpeg";
-import home4 from "public/home4.jpg";
-import home5 from "public/home5.jpeg";
-import home6 from "public/home6.jpeg";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 interface profile {
   name: string;
+}
+
+interface requestBody {
+  email: string;
+  listingId: number;
 }
 
 const Dashboard = () => {
@@ -39,49 +38,75 @@ const Dashboard = () => {
 
   const [openMenu, setOpenMenu] = useState(false);
 
+  // Set overflow property when component mounts and unmounts
+  useEffect(() => {
+    document.body.style.overflow = openMenu || openMenu ? "hidden" : "auto";
+
+    // Cleanup function
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [openMenu]);
+
   const handleToggleMenu = () => {
     setOpenMenu((prevView) => !prevView);
   };
 
-  //addresses
-  const addresses = [
-    "123 Pinecrest Drive, Cinco Ranch, TX 77001",
-    "456 Oakridge Lane, Houston, TX 77002",
-    "3015 Flatbend Road, Cypress, TX 77004",
-    "1012 Riverbend Road, Missouri City, TX 77004",
-    "202 Sunset Boulevard, Pearland, TX 77005",
-    "303 Lakeside Drive, Richmond, TX 77006",
-  ];
+  //will contain array of listings data retrieved from db
+  const [homes, setHomes] = useState<requestBody[]>([]);
 
-  //viewhome
-  const [viewHome, setViewHome] = useState(false);
-
-  const toggleViewHome = () => {
-    setViewHome(!viewHome);
+  //POST request for retrieving the saved listing
+  const receiveListing = async (receive: requestBody) => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(receive),
+        }
+      );
+      if (res.ok) {
+        const data: requestBody[] = await res.json();
+        setHomes(data);
+        console.log("Retrieved Favorite", data);
+      } else {
+        console.log("Failed to retrieve favorites");
+      }
+    } catch (error) {
+      console.error("Error receiving Listing", error);
+    }
   };
 
-  //Saved Listings
-  //homes
-  const [homes, setHomes] = useState<StaticImport[]>([
-    home1,
-    home2,
-    home3,
-    home4,
-    home5,
-    home6,
-  ]);
-  //deleting homes
-  const removeProperty = (index: number) => {
-    console.log("Removing property at index:", index);
-    const updatedHomes = [...homes];
-    updatedHomes.splice(index, 1);
-    setHomes(updatedHomes);
-    console.log("Updated Homes:", updatedHomes);
+  //Used for looking at the details of the home will be used for view the details of property
+  const [viewHome, setViewHome] = useState(false);
+
+  const toggleViewHome = async (receive: requestBody) => {
+    try {
+      setViewHome(!viewHome);
+      await receiveListing(receive);
+    } catch (error) {
+      console.error("Error toggling view home", error);
+    }
+  };
+
+  //deleting favorite listing from user dashboard
+  const removeProperty = async (index: number, receive: requestBody) => {
+    try {
+      console.log("Removing property at index:", index);
+      const updatedHomes = [...homes];
+      updatedHomes.splice(index, 1);
+      setHomes(updatedHomes);
+      console.log("Updated Homes:", updatedHomes);
+      await receiveListing(receive);
+    } catch (error) {
+      console.error("Error Removing Property, please try again later", error);
+    }
   };
 
   return (
     <div className="w-full h-screen flex justify-center items-center">
-      <div className="w-[90%] h-5/6 bg-eggshell  shadow-lg rounded-2xl flex">
+      <div className="w-[90%] h-3/4 bg-eggshell  shadow-lg rounded-2xl flex">
         {/* Profile */}
         <AnimatePresence>
           {viewHome ? (
@@ -147,32 +172,32 @@ const Dashboard = () => {
               <ul className="w-full h-5/6 flex flex-col items-center overflow-y-scroll">
                 {homes.length === 0 ? (
                   <div className="w-full h-5/6 flex flex-col justify-evenly items-center">
-                    <p>There's nothing currently in your Saved Listings.</p>
+                    <p>There's currently nothing in your Saved Listings.</p>
                     <Link
-                      className="w-44 h-44 bg-slate-100/50 shadow-lg rounded-2xl flex justify-center items-center hover:shadow-mint hover:shadow-2xl hover:scale-110 transition duration-300 ease-in-out"
+                      className="w-32 h-32 bg-slate-100/50 shadow-lg rounded-2xl flex justify-center items-center hover:shadow-mint hover:shadow-2xl hover:scale-110 transition duration-300 ease-in-out"
                       href="/listings"
                     >
                       <FontAwesomeIcon
                         icon={faPlus}
-                        className="w-24 h-24 text-gray-400"
+                        className="w-16 h-16 text-gray-400"
                         size="lg"
                       />
                     </Link>
                   </div>
                 ) : (
-                  homes.map((savedHomes, index) => (
+                  homes.map((listing) => (
                     <li
-                      key={index}
+                      key={listing.id}
                       className="w-5/6 relative h-1/4 rounded-2xl my-4 hover:scale-105 hover:translate-x-4 shadow-mint/50 shadow-md transition duration-150 ease-in-out"
                     >
                       <Image
-                        src={savedHomes}
+                        src={listing.pictures[0]}
                         className=" w-[100%] h-[100%]  object-cover rounded-lg brightness-50 contrast-125 shadow-md"
                         alt="homes"
                       />
                       <div className="absolute top-1/2 w-full flex justify-between">
                         <h2 className=" font-montserrat w-1/3 text-white px-4">
-                          {addresses[index]}
+                          {/* {addresses[index]} */}
                         </h2>
                         <div className="w-1/6 flex justify-evenly">
                           <button

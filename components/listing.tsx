@@ -334,7 +334,7 @@ const Listing = () => {
         <div className=" w-full h-full flex flex-wrap gap-4 items-center  xl:hidden p-4">
           {/* Prices */}
           <div className="relative">
-            <div className="w-40 h-12 border border-gray-300 z-50  rounded-md flex justify-center items-center">
+            <div className="w-40 h-12 border border-gray-300 z-10  rounded-md flex justify-center items-center">
               <span className="text-xs  w-[100%] text-center">
                 {selectedPrice.length === 0
                   ? "Price Amount"
@@ -347,7 +347,7 @@ const Listing = () => {
               </div>
             </div>
             {openDropdown === 1 && (
-              <div className="bg-white w-40 h-auto absolute top-full z-30  transition-all ease-in-out duration-200">
+              <div className="bg-white w-40 h-auto absolute top-full z-10  transition-all ease-in-out duration-200">
                 {prices.map((price) => (
                   <div
                     key={price.label}
@@ -362,7 +362,7 @@ const Listing = () => {
           </div>
           {/* Beds */}
           <div className="relative">
-            <div className="w-40 h-12 z-50 border border-gray-300  flex justify-center rounded-md items-center">
+            <div className="w-40 h-12 z-10 border border-gray-300  flex justify-center rounded-md items-center">
               {" "}
               <span className="text-xs w-5/6 text-center">{`${
                 selectedBeds || "0"
@@ -378,7 +378,7 @@ const Listing = () => {
               </div>
             </div>
             {openDropdown === 2 && (
-              <div className="bg-white w-40 h-auto absolute top-full z-30   transition-all ease-in-out duration-200">
+              <div className="bg-white w-40 h-auto absolute top-full z-10   transition-all ease-in-out duration-200">
                 {numOfBeds.map((bed) => (
                   <div
                     key={bed}
@@ -404,7 +404,7 @@ const Listing = () => {
               </div>
             </div>
             {openDropdown === 3 && (
-              <div className="bg-white w-40 h-auto absolute z-30 top-full   transition-all ease-in-out duration-200">
+              <div className="bg-white w-40 h-auto absolute z-10 top-full   transition-all ease-in-out duration-200">
                 {numOfBaths.map((baths) => (
                   <div
                     key={baths}
@@ -430,7 +430,7 @@ const Listing = () => {
               </div>
             </div>
             {openDropdown === 4 && (
-              <div className="bg-white w-40 h-auto absolute z-30 top-full  transition-all ease-in-out duration-200">
+              <div className="bg-white w-40 h-auto absolute z-10 top-full  transition-all ease-in-out duration-200">
                 {locations.map((location) => (
                   <div
                     key={location.label}
@@ -456,7 +456,7 @@ const Listing = () => {
               </div>
             </div>
             {openDropdown === 5 && (
-              <div className="bg-white w-40 h-auto absolute z-30 top-full  ">
+              <div className="bg-white w-40 h-auto absolute z-10 top-full  ">
                 {property.map((properties) => (
                   <div
                     key={properties.label}

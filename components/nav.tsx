@@ -74,7 +74,7 @@ const NavPages = () => {
 
   return (
     <div
-      className={`h-100 w-full flex fixed  flex-col items-center justify-center transition-all duration-300 ease-in-out ${
+      className={`h-100 w-full flex fixed  flex-col items-center justify-center transition-all duration-300 ease-in-out z-50 ${
         color ? "" : ""
       } ${disappear ? "opacity-0 pointer-events-none " : " "}`}
     >
@@ -128,7 +128,7 @@ const NavPages = () => {
         {/* Mobile Button */}
         <button
           onClick={toggleButton}
-          className="w-12 h-12 flex flex-col relative justify-center items-center rounded-full  space-x-reverse xl:hidden z-10"
+          className="w-12 h-12 flex flex-col relative justify-center items-center rounded-full  space-x-reverse xl:hidden z-50"
         >
           <span
             className={`block w-3/4 my-0.5 border border-black ${
@@ -161,7 +161,7 @@ const NavPages = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -100 }}
                 transition={{ ease: "easeInOut", duration: 0.2 }}
-                className="xl:hidden absolute top-0   right-0 bottom-0 w-full h-screen bg-black shadow-xl "
+                className="xl:hidden absolute top-0   right-0 bottom-0 w-full h-screen bg-black shadow-xl z-40"
               >
                 <Image
                   src={mobileLogo}
@@ -218,7 +218,7 @@ const NavPages = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ ease: "easeInOut", duration: 0.5 }}
-            className=" fixed top-0 left-0 bg-black/75 w-full h-full "
+            className=" fixed top-0 left-0 bg-black/75 w-full h-full z-50"
           >
             {/* Sign In/ Log In form */}
             <div className="w-full h-full flex justify-center items-center">

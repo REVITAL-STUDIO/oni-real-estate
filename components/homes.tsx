@@ -72,25 +72,28 @@ const Homes = () => {
 
   //Saved Listing Function
 
-  //Favorite Listing
+  //will contain the information of the listings being sent to client
   const [saveProp, setSaveProp] = useState<SavedListing[]>([]);
+  console.log(saveProp);
 
-  const sendFavListing = async (updatedSaveProp: SavedListing[]) => {
+  const sendFavListing = async (saveList: SavedListing) => {
     try {
+      console.log("Sending request with updatedSaveProp:", saveList);
+
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(updatedSaveProp), // Pass the array of updated saved listings
+          body: JSON.stringify(saveList),
         }
       );
 
       if (response.ok) {
-        const saveData: SavedListing[] = await response.json();
+        const data: SavedListing[] = await response.json();
         // Update state with the received data
-        setSaveProp(saveData);
-        console.log("Property:", saveData);
+        setSaveProp(data);
+        console.log("Property:", data);
       } else {
         console.error("Failed to update favorites");
         // Handle non-OK response
@@ -101,23 +104,31 @@ const Homes = () => {
     }
   };
 
-  const toggleSavedListing = (saveList: SavedListing) => {
+  const toggleSavedListing = async (saveList: SavedListing) => {
     try {
       // Check if the listing is already saved
       const isSaved = saveProp.some(
-        (item) => item.listingId === saveList.listingId
+        (item) =>
+          item.listingId === saveList.listingId && item.email === saveList.email
       );
 
-      // If the listing is already saved, remove it; otherwise, add it
-      const updatedSaveProp = isSaved
-        ? saveProp.filter((item) => item.listingId !== saveList.listingId)
-        : [...saveProp, saveList];
+      if (isSaved) {
+        console.log("Property already saved");
+        return (
+          <div className="w-full h-16 bg-red-500">
+            <h2>Property already saved!</h2>
+          </div>
+        );
+      }
+
+      // If the listing is not saved, add it
+      const updatedSaveProp = [...saveProp, saveList];
+
+      // Call sendFavListing to update favorites
+      await sendFavListing(saveList);
 
       // Update the saveProp state with the updated list of saved listings
       setSaveProp(updatedSaveProp);
-
-      // Call sendFavListing after the state has been updated
-      sendFavListing(updatedSaveProp);
     } catch (error) {
       console.error("Error toggling saved status", error);
       // Handle error
@@ -194,35 +205,42 @@ const Homes = () => {
                   {listing.address}
                 </h2>
                 <p className="font-light p-2 text-sm">{`${listing.beds} beds | ${listing.baths} baths |  ${listing.area} sqft`}</p>
-                {saveProp.map((saveList) => (
-                  <button
-                    key={saveList.listingId} // Ensure to provide a unique key when mapping over an array
-                    onClick={() => toggleSavedListing(saveList)} // Pass both index and saveList
-                    className="w-20 h-10 font-agrandir tracking-wide flex justify-evenly items-center p-2"
-                  >
-                    <span>
-                      {saveList.email ? ( // Assuming saveList has a property 'saved' indicating if it's saved
-                        <FontAwesomeIcon
-                          icon={faCheck}
-                          size="lg"
-                          className="w-4 h-4 text-pine px-2"
-                        />
-                      ) : (
-                        <FontAwesomeIcon
-                          icon={faPlus}
-                          size="lg"
-                          className="w-4 h-4 text-black px-2"
-                        />
-                      )}
-                    </span>
-                    <span>{saveList.email ? "Saved" : "Save"}</span>
-                  </button>
-                ))}
+                <button
+                  onClick={() =>
+                    toggleSavedListing({ listingId: listing.id, email: "" })
+                  }
+                  className="w-20 h-10 font-agrandir tracking-wide flex justify-evenly items-center p-2"
+                >
+                  <span>
+                    {saveProp.some(
+                      (saveList) => saveList.listingId === listing.id
+                    ) ? (
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        size="lg"
+                        className="w-4 h-4 text-pine px-2"
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faPlus}
+                        size="lg"
+                        className="w-4 h-4 text-black px-2"
+                      />
+                    )}
+                  </span>
+                  <span>
+                    {saveProp.some(
+                      (saveList) => saveList.listingId === listing.id
+                    )
+                      ? "Saved"
+                      : "Save"}
+                  </span>
+                </button>
               </div>
               {/* address and bookmark */}
               <AnimatePresence>
                 {propertyInfo && (
-                  <div className="fixed inset-0 z-50">
+                  <div className="fixed inset-0 z-10">
                     <motion.div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
