@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faClose, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSession } from "next-auth/react";
+import PropertyInfo from "./PropertyInfo";
 
 // Home Info
 
@@ -26,6 +27,8 @@ interface SavedListing {
 }
 
 const Homes = () => {
+  const { data: session } = useSession();
+
   //will contain array of listings data retrieved from db
   const [listings, setListings] = useState<Listing[]>([]);
   //used to display loading state to user when fetching listings
@@ -105,7 +108,6 @@ const Homes = () => {
     }
   };
 
-  const { data: session } = useSession();
 
   const toggleSavedListing = async (saveList: SavedListing) => {
     if (!session) {
@@ -163,11 +165,7 @@ const Homes = () => {
   }, [propertyInfo]);
 
   if (loading) {
-    return (
-      <div className="w-3/5 h-full flex justify-center items-center">
-        <p>Loading properties...</p>
-      </div>
-    );
+    return (<div className="w-[50%] flex justify-center items-center">Loading properties...</div>)
   }
 
   if (error) {
@@ -214,122 +212,47 @@ const Homes = () => {
                   {listing.address}
                 </h2>
                 <p className="font-light p-2 text-sm">{`${listing.beds} beds | ${listing.baths} baths |  ${listing.area} sqft`}</p>
-                <button
-                  onClick={() =>
-                    toggleSavedListing({
-                      listingId: listing.id,
-                      email: session.user.email,
-                    })
-                  }
-                  className="w-20 h-10 font-agrandir tracking-wide flex justify-evenly items-center p-2"
-                >
-                  <span>
-                    {saveProp.some(
-                      (saveList) => saveList.listingId === listing.id
-                    ) ? (
-                      <FontAwesomeIcon
-                        icon={faCheck}
-                        size="lg"
-                        className="w-4 h-4 text-pine px-2"
-                      />
-                    ) : (
-                      <FontAwesomeIcon
-                        icon={faPlus}
-                        size="lg"
-                        className="w-4 h-4 text-black px-2"
-                      />
-                    )}
-                  </span>
-                  <span>
-                    {saveProp.some(
-                      (saveList) => saveList.listingId === listing.id
-                    )
-                      ? "Saved"
-                      : "Save"}
-                  </span>
-                </button>
+                {session &&
+                  <button
+                    onClick={() =>
+                      toggleSavedListing({
+                        listingId: listing.id,
+                        email: session?.user.email,
+                      })
+                    }
+                    className="w-20 h-10 font-agrandir tracking-wide flex justify-evenly items-center p-2"
+                  >
+                    <span>
+                      {saveProp.some(
+                        (saveList) => saveList.listingId === listing.id
+                      ) ? (
+                        <FontAwesomeIcon
+                          icon={faCheck}
+                          size="lg"
+                          className="w-4 h-4 text-pine px-2"
+                        />
+                      ) : (
+                        <FontAwesomeIcon
+                          icon={faPlus}
+                          size="lg"
+                          className="w-4 h-4 text-black px-2"
+                        />
+                      )}
+                    </span>
+                    <span>
+                      {saveProp.some(
+                        (saveList) => saveList.listingId === listing.id
+                      )
+                        ? "Saved"
+                        : "Save"}
+                    </span>
+                  </button>
+                }
               </div>
               {/* address and bookmark */}
               <AnimatePresence>
-                {propertyInfo && (
-                  <div className="fixed inset-0 z-10">
-                    <motion.div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ ease: "easeInOut", duration: 0.5 }}
-                      className="bg-forest w-full h-full flex flex-col justify-center items-center relative overflow-y-auto another-scrollbar"
-                    >
-                      <button
-                        onClick={handleClose}
-                        className="w-auto h-auto absolute top-2 right-2"
-                      >
-                        <FontAwesomeIcon
-                          className="hover:text-black/50 text-white duration-100 w-6 h-6"
-                          icon={faClose}
-                          size="lg"
-                        />
-                      </button>
-                      <motion.section
-                        initial={{ opacity: 0, y: -100 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -100 }}
-                        transition={{ ease: "easeInOut", duration: 0.5 }}
-                        className=" w-[95%] h-[100%]  rounded-2xl flex flex-col justify-evenly items-center"
-                      >
-                        {/* Home and Description */}
-                        <div className="w-full h-full flex flex-col xl:flex-row justify-around items-center">
-                          <div className="xl:w-1/2 w-[95%]  xl:h-5/6 h-1/2 rounded-lg p-4 ">
-                            <Image
-                              src={
-                                selectedListing?.pictures[0] !== null
-                                  ? `${selectedListing?.pictures[0]}`
-                                  : "/default-image-url.jpg"
-                              }
-                              width={1}
-                              height={1}
-                              layout="responsive"
-                              className="rounded-lg w-[100%] h-[100%] brightness-90 object-cover"
-                              alt="homes"
-                            />
-                          </div>
-                          <div className="xl:w-2/5 w-full h-full xl:h-5/6 text-white">
-                            <h2 className="text-3xl xl:text-5xl  text-white font-agrandir font-regular">
-                              {selectedListing?.address}
-                            </h2>
-                            <h2 className="  py-2 font-montserrat text-pine font-bold tracking-wide text-2xl xl:text-4xl ">
-                              {selectedListing?.price?.toLocaleString("en-US", {
-                                style: "currency",
-                                currency: "USD",
-                                maximumFractionDigits: 0,
-                              })}
-                            </h2>
-                            <p className="text-xs tracking-wider md:flex font-montserrat font-regular text-justify xl:w-3/4 py-2">
-                              {selectedListing?.description}
-                            </p>
-                            <p className="text-base font-montserrat font-regular py-4">
-                              {selectedListing
-                                ? `${selectedListing?.beds} Beds | ${selectedListing?.baths} Baths | ${selectedListing?.area} sqft`
-                                : "No information available"}
-                            </p>{" "}
-                            {/* Phone and Email */}
-                            <div className="w-full h-1/4  bg-black flex shadow-lg">
-                              <section className="w-full flex items-center ">
-                                <div className="h-full w-2/5 "></div>
-                              </section>
-                            </div>
-                            <div className="w-full h-1/6  flex  items-center">
-                              <button className="w-1/2 h-12 border border-border rounded-xl shadow-md flex justify-center items-center">
-                                Contact Us.
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Card Info */}
-                      </motion.section>
-                    </motion.div>
-                  </div>
+                {propertyInfo && selectedListing && (
+                  <PropertyInfo selectedListing={selectedListing} handleClose={handleClose} />
                 )}
               </AnimatePresence>
             </div>

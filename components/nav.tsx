@@ -1,5 +1,5 @@
 "use client";
-
+import { signIn, signOut, useSession } from "next-auth/react";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,8 +10,12 @@ import mobileLogo from "public/oni-moon.png";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/navigation";
+import { IoIosClose } from "react-icons/io";
 
 const NavPages = () => {
+  const { data: session } = useSession();
+  const router = useRouter();
   const [color, setColor] = useState<boolean>(false);
   const [disappear, setDisappear] = useState<boolean>(false);
 
@@ -72,6 +76,98 @@ const NavPages = () => {
     setSignUpForm((prev) => !prev);
   };
 
+  const [signInData, setSignInData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [errorMsg, setErrorMsg] = useState(
+    "A network issue occured. Please check your internet connection and try again."
+  );
+  const [isLoginError, setIsLoginError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [registerData, setRegisterData] = useState({
+    email: "",
+    password: "",
+  });
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [isRegisterError, setIsRegisterError] = useState(false);
+
+  const handleLogout: React.MouseEventHandler<HTMLButtonElement> = async () => {
+    await signOut()
+  }
+
+  const signInUser: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setIsLoginError(false);
+    signIn("credentials", { ...signInData, redirect: false }).then(
+      (callback) => {
+        if (callback?.error) {
+          setErrorMsg(callback.error);
+          setIsLoginError(true);
+        }
+
+        if (callback?.ok && !callback.error) {
+          // go to listings page
+          router.push("/listings");
+          toggleLogin();
+        }
+        setIsLoading(false);
+      }
+    );
+  };
+
+  const registerUser: React.MouseEventHandler<HTMLButtonElement> = async (
+    e
+  ) => {
+    e.preventDefault();
+    setIsRegisterError(false);
+    setIsLoading(true);
+    try {
+
+      if (registerData.email == '' || registerData.password == '' || confirmPassword == '') {
+        setErrorMsg("Must fill in all fields")
+        throw new Error("Some fields are not filled out")
+      }
+      if (registerData.password != confirmPassword) {
+        setErrorMsg("Passwords do not Match");
+        throw new Error("Passwords do not match");
+      }
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/register`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(registerData),
+        }
+      );
+      if (!response.ok) {
+        if (response.status == 400) {
+          setErrorMsg("Email already in use!");
+        } else {
+          setErrorMsg("An unexpected error ocurred please try again.");
+        }
+        throw new Error(
+          `HTTP Error: Error creating user status ${response.status}`
+        );
+      }
+      toggleSignUp();
+      setRegisterData({ email: "", password: "" });
+      setConfirmPassword("");
+      router.push("/listings");
+    } catch (error) {
+      setIsRegisterError(true);
+      console.error(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div
       className={`h-100 w-full flex fixed  flex-col items-center justify-center transition-all duration-300 ease-in-out z-50 ${
@@ -116,13 +212,52 @@ const NavPages = () => {
               </span>
             </Link>
           </li>
-          <li className="relative p-4">
-            <button onClick={toggleLogin}>
-              <span className="inline-block uppercase transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-10 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-black before:via-white/30 before:to-black hover:before:w-full hover:before:opacity-100">
-                Login
+          {!session &&
+            <li className="relative p-4">
+              <button onClick={toggleLogin}>
+                <span className="inline-block uppercase transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-10 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-white before:via-white/30 before:to-white hover:before:w-full hover:before:opacity-100">
+                  Login
+                </span>
+              </button>
+            </li>
+          }
+                    {session && session?.user.role === 'admin' &&
+            <Link
+              className={`
+                    relative
+                    font-regular
+                  `}
+              href="/admin"
+            >
+              <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-mint before:via-mint/30 before:to-mint hover:before:w-full hover:before:opacity-100">
+                Admin Portal
               </span>
-            </button>
-          </li>
+            </Link>
+
+          }
+          {session && session?.user.role != 'admin' &&
+            <Link
+              className={`
+                    relative
+                    font-regular
+                  `}
+              href="/user"
+            >
+              <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-mint before:via-mint/30 before:to-mint hover:before:w-full hover:before:opacity-100">
+                My Property Hub
+              </span>
+            </Link>
+
+          }
+          {session &&
+            <li className="relative p-4">
+              <button onClick={handleLogout}>
+                <span className="inline-block uppercase transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-10 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-white before:via-white/30 before:to-white hover:before:w-full hover:before:opacity-100">
+                  Logout
+                </span>
+              </button>
+            </li>
+          }
         </ul>
 
         {/* Mobile Button */}
@@ -131,18 +266,16 @@ const NavPages = () => {
           className="w-12 h-12 flex flex-col relative justify-center items-center rounded-full  space-x-reverse xl:hidden z-50"
         >
           <span
-            className={`block w-3/4 my-0.5 border border-black ${
-              openMenu
-                ? "rotate-45 transition-transform duration-300 ease-in-out border-white"
-                : "transition-transform duration-300 ease-in-out relative top-0.5 "
-            }`}
+            className={`block w-3/4 my-0.5 border border-black ${openMenu
+              ? "rotate-45 transition-transform duration-300 ease-in-out border-white"
+              : "transition-transform duration-300 ease-in-out relative top-0.5 "
+              }`}
           ></span>
           <span
-            className={`block w-3/4 my-0.5 border border-black ${
-              openMenu
-                ? "-rotate-45 w-3/4 absolute top-2/5 transition-transform duration-300 ease-in-out border-white"
-                : "transition-transform duration-300 ease-in-out relative top-0.5"
-            }`}
+            className={`block w-3/4 my-0.5 border border-black ${openMenu
+              ? "-rotate-45 w-3/4 absolute top-2/5 transition-transform duration-300 ease-in-out border-white"
+              : "transition-transform duration-300 ease-in-out relative top-0.5"
+              }`}
           ></span>
         </button>
 
@@ -259,17 +392,16 @@ const NavPages = () => {
                     transition={{ duration: 0.5, ease: "easeInOut" }}
                     className="w-3/4 h-[85%] text-sm flex flex-col font-agrandir items-center "
                   >
-                    {/* Name */}
-                    <div className="flex flex-col w-4/5">
-                      <label className="py-2">Name</label>
-                      <input
-                        className="p-2 rounded-lg text-black bg-slate-400/10"
-                        type="text"
-                        id="Name"
-                        name="Name"
-                        placeholder="Name"
-                      />
-                    </div>
+
+                    {isRegisterError && (
+                      <div className="p-[1rem] bg-red-100 flex gap-[1rem] items-center justify-center rounded-lg mb-[2rem]">
+                        <p className="text-red-400">{errorMsg}</p>
+                        <IoIosClose
+                          className=" text-red-300 h-[1rem] w-[1rem] hover:cursor-pointer"
+                          onClick={() => setIsRegisterError(false)}
+                        />
+                      </div>
+                    )}
 
                     {/* Email */}
                     <div className="flex flex-col w-4/5">
@@ -280,6 +412,14 @@ const NavPages = () => {
                         id="Email"
                         name="Email"
                         placeholder="Email"
+                        required
+                        value={registerData.email}
+                        onChange={(e) =>
+                          setRegisterData({
+                            ...registerData,
+                            email: e.target.value,
+                          })
+                        }
                       />
                     </div>
                     {/* Password */}
@@ -287,10 +427,18 @@ const NavPages = () => {
                       <label className="py-2">Password</label>
                       <input
                         className="p-2 rounded-lg text-black bg-slate-400/10"
-                        type="text"
+                        type="password"
                         id="Password"
                         name="Password"
                         placeholder="Password"
+                        required
+                        value={registerData.password}
+                        onChange={(e) =>
+                          setRegisterData({
+                            ...registerData,
+                            password: e.target.value,
+                          })
+                        }
                       />
                     </div>
                     {/* Confirm Password */}
@@ -298,16 +446,23 @@ const NavPages = () => {
                       <label className="py-2">Confirm Password</label>
                       <input
                         className="p-2 rounded-lg text-black bg-slate-400/10"
-                        type="text"
-                        id="Password"
-                        name="Password"
+                        type="password"
+                        id="confirm-password"
+                        name="confirm-assword"
                         placeholder="Password"
+                        required
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                       />
                     </div>
                     {/* Log In Button */}
                     <div className="flex flex-col justify-evenly w-4/5 h-1/2 my-4">
-                      <button className="p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide">
-                        Sign Up
+                      <button
+                        onClick={registerUser}
+                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${isLoading ? "opacity-75" : "opacity-100"
+                          }`}
+                      >
+                        {isLoading ? "Loading..." : "Sign Up"}
                       </button>
                       <p className="text-xs p-2">
                         By Clicking Sign Up, you agree to the Private Policy and
@@ -324,6 +479,17 @@ const NavPages = () => {
                     transition={{ duration: 0.5, ease: "easeInOut" }}
                     className="w-3/4 h-[85%] text-sm flex flex-col font-agrandir items-center "
                   >
+
+                    {isLoginError && (
+                      <div className="p-[1rem] bg-red-100 flex gap-[3rem] items-center rounded-lg mb-[2rem]">
+                        <p className="text-red-400">{errorMsg}</p>
+                        <IoIosClose
+                          className=" text-red-300 h-[2rem] w-[2rem] hover:cursor-pointer"
+                          onClick={() => setIsLoginError(false)}
+                        />
+                      </div>
+                    )}
+
                     {/* Email */}
                     <div className="flex flex-col w-4/5">
                       <label className="py-2">Email</label>
@@ -333,23 +499,45 @@ const NavPages = () => {
                         id="Email"
                         name="Email"
                         placeholder="Email"
+                        autoComplete="email"
+                        required
+                        value={signInData.email}
+                        onChange={(e) =>
+                          setSignInData({
+                            ...signInData,
+                            email: e.target.value,
+                          })
+                        }
                       />
                     </div>
                     {/* Password */}
                     <div className="flex flex-col w-4/5">
                       <label className="py-2">Password</label>
                       <input
-                        className="p-2 rounded-lg text-black bg-slate-400/10"
-                        type="text"
-                        id="Password"
-                        name="Password"
-                        placeholder="Password"
+                       className="p-2 rounded-lg text-black bg-slate-400/10"
+                       type="password"
+                       id="Password"
+                       name="Password"
+                       placeholder="Password"
+                       required
+                       value={signInData.password}
+                       onChange={(e) =>
+                         setSignInData({
+                           ...signInData,
+                           password: e.target.value,
+                         })
+                       }
                       />
                     </div>
                     {/* Log In Button */}
                     <div className="flex flex-col justify-evenly w-4/5 h-1/2 my-4">
-                      <button className="p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide">
-                        Login
+                      <button
+                        disabled={isLoading}
+                        onClick={signInUser}
+                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${isLoading ? "opacity-75" : "opacity-100"
+                          }`}
+                      >
+                        {isLoading ? "Loading..." : "Login"}
                       </button>
                       <button
                         onClick={toggleSignUp}
@@ -357,9 +545,12 @@ const NavPages = () => {
                       >
                         Register
                       </button>
-                      <button className="tracking-wide p-2 w-fit flex justify-center items-center">
+                      <a
+                        href="/forgot-password"
+                        className="tracking-wide p-2 w-fit flex justify-center items-center"
+                      >
                         Forgot Password?
-                      </button>
+                      </a>
                     </div>
                   </motion.form>
                 )}
@@ -397,7 +588,7 @@ const NavPages = () => {
                       <div className="w-full flex justify-center items-center">
                         <h2>Already a member?</h2>
                         <button
-                          onClick={() => !toggleSignUp()}
+                          onClick={() => toggleSignUp()}
                           className="text-blue-500 font-bold ml-2"
                         >
                           Sign in

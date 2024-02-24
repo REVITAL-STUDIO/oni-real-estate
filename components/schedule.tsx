@@ -90,11 +90,11 @@ const Schedule = () => {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ ease: "easeInOut", duration: 0.5 }}
-                className="fixed inset-0 z-50"
+                className="fixed inset-0 z-100"
               >
                 <div
                   className="w-full h-full bg-white/80
-              flex justify-center items-center"
+              flex justify-center items-center z-100"
                 >
                   <motion.section
                     initial={{ opacity: 0, y: -100 }}
@@ -112,7 +112,7 @@ const Schedule = () => {
                         className="w-6 h-6 text-white "
                       />
                     </button>
-                    <div className="w-full h-[95%] flex flex-col justify-center items-center">
+                    <div className="w-full h-[95%] flex flex-col justify-center items-center z-100">
                       <Image
                         src={Logo}
                         alt="company logo"
@@ -183,7 +183,6 @@ const Schedule = () => {
                               className="shadow font-montserrat  appearance-none bg-transparent border rounded w-full py-6 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
                               id="message"
                               placeholder="Type your message here..."
-                              rows="1" // You can adjust the number of rows as needed
                             ></textarea>
                             <div className="my-2 h-1/5 w-full flex justify-center items-center ">
                               <button

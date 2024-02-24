@@ -5,7 +5,7 @@ import Google from "./google";
 
 const MLS = () => {
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen justify-between">
       <Homes />
       <Google />
     </div>
