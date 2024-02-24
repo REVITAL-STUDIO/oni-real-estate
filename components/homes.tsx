@@ -4,6 +4,7 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faClose, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { AnimatePresence, motion } from "framer-motion";
+import { useSession } from "next-auth/react";
 
 // Home Info
 
@@ -104,7 +105,15 @@ const Homes = () => {
     }
   };
 
+  const { data: session } = useSession();
+
   const toggleSavedListing = async (saveList: SavedListing) => {
+    if (!session) {
+      // Handle case when user is not logged in
+      console.log("User not logged in");
+      // You might want to show a login modal or redirect the user to the login page
+      return;
+    }
     try {
       // Check if the listing is already saved
       const isSaved = saveProp.some(
@@ -207,7 +216,10 @@ const Homes = () => {
                 <p className="font-light p-2 text-sm">{`${listing.beds} beds | ${listing.baths} baths |  ${listing.area} sqft`}</p>
                 <button
                   onClick={() =>
-                    toggleSavedListing({ listingId: listing.id, email: "" })
+                    toggleSavedListing({
+                      listingId: listing.id,
+                      email: session.user.email,
+                    })
                   }
                   className="w-20 h-10 font-agrandir tracking-wide flex justify-evenly items-center p-2"
                 >
