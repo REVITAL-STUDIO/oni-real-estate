@@ -1,73 +1,117 @@
 "use client"
 
 import React from "react";
+import { useState } from "react";
 
 
 
-const InquiryModal: React.FC<{ onClose: () => void }> = ({onClose}) => {
-    const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
-      e.preventDefault();
-      // Handle inquiry submission logic here
-      // You can access form data using e.target.elements
-      onClose(); // Close the modal after submission
-    };
-  
-    return (
-      <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50">
-        <div className="relative bg-white rounded-lg w-96 p-8">
-          <h2 className="text-2xl font-semibold mb-4 text-black">Property Inquiry</h2>
-          <button
-            className="absolute top-4 right-4 text-gray-600 hover:text-gray-800 text-2xl"
-            onClick={onClose}
-          >
-            &times;
-          </button>
-          <form onSubmit={handleSubmit}>
-            <div className="mb-4">
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                Name:
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                className="mt-1 p-2 w-full border rounded focus:outline-none focus:ring focus:border-blue-300"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-                Email:
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                className="mt-1 p-2 w-full border rounded focus:outline-none focus:ring focus:border-blue-300"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700">
-                Message:
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                className="mt-1 p-2 w-full border rounded focus:outline-none focus:ring focus:border-blue-300"
-                required
-              ></textarea>
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-blue-500 text-white rounded-md py-2 hover:bg-blue-600"
-            >
-              Submit
-            </button>
-          </form>
-        </div>
+const InquiryModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+  const [isSuccess, setIsSuccess] = useState(false)
+  const [errorMsg, setErrorMsg] = useState("")
+  const [isError, setIsError] = useState(false)
+  const [leadData, setLeadData] = useState({
+    name: '',
+    number: '',
+    email: '',
+    message: '',
+
+  })
+
+  const createLead: React.FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault()
+
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/leads`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(leadData),
+      })
+      if (!response.ok) {
+
+        throw new Error(`HTTP ERROR - Error creating lead. Status: ${response.status}`)
+      } else {
+        setIsSuccess(true)
+
+      }
+    }
+    catch (error) {
+      setIsError(true)
+      setErrorMsg("A network issue occured. Please check your internet connection and try again.")
+      console.error('NETWORK ERROR - Unable to reach the server or network issue. Error Message: ', error)
+
+    }
+
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-50">
+      <div className="relative bg-black/80  rounded-lg w-96 p-8">
+        <button
+          className="absolute top-4 right-4 text-gray-100 hover:text-gray-800 text-2xl"
+          onClick={onClose}
+        >
+          &times;
+        </button>
+        {isSuccess ? <div className="flex justify-center items-center">Message Sent!</div> :
+          <div>
+            <h2 className="text-2xl font-semibold mb-4 text-white">Property Inquiry</h2>
+
+            <form onSubmit={createLead} className="text-gray-800">
+              <div className="mb-4">
+                <label htmlFor="name" className="block text-sm font-medium text-gray-200">
+                  Name:
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  className="mt-1 p-2 w-full border rounded focus:outline-none focus:ring ring-gray-300 focus:border-gray-300"
+                  required
+                  value={leadData.name}
+                  onChange={e => setLeadData({ ...leadData, name: e.target.value })}
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-200">
+                  Email:
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  className="mt-1 p-2 w-full border rounded focus:outline-none focus:ring ring-gray-300 focus:border-gray-300"
+                  required
+                  value={leadData.email}
+                  onChange={e => setLeadData({ ...leadData, email: e.target.value })}
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="message" className="block text-sm font-medium text-gray-200">
+                  Message:
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  className="mt-1 p-2 w-full border rounded focus:outline-none focus:ring ring-gray-300 focus:border-gray-300"
+                  required
+                  value={leadData.message}
+                  onChange={e => setLeadData({ ...leadData, message: e.target.value })}
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                className="w-full bg-gray-400 text-white rounded-md py-2 hover:bg-gray-600"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+        }
       </div>
-    );
-  };
-  
-  export default InquiryModal;
+    </div>
+  );
+};
+
+export default InquiryModal;
