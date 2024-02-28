@@ -11,18 +11,13 @@ const Contact = () => {
     <div className="h-700 w-full flex flex-col xl:flex-row">
       <div className="xl:w-1/4 xl:h-full w-full h-1/4 bg-[url('/houston-contact.jpeg')] brightness-90 bg-cover bg-center saturate-0"></div>
       <div className="xl:w-3/4 xl:h-full w-full h-3/4 bg-forest flex flex-col justify-center items-center relative font-montserrat">
-        <Image
-          src={logo}
-          alt="oni logo"
-          className="w-1/2 h-auto opacity-10  absolute 	"
-        ></Image>
-        <div className="w-3/4 font-agrandir text-4xl text-white my-2">
-          <h2 className="w-1/3 relative left-8 text-white hidden xl:block mb-4">
+        <div className="w-3/4 h-[10%] flex justify-center font-agrandir text-4xl text-white my-4 ">
+          <h2 className="w-full relative left-8 text-white hidden xl:block tracking-wider">
             Get in touch with us
           </h2>
         </div>
         <form className="w-5/6 h-3/4 flex items-center justify-center flex-col rounded-lg  gap-x-4  z-10">
-          <div className="w-full flex flex-wrap justify-center gap-x-4 h-3/4 ">
+          <div className="w-full flex flex-wrap justify-center gap-4 h-5/6 ">
             <div className="flex flex-col w-2/5">
               <label htmlFor="firstName" className="my-2 text-white">
                 First Name
@@ -86,7 +81,7 @@ const Contact = () => {
                 className="text-pine ml-2 w-4 h-4"
               />
             </button>
-            <p className="xl:w-3/4 w-full text-sm xl:text-md text-white font-montserrat tracking-wide">
+            <p className="xl:w-3/4 w-full  hidden xl:block text-sm xl:text-md text-white font-montserrat tracking-wide">
               Please do not hesitate to contact us directly. Alternatively, you
               can send us a message by filling out the form.
             </p>

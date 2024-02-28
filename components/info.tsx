@@ -1,24 +1,32 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef } from "react";
+import { motion, useAnimation, useInView } from "framer-motion";
 import Image from "next/image";
 import Pool from "public/iStock-1453183714.jpg";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-type expandId = 1 | 2 | null;
-
 const Info = () => {
   return (
     <div className="h-screen w-full xl:h-1000 flex flex-col lg:flex-row bg-eggshell ">
-      <div className="h-full w-full xl:w-1/2 relative e ">
-        <div className="w-full h-full  flex flex-col xl:justify-start items-center  text-black">
+      <div className="h-full w-full xl:w-1/2 relative ">
+        <motion.div
+          variants={{
+            hidden: { opacity: 0, y: -75 },
+            visible: { opacity: 1, y: 0 },
+          }}
+          initial="hidden"
+          animate="visible"
+          transition={{ duration: 0.5, delay: 0.25 }}
+          className="w-full h-full  flex flex-col xl:justify-start items-center  text-black"
+        >
           <div className="w-full h-1/2 flex flex-col justify-center">
             <h1 className=" font-agrandir tracking-wider flex items-center font-regular p-4 mt-4 text-3xl md:text-6xl  text-black  ">
               Our Purpose{" "}
             </h1>
-            <h3 className="p-4 text-xl font-cinzel font-medium tracking-widest text-black/75">
-              It's the little things
+            <h3 className="p-4 text-base font-montserrat font-medium tracking-widest text-black/75">
+              Creating a one-of-a-kind Home Buying Experience
             </h3>
             <p className="text-base md:text-lg xl:w-full  text-black/60  font-regular font-montserrat tracking-wide  p-4 xl:leading-6">
               For every project, we start with the fundamentals. Reliability,
@@ -135,17 +143,26 @@ const Info = () => {
               className="w-[100%] h-[100%] rounded-lg shadow-md"
             />
           </div>
-        </div>
+        </motion.div>
       </div>
 
       <div className="xl:w-1/2 w-full h-full hidden xl:flex justify-center xl:items-end">
-        <div className="md:h-3/4 md:w-[90%]  flex rounded-lg flex-col  justify-center items-center overflow-hidden relative left-4">
+        <motion.div
+          variants={{
+            hidden: { opacity: 0, y: 75 },
+            visible: { opacity: 1, y: 0 },
+          }}
+          initial="hidden"
+          animate="visible"
+          transition={{ duration: 0.5, delay: 0.25 }}
+          className="md:h-3/4 md:w-[90%]  flex rounded-lg flex-col  justify-center items-center overflow-hidden relative left-4"
+        >
           <Image
             src={Pool}
             alt="pool-image"
             className="rounded-lg w-[100%] h-[100%] object-cover bg-center"
           />
-        </div>
+        </motion.div>
       </div>
     </div>
   );

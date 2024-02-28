@@ -76,7 +76,7 @@ const Nav = () => {
 
   const toggleSignUp = () => {
     setErrorMsg("");
-    setIsRegisterError(false)
+    setIsRegisterError(false);
     setIsLoginError(false);
     setSignUpForm((prev) => !prev);
   };
@@ -100,15 +100,17 @@ const Nav = () => {
   const [isRegisterError, setIsRegisterError] = useState(false);
 
   const handleLogout: React.MouseEventHandler<HTMLButtonElement> = async () => {
-    await signOut()
-  }
+    await signOut();
+  };
 
-
+  //Handling Login
+  // Indicating that this function will handle mouse events on HTML button elements in a React application.
   const signInUser: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setIsLoginError(false);
+    e.preventDefault(); //prevents the form submission from a pager reload
+    setIsLoading(true); //signals loading in progress
+    setIsLoginError(false); // indicates there's currently no login error
     signIn("credentials", { ...signInData, redirect: false }).then(
+      //autheticates the user with provided creds
       (callback) => {
         if (callback?.error) {
           setErrorMsg(callback.error);
@@ -125,17 +127,21 @@ const Nav = () => {
     );
   };
 
+  //Handling Sign-up
   const registerUser: React.MouseEventHandler<HTMLButtonElement> = async (
     e
   ) => {
     e.preventDefault();
-    setIsRegisterError(false);
+    setIsRegisterError(false); // indicates there's no registration error
     setIsLoading(true);
     try {
-
-      if (registerData.email == '' || registerData.password == '' || confirmPassword == '') {
-        setErrorMsg("Must fill in all fields")
-        throw new Error("Some fields are not filled out")
+      if (
+        registerData.email == "" ||
+        registerData.password == "" ||
+        confirmPassword == ""
+      ) {
+        setErrorMsg("Must fill in all fields");
+        throw new Error("Some fields are not filled out");
       }
       if (registerData.password != confirmPassword) {
         setErrorMsg("Passwords do not Match");
@@ -176,8 +182,9 @@ const Nav = () => {
 
   return (
     <div
-      className={`h-80 w-full flex fixed bg-gradient-to-b from-black/50 via-black/30 to-transparent z-50 flex-col items-center justify-center transition-all duration-300 ease-in-out ${color ? "" : ""
-        } ${disappear ? "opacity-0 pointer-events-none " : " "}`}
+      className={`h-80 w-full flex fixed bg-gradient-to-b from-black/50 via-black/30 to-transparent z-50 flex-col items-center justify-center transition-all duration-300 ease-in-out ${
+        color ? "" : ""
+      } ${disappear ? "opacity-0 pointer-events-none " : " "}`}
     >
       <motion.div
         variants={variants}
@@ -217,7 +224,7 @@ const Nav = () => {
               </span>
             </Link>
           </li>
-          {!session &&
+          {!session && (
             <li className="relative p-4">
               <button onClick={toggleLogin}>
                 <span className="inline-block uppercase transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-10 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-white before:via-white/30 before:to-white hover:before:w-full hover:before:opacity-100">
@@ -225,8 +232,8 @@ const Nav = () => {
                 </span>
               </button>
             </li>
-          }
-          {session && session?.user.role === 'admin' &&
+          )}
+          {session && session?.user.role === "admin" && (
             <Link
               className={`
                     relative
@@ -238,9 +245,8 @@ const Nav = () => {
                 Admin Portal
               </span>
             </Link>
-
-          }
-          {session && session?.user.role != 'admin' &&
+          )}
+          {session && session?.user.role != "admin" && (
             <Link
               className={`
                     relative
@@ -252,9 +258,8 @@ const Nav = () => {
                 My Property Hub
               </span>
             </Link>
-
-          }
-          {session &&
+          )}
+          {session && (
             <li className="relative p-4">
               <button onClick={handleLogout}>
                 <span className="inline-block uppercase transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-10 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-white before:via-white/30 before:to-white hover:before:w-full hover:before:opacity-100">
@@ -262,9 +267,8 @@ const Nav = () => {
                 </span>
               </button>
             </li>
-          }
+          )}
         </ul>
-
 
         {/* Mobile Button */}
         <button
@@ -272,16 +276,18 @@ const Nav = () => {
           className="w-12 h-12 flex flex-col relative justify-center items-center rounded-full  space-x-reverse xl:hidden z-50"
         >
           <span
-            className={`block w-3/4 my-0.5 border border-white ${openMenu
-              ? "rotate-45 transition-transform duration-300 ease-in-out"
-              : "transition-transform duration-300 ease-in-out relative top-0.5"
-              }`}
+            className={`block w-3/4 my-0.5 border border-white ${
+              openMenu
+                ? "rotate-45 transition-transform duration-300 ease-in-out"
+                : "transition-transform duration-300 ease-in-out relative top-0.5"
+            }`}
           ></span>
           <span
-            className={`block w-3/4 my-0.5 border border-white ${openMenu
-              ? "-rotate-45 w-3/4 absolute top-2/5 transition-transform duration-300 ease-in-out"
-              : "transition-transform duration-300 ease-in-out relative top-0.5"
-              }`}
+            className={`block w-3/4 my-0.5 border border-white ${
+              openMenu
+                ? "-rotate-45 w-3/4 absolute top-2/5 transition-transform duration-300 ease-in-out"
+                : "transition-transform duration-300 ease-in-out relative top-0.5"
+            }`}
           ></span>
         </button>
 
@@ -464,8 +470,9 @@ const Nav = () => {
                     <div className="flex flex-col justify-evenly w-4/5 h-1/2 my-4">
                       <button
                         onClick={registerUser}
-                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${isLoading ? "opacity-75" : "opacity-100"
-                          }`}
+                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${
+                          isLoading ? "opacity-75" : "opacity-100"
+                        }`}
                       >
                         {isLoading ? "Loading..." : "Sign Up"}
                       </button>
@@ -538,8 +545,9 @@ const Nav = () => {
                       <button
                         disabled={isLoading}
                         onClick={signInUser}
-                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${isLoading ? "opacity-75" : "opacity-100"
-                          }`}
+                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${
+                          isLoading ? "opacity-75" : "opacity-100"
+                        }`}
                       >
                         {isLoading ? "Loading..." : "Login"}
                       </button>
@@ -589,7 +597,7 @@ const Nav = () => {
                     >
                       <Image
                         src={AppleIcon}
-                        alt="facebook icon"
+                        alt="Apple icon"
                         className="w-5 mr-4"
                       />
                       Sign in with Apple

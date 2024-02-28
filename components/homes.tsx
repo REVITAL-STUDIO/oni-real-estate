@@ -108,7 +108,6 @@ const Homes = () => {
     }
   };
 
-
   const toggleSavedListing = async (saveList: SavedListing) => {
     if (!session) {
       // Handle case when user is not logged in
@@ -165,7 +164,11 @@ const Homes = () => {
   }, [propertyInfo]);
 
   if (loading) {
-    return (<div className="w-[50%] flex justify-center items-center">Loading properties...</div>)
+    return (
+      <div className="w-[50%] flex justify-center items-center">
+        Loading properties...
+      </div>
+    );
   }
 
   if (error) {
@@ -212,7 +215,7 @@ const Homes = () => {
                   {listing.address}
                 </h2>
                 <p className="font-light p-2 text-sm">{`${listing.beds} beds | ${listing.baths} baths |  ${listing.area} sqft`}</p>
-                {session &&
+                {session && (
                   <button
                     onClick={() =>
                       toggleSavedListing({
@@ -247,12 +250,15 @@ const Homes = () => {
                         : "Save"}
                     </span>
                   </button>
-                }
+                )}
               </div>
               {/* address and bookmark */}
               <AnimatePresence>
                 {propertyInfo && selectedListing && (
-                  <PropertyInfo selectedListing={selectedListing} handleClose={handleClose} />
+                  <PropertyInfo
+                    selectedListing={selectedListing}
+                    handleClose={handleClose}
+                  />
                 )}
               </AnimatePresence>
             </div>

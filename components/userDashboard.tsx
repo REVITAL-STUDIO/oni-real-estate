@@ -17,9 +17,15 @@ interface profile {
   name: string;
 }
 
-interface requestBody {
-  email: string;
-  listingId: number;
+interface Listing {
+  id: number;
+  address: string;
+  description: string;
+  pictures: string[];
+  beds: number;
+  baths: number;
+  area: number;
+  price: number;
 }
 
 const Dashboard = () => {
@@ -53,10 +59,10 @@ const Dashboard = () => {
   };
 
   //will contain array of listings data retrieved from db
-  const [homes, setHomes] = useState<requestBody[]>([]);
+  const [homes, setHomes] = useState<Listing[]>([]);
 
   //POST request for retrieving the saved listing
-  const receiveListing = async (receive: requestBody) => {
+  const receiveListing = async (receive: Listing) => {
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites`,
@@ -67,7 +73,7 @@ const Dashboard = () => {
         }
       );
       if (res.ok) {
-        const data: requestBody[] = await res.json();
+        const data: Listing[] = await res.json();
         setHomes(data);
         console.log("Retrieved Favorite", data);
       } else {
@@ -81,28 +87,41 @@ const Dashboard = () => {
   //Used for looking at the details of the home will be used for view the details of property
   const [viewHome, setViewHome] = useState(false);
 
-  const toggleViewHome = async (receive: requestBody) => {
+  const toggleViewHome = async (toggle: Listing) => {
     try {
       setViewHome(!viewHome);
-      await receiveListing(receive);
+      await receiveListing(toggle);
     } catch (error) {
       console.error("Error toggling view home", error);
     }
   };
 
   //deleting favorite listing from user dashboard
-  const removeProperty = async (index: number, receive: requestBody) => {
+  const removeProperty = async (remove: Listing) => {
     try {
-      console.log("Removing property at index:", index);
-      const updatedHomes = [...homes];
-      updatedHomes.splice(index, 1);
+      const updatedHomes = homes.filter((home) => home.id !== remove.id);
       setHomes(updatedHomes);
+      await receiveListing(remove);
       console.log("Updated Homes:", updatedHomes);
-      await receiveListing(receive);
     } catch (error) {
       console.error("Error Removing Property, please try again later", error);
     }
   };
+
+  useEffect(() => {
+    console.log("Current homes:", homes); // Log the current state
+    const receive: Listing = {
+      id: 0,
+      address: "",
+      description: "",
+      pictures: [],
+      beds: 0,
+      baths: 0,
+      area: 0,
+      price: 0,
+    }; // Define receive as an empty object
+    receiveListing(receive);
+  }, []);
 
   return (
     <div className="w-full h-screen flex justify-center items-center">
@@ -201,7 +220,7 @@ const Dashboard = () => {
                         </h2>
                         <div className="w-1/6 flex justify-evenly">
                           <button
-                            onClick={toggleViewHome}
+                            onClick={() => toggleViewHome(listing)}
                             className="w-10 h-10 flex justify-center items-center"
                           >
                             <svg
@@ -229,7 +248,7 @@ const Dashboard = () => {
                           </button>
 
                           <button
-                            onClick={() => removeProperty(index)}
+                            onClick={() => removeProperty(listing)}
                             className="w-10 h-10 flex justify-center items-center"
                           >
                             <svg

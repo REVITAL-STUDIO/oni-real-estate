@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import Logo2 from "../public/oni-moon.png";
-import { motion, useAnimation } from "framer-motion";
-import { Cinzel } from "next/font/google";
+import { motion, useAnimation, useScroll, useTransform } from "framer-motion";
 
 const Hero = () => {
   const variants = {
@@ -32,7 +31,7 @@ const Hero = () => {
   };
 
   return (
-    <div className="h-screen w-full flex  justify-center items-center bg-[url('/aerial-houston.jpg')] bg-cover ">
+    <motion.div className="h-screen w-full bg-black flex justify-center items-center  bg-[url('/aerial-houston.jpg')] bg-cover ">
       <div className=" flex   justify-center items-center w-5/6 h-2/6">
         {/* Logo & Slogan */}
         <motion.div
@@ -57,7 +56,7 @@ const Hero = () => {
           </h2>
         </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
