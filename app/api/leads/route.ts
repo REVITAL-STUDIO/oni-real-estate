@@ -1,21 +1,50 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/database/client";
 
+const getRandomColor = () => {
+    // Array of Tailwind CSS color classes
+    const colors = [
+      'bg-red-400',
+      'bg-red-100',
+      'bg-blue-400',
+      'bg-blue-100',
+      'bg-green-400',
+      'bg-green-100',
+      'bg-green-400',
+      'bg-emerald-300',
+      'bg-teal-400',
+      'bg-cyan-300',
+      'bg-fuchsia-400',
+      'bg-indigo-600',
+      'bg-yellow-400',
+      'bg-purple-400',
+      'bg-orange-300',
+      'bg-lime-300',
+
+      // Add more colors as needed
+    ];
+
+    // Generate a random index
+    const randomIndex = Math.floor(Math.random() * colors.length);
+
+    // Return the randomly selected color class
+    return colors[randomIndex];
+  };
 
 interface postRequestBody {
     name: string,
     number: string,
     email: string,
     message: string,
-    
+    source: string
 }
 
 // api handler for creating a new lead
 export async function POST(request: Request) {
     const body: postRequestBody = await request.json();
-    console.log("#### IN ENDPOINT TO CREATE LEAD BODY: ", body)
-    try {
+    console.log("############ IN create lead endpoint body: ", body)
 
+    try {
 
         const newLead = await prisma.lead.create({
             data: {
@@ -23,10 +52,11 @@ export async function POST(request: Request) {
                 number: body.number,
                 email: body.email,
                 message: body.message,
-
+                source: body.source,
+                color: getRandomColor()
             }
         })
-
+        console.log("############ IN create lead endpoint newLead: ", newLead)
         return NextResponse.json(newLead, { status: 200 });
 
     } catch (error) {
@@ -46,6 +76,8 @@ export async function GET() {
                 email: true,
                 message: true,
                 status: true,
+                source: true,
+                color: true
             },
         });
 

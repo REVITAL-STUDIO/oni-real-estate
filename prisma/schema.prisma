@@ -58,4 +58,6 @@ model Lead {
   email   String
   message String
   status  String  @default("new")
+  color   String
+  source  String
 }

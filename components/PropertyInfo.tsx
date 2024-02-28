@@ -182,7 +182,7 @@ const PropertyInfo: React.FC<{ selectedListing: Listing, handleClose: () => void
                       exit={{ opacity: 0, y: -100 }}
                       transition={{ ease: "easeInOut", duration: 0.5 }}
                       className="fixed inset-0 z-50 flex justify-center items-center "                    >
-                      <InquiryModal onClose={handleCloseModal} />
+                      <InquiryModal onClose={handleCloseModal} listingInquired={selectedListing} />
                     </motion.section>
 
                   </div>

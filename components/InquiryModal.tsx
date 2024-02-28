@@ -3,9 +3,18 @@
 import React from "react";
 import { useState } from "react";
 
+interface Listing {
+  id: number;
+  address: string;
+  description: string;
+  pictures: string[];
+  beds: number;
+  baths: number;
+  area: number;
+  price: number;
+}
 
-
-const InquiryModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+const InquiryModal: React.FC<{ onClose: () => void, listingInquired: Listing }> = ({ onClose, listingInquired }) => {
   const [isSuccess, setIsSuccess] = useState(false)
   const [errorMsg, setErrorMsg] = useState("")
   const [isError, setIsError] = useState(false)
@@ -14,7 +23,6 @@ const InquiryModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     number: '',
     email: '',
     message: '',
-
   })
 
   const createLead: React.FormEventHandler<HTMLFormElement> = async (e) => {
@@ -26,7 +34,7 @@ const InquiryModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(leadData),
+        body: JSON.stringify({...leadData, source:`${listingInquired.address} Inquiry`}),
       })
       if (!response.ok) {
 

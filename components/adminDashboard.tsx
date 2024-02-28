@@ -4,12 +4,9 @@ import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Footer from "./footer";
 import Image from "next/image";
-import home1 from "public/home1.webp";
-import home2 from "public/home2.jpeg";
-import home3 from "public/home3.jpeg";
-import home4 from "public/home4.jpg";
-import home5 from "public/home5.jpeg";
-import home6 from "public/home6.jpeg";
+import { AnimatePresence, motion } from "framer-motion";
+
+
 import {
   faPenToSquare,
   faCheck,
@@ -22,6 +19,8 @@ import CreateListing from "./create-listing";
 import EditListing from "./edit-listing";
 import { IoIosClose } from "react-icons/io";
 import { useEdgeStore } from "@/lib/edgestore";
+import LeadInfo from "./LeadInfo";
+import PropertyInfo from "./PropertyInfo";
 
 interface Lead {
   id: number;
@@ -29,7 +28,9 @@ interface Lead {
   number: string,
   email: string,
   message: string,
-  status: string
+  status: string,
+  source: string,
+  color: string
 }
 
 interface Listing {
@@ -58,6 +59,8 @@ const AdminDashboard = () => {
   const [errorMsg, seterrorMsg] = useState("");
   // variable to keep track of which listing user selects to view
   const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
+  const [selectedLead, setSelectedLead] = useState<Lead | null>(null);
+
   // variable to indicate when data has been recieved
   const [fetchedListingsData, setFetchedListingsData] = useState(false)
   const [fetchedLeadsData, setFetchedLeadsData] = useState(false)
@@ -65,6 +68,41 @@ const AdminDashboard = () => {
 
   const [showDeleteListing, setShowDeleteListing] = useState(false);
   const [isError, setIsError] = useState(false)
+  const [isLeadInfoOpen, setIsLeadInfoOpen] = useState(false);
+  const [propertyInfo, openPropertyInfo] = useState(false);
+
+  const handlePropertyInfo = (listing: Listing) => {
+    //the listing to show in the property info page
+    setSelectedListing(listing);
+    openPropertyInfo((prevOpen) => !prevOpen);
+  };
+
+  const handleClose = () => {
+    openPropertyInfo(false);
+  };
+
+
+  const handleOpenLeadInfo = () => {
+    setIsLeadInfoOpen(true);
+  };
+
+  const handleCloseLeadInfo = () => {
+    setIsLeadInfoOpen(false);
+  };
+  const colorizeStatus = (status: String) => {
+    console.log("In colorize func: ", status)
+    switch (status) {
+      case 'new':
+        return (<span className="text-green-500">New</span>)
+      case 'contacted':
+        return (<span className="bg-yellow-500">Contacted</span>)
+      case 'closed':
+        return (<span className="text-red-500">Closed</span>)
+      default:
+        return (<span className="text-gray-500">No Status</span>)
+
+    }
+  }
 
   const fetchLeads = async () => {
     setFetchedLeadsData(false)
@@ -73,6 +111,7 @@ const AdminDashboard = () => {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/leads`, { method: 'GET' });
       const data: Lead[] = await response.json();
       //setting listings data to Listings state variable
+      console.log("LEADS: ", data)
       setLeads(data);
       setFetchedLeadsData(true)
     } catch (error) {
@@ -80,7 +119,7 @@ const AdminDashboard = () => {
       seterrorMsg("Unable to show leads at this time, check network connection and try again.")
     } finally {
       setLoadingLeads(false);
-      console.log("Leads", listings)
+      console.log("Leads: ", leads)
     }
 
   };
@@ -144,20 +183,7 @@ const AdminDashboard = () => {
   }, []);
 
 
-  //Saved Listings
-  //homes
-  //homes
-  const homes: StaticImport[] = [home1, home2, home3, home4, home5, home6];
 
-  //addresses
-  const addresses = [
-    "123 Pinecrest Drive, Cinco Ranch, TX 77001",
-    "456 Oakridge Lane, Houston, TX 77002",
-    "3015 Flatbend Road, Cypress, TX 77004",
-    "1012 Riverbend Road, Missouri City, TX 77004",
-    "202 Sunset Boulevard, Pearland, TX 77005",
-    "303 Lakeside Drive, Richmond, TX 77006",
-  ];
 
   //Opening create lisitng form
   const [createListing, setCreateListing] = useState(false);
@@ -257,18 +283,19 @@ const AdminDashboard = () => {
                         <div key={lead.id} className="w-full  bg-white rounded-2xl text-black shadow-lg flex justify-between items-center mb-[1rem] py-[1rem]">
                           {/* Client Lead */}
                           <div className="w-1/2 h-full flex justify-evenly items-center ">
-                            <div className="w-10 h-10 rounded-full bg-orange-400 flex justify-center items-center">
-                              <span>C</span>
+                            <div className={`w-10 h-10 rounded-full flex justify-center items-center ${lead.color}`}>
+                              <span>{lead.name.charAt(0).toUpperCase()}</span>
                             </div>
                             <span className="text-sm tracking-wider font-montserrat">
                               {lead.name}
                             </span>
                           </div>
-                          
-                          <div className="w-1/2 h-full flex justify-end items-center">
-                          <div className="relative right-[40%]">
-                              <p className="text-semibold">Status: {lead.status}</p>
+
+                          <div className="w-1/2 h-full flex justify-between items-center">
+                            <div className="relative ">
+                              <p className="text-semibold">Status: {colorizeStatus(lead.status)}</p>
                             </div>
+                            <button onClick={()=>{setSelectedLead(lead); handleOpenLeadInfo()}} className="text-lg text-blue-400 hover:text-gray-500 active:text-blue-400">view</button>
                             <button className="w-fit px-4 tracking-wider font-montserrat h-8 rounded-full  text-red-500 text-xs">
                               <svg
                                 width="24"
@@ -289,7 +316,20 @@ const AdminDashboard = () => {
                       )
 
                   }
+                  {isLeadInfoOpen && selectedLead &&
+                    <div>
+                      <motion.section
+                        initial={{ opacity: 0, y: -100 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -100 }}
+                        transition={{ ease: "easeInOut", duration: 0.5 }}
+                        className="fixed inset-0 z-50 flex justify-center items-center "                    >
+                        <LeadInfo onClose={handleCloseLeadInfo} selectedLead={selectedLead} />
+                      </motion.section>
 
+                    </div>
+
+                  }
                 </div>
               </div>
             </section>
@@ -332,7 +372,7 @@ const AdminDashboard = () => {
                           {listing.address}
                         </span>
                         <div className="w-1/4 h-full flex justify-end relative items-center right-2 ">
-                          <button className=" p-4 tracking-wider font-montserrat hover:bg-white/40 hover:shadow-md  flex justify-center items-center rounded-full  text-xs ">
+                          <button onClick={() => handlePropertyInfo(listing)} className=" p-4 tracking-wider font-montserrat hover:bg-white/40 hover:shadow-md  flex justify-center items-center rounded-full  text-xs ">
                             <svg
                               width="25"
                               height="25"
@@ -484,8 +524,16 @@ const AdminDashboard = () => {
             </div>
           </div>
         )}
+        <AnimatePresence>
+                {propertyInfo && selectedListing && (
+                  <PropertyInfo
+                    selectedListing={selectedListing}
+                    handleClose={handleClose}
+                  />
+                )}
+              </AnimatePresence>
       </div>
-      {!createListing && !editListing && !showDeleteListing && (
+      {!createListing && !editListing && !showDeleteListing && !propertyInfo && (
         <Footer />
       )}
     </div>
