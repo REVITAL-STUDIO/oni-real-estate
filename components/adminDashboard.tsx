@@ -23,6 +23,14 @@ import EditListing from "./edit-listing";
 import { IoIosClose } from "react-icons/io";
 import { useEdgeStore } from "@/lib/edgestore";
 
+interface Lead {
+  id: number;
+  name: string,
+  number: string,
+  email: string,
+  message: string,
+  status: string
+}
 
 interface Listing {
   id: number;
@@ -41,17 +49,41 @@ const AdminDashboard = () => {
 
   //will contain array of listings data retrieved from db
   const [listings, setListings] = useState<Listing[]>([]);
+  // will contain leads fetch from db
+  const [leads, setLeads] = useState<Lead[]>([]);
   //used to display loading state to user when fetching listings 
-  const [loading, setLoading] = useState(true);
+  const [loadingListings, setLoadingListings] = useState(true);
+  const [loadingLeads, setLoadingLeads] = useState(true);
   // used to display an error messages to user 
   const [errorMsg, seterrorMsg] = useState("");
   // variable to keep track of which listing user selects to view
   const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
   // variable to indicate when data has been recieved
   const [fetchedListingsData, setFetchedListingsData] = useState(false)
+  const [fetchedLeadsData, setFetchedLeadsData] = useState(false)
+
 
   const [showDeleteListing, setShowDeleteListing] = useState(false);
   const [isError, setIsError] = useState(false)
+
+  const fetchLeads = async () => {
+    setFetchedLeadsData(false)
+    try {
+      //requet to get listing data from api
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/leads`, { method: 'GET' });
+      const data: Lead[] = await response.json();
+      //setting listings data to Listings state variable
+      setLeads(data);
+      setFetchedLeadsData(true)
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      seterrorMsg("Unable to show leads at this time, check network connection and try again.")
+    } finally {
+      setLoadingLeads(false);
+      console.log("Leads", listings)
+    }
+
+  };
 
   const deleteListing = async (id: number) => {
     setIsError(false)
@@ -100,8 +132,7 @@ const AdminDashboard = () => {
       console.error("Error fetching data:", error);
       seterrorMsg("Unable to show listings at this time, check network connection and try again.")
     } finally {
-      setLoading(false);
-      console.log("Listings", listings)
+      setLoadingListings(false);
     }
 
   };
@@ -109,6 +140,7 @@ const AdminDashboard = () => {
   // use effect so that listing data is fetched as component is loaded
   useEffect(() => {
     fetchListings();
+    fetchLeads();
   }, []);
 
 
@@ -130,7 +162,7 @@ const AdminDashboard = () => {
   //Opening create lisitng form
   const [createListing, setCreateListing] = useState(false);
   const showCreateListing = (isOpen: boolean) => {
-    if(!isOpen){
+    if (!isOpen) {
       fetchListings()
     }
     setCreateListing(isOpen);
@@ -138,7 +170,7 @@ const AdminDashboard = () => {
 
   const [editListing, setEditListing] = useState(false);
   const showEditListing = (isOpen: boolean) => {
-    if(!isOpen){
+    if (!isOpen) {
       fetchListings()
     }
     setEditListing(isOpen);
@@ -208,52 +240,56 @@ const AdminDashboard = () => {
                 Leads
               </h2>
               <div className=" h-full flex p-4 gap-x-4">
-                <div className="p-4 bg-black rounded-full shadow-lg w-32 h-16 text-white text-xs flex flex-col items-center justify-center">
+                <div className="p-4 bg-black rounded-full shadow-lg w-32 py-[.5rem] text-white text-xs flex flex-col items-center justify-center">
                   <span className="text-xs">Leads</span>
-                  <span className="text-lg">1</span>
-                </div>
-                <div className="p-4 bg-black rounded-full shadow-lg w-32 h-16 text-white flex flex-col items-center justify-center">
-                  <span className="text-xs">Subscribers</span>
-                  <span className="text-lg">4</span>
+                  <span className="text-lg">{leads.length}</span>
                 </div>
               </div>
             </div>
             <section className="w-full h-full flex justify-evenly items-end">
               <div className="w-full h-[75%]  rounded-2xl flex justify-center ">
-                <div className="w-5/6 h-full flex justify-center p-4">
-                  <div className="w-full h-20 bg-white rounded-2xl text-black shadow-lg flex justify-between items-center">
-                    {/* Client Lead */}
-                    <div className="w-1/2 h-full flex justify-evenly items-center ">
-                      <div className="w-10 h-10 rounded-full bg-orange-400 flex justify-center items-center">
-                        <span>C</span>
-                      </div>
-                      <span className="text-sm tracking-wider font-montserrat">
-                        Charles Thomas
-                      </span>
-                    </div>
-                    <div className="w-1/2 h-full flex justify-end items-center">
-                      <button className="w-5 h-5 px-4">
-                        <FontAwesomeIcon className="w-5 h-5" icon={faPhone} />{" "}
-                      </button>
-                      <button className="w-5 h-5 px-4">
-                        <FontAwesomeIcon className="w-5 h-5" icon={faEnvelope} />
-                      </button>
-                      <button className="w-fit px-4 tracking-wider font-montserrat h-8 rounded-full  text-red-500 text-xs">
-                        <svg
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M6.39989 18.3079L5.69189 17.5999L11.2919 11.9999L5.69189 6.39989L6.39989 5.69189L11.9999 11.2919L17.5999 5.69189L18.3079 6.39989L12.7079 11.9999L18.3079 17.5999L17.5999 18.3079L11.9999 12.7079L6.39989 18.3079Z"
-                            fill="#FF0000"
-                          />
-                        </svg>
-                      </button>
-                    </div>
-                  </div>
+                <div className="w-5/6 h-full block justify-center p-4  overflow-y-scroll ">
+
+                  {
+                    !fetchedLeadsData ? <div className="flex justify-center items-center h-full">Loading Leads...</div> :
+                      leads.map((lead) =>
+                      (
+                        <div key={lead.id} className="w-full  bg-white rounded-2xl text-black shadow-lg flex justify-between items-center mb-[1rem] py-[1rem]">
+                          {/* Client Lead */}
+                          <div className="w-1/2 h-full flex justify-evenly items-center ">
+                            <div className="w-10 h-10 rounded-full bg-orange-400 flex justify-center items-center">
+                              <span>C</span>
+                            </div>
+                            <span className="text-sm tracking-wider font-montserrat">
+                              {lead.name}
+                            </span>
+                          </div>
+                          
+                          <div className="w-1/2 h-full flex justify-end items-center">
+                          <div className="relative right-[40%]">
+                              <p className="text-semibold">Status: {lead.status}</p>
+                            </div>
+                            <button className="w-fit px-4 tracking-wider font-montserrat h-8 rounded-full  text-red-500 text-xs">
+                              <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M6.39989 18.3079L5.69189 17.5999L11.2919 11.9999L5.69189 6.39989L6.39989 5.69189L11.9999 11.2919L17.5999 5.69189L18.3079 6.39989L12.7079 11.9999L18.3079 17.5999L17.5999 18.3079L11.9999 12.7079L6.39989 18.3079Z"
+                                  fill="#FF0000"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      )
+                      )
+
+                  }
+
                 </div>
               </div>
             </section>
@@ -265,7 +301,7 @@ const AdminDashboard = () => {
                 Listings
               </h2>
               <button
-                onClick={()=>showCreateListing(true)}
+                onClick={() => showCreateListing(true)}
                 className="p-4 h-8 w-32 text-white bg-black shadow-lg rounded-full relative right-4 flex justify-evenly items-center text-xs hover:scale-105 active:scale-100"
               >
                 <FontAwesomeIcon icon={faPlus} className="w-4 h-4" /> add listing
@@ -372,7 +408,7 @@ const AdminDashboard = () => {
           {createListing && (
             <div className="fixed left-0 top-0 bg-black/90 w-full h-full z-20">
               <button
-                onClick={()=>showCreateListing(false)}
+                onClick={() => showCreateListing(false)}
                 className="absolute right-2 top-2 p-4 flex justify-center items-center z-50"
               >
                 <span

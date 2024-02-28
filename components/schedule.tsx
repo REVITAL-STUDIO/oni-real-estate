@@ -10,6 +10,7 @@ import {
   faMobile,
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
+import ScheduleModal from "./scheduleModal";
 
 const Schedule = () => {
   //Open and Close Scheduling
@@ -85,120 +86,7 @@ const Schedule = () => {
           </motion.button>
           <AnimatePresence>
             {openSchedule && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ ease: "easeInOut", duration: 0.5 }}
-                className="fixed inset-0 z-100"
-              >
-                <div
-                  className="w-full h-full bg-white/80
-              flex justify-center items-center z-100"
-                >
-                  <motion.section
-                    initial={{ opacity: 0, y: -100 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -100 }}
-                    transition={{ ease: "easeInOut", duration: 0.5 }}
-                    className="xl:w-1/3 w-[90%] h-[90%] backdrop-blur bg-black/50  rounded-2xl shadow-xl"
-                  >
-                    <button
-                      onClick={handleClose}
-                      className="w-12   h-12 flex justify-center items-center"
-                    >
-                      <FontAwesomeIcon
-                        icon={faClose}
-                        className="w-6 h-6 text-white "
-                      />
-                    </button>
-                    <div className="w-full h-[95%] flex flex-col justify-center items-center z-100">
-                      <Image
-                        src={Logo}
-                        alt="company logo"
-                        className="w-1/3 invert "
-                      />
-                      <h2 className="text-2xl font-agrandir tracking-wide mt-4 font-bold text-white">
-                        Let's Talk.
-                      </h2>
-                      {/* Schedule */}
-                      <div className="w-full h-4/5 flex justify-evenly items-center flex-col">
-                        {/* Form */}
-                        <form className="bg-transparent rounded  w-3/4 h-5/6 ">
-                          {" "}
-                          {/* First Name */}
-                          <div className="mb-4">
-                            <label
-                              className="block text-white font-montserrat  text-sm font-medium mb-2"
-                              placeholder="name"
-                            >
-                              First Name
-                            </label>
-                            <input
-                              className="shadow appearance-none font-montserrat  bg-transparent border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
-                              id="username"
-                              type="text"
-                              placeholder="Name"
-                            />
-                          </div>
-                          {/* Last Name */}
-                          <div className="mb-4">
-                            <label
-                              className="block text-white font-montserrat  text-sm font-medium mb-2"
-                              placeholder="name"
-                            >
-                              Last Name
-                            </label>
-                            <input
-                              className="shadow appearance-none font-montserrat  bg-transparent border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
-                              id="username"
-                              type="text"
-                              placeholder="Name"
-                            />
-                          </div>
-                          {/* Last Name */}
-                          <div className="mb-4">
-                            <label
-                              className="block text-white font-montserrat  text-sm font-medium mb-2"
-                              placeholder="name"
-                            >
-                              Email
-                            </label>
-                            <input
-                              className="shadow appearance-none font-montserrat  bg-transparent border rounded w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
-                              id="username"
-                              type="text"
-                              placeholder="Email"
-                            />
-                          </div>
-                          {/* Submission Field */}
-                          <div className="mb-4">
-                            <label
-                              className="block text-white font-montserrat  text-sm font-medium mb-2"
-                              placeholder="name"
-                            >
-                              Message
-                            </label>
-                            <textarea
-                              className="shadow font-montserrat  appearance-none bg-transparent border rounded w-full py-6 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
-                              id="message"
-                              placeholder="Type your message here..."
-                            ></textarea>
-                            <div className="my-2 h-1/5 w-full flex justify-center items-center ">
-                              <button
-                                className="w-3/4 border font-montserrat text-sm rounded-full text-white font-bold p-2"
-                                type="submit"
-                              >
-                                Submit.
-                              </button>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
-                  </motion.section>
-                </div>
-              </motion.div>
+              <ScheduleModal handleClose={handleClose} />
             )}
           </AnimatePresence>
         </div>

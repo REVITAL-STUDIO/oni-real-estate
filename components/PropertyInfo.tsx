@@ -33,7 +33,7 @@ const PropertyInfo: React.FC<{ selectedListing: Listing, handleClose: () => void
   const handleOpenModal = () => {
     setIsInquiryModalOpen(true);
   };
-  
+
   const handleCloseModal = () => {
     setIsInquiryModalOpen(false);
   };
@@ -174,7 +174,20 @@ const PropertyInfo: React.FC<{ selectedListing: Listing, handleClose: () => void
                 </div>
               </div>
               <div className="w-full h-1/6  flex  items-center">
-              {isInquiryModalOpen && <InquiryModal onClose={handleCloseModal} />}
+                {isInquiryModalOpen &&
+                  <div>
+                    <motion.section
+                      initial={{ opacity: 0, y: -100 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -100 }}
+                      transition={{ ease: "easeInOut", duration: 0.5 }}
+                      className="fixed inset-0 z-50 flex justify-center items-center "                    >
+                      <InquiryModal onClose={handleCloseModal} />
+                    </motion.section>
+
+                  </div>
+
+                }
                 <button onClick={handleOpenModal} className="w-1/2 h-12 border border-border rounded-xl shadow-md flex justify-center items-center">
                   Inquire.
                 </button>
