@@ -11,7 +11,7 @@ import { motion, useAnimation } from "framer-motion";
 
 const Seller = () => {
   return (
-    <div className="w-full h-full flex bg-eggshell">
+    <div className="w-full h-full flex bg-white">
       {/* Info */}
       <div className="xl:w-2/5 w-1/3 flex flex-col justify-end items-start">
         <h2 className="p-4 text-2xl md:text-6xl">Why Choose Us?</h2>

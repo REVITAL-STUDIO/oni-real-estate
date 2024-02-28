@@ -140,7 +140,7 @@ const Buyer = () => {
   const currentSlidePick = slides[currentSlide];
 
   return (
-    <div className="w-full  bg-eggshell ">
+    <div className="w-full  bg-white ">
       {/* Buyer Process */}
       <div className="w-full h-700 flex flex-col justify-center ">
         <div className="w-[95%] h-4/5 flex flex-col gap-x-2 justify-center bg-[url('/family.png')] bg-cover bg-center rounded-tr-xl rounded-br-xl shadow-xl">

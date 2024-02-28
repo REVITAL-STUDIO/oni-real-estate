@@ -7,7 +7,7 @@ import NavPages from "@/components/nav";
 
 export default function Client() {
   return (
-    <div className="bg-eggshell h-screen w-full z-10">
+    <div className="bg-white h-screen w-full z-10">
       <NavPages />
       <div className="w-full h-[20%]"></div>
       <Buyer />

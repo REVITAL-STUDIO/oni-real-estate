@@ -44,53 +44,131 @@ const Expert = () => {
         ref={ref}
       >
         {/* Flex-row */}
-        <motion.div
-          variants={{
-            hidden: { opacity: 0, y: 75 },
-            visible: { opacity: 1, y: 0 },
-          }}
-          initial="hidden"
-          animate={control}
-          transition={{ duration: 0.6, delay: 0.25 }}
-          className="w-full xl:w-1/2 h-3/4  xl:h-full hidden xl:flex xl:flex-col xl:justify-evenly items-center"
-        >
-          <h2 className="  w-full  font-agrandir p-4 text-2xl md:text-6xl font-regular uppercase tracking-wide text-black ">
+        <div className="w-full xl:w-1/2 h-3/4  xl:h-full hidden xl:flex xl:flex-col xl:justify-evenly items-center">
+          <motion.h2
+            variants={{
+              hidden: { opacity: 0, y: 75 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            initial="hidden"
+            animate={control}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            className="  w-full  font-agrandir p-4 text-2xl md:text-6xl font-regular uppercase tracking-wide text-black "
+          >
             LOCAL EXPERTISE HOUSTON CONNECTED
-          </h2>
-          <div className="w-full h-1/2 relative p-4 bottom-24">
+          </motion.h2>
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, y: 0 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            initial="hidden"
+            animate={control}
+            transition={{ duration: 0.6, delay: 1.5 }}
+            className="w-full h-1/2 relative p-4 bottom-24"
+          >
             <Image
               src={Local}
               alt="local support"
               className="object-cover object-center h-[100%] w-[100%]  rounded-lg shadow-xl"
             ></Image>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
         {/* Local Expertise */}
         <div className="w-full h-1/4 xl:h-5/6  xl:w-1/2 flex items-center flex-col justify-center xl:justify-evenly  xl:items-end  relative">
           {/* Mobille Responsive */}
           <h2 className="md:w-full xl:hidden text-right font-agrandir p-4 text-2xl md:text-5xl uppercase tracking-wide text-black ">
             LOCAL EXPERTISE HOUSTON CONNECTED
           </h2>
-          <p className="text-base md:text-lg xl:w-full  p-4 text-black/75 mt-2 font-montserrat leading-6 font-regular tracking-wide text-right relative xl:top-6">
+          <motion.p
+            variants={{
+              hidden: { opacity: 0, y: 0 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            initial="hidden"
+            animate={control}
+            transition={{ duration: 0.6, delay: 1 }}
+            className="text-base md:text-lg xl:w-full  p-4 text-black/75 mt-2 font-montserrat leading-6 font-regular tracking-wide text-right relative xl:top-6"
+          >
             Empowering Your Real Estate Journey with Unmatched Local Insight and
             Houston Connectivity. Navigate the Market Confidently with Our
             Expertise.
-          </p>
+          </motion.p>
           <ul className="xl:w-full xl:h-1/2 hidden xl:flex xl:flex-col items-end p-4 justify-evenly font-cinzel text-xl relative top-20">
-            <div className="w-full  border-t border-black/50  flex justify-end items-center">
-              <li className="  p-4 text-right  text-black tracking-wider font-light">
+            <div className="w-full ">
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={control}
+                variants={{
+                  hidden: { scaleX: 0 },
+                  visible: { scaleX: 1 },
+                }}
+                transition={{ duration: 1, delay: 2 }}
+                className="w-full border border-black/50"
+                style={{ transformOrigin: "right" }}
+              ></motion.div>
+              <motion.li
+                variants={{
+                  hidden: { opacity: 0, y: 0 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                initial="hidden"
+                animate={control}
+                transition={{ duration: 1, delay: 2 }}
+                className="p-4 text-right text-black tracking-wider font-light"
+              >
                 Curated & Exclusive
-              </li>
+              </motion.li>
             </div>
-            <div className=" border-t border-black/50 w-full flex justify-end items-center">
-              <li className="  p-4 text-right  text-black tracking-wider font-light">
+            <div className=" w-full ">
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={control}
+                variants={{
+                  hidden: { scaleX: 0 },
+                  visible: { scaleX: 1 },
+                }}
+                transition={{ duration: 1, delay: 2.5 }}
+                className="w-full border border-black/50"
+                style={{ transformOrigin: "right" }}
+              ></motion.div>
+              <motion.li
+                variants={{
+                  hidden: { opacity: 0, y: 0 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                initial="hidden"
+                animate={control}
+                transition={{ duration: 0.6, delay: 2.5 }}
+                className="p-4 text-right text-black tracking-wider font-light"
+              >
                 Redefining Standards
-              </li>
+              </motion.li>
             </div>
-            <div className="  border-t border-black/50 w-full flex justify-end items-center">
-              <li className="   p-4 text-right  text-black tracking-wider font-light">
+            <div className="  w-full">
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={control}
+                variants={{
+                  hidden: { scaleX: 0 },
+                  visible: { scaleX: 1 },
+                }}
+                transition={{ duration: 0.5, delay: 3 }}
+                className="w-full border border-black/50"
+                style={{ transformOrigin: "right" }}
+              ></motion.div>
+              <motion.li
+                variants={{
+                  hidden: { opacity: 0, y: 0 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                initial="hidden"
+                animate={control}
+                transition={{ duration: 0.6, delay: 3 }}
+                className="p-4 text-right text-black tracking-wider font-light"
+              >
                 Uncompromising Efforts
-              </li>
+              </motion.li>
             </div>
           </ul>
           <button className="absolute xl:w-1/3 w-5/6 hidden  h-16 hover:bg-black hover:text-white text-black font-light tracking-wider text-base xl:flex justify-center items-center transition-all duration-300 ease-in-out font-montserrat bottom-[0%] bg-white xl:right-4  bg-opacity-20 backdrop-blur-5 border border-opacity-30 border-black/50 rounded-2xl shadow-sm p-4  group">

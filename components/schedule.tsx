@@ -55,7 +55,7 @@ const Schedule = () => {
   }, [controls]);
 
   return (
-    <div className="bg-eggshell w-full h-screen flex justify-center items-center">
+    <div className="bg-white w-full h-screen flex justify-center items-center">
       <div className="w-full xl:5/6 h-5/6  flex flex-col justify-center ">
         <motion.h2
           className="md:text-6xl text-3xl  font-agrandir tracking-wide w-[90%] p-4 xl:w-[90%] "
