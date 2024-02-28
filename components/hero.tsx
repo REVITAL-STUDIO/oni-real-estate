@@ -11,9 +11,9 @@ const Hero = () => {
     visible: {
       opacity: 1,
       y: -20,
-      scale: 0.75,
+
       transition: {
-        opacity: { duration: 0.5 },
+        opacity: { duration: 0.3 },
         scale: { duration: 0.8, delay: 1 }, // Delay the y transition by 0.5 seconds
       },
     },

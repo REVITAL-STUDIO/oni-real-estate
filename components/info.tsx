@@ -1,24 +1,51 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { motion, useAnimation, useInView } from "framer-motion";
+import { motion, useAnimation, useScroll } from "framer-motion";
 import Image from "next/image";
 import Pool from "public/iStock-1453183714.jpg";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useInView } from "react-intersection-observer";
 
 const Info = () => {
+  const parentRef = useRef<HTMLDivElement>(null);
+  const control = useAnimation();
+
+  const { ref, inView } = useInView({
+    threshold: 0.5,
+    triggerOnce: true,
+  });
+
+  useEffect(() => {
+    if (!parentRef.current) {
+      return;
+    }
+    if (inView) {
+      control.start("visible");
+    } else {
+      const { bottom } = parentRef.current.getBoundingClientRect();
+      const isBelowScreenBottom = bottom > window.innerHeight;
+      if (isBelowScreenBottom) {
+        control.start("hidden");
+      }
+    }
+  }, [inView, control]);
+
   return (
-    <div className="h-screen w-full xl:h-1000 flex flex-col lg:flex-row bg-eggshell ">
-      <div className="h-full w-full xl:w-1/2 relative ">
+    <div
+      ref={parentRef}
+      className="h-screen  w-full xl:h-1000 flex flex-col lg:flex-row bg-white "
+    >
+      <div className="h-full w-full xl:w-1/2 relative " ref={ref}>
         <motion.div
           variants={{
             hidden: { opacity: 0, y: -75 },
             visible: { opacity: 1, y: 0 },
           }}
           initial="hidden"
-          animate="visible"
-          transition={{ duration: 0.5, delay: 0.25 }}
+          animate={control}
+          transition={{ duration: 0.6, delay: 0.25 }}
           className="w-full h-full  flex flex-col xl:justify-start items-center  text-black"
         >
           <div className="w-full h-1/2 flex flex-col justify-center">
@@ -26,7 +53,7 @@ const Info = () => {
               Our Purpose{" "}
             </h1>
             <h3 className="p-4 text-base font-montserrat font-medium tracking-widest text-black/75">
-              Creating a one-of-a-kind Home Buying Experience
+              Creating a One-of-A-Kind Home Buying Experience
             </h3>
             <p className="text-base md:text-lg xl:w-full  text-black/60  font-regular font-montserrat tracking-wide  p-4 xl:leading-6">
               For every project, we start with the fundamentals. Reliability,
@@ -153,8 +180,8 @@ const Info = () => {
             visible: { opacity: 1, y: 0 },
           }}
           initial="hidden"
-          animate="visible"
-          transition={{ duration: 0.5, delay: 0.25 }}
+          animate={control}
+          transition={{ duration: 0.6, delay: 0.25 }}
           className="md:h-3/4 md:w-[90%]  flex rounded-lg flex-col  justify-center items-center overflow-hidden relative left-4"
         >
           <Image

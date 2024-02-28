@@ -1,17 +1,59 @@
-import React from "react";
+"use client";
+
+import React, { useEffect, useRef } from "react";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import Local from "public/iStock-1481867504.jpg";
+import { motion, useAnimation, useScroll } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 
 const Expert = () => {
+  const parentRef = useRef<HTMLDivElement>(null);
+  const control = useAnimation();
+
+  const { ref, inView } = useInView({
+    threshold: 0.5,
+    triggerOnce: true,
+  });
+
+  useEffect(() => {
+    if (!parentRef.current) {
+      return;
+    }
+    if (inView) {
+      control.start("visible");
+    } else {
+      const { bottom } = parentRef.current.getBoundingClientRect();
+      const isBelowScreenBottom = bottom > window.innerHeight;
+      if (isBelowScreenBottom) {
+        control.start("hidden");
+      }
+    }
+  }, [inView, control]);
+
   return (
-    <div className=" h-screen w-full xl:h-1300 bg-gradient-to-b from-eggshell via-mint/50 to-eggshell">
+    <div
+      className=" h-screen w-full xl:h-1300 bg-gradient-to-b from-white via-mint/50 to-white"
+      ref={parentRef}
+    >
       {/* Local Support */}
-      <div className="h-full w-full  flex flex-col justify-center items-center xl:flex-row">
+      <div
+        className="h-full w-full  flex flex-col justify-center items-center xl:flex-row"
+        ref={ref}
+      >
         {/* Flex-row */}
-        <div className="w-full xl:w-1/2 h-3/4  xl:h-full hidden xl:flex xl:flex-col xl:justify-evenly items-center">
+        <motion.div
+          variants={{
+            hidden: { opacity: 0, y: 75 },
+            visible: { opacity: 1, y: 0 },
+          }}
+          initial="hidden"
+          animate={control}
+          transition={{ duration: 0.6, delay: 0.25 }}
+          className="w-full xl:w-1/2 h-3/4  xl:h-full hidden xl:flex xl:flex-col xl:justify-evenly items-center"
+        >
           <h2 className="  w-full  font-agrandir p-4 text-2xl md:text-6xl font-regular uppercase tracking-wide text-black ">
             LOCAL EXPERTISE HOUSTON CONNECTED
           </h2>
@@ -22,7 +64,7 @@ const Expert = () => {
               className="object-cover object-center h-[100%] w-[100%]  rounded-lg shadow-xl"
             ></Image>
           </div>
-        </div>
+        </motion.div>
         {/* Local Expertise */}
         <div className="w-full h-1/4 xl:h-5/6  xl:w-1/2 flex items-center flex-col justify-center xl:justify-evenly  xl:items-end  relative">
           {/* Mobille Responsive */}
