@@ -8,6 +8,8 @@ import {
   faCheck,
   faPlus,
   faArrowRight,
+  faUser,
+  faHouse,
 } from "@fortawesome/free-solid-svg-icons";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import Image from "next/image";
@@ -130,7 +132,7 @@ const Dashboard = () => {
 
   return (
     <div className="w-full h-screen flex justify-center items-center">
-      <div className="w-[90%] h-3/4 bg-eggshell  shadow-lg rounded-2xl flex">
+      <div className="w-[90%] h-3/4 bg-gray-400/10  shadow-lg rounded-2xl flex flex-col xl:flex-row">
         {/* Profile */}
         <AnimatePresence>
           {viewHome ? (
@@ -138,18 +140,20 @@ const Dashboard = () => {
           ) : (
             <motion.div
               key="profile"
-              className=" w-1/3 h-full flex justify-center items-center "
+              className="xl:w-1/3 w-full  h-full flex justify-center items-center "
             >
               {/* Profile Circle */}
-              <div className="w-full h-[90%] flex justify-center">
-                <div className="w-3/5 h-3/6 rounded-2xl bg-white shadow-md  flex flex-col  items-center">
+              <div className="w-full h-full flex justify-center items-center">
+                <div className="w-4/5 h-5/6 xl:w-3/5 xl:h-3/6 rounded-2xl bg-white shadow-md  flex flex-col  items-center">
                   <div className="w-5/6 h-1/6 flex items-center justify-between">
-                    <h2 className="  font-medium font-agrandir tracking-wider">
-                      Profile
-                    </h2>
+                    <FontAwesomeIcon
+                      className="text-mint"
+                      icon={faUser}
+                      size="lg"
+                    />
                     <button
                       onClick={handleToggleMenu}
-                      className="w-8 h-8 hover:bg-gray-200/20 rounded-full shadow-md flex justify-center items-center transition duration-200 ease-in-out"
+                      className="w-8 h-8 hover:bg-gray-100/20 rounded-full bg-white shadow-md flex justify-center items-center transition duration-200 ease-in-out"
                     >
                       <FontAwesomeIcon
                         icon={faPenToSquare}
@@ -161,8 +165,8 @@ const Dashboard = () => {
                   {/* Profile Picture */}
                   <div className="w-full h-2/3 flex justify-center items-center">
                     <div className="w-44 h-44 relative rounded-2xl flex justify-center items-center">
-                      <div className="w-36 h-36 bg-eggshell inset-0 rounded-2xl shadow-md flex justify-center items-center">
-                        <h2 className="text-5xl text-white font-montserrat">
+                      <div className="w-36 h-36 bg-gray-300/20 inset-0 rounded-2xl shadow-md flex justify-center items-center">
+                        <h2 className="text-3xl text-black font-montserrat">
                           D
                         </h2>
                       </div>
@@ -176,8 +180,8 @@ const Dashboard = () => {
                     </div>
                   </div>
                   {/* Username */}
-                  <div className="w-full h-1/5   flex justify-center items-center">
-                    <h2 className="font-agrandir text-lg tracking-wider">
+                  <div className="w-1/2 h-1/6    flex justify-center items-center">
+                    <h2 className="font-agrandir w-full py-1 px-4 flex justify-center items-center text-sm  bg-black/75 rounded-full text-white tracking-wider">
                       {profile.name}
                     </h2>
                   </div>
@@ -188,25 +192,30 @@ const Dashboard = () => {
         </AnimatePresence>
         {/* Saved Listing */}
         <AnimatePresence>
-          <motion.div className=" w-2/3 h-full flex justify-center items-center ">
-            <div className="w-[95%] h-[90%] rounded-2xl bg-white shadow-md ">
-              <section className="w-full h-1/6">
-                <h2 className="p-4 font-agrandir">Saved Listings</h2>
+          <motion.div className="xl:w-2/3 w-full h-full flex justify-center items-center ">
+            <div className="xl:w-[95%] xl:h-[90%] w-4/5 h-5/6 rounded-2xl bg-white shadow-md ">
+              <section className="w-1/4 h-1/6 xl:w-[10%] flex justify-center">
+                <FontAwesomeIcon
+                  className="text-mint p-4 w-6 h-6"
+                  icon={faHouse}
+                />
               </section>
               <ul className="w-full h-5/6 flex flex-col items-center overflow-y-scroll">
                 {homes.length === 0 ? (
                   <div className="w-full h-5/6 flex flex-col justify-evenly items-center">
-                    <p>There's currently nothing in your Saved Listings.</p>
                     <Link
-                      className="w-32 h-32 bg-slate-100/50 shadow-lg rounded-2xl flex justify-center items-center hover:shadow-mint hover:shadow-2xl hover:scale-110 transition duration-300 ease-in-out"
+                      className="w-32 h-32 bg-gray-300/20 shadow-lg rounded-2xl flex justify-center items-center  hover:shadow-2xl  transition duration-300 ease-in-out"
                       href="/listings"
                     >
                       <FontAwesomeIcon
                         icon={faPlus}
-                        className="w-16 h-16 text-gray-400"
+                        className=" w-8 h-8 text-black"
                         size="lg"
                       />
                     </Link>
+                    <p className="bg-black/75 py-1 px-4 text-white rounded-full text-sm">
+                      List is currently empty.
+                    </p>
                   </div>
                 ) : (
                   homes.map((listing) => (
@@ -311,10 +320,10 @@ const Dashboard = () => {
               animate={{ opacity: 1, left: 0 }}
               exit={{ opacity: 0, left: -100 }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
-              className="w-1/3 bg-black h-full flex flex-col items-center relative"
+              className="xl:w-1/3 w-3/4 bg-black h-full flex flex-col items-center relative"
             >
               {/* Close Button */}
-              <div className="absolute w-fit right-2">
+              <div className="absolute w-fit right-2 p-4">
                 <button
                   onClick={() => setOpenMenu(false)}
                   className="w-8 h-8 flex flex-col relative justify-center items-center rounded-full  space-x-reverse  z-10"
@@ -329,7 +338,7 @@ const Dashboard = () => {
               </div>
               {/* Profile  */}
               <div className="w-5/6 h-1/4 flex items-center">
-                <div className="w-32 h-32 border-4 border-mint inset-0 relative rounded-2xl flex justify-center items-center">
+                <div className="w-32 h-32  inset-0 relative rounded-2xl flex justify-center items-center">
                   <div className="w-24 h-24 bg-eggshell inset-0 rounded-2xl shadow-md flex justify-center items-center">
                     <h2 className="text-5xl text-white font-montserrat">D</h2>
                   </div>

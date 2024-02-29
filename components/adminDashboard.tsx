@@ -9,8 +9,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   faPenToSquare,
   faCheck,
-  faPhone,
-  faEnvelope,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";

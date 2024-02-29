@@ -391,7 +391,7 @@ const NavPages = () => {
                 className="bg-white w-1/2 h-5/6 relative rounded-xl shadow-lg flex flex-col items-center"
               >
                 {/* Close Button */}
-                <div className="absolute w-fit right-2">
+                <div className="absolute w-fit right-2 p-4">
                   <button
                     onClick={() => setOpenLogin(false)}
                     className="w-8 h-8 flex flex-col relative justify-center items-center rounded-full  space-x-reverse  z-10"
