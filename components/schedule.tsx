@@ -56,10 +56,10 @@ const Schedule = () => {
   }, [controls]);
 
   return (
-    <div className="bg-white w-full h-screen flex justify-center items-center">
+    <div className=" bg-gradient-to-b from-mint/50 via-white to-white w-full h-screen flex justify-center items-center">
       <div className="w-full xl:5/6 h-5/6  flex flex-col justify-center ">
         <motion.h2
-          className="md:text-6xl text-3xl  font-agrandir tracking-wide w-[90%] p-4 xl:w-[90%] "
+          className="md:text-5xl text-3xl  font-agrandir tracking-wide w-[90%] p-4 xl:w-[80%] "
           variants={textVariants}
           initial="initial"
           animate="animate"
@@ -85,9 +85,7 @@ const Schedule = () => {
             Schedule
           </motion.button>
           <AnimatePresence>
-            {openSchedule && (
-              <ScheduleModal handleClose={handleClose} />
-            )}
+            {openSchedule && <ScheduleModal handleClose={handleClose} />}
           </AnimatePresence>
         </div>
       </div>

@@ -9,7 +9,7 @@ export default function Client() {
   return (
     <div className="bg-white h-screen w-full z-10">
       <NavPages />
-      <div className="w-full h-[20%]"></div>
+      <div className="w-full h-[10%]"></div>
       <Buyer />
       <Seller />
       <Schedule />
