@@ -14,13 +14,14 @@ interface Lead {
     status: string,
     source: string,
     color: string
-  }
+}
 
 
 const LeadInfo: React.FC<{ onClose: () => void, selectedLead: Lead }> = ({ onClose, selectedLead }) => {
     const [isSuccess, setIsSuccess] = useState(false)
     const [errorMsg, setErrorMsg] = useState("")
     const [isError, setIsError] = useState(false)
+    const [showStatusEdit, setShowStatusEdit] = useState(false)
     const [leadData, setLeadData] = useState({
         name: '',
         number: '',
@@ -28,21 +29,42 @@ const LeadInfo: React.FC<{ onClose: () => void, selectedLead: Lead }> = ({ onClo
         message: '',
 
     })
+    const [selectedStatus, setSelectedStatus] = useState(selectedLead.status); // State for selected dropdown value
+
+    const handleSaveStatus = async () => {
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/leads/${selectedLead.id}`, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(selectedStatus),
+            })
+            if (!response.ok) {
+                setErrorMsg("Error saving lead status, check connection and please try again")
+                setIsError(true)
+            }
+            setSelectedStatus(await response.json())
+            setShowStatusEdit(false)
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     const colorizeStatus = (status: String) => {
         console.log("In colorize func: ", status)
         switch (status) {
-          case 'new':
-            return (<span className="text-green-500">New</span>)
-          case 'contacted':
-            return (<span className="bg-yellow-500">Contacted</span>)
-          case 'closed':
-            return (<span className="text-red-500">Closed</span>)
-          default:
-            return (<span className="text-gray-500">No Status</span>)
-    
+            case 'new':
+                return (<span className="text-green-500">New</span>)
+            case 'contacted':
+                return (<span className="bg-yellow-500">Contacted</span>)
+            case 'converted':
+                return (<span className="text-red-500">Converted</span>)
+            default:
+                return (<span className="text-gray-500">No Status</span>)
+
         }
-      }
+    }
 
 
     return (
@@ -61,13 +83,13 @@ const LeadInfo: React.FC<{ onClose: () => void, selectedLead: Lead }> = ({ onClo
                 <div>
                     <div className="flex justify-around gap-[3rem] mb-[15%]">
                         <div >
-                            <div className="flex flex-col bg-[#F4F4F4] rounded-lg p-[1rem] shadow-md">
+                            <div className="flex flex-col bg-[#F4F4F4] rounded-lg p-[1rem] shadow-md w-[20rem]">
                                 <p className="text-2xl mb-[5%]">Message:</p>
                                 <p>{selectedLead.message}</p>
                             </div>
                         </div>
                         <div >
-                            <div className="flex flex-col bg-[#F4F4F4] rounded-lg py-[1rem] px-[3rem] shadow-md">
+                            <div className="flex flex-col bg-[#F4F4F4] rounded-lg py-[1rem] px-[3rem] shadow-md min-w-[18rem]">
                                 <p className="text-2xl mb-[15%]">Contact:</p>
                                 <div className="mb-[20%]">
                                     <HiOutlinePhone />
@@ -83,7 +105,21 @@ const LeadInfo: React.FC<{ onClose: () => void, selectedLead: Lead }> = ({ onClo
                     <p className="absolute bottom-[2rem] left-[2rem] text-xl">Source: {selectedLead.source} </p>
 
                     <div className="absolute bottom-[2rem] right-[2rem]">
-                        <p className="text-xl">Status: {colorizeStatus(selectedLead.status)}</p>
+                        <p className="text-xl">Status: {showStatusEdit ? '': colorizeStatus(selectedLead.status)}</p>
+                        {!showStatusEdit && <button onClick={() => setShowStatusEdit(true)}>edit</button>}
+                        {showStatusEdit &&
+                            <div className="flex">
+                                <select value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)}>
+                                    <option value="new">New</option>
+                                    <option value="contacted">Contacted</option>
+                                    <option value="converted">Closed</option>
+                                </select>
+                                <div>
+                                    <button onClick={()=>setShowStatusEdit(false)}>cancel</button>
+                                    <button onClick={handleSaveStatus}>save</button>
+                                </div>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>

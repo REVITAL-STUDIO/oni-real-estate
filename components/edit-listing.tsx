@@ -2,7 +2,6 @@
 import { useState, useEffect } from "react";
 import FileUpload from "@/components/FileUpload";
 import { useEdgeStore } from "@/lib/edgestore";
-import toast from "react-hot-toast";
 import Nav from "@/components/navbar";
 import { IoIosClose } from "react-icons/io";
 
@@ -176,7 +175,6 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
         }
         catch (error) {
             setIsError(true)
-            toast.error('There was an error updating the Listing. Please try again.')
             console.error('NETWORK ERROR - Unable to upload listing files to the cloud, listing was not created')
         }
 

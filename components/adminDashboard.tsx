@@ -96,8 +96,8 @@ const AdminDashboard = () => {
         return (<span className="text-green-500">New</span>)
       case 'contacted':
         return (<span className="bg-yellow-500">Contacted</span>)
-      case 'closed':
-        return (<span className="text-red-500">Closed</span>)
+      case 'converted':
+        return (<span className="text-red-500">Converted</span>)
       default:
         return (<span className="text-gray-500">No Status</span>)
 
