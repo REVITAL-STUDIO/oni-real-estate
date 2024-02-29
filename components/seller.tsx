@@ -6,15 +6,14 @@ import seller1 from "public/seller1.jpeg";
 import seller2 from "public/seller2.webp";
 import seller3 from "public/seller3.jpeg";
 import "app/globals.css";
-import ProgressBarSvg from "./progressBarSvg";
 import { motion, useAnimation } from "framer-motion";
 
 const Seller = () => {
   return (
-    <div className="w-full h-full flex bg-white">
+    <div className="w-full h-full flex justify-between bg-white bg-gradient-to-b from-white via-white to-mint/50">
       {/* Info */}
-      <div className="xl:w-2/5 w-1/3 flex flex-col justify-end items-start">
-        <h2 className="p-4 text-2xl md:text-6xl">Why Choose Us?</h2>
+      <div className="xl:w-2/5 w-1/2 flex flex-col justify-end items-start">
+        <h2 className="p-4 text-2xl md:text-5xl">Why Choose Us?</h2>
         <p className="font-montserrat p-4 text-black/60 text-xs md:text-sm lg:text-lg font-medium xl:text-base">
           We understand that selling your home is a significant milestone, and
           we're here to ensure that you not only achieve but surpass your
@@ -32,7 +31,7 @@ const Seller = () => {
         </p>
       </div>
       {/* Image */}
-      <div className="xl:w-3/5 w-2/3 flex justify-center items-start ">
+      <div className="xl:w-3/5 w-1/2 flex justify-center items-start ">
         <div className="w-full h-full bg-[url('/interior.jpg')] bg-cover bg-center rounded-tl-xl rounded-bl-xl flex flex-col items-end">
           <h2 className="xl:text-7xl text-5xl text-mint font-agrandir text-right p-4">
             Seller Process
