@@ -1,14 +1,35 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import Image from "next/image";
-import seller1 from "public/seller1.jpeg";
-import seller2 from "public/seller2.webp";
-import seller3 from "public/seller3.jpeg";
+import React, { useEffect, useState, useRef } from "react";
+import { motion, useAnimation, useScroll } from "framer-motion";
+import { useInView } from "react-intersection-observer";
 import "app/globals.css";
-import { motion, useAnimation } from "framer-motion";
 
 const Seller = () => {
+  //Animation
+  const parentRef = useRef<HTMLDivElement>(null);
+  const control = useAnimation();
+
+  const { ref, inView } = useInView({
+    threshold: 0.5,
+    triggerOnce: true,
+  });
+
+  useEffect(() => {
+    if (!parentRef.current) {
+      return;
+    }
+    if (inView) {
+      control.start("visible");
+    } else {
+      const { bottom } = parentRef.current.getBoundingClientRect();
+      const isBelowScreenBottom = bottom > window.innerHeight;
+      if (isBelowScreenBottom) {
+        control.start("hidden");
+      }
+    }
+  }, [inView, control]);
+
   return (
     <div className="w-full h-full flex justify-between bg-white bg-gradient-to-b from-white via-white to-mint/50">
       {/* Info */}
@@ -36,7 +57,7 @@ const Seller = () => {
           <h2 className="xl:text-7xl text-5xl text-mint font-agrandir text-right p-4">
             Seller Process
           </h2>
-          <p className="text-right w-5/6 text-white text-sm md:text-xl p-4 text-montserrat tracking-wider">
+          <p className="text-right w-5/6 text-white text-sm md:text-lg p-4 text-montserrat tracking-wider">
             Our in-depth knowledge of the local real estate market empowers us
             to provide accurate pricing strategies. We analyze trends and
             leverage our understanding of the area to maximize the value of your
