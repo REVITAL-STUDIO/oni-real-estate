@@ -63,6 +63,11 @@ const Dashboard = () => {
 
   //POST request for retrieving the saved listing
   const receiveListing = async (receive: Listing) => {
+    console.log(
+      "POST URL:",
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites`
+    );
+    console.log("Request Body:", JSON.stringify(receive));
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites`,
@@ -299,7 +304,7 @@ const Dashboard = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
-            className="bg-white/75 w-full h-full fixed top-0 left-0"
+            className="bg-white/75 w-full h-full fixed top-0 left-0 z-50"
           >
             <motion.div
               initial={{ opacity: 0, left: -100 }}

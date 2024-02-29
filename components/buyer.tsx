@@ -168,7 +168,16 @@ const Buyer = () => {
     <div className="w-full  bg-white ">
       {/* Buyer Process */}
       <div className="w-full h-700 flex flex-col justify-center bg-gradient-to-b from-white  via-white to-mint/30">
-        <div className="w-[95%] h-4/5 flex flex-col gap-x-2 justify-center bg-[url('/living-room-interior-design-zoom-calls-with-chair.jpg')] bg-cover bg-center rounded-tr-xl rounded-br-xl shadow-xl">
+        <motion.div
+          variants={{
+            hidden: { opacity: 0, y: -75 },
+            visible: { opacity: 1, y: 0 },
+          }}
+          initial="hidden"
+          animate="visible"
+          transition={{ duration: 1, delay: 0.25 }}
+          className="w-[95%] h-4/5 flex flex-col gap-x-2 justify-center bg-[url('/living-room-interior-design-zoom-calls-with-chair.jpg')] bg-cover bg-center rounded-tr-xl rounded-br-xl shadow-xl"
+        >
           <div className="md:text-7xl text-5xl p-4 font-agrandir w-full text-mint">
             Buyer Process
           </div>
@@ -179,19 +188,22 @@ const Buyer = () => {
             navigating the intricate details of real estate transactions, we are
             here to make your dream home a reality.
           </h2>
-        </div>
+        </motion.div>
       </div>
-      <div className="w-full h-screen bg-gradient-to-b from-mint/30  via-white to-white">
+      <div
+        className="w-full h-screen bg-gradient-to-b from-mint/30  via-white to-white"
+        ref={parentRef}
+      >
         {/* Slides */}
 
-        <div className="w-[100%] xl:w-[95%] h-full  relative">
+        <div className="w-[100%] xl:w-[95%] h-full  relative" ref={ref}>
           <motion.div
             key={currentSlide}
             initial={{ opacity: 0, x: 200 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -100 }}
             transition={{ ease: "easeInOut", duration: 1 }}
-            className="w-full h-full flex flex-col xl:flex-row overflow-hidden"
+            className="w-full h-full flex flex-col xl:flex-row overflow-x-hidden"
           >
             <motion.div className="xl:w-1/2 w-full xl:h-3/4 h-1/3 flex xl:flex-col xl:justify-around justify-start items-center px-4">
               <div className="rounded-full border-2 border-forest md:h-96 md:w-96 h-48 w-48 drop-shadow-lg flex flex-col justify-center items-center pulse-btn">
@@ -202,7 +214,7 @@ const Buyer = () => {
               </div>
             </motion.div>
             <motion.div className="xl:w-1/2 w-full xl:h-5/6 h-full flex flex-col justify-evenly  xl:justify-end ">
-              <h1 className="p-4 xl:mb-4  xl:ml-0 bg-forest text-white ml-4 text-base w-fit border border-black rounded-full  font-montserrat  font-medium tracking-wide">
+              <h1 className="p-4 xl:mb-4 shadow-lg xl:ml-0 bg-forest text-white ml-4 text-base w-fit  rounded-full  font-montserrat  font-medium tracking-wide">
                 {currentSlidePick.title}
               </h1>
 

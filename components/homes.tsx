@@ -85,7 +85,9 @@ const Homes = () => {
       console.log("Sending request with updatedSaveProp:", saveList);
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites`,
+        `${
+          process.env.NEXT_PUBLIC_API_BASE_URL
+        }/api/listing/favorites?email=${encodeURIComponent(saveList.email)}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
