@@ -166,7 +166,7 @@ const Homes = () => {
   if (loading) {
     return (
       <div className="w-[50%] flex justify-center items-center">
-        Loading properties...
+        <div className="h-20 w-20 border-4 border-mint rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
       </div>
     );
   }

@@ -474,7 +474,11 @@ const Nav = () => {
                           isLoading ? "opacity-75" : "opacity-100"
                         }`}
                       >
-                        {isLoading ? "Loading..." : "Sign Up"}
+                        {isLoading ? (
+                          <div className="h-20 w-20 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                        ) : (
+                          "Sign Up"
+                        )}
                       </button>
                       <p className="text-xs p-2">
                         By Clicking Sign Up, you agree to the Private Policy and
@@ -545,11 +549,15 @@ const Nav = () => {
                       <button
                         disabled={isLoading}
                         onClick={signInUser}
-                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${
+                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint flex justify-center items-center text-base text-black rounded-full tracking-wide hover:opacity-75 ${
                           isLoading ? "opacity-75" : "opacity-100"
                         }`}
                       >
-                        {isLoading ? "Loading..." : "Login"}
+                        {isLoading ? (
+                          <div className="h-8 w-8 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                        ) : (
+                          "Login"
+                        )}
                       </button>
                       <button
                         onClick={toggleSignUp}
