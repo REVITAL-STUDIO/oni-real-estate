@@ -82,16 +82,17 @@ const AdminDashboard = () => {
 
   const handleCloseLeadInfo = () => {
     setIsLeadInfoOpen(false);
+    fetchLeads()
   };
   const colorizeStatus = (status: String) => {
     console.log("In colorize func: ", status);
     switch (status) {
-      case "new":
-        return <span className="text-green-500">New</span>;
-      case "contacted":
-        return <span className="bg-yellow-500">Contacted</span>;
-      case "converted":
-        return <span className="text-red-500">Converted</span>;
+      case 'new':
+        return (<span className="text-green-500">New</span>)
+      case 'contacted':
+        return (<span className="text-yellow-500">Contacted</span>)
+      case 'converted':
+        return (<span className="text-red-500">Converted</span>)
       default:
         return <span className="text-gray-500">No Status</span>;
     }
@@ -107,7 +108,9 @@ const AdminDashboard = () => {
       );
       const data: Lead[] = await response.json();
       //setting listings data to Listings state variable
-      console.log("LEADS: ", data);
+      console.log("LEADS: ", data)
+      data.sort((a, b) => a.name.localeCompare(b.name));
+      console.log("LEADS: ", data)
       setLeads(data);
       setFetchedLeadsData(true);
     } catch (error) {
@@ -181,8 +184,8 @@ const AdminDashboard = () => {
 
   // use effect so that listing data is fetched as component is loaded
   useEffect(() => {
-    fetchListings();
     fetchLeads();
+    fetchListings();
   }, []);
 
   //Opening create lisitng form
@@ -300,19 +303,9 @@ const AdminDashboard = () => {
 
                         <div className="w-1/2 h-full flex justify-between items-center">
                           <div className="relative ">
-                            <p className="text-semibold">
-                              Status: {colorizeStatus(lead.status)}
-                            </p>
+                            <p className="text-semibold">Status: {colorizeStatus(lead.status)}</p>
                           </div>
-                          <button
-                            onClick={() => {
-                              setSelectedLead(lead);
-                              handleOpenLeadInfo();
-                            }}
-                            className="text-lg text-blue-400 hover:text-gray-500 active:text-blue-400"
-                          >
-                            view
-                          </button>
+                          <button onClick={() => { setSelectedLead(lead); handleOpenLeadInfo() }} className="text-lg text-blue-500 hover:text-gray-500 active:text-blue-500">view</button>
                           <button className="w-fit px-4 tracking-wider font-montserrat h-8 rounded-full  text-red-500 text-xs">
                             <svg
                               width="24"
@@ -329,9 +322,11 @@ const AdminDashboard = () => {
                           </button>
                         </div>
                       </div>
+                    )
+
                     ))
-                  )}
-                  {isLeadInfoOpen && selectedLead && (
+                  }
+                  {isLeadInfoOpen && selectedLead &&
                     <div>
                       <motion.section
                         initial={{ opacity: 0, y: -100 }}
@@ -346,7 +341,7 @@ const AdminDashboard = () => {
                         />
                       </motion.section>
                     </div>
-                  )}
+                  }
                 </div>
               </div>
             </section>
@@ -602,5 +597,6 @@ const AdminDashboard = () => {
     </div>
   );
 };
+
 
 export default AdminDashboard;
