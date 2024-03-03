@@ -184,7 +184,7 @@ const NavPages = () => {
 
   return (
     <div
-      className={`h-100 w-full flex fixed  flex-col items-center justify-center transition-all duration-300 ease-in-out ${
+      className={`h-100 w-full flex fixed z-10 flex-col items-center justify-center transition-all duration-300 ease-in-out ${
         color ? "" : ""
       } ${disappear ? "opacity-0 pointer-events-none " : " "}`}
     >

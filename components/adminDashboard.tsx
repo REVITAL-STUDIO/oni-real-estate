@@ -10,6 +10,7 @@ import {
   faPenToSquare,
   faCheck,
   faPlus,
+  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import CreateListing from "./create-listing";
@@ -82,17 +83,17 @@ const AdminDashboard = () => {
 
   const handleCloseLeadInfo = () => {
     setIsLeadInfoOpen(false);
-    fetchLeads()
+    fetchLeads();
   };
   const colorizeStatus = (status: String) => {
     console.log("In colorize func: ", status);
     switch (status) {
-      case 'new':
-        return (<span className="text-green-500">New</span>)
-      case 'contacted':
-        return (<span className="text-yellow-500">Contacted</span>)
-      case 'converted':
-        return (<span className="text-red-500">Converted</span>)
+      case "new":
+        return <span className="text-green-500">New</span>;
+      case "contacted":
+        return <span className="text-yellow-500">Contacted</span>;
+      case "converted":
+        return <span className="text-red-500">Converted</span>;
       default:
         return <span className="text-gray-500">No Status</span>;
     }
@@ -108,9 +109,9 @@ const AdminDashboard = () => {
       );
       const data: Lead[] = await response.json();
       //setting listings data to Listings state variable
-      console.log("LEADS: ", data)
+      console.log("LEADS: ", data);
       data.sort((a, b) => a.name.localeCompare(b.name));
-      console.log("LEADS: ", data)
+      console.log("LEADS: ", data);
       setLeads(data);
       setFetchedLeadsData(true);
     } catch (error) {
@@ -222,7 +223,7 @@ const AdminDashboard = () => {
       <div className="w-full h-screen flex justify-center items-center">
         <div className="w-[90%] h-4/5   rounded-2xl grid gap-4 grid-cols-2 grid-rows-2">
           {/* Admin Profile */}
-          <div className=" col-span-1 row-span-1 bg-eggshell relative rounded-2xl flex justify-center items-center shadow-lg">
+          <div className=" xl:col-span-1 col-span-2 row-span-2 xl:row-span-1 bg-gray-400/10 transition ease-in-out duration-100 relative rounded-2xl flex justify-center items-center shadow-lg">
             <div className="w-2/3 h-[90%] rounded-2xl  flex flex-col items-center">
               <div className="w-fit left-5 h-[90%]  absolute flex flex-col justify-between">
                 <h2 className="  font-medium font-agrandir tracking-wider">
@@ -239,10 +240,10 @@ const AdminDashboard = () => {
               {/* Profile Picture */}
               <div className="w-full h-2/3 flex justify-center  items-center">
                 <div className="w-44 h-44 rounded-2xl relative flex justify-center items-center">
-                  <div className="w-36 h-36 bg-white inset-0 rounded-2xl shadow-md flex justify-center items-center">
-                    <h2 className="text-5xl  font-montserrat">M</h2>
+                  <div className="md:w-36 md:h-36 w-24 h-24  bg-white inset-0 rounded-2xl shadow-md flex justify-center items-center">
+                    <h2 className="xL:text-5xl text-3xl font-montserrat">M</h2>
                   </div>
-                  <div className="absolute w-7 h-7 bg-blue-500 shadow-sm left-[0%] bottom-0  rounded-full flex justify-center items-center">
+                  <div className="absolute w-5 h-5 xl:w-7 xl:h-7 bg-blue-500 shadow-sm left-[0%] bottom-0  rounded-full flex justify-center items-center">
                     <FontAwesomeIcon
                       icon={faCheck}
                       size="sm"
@@ -263,13 +264,13 @@ const AdminDashboard = () => {
             </div>
           </div>
           {/* Leads */}
-          <div className=" col-span-1 row-span-1 relative bg-eggshell rounded-2xl shadow-lg">
-            <div className="w-full absolute flex items-center justify-between">
+          <div className=" xl:col-span-1 col-span-2 xl:row-span-1 row-span-2 relative bg-gray-400/10 transition ease-in-out duration-100 rounded-2xl shadow-lg">
+            <div className="w-full absolute flex  justify-between">
               <h2 className="tracking-wider left-0  font-medium font-agrandir p-4">
                 Leads
               </h2>
-              <div className=" h-full flex p-4 gap-x-4">
-                <div className="p-4 bg-black rounded-full shadow-lg w-32 py-[.5rem] text-white text-xs flex flex-col items-center justify-center">
+              <div className=" h-full flex md:p-4 p-2 gap-x-4">
+                <div className="p-4 bg-black rounded-full shadow-lg  py-0 w-32 xl:py-[.5rem]  text-white text-xs flex flex-col items-center justify-center">
                   <span className="text-xs">Leads</span>
                   <span className="text-lg">{leads.length}</span>
                 </div>
@@ -281,7 +282,7 @@ const AdminDashboard = () => {
                   {!fetchedLeadsData ? (
                     <div className="flex justify-center items-center h-full">
                       {" "}
-                      <div className="h-10 w-10 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                      <div className=" h-6 w-6 md:h-10 md:w-10  border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
                     </div>
                   ) : (
                     leads.map((lead) => (
@@ -303,9 +304,19 @@ const AdminDashboard = () => {
 
                         <div className="w-1/2 h-full flex justify-between items-center">
                           <div className="relative ">
-                            <p className="text-semibold">Status: {colorizeStatus(lead.status)}</p>
+                            <p className="text-semibold">
+                              Status: {colorizeStatus(lead.status)}
+                            </p>
                           </div>
-                          <button onClick={() => { setSelectedLead(lead); handleOpenLeadInfo() }} className="text-lg text-blue-500 hover:text-gray-500 active:text-blue-500">view</button>
+                          <button
+                            onClick={() => {
+                              setSelectedLead(lead);
+                              handleOpenLeadInfo();
+                            }}
+                            className="text-lg text-blue-500 hover:text-gray-500 active:text-blue-500"
+                          >
+                            view
+                          </button>
                           <button className="w-fit px-4 tracking-wider font-montserrat h-8 rounded-full  text-red-500 text-xs">
                             <svg
                               width="24"
@@ -322,11 +333,9 @@ const AdminDashboard = () => {
                           </button>
                         </div>
                       </div>
-                    )
-
                     ))
-                  }
-                  {isLeadInfoOpen && selectedLead &&
+                  )}
+                  {isLeadInfoOpen && selectedLead && (
                     <div>
                       <motion.section
                         initial={{ opacity: 0, y: -100 }}
@@ -341,13 +350,13 @@ const AdminDashboard = () => {
                         />
                       </motion.section>
                     </div>
-                  }
+                  )}
                 </div>
               </div>
             </section>
           </div>
           {/* Listings */}
-          <div className="bg-eggshell relative col-span-2 rounded-br-2xl rounded-2xl  shadow-lg">
+          <div className="bg-gray-400/10  relative col-span-2 rounded-br-2xl rounded-2xl transition ease-in-out duration-100 shadow-lg">
             <div className="flex justify-between items-center w-full h-1/6 ">
               <h2 className="p-4  left-0 font-agrandir font-medium tracking-wider">
                 Listings
@@ -363,13 +372,13 @@ const AdminDashboard = () => {
             <div className="w-full h-5/6  overflow-y-scroll block  p-4 ">
               {!fetchedListingsData ? (
                 <div className="flex justify-center items-center h-full">
-                  <div className="h-10 w-10 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                  <div className="h-6 w-6 md:h-10 md:w-10  border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
                 </div>
               ) : (
                 listings.map((listing) => (
                   <div
                     key={listing.id}
-                    className="w-3/4 h-28 bg-white rounded-2xl relative  shadow-lg float-right flex justify-between mb-8"
+                    className="xl:w-3/4 w-full h-28 bg-white rounded-2xl relative  shadow-lg float-right flex justify-between mb-8"
                   >
                     <Image
                       src={listing.pictures[0]}
@@ -380,7 +389,7 @@ const AdminDashboard = () => {
                       className="w-[100%] object-cover brightness-50 object-center contrast-125 rounded-2xl"
                     />
                     <div className="absolute flex justify-between items-center w-full h-full">
-                      <span className="px-4 font-montserrat text-white text-sm w-1/4">
+                      <span className="px-4  font-montserrat text-white text-xs xl:text-sm xl:w-1/4 w-1/2">
                         {listing.address}
                       </span>
                       <div className="w-1/4 h-full flex justify-end relative items-center right-2 ">
@@ -597,6 +606,5 @@ const AdminDashboard = () => {
     </div>
   );
 };
-
 
 export default AdminDashboard;

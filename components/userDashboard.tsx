@@ -146,11 +146,13 @@ const Dashboard = () => {
               <div className="w-full h-full flex justify-center items-center">
                 <div className="w-4/5 h-5/6 xl:w-3/5 xl:h-3/6 rounded-2xl bg-white shadow-md  flex flex-col  items-center">
                   <div className="w-5/6 h-1/6 flex items-center justify-between">
-                    <FontAwesomeIcon
-                      className="text-mint"
-                      icon={faUser}
-                      size="lg"
-                    />
+                    <div className="w-6 h-6 flex justify-center items-center">
+                      <FontAwesomeIcon
+                        className="text-mint w-6 h-6"
+                        icon={faUser}
+                        size="lg"
+                      />
+                    </div>
                     <button
                       onClick={handleToggleMenu}
                       className="w-8 h-8 hover:bg-gray-100/20 rounded-full bg-white shadow-md flex justify-center items-center transition duration-200 ease-in-out"
@@ -165,12 +167,12 @@ const Dashboard = () => {
                   {/* Profile Picture */}
                   <div className="w-full h-2/3 flex justify-center items-center">
                     <div className="w-44 h-44 relative rounded-2xl flex justify-center items-center">
-                      <div className="w-36 h-36 bg-gray-300/20 inset-0 rounded-2xl shadow-md flex justify-center items-center">
+                      <div className="w-36 h-36 bg-gray-300/20  rounded-2xl  shadow-lg flex justify-center items-center">
                         <h2 className="text-3xl text-black font-montserrat">
                           D
                         </h2>
                       </div>
-                      <div className="absolute w-7 h-7 bg-blue-500 shadow-sm left-0 bottom-0 rounded-full flex justify-center items-center">
+                      <div className="absolute w-7 h-7  bg-blue-500 shadow-sm left-0 bottom-0 rounded-full flex justify-center items-center">
                         <FontAwesomeIcon
                           icon={faCheck}
                           size="sm"
@@ -181,7 +183,7 @@ const Dashboard = () => {
                   </div>
                   {/* Username */}
                   <div className="w-1/2 h-1/6    flex justify-center items-center">
-                    <h2 className="font-agrandir w-full py-1 px-4 flex justify-center items-center text-sm  bg-black/75 rounded-full text-white tracking-wider">
+                    <h2 className="font-agrandir w-full py-1 px-4 flex justify-center items-center text-sm   rounded-full text-black tracking-wider">
                       {profile.name}
                     </h2>
                   </div>
@@ -194,17 +196,19 @@ const Dashboard = () => {
         <AnimatePresence>
           <motion.div className="xl:w-2/3 w-full h-full flex justify-center items-center ">
             <div className="xl:w-[95%] xl:h-[90%] w-4/5 h-5/6 rounded-2xl bg-white shadow-md ">
-              <section className="w-1/4 h-1/6 xl:w-[10%] flex justify-center">
-                <FontAwesomeIcon
-                  className="text-mint p-4 w-6 h-6"
-                  icon={faHouse}
-                />
+              <section className="w-1/4 h-[15%] xl:h-[10%] xl:w-[10%] flex justify-center items-center">
+                <div className="w-6 h-6 flex justify-center items-center p-4 ">
+                  <FontAwesomeIcon
+                    className="text-mint  w-6 h-6 py-4"
+                    icon={faHouse}
+                  />
+                </div>
               </section>
-              <ul className="w-full h-5/6 flex flex-col items-center overflow-y-scroll">
+              <ul className="w-full h-[90%] flex flex-col items-center overflow-y-scroll">
                 {homes.length === 0 ? (
                   <div className="w-full h-5/6 flex flex-col justify-evenly items-center">
                     <Link
-                      className="w-32 h-32 bg-gray-300/20 shadow-lg rounded-2xl flex justify-center items-center  hover:shadow-2xl  transition duration-300 ease-in-out"
+                      className="w-36 h-36 bg-gray-300/20 shadow-lg rounded-2xl flex justify-center items-center  hover:shadow-2xl  transition duration-300 ease-in-out"
                       href="/listings"
                     >
                       <FontAwesomeIcon
@@ -213,7 +217,7 @@ const Dashboard = () => {
                         size="lg"
                       />
                     </Link>
-                    <p className="bg-black/75 py-1 px-4 text-white rounded-full text-sm">
+                    <p className=" w-2/3 xl:w-fit text-center py-1 px-4 text-black font-agrandir rounded-full text-sm ">
                       List is currently empty.
                     </p>
                   </div>
@@ -320,13 +324,13 @@ const Dashboard = () => {
               animate={{ opacity: 1, left: 0 }}
               exit={{ opacity: 0, left: -100 }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
-              className="xl:w-1/3 w-3/4 bg-black h-full flex flex-col items-center relative"
+              className="xl:w-1/3 w-3/4 bg-black h-full flex flex-col items-center relative z-50"
             >
               {/* Close Button */}
               <div className="absolute w-fit right-2 p-4">
                 <button
                   onClick={() => setOpenMenu(false)}
-                  className="w-8 h-8 flex flex-col relative justify-center items-center rounded-full  space-x-reverse  z-10"
+                  className="w-8 h-8 flex flex-col relative justify-center items-center rounded-full  space-x-reverse  "
                 >
                   <span
                     className={`block w-3/4 my-0.5 border absolute border-white rotate-45 transition-transform `}

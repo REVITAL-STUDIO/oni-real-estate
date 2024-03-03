@@ -5,18 +5,21 @@ import Delete from "../public/delete.svg";
 import Image from "next/image";
 
 interface fileUploadProps {
-  onFilesSelected: (files: FileExtended[]) => void,
+  onFilesSelected: (files: FileExtended[]) => void;
   initialFiles?: File[];
-
 }
 
 interface FileExtended extends File {
-  url?: string
-
+  url?: string;
 }
 
-const FileUpload: React.FC<fileUploadProps> = ({ onFilesSelected, initialFiles }) => {
-  const [selectedFiles, setSelectedFiles] = useState<FileExtended[]>(initialFiles || []);
+const FileUpload: React.FC<fileUploadProps> = ({
+  onFilesSelected,
+  initialFiles,
+}) => {
+  const [selectedFiles, setSelectedFiles] = useState<FileExtended[]>(
+    initialFiles || []
+  );
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setSelectedFiles((prevFiles) => [...prevFiles, ...acceptedFiles]);
   }, []);
@@ -48,15 +51,15 @@ const FileUpload: React.FC<fileUploadProps> = ({ onFilesSelected, initialFiles }
         className="border-2 border-dashed rounded px-4 py-[4rem] cursor-pointer flex flex-col items-center justify-center gap-2"
       >
         <input {...getInputProps()} />
-        <Image src={PhotoDrop} alt="photo-drop" className="w-20 h-20" />
-        <p>Drag and drop your images here</p>
+        <Image src={PhotoDrop} alt="photo-drop" className="w-20 h-20 " />
+        <p className="text-center text-sm">Drag and drop your images here</p>
         <p>or</p>
         <button className="bg-[#B3B3B3] p-4 rounded-lg text-xs hover:opacity-50 active:opacity-100">
           Browse Files
         </button>
       </div>
       <div>
-        <div className="grid grid-cols-3 gap-2 py-4 max-h-[12rem] overflow-y-auto px-2">
+        <div className="grid grid-cols-3 gap-2 py-4 max-h-[12rem]  px-2">
           {" "}
           {/* Grid container with 3 columns and gap */}
           {selectedFiles.map((file) => (
