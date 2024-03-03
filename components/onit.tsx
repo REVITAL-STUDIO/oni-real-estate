@@ -32,7 +32,10 @@ const Onit = () => {
 
   return (
     <div className="w-full h-screen" ref={parentRef}>
-      <div className="h-800 w-full flex justify-center items-center" ref={ref}>
+      <div
+        className="h-800 xl:h-800 md:h-full w-full flex justify-center items-center"
+        ref={ref}
+      >
         <motion.div
           variants={{
             hidden: { opacity: 0, y: 75 },
@@ -41,7 +44,7 @@ const Onit = () => {
           initial="hidden"
           animate={control}
           transition={{ duration: 0.6, delay: 0.25 }}
-          className=" w-[90%] h-3/4 bg-[url('/neighborhood2.jpg')] relative bg-cover bg-bottom rounded-2xl shadow-xl flex flex-col justify-center items-center"
+          className=" w-[95%] h-3/4 bg-[url('/neighborhood2.jpg')] relative bg-cover bg-bottom rounded-2xl shadow-xl flex flex-col justify-center items-center"
         >
           <div className="w-full h-full absolute bg-black/75 opacity-0 rounded-2xl transition ease-out duration-200 hover:opacity-100 flex justify-center items-center">
             <button className=" xl:w-1/4 w-5/6 flex h-16 hover:bg-black/50 text-white border border-white font-light tracking-wider text-base justify-center items-center transition-all duration-300 ease-in-out font-montserrat bottom-[0%] bg-white xl:left-4  bg-opacity-20 backdrop-blur-5  rounded-2xl shadow-sm p-4  group">
@@ -63,6 +66,7 @@ const Onit = () => {
             viewBox="0 0 380 312"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
+            className="xl:w-full w-5/6"
           >
             <g id="Group 34" filter="url(#filter0_d_1679_89)">
               <circle

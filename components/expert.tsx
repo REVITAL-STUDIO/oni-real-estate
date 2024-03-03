@@ -77,9 +77,7 @@ const Expert = () => {
         {/* Local Expertise */}
         <div className="w-full h-1/4 xl:h-5/6  xl:w-1/2 flex items-center flex-col justify-center xl:justify-evenly  xl:items-end  relative">
           {/* Mobille Responsive */}
-          <h2 className="md:w-full xl:hidden text-right font-agrandir p-4 text-2xl md:text-5xl uppercase tracking-wide text-black ">
-            LOCAL EXPERTISE HOUSTON CONNECTED
-          </h2>
+
           <motion.p
             variants={{
               hidden: { opacity: 0, y: 0 },
@@ -88,7 +86,7 @@ const Expert = () => {
             initial="hidden"
             animate={control}
             transition={{ duration: 0.6, delay: 1 }}
-            className="text-base md:text-lg xl:w-full  p-4 text-black/75 mt-2 font-montserrat leading-6 font-regular tracking-wide text-right relative xl:top-6"
+            className="text-base md:text-lg xl:w-full hidden xl:block p-4 text-black/75 mt-2 font-montserrat leading-6 font-regular tracking-wide text-right relative xl:top-6"
           >
             Empowering Your Real Estate Journey with Unmatched Local Insight and
             Houston Connectivity. Navigate the Market Confidently with Our
@@ -153,7 +151,7 @@ const Expert = () => {
                   hidden: { scaleX: 0 },
                   visible: { scaleX: 1 },
                 }}
-                transition={{ duration: 0.5, delay: 3 }}
+                transition={{ duration: 1, delay: 3 }}
                 className="w-full border border-black/50"
                 style={{ transformOrigin: "right" }}
               ></motion.div>
@@ -180,8 +178,25 @@ const Expert = () => {
         </div>
 
         {/* flex column */}
-        <div className="w-full h-2/4 md:h-2/3 xl:hidden relative flex flex-col items-center justify-center">
-          <div className="w-full md:h-5/6 h-3/4 rounded-lg p-4  mt-4 ">
+        <motion.div
+          variants={{
+            hidden: { opacity: 0, y: -75 },
+            visible: { opacity: 1, y: 0 },
+          }}
+          initial="hidden"
+          animate={control}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="w-full h-full md:h-2/3 xl:hidden relative flex flex-col items-center justify-center"
+        >
+          <motion.h2 className="md:w-full xl:hidden text-right font-agrandir p-4 text-2xl md:text-5xl uppercase tracking-wide text-black ">
+            LOCAL EXPERTISE HOUSTON CONNECTED
+          </motion.h2>
+          <motion.p className="text-base md:text-lg xl:w-full xl:hidden p-4 text-black/75 mt-2 font-montserrat leading-6 font-regular tracking-wide text-right relative xl:top-6">
+            Empowering Your Real Estate Journey with Unmatched Local Insight and
+            Houston Connectivity. Navigate the Market Confidently with Our
+            Expertise.
+          </motion.p>
+          <div className="w-full xl:h-5/6 lg:h-3/5 md:h-1/2 h-3/5 rounded-lg p-4   ">
             <Image
               src={Local}
               alt="local support"
@@ -194,7 +209,7 @@ const Expert = () => {
               <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
             </span>
           </button>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
