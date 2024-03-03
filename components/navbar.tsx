@@ -9,7 +9,11 @@ import Logo from "public/logo-real.png";
 import mobileLogo from "public/oni-moon.png";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleRight,
+  faGears,
+  faArrowRightFromBracket,
+} from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import { IoIosClose } from "react-icons/io";
 
@@ -180,6 +184,13 @@ const Nav = () => {
     }
   };
 
+  //onHover for Property Hub
+  const [openLogOut, setLogOut] = useState(false);
+
+  const togglelogOutMenu = () => {
+    setLogOut(!openLogOut);
+  };
+
   return (
     <div
       className={`h-80 w-full flex fixed bg-gradient-to-b from-black/50 via-black/30 to-transparent z-50 flex-col items-center justify-center transition-all duration-300 ease-in-out ${
@@ -246,27 +257,41 @@ const Nav = () => {
               </span>
             </Link>
           )}
-          {session && session?.user.role != "admin" && (
-            <Link
-              className={`
-                    relative
-                    font-regular
-                  `}
-              href="/user"
+          {session && session?.user.role !== "admin" && (
+            <div
+              className="relative w-fit h-auto duration-300  transition ease- z-10  rounded-md"
+              onMouseEnter={() => setLogOut(true)}
+              onMouseLeave={() => setLogOut(false)}
             >
-              <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-mint before:via-mint/30 before:to-mint hover:before:w-full hover:before:opacity-100">
-                Property Hub
-              </span>
-            </Link>
-          )}
-          {session && (
-            <li className="relative p-4">
-              <button onClick={handleLogout}>
-                <span className="inline-block uppercase transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-10 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-white before:via-white/30 before:to-white hover:before:w-full hover:before:opacity-100">
-                  Logout
-                </span>
-              </button>
-            </li>
+              <Link
+                className={`
+           
+            font-regular
+          `}
+                href="/user"
+              >
+                <span className=" text-white">Property Hub</span>
+              </Link>
+              {openLogOut && (
+                <div className="absolute top-4/6 right-0 w-full h-auto bg-white shadow-lg rounded-2xl ">
+                  <button className="text-left w-full p-4 h-fit flex items-center justify-evenly text-black/50 ">
+                    <FontAwesomeIcon icon={faGears} size="lg" />
+                    Settings
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    className="text-left w-full p-4 h-fit flex items-center justify-evenly text-black/50 "
+                  >
+                    <FontAwesomeIcon
+                      className="transform scale-x(-1)"
+                      icon={faArrowRightFromBracket}
+                      size="lg"
+                    />{" "}
+                    Log out
+                  </button>
+                </div>
+              )}
+            </div>
           )}
         </ul>
 

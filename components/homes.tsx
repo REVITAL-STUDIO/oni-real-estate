@@ -91,8 +91,8 @@ const Homes = () => {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            email: session?.user.email,
-            listingId: listings[0].id, // Assuming you want to access the first listing's ID
+            email: saveList.email,
+            listingId: saveList.listingId, // Assuming you want to access the first listing's ID
           }),
         }
       );
@@ -132,8 +132,7 @@ const Homes = () => {
 
       if (isSaved) {
         console.log("Property already saved");
-        // No need to return JSX here, handle the UI logic in the component
-        return; // Early return if property is already saved
+        return;
       }
 
       // If the listing is not saved, add it

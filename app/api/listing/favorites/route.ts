@@ -11,15 +11,17 @@ interface putRequestBody {
 export async function PUT(request: Request) {
     try {
         const body: putRequestBody = await request.json()
+        console.log("Body:", body)
         const user = await prisma.user.findUnique({
             where: {
                 email: body.email,
             },
         });
+        console.log("User:", user)
 
         user?.favoriteListingsIds.push(body.listingId);
         return NextResponse.json(null, { status: 204 });
-
+        
     } catch (error) {
         // Handle errors
         console.error("Error adding listing to user's favorites:", error);
