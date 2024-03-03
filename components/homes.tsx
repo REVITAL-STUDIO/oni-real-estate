@@ -6,6 +6,7 @@ import { faPlus, faClose, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { AnimatePresence, motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 import PropertyInfo from "./PropertyInfo";
+import Email from "next-auth/providers/email";
 
 // Home Info
 
@@ -78,28 +79,33 @@ const Homes = () => {
 
   //will contain the information of the listings being sent to client
   const [saveProp, setSaveProp] = useState<SavedListing[]>([]);
-  console.log(saveProp);
+  //Data needed for save listing
 
   const sendFavListing = async (saveList: SavedListing) => {
     try {
       console.log("Sending request with updatedSaveProp:", saveList);
 
       const response = await fetch(
-        `${
-          process.env.NEXT_PUBLIC_API_BASE_URL
-        }/api/listing/favorites?email=${encodeURIComponent(saveList.email)}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(saveList),
+          body: JSON.stringify({
+            email: session?.user.email,
+            listingId: listings[0].id, // Assuming you want to access the first listing's ID
+          }),
         }
       );
 
       if (response.ok) {
         const data: SavedListing[] = await response.json();
-        // Update state with the received data
-        setSaveProp(data);
-        console.log("Property:", data);
+        // Verify the structure of the response and update the state accordingly
+        if (Array.isArray(data)) {
+          setSaveProp(data);
+          console.log("Property:", data);
+        } else {
+          console.error("Invalid response format");
+        }
       } else {
         console.error("Failed to update favorites");
         // Handle non-OK response
@@ -115,7 +121,7 @@ const Homes = () => {
       // Handle case when user is not logged in
       console.log("User not logged in");
       // You might want to show a login modal or redirect the user to the login page
-      return;
+      return; // Early return if user is not logged in
     }
     try {
       // Check if the listing is already saved
@@ -126,18 +132,15 @@ const Homes = () => {
 
       if (isSaved) {
         console.log("Property already saved");
-        return (
-          <div className="w-full h-16 bg-red-500">
-            <h2>Property already saved!</h2>
-          </div>
-        );
+        // No need to return JSX here, handle the UI logic in the component
+        return; // Early return if property is already saved
       }
 
       // If the listing is not saved, add it
       const updatedSaveProp = [...saveProp, saveList];
 
       // Call sendFavListing to update favorites
-      await sendFavListing(saveList);
+      await sendFavListing(saveList); // Pass saveList to sendFavListing
 
       // Update the saveProp state with the updated list of saved listings
       setSaveProp(updatedSaveProp);
