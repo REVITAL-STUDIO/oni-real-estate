@@ -176,7 +176,7 @@ const Buyer = () => {
           initial="hidden"
           animate="visible"
           transition={{ duration: 1, delay: 0.25 }}
-          className="w-[95%] h-4/5 flex flex-col gap-x-2 justify-center bg-[url('/living-room-interior-design-zoom-calls-with-chair.jpg')] bg-cover bg-center rounded-tr-xl rounded-br-xl shadow-xl"
+          className="w-[95%] h-5/6 flex flex-col gap-x-2 justify-center bg-[url('/living-room-interior-design-zoom-calls-with-chair.jpg')] bg-cover bg-center rounded-tr-xl rounded-br-xl shadow-xl"
         >
           <div className="md:text-7xl text-5xl p-4 font-agrandir w-full text-mint">
             Buyer Process
@@ -205,16 +205,16 @@ const Buyer = () => {
             transition={{ ease: "easeInOut", duration: 1 }}
             className="w-full h-full flex flex-col xl:flex-row overflow-x-hidden"
           >
-            <motion.div className="xl:w-1/2 w-full xl:h-3/4 h-1/3 flex xl:flex-col xl:justify-around justify-start items-center px-4">
-              <div className="rounded-full border-2 border-forest md:h-96 md:w-96 h-48 w-48 drop-shadow-lg flex flex-col justify-center items-center pulse-btn">
-                <h2 className="font-agrandir text-base md:text-4xl   tracking-wider font-regular">
+            <motion.div className="xl:w-1/2 w-full xl:h-3/4 h-1/3 flex xl:flex-col xl:justify-around justify-start items-center px-4 my-8">
+              <div className="rounded-full border-2 border-forest  md:h-96 md:w-96 h-64 w-64 drop-shadow-lg flex flex-col justify-center items-center pulse-btn">
+                <h2 className="font-agrandir text-base md:text-xl lg:text-4xl  tracking-wider font-regular">
                   {currentSlidePick.name}
                 </h2>
                 {currentSlidePick.icon}
               </div>
             </motion.div>
             <motion.div className="xl:w-1/2 w-full xl:h-5/6 h-full flex flex-col justify-evenly  xl:justify-end ">
-              <h1 className="p-4 xl:mb-4 shadow-lg xl:ml-0 bg-forest text-white ml-4 text-base w-fit  rounded-full  font-montserrat  font-medium tracking-wide">
+              <h1 className="p-4 xl:mb-4 shadow-lg xl:ml-0 bg-forest text-white ml-4 text-base md:text-xl w-fit  rounded-full  font-montserrat  font-medium tracking-wide">
                 {currentSlidePick.title}
               </h1>
 
@@ -239,7 +239,7 @@ const Buyer = () => {
             <FontAwesomeIcon
               icon={faChevronRight}
               size="lg"
-              className="md:w-8 md:h-8 w-6 h-6 "
+              className="xl:w-8 xl:h-8 w-6 h-6 "
             />
           </button>
         </div>
