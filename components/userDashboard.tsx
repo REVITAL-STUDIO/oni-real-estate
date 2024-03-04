@@ -19,7 +19,13 @@ interface profile {
   name: string;
 }
 
+interface postRequestBody {
+  email: string;
+  listingId: number;
+}
+
 interface Listing {
+  index: number;
   id: number;
   address: string;
   description: string;
@@ -61,26 +67,25 @@ const Dashboard = () => {
   };
 
   //will contain array of listings data retrieved from db
-  const [homes, setHomes] = useState<Listing[]>([]);
+  const [homes, setHomes] = useState<postRequestBody[]>([]);
+  //Retrieving listing info
 
   //POST request for retrieving the saved listing
-  const receiveListing = async (receive: Listing) => {
-    console.log(
-      "POST URL:",
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites`
-    );
-    console.log("Request Body:", JSON.stringify(receive));
+  const receiveListing = async (receive: postRequestBody) => {
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(receive),
+          body: JSON.stringify({
+            email: receive.email,
+            listingId: receive.listingId,
+          }),
         }
       );
       if (res.ok) {
-        const data: Listing[] = await res.json();
+        const data: postRequestBody[] = await res.json();
         setHomes(data);
         console.log("Retrieved Favorite", data);
       } else {
@@ -94,21 +99,23 @@ const Dashboard = () => {
   //Used for looking at the details of the home will be used for view the details of property
   const [viewHome, setViewHome] = useState(false);
 
-  const toggleViewHome = async (toggle: Listing) => {
+  const toggleViewHome = async (receive: postRequestBody) => {
     try {
       setViewHome(!viewHome);
-      await receiveListing(toggle);
+      await receiveListing(receive);
     } catch (error) {
       console.error("Error toggling view home", error);
     }
   };
 
   //deleting favorite listing from user dashboard
-  const removeProperty = async (remove: Listing) => {
+  const removeProperty = async (receive: postRequestBody) => {
     try {
-      const updatedHomes = homes.filter((home) => home.id !== remove.id);
+      const updatedHomes = homes.filter(
+        (home) => home.listingId !== receive.listingId
+      );
       setHomes(updatedHomes);
-      await receiveListing(remove);
+      await receiveListing(receive);
       console.log("Updated Homes:", updatedHomes);
     } catch (error) {
       console.error("Error Removing Property, please try again later", error);
@@ -116,18 +123,11 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    console.log("Current homes:", homes); // Log the current state
-    const receive: Listing = {
-      id: 0,
-      address: "",
-      description: "",
-      pictures: [],
-      beds: 0,
-      baths: 0,
-      area: 0,
-      price: 0,
-    }; // Define receive as an empty object
-    receiveListing(receive);
+    const initialReceiveData: postRequestBody = {
+      email: "",
+      listingId: 0,
+    };
+    receiveListing(initialReceiveData);
   }, []);
 
   return (
@@ -224,11 +224,11 @@ const Dashboard = () => {
                 ) : (
                   homes.map((listing) => (
                     <li
-                      key={listing.id}
+                      key={listing.listingId}
                       className="w-5/6 relative h-1/4 rounded-2xl my-4 hover:scale-105 hover:translate-x-4 shadow-mint/50 shadow-md transition duration-150 ease-in-out"
                     >
                       <Image
-                        src={listing.pictures[0]}
+                        src={listing.email}
                         className=" w-[100%] h-[100%]  object-cover rounded-lg brightness-50 contrast-125 shadow-md"
                         alt="homes"
                       />
