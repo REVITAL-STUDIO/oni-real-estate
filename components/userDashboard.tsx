@@ -330,14 +330,14 @@ const Dashboard = () => {
                   ) : (
                     homes.map((listing) => (
                       <li
-                        key={listing.id}
+                        // key={listing.id}
                         className="w-5/6 relative h-1/4 rounded-2xl my-4 hover:scale-105 hover:translate-x-4 shadow-mint/50 shadow-md transition duration-150 ease-in-out"
                       >
-                        <Image
+                        {/* <Image
                           src={listing.pictures[0]}
                           className=" w-[100%] h-[100%]  object-cover rounded-lg brightness-50 contrast-125 shadow-md"
                           alt="homes"
-                        />
+                        /> */}
                         <div className="absolute top-1/2 w-full flex justify-between">
                           <h2 className=" font-montserrat w-1/3 text-white px-4">
                             {/* {addresses[index]} */}

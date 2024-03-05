@@ -198,7 +198,7 @@ const Contact = () => {
                 </p>
               </div>
             </form>
-          )}
+          }
         </motion.div>
       </div>
     </div>
