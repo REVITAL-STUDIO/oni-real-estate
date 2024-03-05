@@ -185,7 +185,7 @@ const NavPages = () => {
         }
       );
       toggleSignUp();
-      setRegisterData({ email: "", password: "" });
+      setRegisterData({ name: "", email: "", password: "" });
       setConfirmPassword("");
     } catch (error) {
       setIsRegisterError(true);
@@ -204,14 +204,8 @@ const NavPages = () => {
 
   return (
     <div
-<<<<<<< Updated upstream
-      className={`h-100 w-full flex fixed z-10 flex-col items-center justify-center transition-all duration-300 ease-in-out ${
-        color ? "" : ""
-      } ${disappear ? "opacity-0 pointer-events-none " : " "}`}
-=======
       className={`h-100 w-full flex fixed  flex-col items-center justify-center transition-all duration-300 ease-in-out ${color ? "" : ""
         } ${disappear ? "opacity-0 pointer-events-none " : " "}`}
->>>>>>> Stashed changes
     >
       <motion.div
         variants={variants}
