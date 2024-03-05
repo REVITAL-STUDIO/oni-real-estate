@@ -97,6 +97,7 @@ const Nav = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [registerData, setRegisterData] = useState({
+    name: "",
     email: "",
     password: "",
   });
@@ -104,7 +105,10 @@ const Nav = () => {
   const [isRegisterError, setIsRegisterError] = useState(false);
 
   const handleLogout: React.MouseEventHandler<HTMLButtonElement> = async () => {
-    await signOut();
+    // Clear sessionStorage on logout
+    sessionStorage.removeItem("successMessageDisplayed");
+    await signOut({ redirect: false });
+    router.push("/")
   };
 
   //Handling Login
@@ -136,7 +140,7 @@ const Nav = () => {
     e
   ) => {
     e.preventDefault();
-    setIsRegisterError(false); // indicates there's no registration error
+    setIsRegisterError(false);
     setIsLoading(true);
     try {
       if (
@@ -172,10 +176,24 @@ const Nav = () => {
           `HTTP Error: Error creating user status ${response.status}`
         );
       }
+      signIn("credentials", { ...registerData, redirect: false }).then(
+        //autheticates the user with provided creds
+        (callback) => {
+          if (callback?.error) {
+            setErrorMsg(callback.error);
+            setIsLoginError(true);
+          }
+
+          if (callback?.ok && !callback.error) {
+            // log in user and go to listings page
+            router.push("/listings?success=true");
+          }
+          setIsLoading(false);
+        }
+      );
       toggleSignUp();
-      setRegisterData({ email: "", password: "" });
+      setRegisterData({ name: "", email: "", password: "" });
       setConfirmPassword("");
-      router.push("/listings");
     } catch (error) {
       setIsRegisterError(true);
       console.error(error);
@@ -193,9 +211,8 @@ const Nav = () => {
 
   return (
     <div
-      className={`h-80 w-full flex fixed bg-gradient-to-b from-black/50 via-black/30 to-transparent z-50 flex-col items-center justify-center transition-all duration-300 ease-in-out ${
-        color ? "" : ""
-      } ${disappear ? "opacity-0 pointer-events-none " : " "}`}
+      className={`h-80 w-full flex fixed bg-gradient-to-b from-black/50 via-black/30 to-transparent z-50 flex-col items-center justify-center transition-all duration-300 ease-in-out ${color ? "" : ""
+        } ${disappear ? "opacity-0 pointer-events-none " : " "}`}
     >
       <motion.div
         variants={variants}
@@ -301,18 +318,16 @@ const Nav = () => {
           className="w-12 h-12 flex flex-col relative justify-center items-center rounded-full  space-x-reverse xl:hidden z-50"
         >
           <span
-            className={`block w-3/4 my-0.5 border border-white ${
-              openMenu
-                ? "rotate-45 transition-transform duration-300 ease-in-out"
-                : "transition-transform duration-300 ease-in-out relative top-0.5"
-            }`}
+            className={`block w-3/4 my-0.5 border border-white ${openMenu
+              ? "rotate-45 transition-transform duration-300 ease-in-out"
+              : "transition-transform duration-300 ease-in-out relative top-0.5"
+              }`}
           ></span>
           <span
-            className={`block w-3/4 my-0.5 border border-white ${
-              openMenu
-                ? "-rotate-45 w-3/4 absolute top-2/5 transition-transform duration-300 ease-in-out"
-                : "transition-transform duration-300 ease-in-out relative top-0.5"
-            }`}
+            className={`block w-3/4 my-0.5 border border-white ${openMenu
+              ? "-rotate-45 w-3/4 absolute top-2/5 transition-transform duration-300 ease-in-out"
+              : "transition-transform duration-300 ease-in-out relative top-0.5"
+              }`}
           ></span>
         </button>
 
@@ -422,95 +437,114 @@ const Nav = () => {
                 {/* Form */}
 
                 {showSignUpForm ? (
-                  <motion.form
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.5, ease: "easeInOut" }}
-                    className="w-3/4 h-[85%] text-sm flex flex-col font-agrandir items-center "
-                  >
-                    {isRegisterError && (
-                      <div className="p-[1rem] bg-red-100 flex gap-[1rem] items-center justify-center rounded-lg mb-[2rem]">
-                        <p className="text-red-400">{errorMsg}</p>
-                        <IoIosClose
-                          className=" text-red-300 h-[1rem] w-[1rem] hover:cursor-pointer"
-                          onClick={() => setIsRegisterError(false)}
+                  <div >
+                    <motion.form
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.5, ease: "easeInOut" }}
+                      className="w-full h-[85%] text-sm flex flex-col font-agrandir items-center  "
+                    >
+                      {isRegisterError && (
+                        <div className="p-[1rem] bg-red-100 flex gap-[1rem] items-center justify-center rounded-lg mb-[2rem]">
+                          <p className="text-red-400">{errorMsg}</p>
+                          <IoIosClose
+                            className=" text-red-300 h-[1rem] w-[1rem] hover:cursor-pointer"
+                            onClick={() => setIsRegisterError(false)}
+                          />
+                        </div>
+                      )}
+                      {/* Name */}
+                      <div className="flex flex-col w-4/5">
+                        <label className="py-2">Name</label>
+                        <input
+                          className="p-2 rounded-lg text-black bg-slate-400/10"
+                          type="text"
+                          id="Name"
+                          name="Name"
+                          placeholder="Name"
+                          required
+                          value={registerData.name}
+                          onChange={(e) =>
+                            setRegisterData({
+                              ...registerData,
+                              name: e.target.value,
+                            })
+                          }
                         />
                       </div>
-                    )}
-
-                    {/* Email */}
-                    <div className="flex flex-col w-4/5">
-                      <label className="py-2">Email</label>
-                      <input
-                        className="p-2 rounded-lg text-black bg-slate-400/10"
-                        type="text"
-                        id="Email"
-                        name="Email"
-                        placeholder="Email"
-                        required
-                        value={registerData.email}
-                        onChange={(e) =>
-                          setRegisterData({
-                            ...registerData,
-                            email: e.target.value,
-                          })
-                        }
-                      />
-                    </div>
-                    {/* Password */}
-                    <div className="flex flex-col w-4/5">
-                      <label className="py-2">Password</label>
-                      <input
-                        className="p-2 rounded-lg text-black bg-slate-400/10"
-                        type="password"
-                        id="Password"
-                        name="Password"
-                        placeholder="Password"
-                        required
-                        value={registerData.password}
-                        onChange={(e) =>
-                          setRegisterData({
-                            ...registerData,
-                            password: e.target.value,
-                          })
-                        }
-                      />
-                    </div>
-                    {/* Confirm Password */}
-                    <div className="flex flex-col w-4/5">
-                      <label className="py-2">Confirm Password</label>
-                      <input
-                        className="p-2 rounded-lg text-black bg-slate-400/10"
-                        type="password"
-                        id="confirm-password"
-                        name="confirm-assword"
-                        placeholder="Password"
-                        required
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                      />
-                    </div>
-                    {/* Log In Button */}
-                    <div className="flex flex-col justify-evenly w-4/5 h-1/2 my-4">
-                      <button
-                        onClick={registerUser}
-                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${
-                          isLoading ? "opacity-75" : "opacity-100"
-                        }`}
-                      >
-                        {isLoading ? (
-                          <div className="h-20 w-20 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
-                        ) : (
-                          "Sign Up"
-                        )}
-                      </button>
-                      <p className="text-xs p-2">
-                        By Clicking Sign Up, you agree to the Private Policy and
-                        consent to marketing communications.
-                      </p>
-                    </div>
-                  </motion.form>
+                      {/* Email */}
+                      <div className="flex flex-col w-4/5">
+                        <label className="py-2">Email</label>
+                        <input
+                          className="p-2 rounded-lg text-black bg-slate-400/10"
+                          type="text"
+                          id="Email"
+                          name="Email"
+                          placeholder="Email"
+                          required
+                          value={registerData.email}
+                          onChange={(e) =>
+                            setRegisterData({
+                              ...registerData,
+                              email: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
+                      {/* Password */}
+                      <div className="flex flex-col w-4/5">
+                        <label className="py-2">Password</label>
+                        <input
+                          className="p-2 rounded-lg text-black bg-slate-400/10"
+                          type="password"
+                          id="Password"
+                          name="Password"
+                          placeholder="Password"
+                          required
+                          value={registerData.password}
+                          onChange={(e) =>
+                            setRegisterData({
+                              ...registerData,
+                              password: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
+                      {/* Confirm Password */}
+                      <div className="flex flex-col w-4/5">
+                        <label className="py-2">Confirm Password</label>
+                        <input
+                          className="p-2 rounded-lg text-black bg-slate-400/10"
+                          type="password"
+                          id="confirm-password"
+                          name="confirm-assword"
+                          placeholder="Password"
+                          required
+                          value={confirmPassword}
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                        />
+                      </div>
+                      {/* Log In Button */}
+                      <div className="flex flex-col justify-evenly w-4/5 h-1/2 my-4">
+                        <button
+                          onClick={registerUser}
+                          className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${isLoading ? "opacity-75" : "opacity-100"
+                            }`}
+                        >
+                          {isLoading ? (
+                            <div className="h-20 w-20 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                          ) : (
+                            "Sign Up"
+                          )}
+                        </button>
+                        <p className="text-xs p-2">
+                          By Clicking Sign Up, you agree to the Private Policy and
+                          consent to marketing communications.
+                        </p>
+                      </div>
+                    </motion.form>
+                  </div>
                 ) : (
                   <motion.form
                     key="login"
@@ -574,9 +608,8 @@ const Nav = () => {
                       <button
                         disabled={isLoading}
                         onClick={signInUser}
-                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint flex justify-center items-center text-base text-black rounded-full tracking-wide hover:opacity-75 ${
-                          isLoading ? "opacity-75" : "opacity-100"
-                        }`}
+                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint flex justify-center items-center text-base text-black rounded-full tracking-wide hover:opacity-75 ${isLoading ? "opacity-75" : "opacity-100"
+                          }`}
                       >
                         {isLoading ? (
                           <div className="h-8 w-8 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>

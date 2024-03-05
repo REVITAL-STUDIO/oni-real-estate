@@ -92,6 +92,7 @@ const NavPages = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [registerData, setRegisterData] = useState({
+    name: "",
     email: "",
     password: "",
   });
@@ -99,7 +100,11 @@ const NavPages = () => {
   const [isRegisterError, setIsRegisterError] = useState(false);
 
   const handleLogout: React.MouseEventHandler<HTMLButtonElement> = async () => {
-    await signOut();
+    // Clear sessionStorage on logout
+    sessionStorage.removeItem("successMessageDisplayed");
+    await signOut({ redirect: false });
+    router.push("/")
+
   };
 
   const signInUser: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
@@ -123,6 +128,7 @@ const NavPages = () => {
     );
   };
 
+  //Handling Sign-up
   const registerUser: React.MouseEventHandler<HTMLButtonElement> = async (
     e
   ) => {
@@ -163,10 +169,24 @@ const NavPages = () => {
           `HTTP Error: Error creating user status ${response.status}`
         );
       }
+      signIn("credentials", { ...registerData, redirect: false }).then(
+        //autheticates the user with provided creds
+        (callback) => {
+          if (callback?.error) {
+            setErrorMsg(callback.error);
+            setIsLoginError(true);
+          }
+
+          if (callback?.ok && !callback.error) {
+            // log in user and go to listings page
+            router.push("/listings?success=true");
+          }
+          setIsLoading(false);
+        }
+      );
       toggleSignUp();
       setRegisterData({ email: "", password: "" });
       setConfirmPassword("");
-      router.push("/listings");
     } catch (error) {
       setIsRegisterError(true);
       console.error(error);
@@ -184,9 +204,14 @@ const NavPages = () => {
 
   return (
     <div
+<<<<<<< Updated upstream
       className={`h-100 w-full flex fixed z-10 flex-col items-center justify-center transition-all duration-300 ease-in-out ${
         color ? "" : ""
       } ${disappear ? "opacity-0 pointer-events-none " : " "}`}
+=======
+      className={`h-100 w-full flex fixed  flex-col items-center justify-center transition-all duration-300 ease-in-out ${color ? "" : ""
+        } ${disappear ? "opacity-0 pointer-events-none " : " "}`}
+>>>>>>> Stashed changes
     >
       <motion.div
         variants={variants}
@@ -292,18 +317,16 @@ const NavPages = () => {
           className="w-12 h-12 flex flex-col relative justify-center items-center rounded-full  space-x-reverse xl:hidden z-50"
         >
           <span
-            className={`block w-3/4 my-0.5 border border-black ${
-              openMenu
-                ? "rotate-45 transition-transform duration-300 ease-in-out border-white"
-                : "transition-transform duration-300 ease-in-out relative top-0.5 "
-            }`}
+            className={`block w-3/4 my-0.5 border border-black ${openMenu
+              ? "rotate-45 transition-transform duration-300 ease-in-out border-white"
+              : "transition-transform duration-300 ease-in-out relative top-0.5 "
+              }`}
           ></span>
           <span
-            className={`block w-3/4 my-0.5 border border-black ${
-              openMenu
-                ? "-rotate-45 w-3/4 absolute top-2/5 transition-transform duration-300 ease-in-out border-white"
-                : "transition-transform duration-300 ease-in-out relative top-0.5"
-            }`}
+            className={`block w-3/4 my-0.5 border border-black ${openMenu
+              ? "-rotate-45 w-3/4 absolute top-2/5 transition-transform duration-300 ease-in-out border-white"
+              : "transition-transform duration-300 ease-in-out relative top-0.5"
+              }`}
           ></span>
         </button>
 
@@ -429,7 +452,25 @@ const NavPages = () => {
                         />
                       </div>
                     )}
-
+                    {/* Name */}
+                    <div className="flex flex-col w-4/5">
+                      <label className="py-2">Name</label>
+                      <input
+                        className="p-2 rounded-lg text-black bg-slate-400/10"
+                        type="text"
+                        id="Name"
+                        name="Name"
+                        placeholder="Name"
+                        required
+                        value={registerData.name}
+                        onChange={(e) =>
+                          setRegisterData({
+                            ...registerData,
+                            name: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
                     {/* Email */}
                     <div className="flex flex-col w-4/5">
                       <label className="py-2">Email</label>
@@ -486,9 +527,8 @@ const NavPages = () => {
                     <div className="flex flex-col justify-evenly w-4/5 h-1/2 my-4">
                       <button
                         onClick={registerUser}
-                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${
-                          isLoading ? "opacity-75" : "opacity-100"
-                        }`}
+                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${isLoading ? "opacity-75" : "opacity-100"
+                          }`}
                       >
                         {isLoading ? "Loading..." : "Sign Up"}
                       </button>
@@ -561,9 +601,8 @@ const NavPages = () => {
                       <button
                         disabled={isLoading}
                         onClick={signInUser}
-                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${
-                          isLoading ? "opacity-75" : "opacity-100"
-                        }`}
+                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${isLoading ? "opacity-75" : "opacity-100"
+                          }`}
                       >
                         {isLoading ? "Loading..." : "Login"}
                       </button>

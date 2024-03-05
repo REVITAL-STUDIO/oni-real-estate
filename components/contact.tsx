@@ -33,20 +33,13 @@ const Contact = () => {
 
     try {
       const fullName = `${firstName} ${lastName}`;
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/leads`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            ...leadData,
-            name: fullName,
-            source: "Ownership form Submission",
-          }),
-        }
-      );
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/leads`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ...leadData, name: fullName, source: 'Homepage form Submission' }),
+      })
       if (!response.ok) {
         throw new Error(
           `HTTP ERROR - Error creating lead. Status: ${response.status}`
@@ -111,15 +104,11 @@ const Contact = () => {
               Get in touch with us
             </h2>
           </div>
-          {isSuccess ? (
-            <div className="h-3/4 flex justify-center items-center text-5xl text-white">
-              Message Sent!
-            </div>
-          ) : (
-            <form
-              onSubmit={createlead}
-              className="w-full xl:5/6 h-full flex items-center justify-center flex-col rounded-lg  gap-x-4  z-10"
-            >
+          {isSuccess ?
+            <div className="h-3/4 flex justify-center items-center text-5xl text-black">Message Sent!</div>
+            :
+
+            <form onSubmit={createlead} className="w-5/6 h-full flex items-center justify-center flex-col rounded-lg  gap-x-4  z-10">
               <div className="w-full flex flex-wrap justify-center gap-4  ">
                 <div className="flex flex-col w-2/5">
                   <label htmlFor="firstName" className="my-2 text-black">
