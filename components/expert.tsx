@@ -196,7 +196,7 @@ const Expert = () => {
             Houston Connectivity. Navigate the Market Confidently with Our
             Expertise.
           </motion.p>
-          <div className="w-full xl:h-5/6 lg:h-3/5 md:h-1/2 h-3/5 rounded-lg p-4   ">
+          <div className="w-full xl:h-5/6 lg:h-3/5 md:h-1/2 h-1/2 rounded-lg p-4   ">
             <Image
               src={Local}
               alt="local support"

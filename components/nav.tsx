@@ -322,7 +322,7 @@ const NavPages = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -100 }}
                 transition={{ ease: "easeInOut", duration: 0.2 }}
-                className="xl:hidden absolute top-0   right-0 bottom-0 w-full h-screen bg-black shadow-xl z-40"
+                className="xl:hidden absolute top-0   right-0 bottom-0 w-full h-screen bg-black shadow-xl "
               >
                 <Image
                   src={mobileLogo}
@@ -330,33 +330,102 @@ const NavPages = () => {
                   className="invert w-24 p-4"
                 />
                 <ul
-                  className={` gap-y-4  flex flex-col justify-center font-agrandir w-full h-1/2
+                  className={` gap-y-4 font-medium  flex flex-col items-center justify-center font-agrandir w-full h-2/3
           `}
                 >
-                  <li className="relative   w-full p-4 text-lg md:text-4xl tracking-wider font-extralight  ">
+                  <li className="relative   w-full p-4 text-xl md:text-4xl tracking-wider font-extralight  ">
                     <Link href="/" className="w-full flex justify-between">
-                      Home <FontAwesomeIcon icon={faAngleRight} />
+                      Home
                     </Link>
                   </li>
-                  <li className="relative  flex justify-between  w-full p-4 text-lg md:text-4xl tracking-wider font-extralight  ">
-                    <Link href="/users" className="w-full flex justify-between">
-                      Login <FontAwesomeIcon icon={faAngleRight} />
+                  {!session && (
+                    <li className="relative   w-full p-4 text-xl md:text-4xl tracking-wider font-extralight">
+                      <button onClick={toggleLogin}>
+                        <span className="w-full flex  justify-center">
+                          Login{" "}
+                          {/* <FontAwesomeIcon
+                            icon={faAngleRight}
+                            className="w-6 h-6"
+                          /> */}
+                        </span>
+                      </button>
+                    </li>
+                  )}
+                  {session && session?.user.role === "admin" && (
+                    <Link
+                      className={`
+                   
+                    font-regular
+                    relative   w-full p-4 text-lg md:text-4xl tracking-wider font-extralight
+                  `}
+                      href="/admin"
+                    >
+                      <span className="w-full flex justify-between">
+                        Admin Portal
+                      </span>
                     </Link>
-                  </li>
-                  <li className="relative  flex justify-between  w-full p-4 text-lg md:text-4xl tracking-wider font-extralight  ">
+                  )}
+                  {session && session?.user.role !== "admin" && (
+                    <div className="relative w-full h-auto duration-300  transition ease- z-10  rounded-md">
+                      <li className="relative   w-full p-4 text-xl md:text-4xl tracking-wider font-extralight flex  justify-between">
+                        <Link className="w-full" href="/user">
+                          <span className=" w-full ">Property Hub</span>
+                        </Link>
+                        <FontAwesomeIcon
+                          onClick={togglelogOutMenu}
+                          icon={faAngleRight}
+                          className={
+                            openLogOut
+                              ? "w-6 h-6 transform rotate-90 transition ease-in-out duration-200"
+                              : "w-6 h-6 "
+                          }
+                        />
+                      </li>
+                      {openLogOut && (
+                        <div
+                          className={`overflow-hidden transition-max-h ${
+                            openLogOut ? "max-h-40 bg-black" : "max-h-0"
+                          } transition-all duration-300 ease-in-out`}
+                        >
+                          <button className="text-left w-full p-4 h-fit flex items-center text-white ">
+                            <FontAwesomeIcon
+                              icon={faGears}
+                              size="lg"
+                              className="ml-4"
+                            />
+                            <span className="px-2 text-base">Settings</span>
+                          </button>
+                          <button
+                            onClick={handleLogout}
+                            className="text-left w-full p-4 h-fit flex  items-center  text-white"
+                          >
+                            <FontAwesomeIcon
+                              className="transform scale-x(-1) ml-4"
+                              icon={faArrowRightFromBracket}
+                              size="lg"
+                            />{" "}
+                            <span className="px-2 text-red-500 text-base">
+                              Log out
+                            </span>
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  <li className="relative  flex justify-between  w-full p-4 text-xl md:text-4xl tracking-wider font-extralight  ">
                     <Link
                       href="/owners"
                       className="w-full flex justify-between"
                     >
-                      Ownership <FontAwesomeIcon icon={faAngleRight} />
+                      Ownership
                     </Link>
                   </li>
-                  <li className="relative  flex justify-between  w-full p-4 text-lg md:text-4xl tracking-wider font-extralight  ">
+                  <li className="relative  flex justify-between  w-full p-4 text-xl md:text-4xl tracking-wider font-extralight  ">
                     <Link
                       href="/listings"
                       className="w-full flex justify-between"
                     >
-                      Properties <FontAwesomeIcon icon={faAngleRight} />
+                      Properties
                     </Link>
                   </li>
                 </ul>
@@ -379,7 +448,7 @@ const NavPages = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ ease: "easeInOut", duration: 0.5 }}
-            className=" fixed top-0 left-0 bg-black/75 w-full h-full z-50"
+            className=" fixed top-0 left-0 bg-white/90 w-full h-full "
           >
             {/* Sign In/ Log In form */}
             <div className="w-full h-full flex justify-center items-center">
@@ -388,10 +457,10 @@ const NavPages = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -100 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="bg-white w-1/2 h-5/6 relative rounded-xl shadow-lg flex flex-col items-center"
+                className="bg-white w-[95%] md:w-1/2 h-5/6 relative rounded-xl shadow-lg flex flex-col items-center"
               >
                 {/* Close Button */}
-                <div className="absolute w-fit right-2 p-4">
+                <div className="absolute w-fit right-2">
                   <button
                     onClick={() => setOpenLogin(false)}
                     className="w-8 h-8 flex flex-col relative justify-center items-center rounded-full  space-x-reverse  z-10"
@@ -406,7 +475,7 @@ const NavPages = () => {
                 </div>
                 {/* Sign Up/Sign In */}
                 <div className="w-3/4 h-1/5  flex justify-center items-center">
-                  <h2 className="text-4xl font-bold p-4 tracking-wide font-agrandir">
+                  <h2 className="text-2xl md:text-4xl font-bold p-4 tracking-wide font-agrandir">
                     {showSignUpForm ? "Sign Up" : "Sign In"}
                   </h2>
                 </div>
@@ -483,14 +552,18 @@ const NavPages = () => {
                       />
                     </div>
                     {/* Log In Button */}
-                    <div className="flex flex-col justify-evenly w-4/5 h-1/2 my-4">
+                    <div className="flex flex-col justify-evenly w-4/5 h-1/2 my-4 ">
                       <button
                         onClick={registerUser}
                         className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${
                           isLoading ? "opacity-75" : "opacity-100"
                         }`}
                       >
-                        {isLoading ? "Loading..." : "Sign Up"}
+                        {isLoading ? (
+                          <div className="md:h-20 md:w-20  border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                        ) : (
+                          "Sign Up"
+                        )}
                       </button>
                       <p className="text-xs p-2">
                         By Clicking Sign Up, you agree to the Private Policy and
@@ -561,11 +634,15 @@ const NavPages = () => {
                       <button
                         disabled={isLoading}
                         onClick={signInUser}
-                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${
+                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint flex justify-center items-center text-base text-black rounded-full tracking-wide hover:opacity-75 ${
                           isLoading ? "opacity-75" : "opacity-100"
                         }`}
                       >
-                        {isLoading ? "Loading..." : "Login"}
+                        {isLoading ? (
+                          <div className="h-8 w-8 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                        ) : (
+                          "Login"
+                        )}
                       </button>
                       <button
                         onClick={toggleSignUp}
@@ -596,7 +673,10 @@ const NavPages = () => {
                   {/* Sign In Options Google and Facebook */}
 
                   <div className="h-3/5 w-3/4 ">
-                    <button className="w-full my-2 p-4 flex items-center justify-center bg-black text-white text-sm rounded-2xl">
+                    <button
+                      onClick={() => signIn("google")}
+                      className="w-full my-2 p-4 flex items-center justify-center bg-black text-white text-sm rounded-2xl"
+                    >
                       <Image
                         src={GoogleIcon}
                         alt="google icon"
@@ -604,10 +684,13 @@ const NavPages = () => {
                       />
                       Sign in with Google
                     </button>
-                    <button className="w-full my-2 p-4 flex items-center justify-center bg-black text-white text-sm rounded-2xl">
+                    <button
+                      onClick={() => signIn("facebook")}
+                      className="w-full my-2 p-4 flex items-center justify-center bg-black text-white text-sm rounded-2xl"
+                    >
                       <Image
                         src={AppleIcon}
-                        alt="facebook icon"
+                        alt="Apple icon"
                         className="w-5 mr-4"
                       />
                       Sign in with Apple
