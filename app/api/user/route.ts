@@ -1,30 +1,58 @@
-import { NextResponse } from "next/server";
-import { prisma } from "@/lib/database/client";
 const bcrypt = require('bcrypt');
+import { prisma } from "@/lib/database/client";
+import { NextResponse } from "next/server";
 
-interface postRequestBody {
-    name: string,
-    email: string,
-    password: string,
+
+
+interface User {
+    id: string;
+    name: string;
+    email: string;
+    number: string;
+    password: string;
+    favoriteListingsId: number[];
 }
 
-  //api route creating a user on a database
-export async function POST(request: Request) {
-    const body: postRequestBody = await request.json()
-
+// api handler for updating a users information
+export async function PUT(request: Request) {
+    const body: User = await request.json();
+    let updatedUser;
+    console.log("############# In update user endpoint body: ", body)
     try {
-        const newUser = await prisma.user.create({
-            data: {
-                name: body.name,
-                email: body.email,
-                passwordHash: await bcrypt.hash(body.password, 10),
-            }
-        })
-        return NextResponse.json(newUser, { status: 200 });
-    } catch (error) {
-        // Handle errors
-        console.error("Error creating user on database:", error);
-        return NextResponse.json({ error: "failed to create user" }, { status: 500 });
-    }
-}
+        //user changed password
+        if (body.password != "") {
+            const hashedPassword = await bcrypt.hash(body.password, 10);
+             updatedUser = await prisma.user.update({
+                where: {
+                    id: body.id
+                },
+                data: {
+                    name: body.name,
+                    email: body.email,
+                    number: body.number,
+                    passwordHash: hashedPassword,
+                    updatedAt: new Date()
+                }
+            })
+        } else {
+            //user did not change password
+             updatedUser = await prisma.user.update({
+                where: {
+                    id: body.id
+                },
+                data: {
+                    name: body.name,
+                    email: body.email,
+                    number: body.number,
+                    updatedAt: new Date()
+                }
+            })
+        }
+        return NextResponse.json(updatedUser, { status: 200 })
 
+    } catch (error) {
+        console.error("Error updating User on database:", error);
+        return NextResponse.json({ error: "failed to Update User" }, { status: 500 });
+    }
+
+}

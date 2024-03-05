@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 
 
 interface requestBody {
+    name: string,
     email: string,
     password: string,
 }
@@ -29,6 +30,8 @@ export async function POST(request: Request){
     // creating user in db
     const user = await prisma.user.create({
         data: {
+            name: body.name,
+
             email: body.email,
             passwordHash: hashedPassword
         }

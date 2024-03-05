@@ -92,6 +92,7 @@ const NavPages = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const [registerData, setRegisterData] = useState({
+    name: "",
     email: "",
     password: "",
   });
@@ -99,7 +100,10 @@ const NavPages = () => {
   const [isRegisterError, setIsRegisterError] = useState(false);
 
   const handleLogout: React.MouseEventHandler<HTMLButtonElement> = async () => {
-    await signOut();
+    // Clear sessionStorage on logout
+    sessionStorage.removeItem("successMessageDisplayed");
+    await signOut({ redirect: false });
+    router.push("/");
   };
 
   const signInUser: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
@@ -123,6 +127,7 @@ const NavPages = () => {
     );
   };
 
+  //Handling Sign-up
   const registerUser: React.MouseEventHandler<HTMLButtonElement> = async (
     e
   ) => {
@@ -163,10 +168,24 @@ const NavPages = () => {
           `HTTP Error: Error creating user status ${response.status}`
         );
       }
+      signIn("credentials", { ...registerData, redirect: false }).then(
+        //autheticates the user with provided creds
+        (callback) => {
+          if (callback?.error) {
+            setErrorMsg(callback.error);
+            setIsLoginError(true);
+          }
+
+          if (callback?.ok && !callback.error) {
+            // log in user and go to listings page
+            router.push("/listings?success=true");
+          }
+          setIsLoading(false);
+        }
+      );
       toggleSignUp();
-      setRegisterData({ email: "", password: "" });
+      setRegisterData({ name: "", email: "", password: "" });
       setConfirmPassword("");
-      router.push("/listings");
     } catch (error) {
       setIsRegisterError(true);
       console.error(error);
@@ -184,7 +203,7 @@ const NavPages = () => {
 
   return (
     <div
-      className={`h-100 w-full flex fixed z-10 flex-col items-center justify-center transition-all duration-300 ease-in-out ${
+      className={`h-100 w-full flex fixed  flex-col items-center justify-center transition-all duration-300 ease-in-out ${
         color ? "" : ""
       } ${disappear ? "opacity-0 pointer-events-none " : " "}`}
     >
@@ -498,7 +517,25 @@ const NavPages = () => {
                         />
                       </div>
                     )}
-
+                    {/* Name */}
+                    <div className="flex flex-col w-4/5">
+                      <label className="py-2">Name</label>
+                      <input
+                        className="p-2 rounded-lg text-black bg-slate-400/10"
+                        type="text"
+                        id="Name"
+                        name="Name"
+                        placeholder="Name"
+                        required
+                        value={registerData.name}
+                        onChange={(e) =>
+                          setRegisterData({
+                            ...registerData,
+                            name: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
                     {/* Email */}
                     <div className="flex flex-col w-4/5">
                       <label className="py-2">Email</label>
@@ -634,7 +671,7 @@ const NavPages = () => {
                       <button
                         disabled={isLoading}
                         onClick={signInUser}
-                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint flex justify-center items-center text-base text-black rounded-full tracking-wide hover:opacity-75 ${
+                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${
                           isLoading ? "opacity-75" : "opacity-100"
                         }`}
                       >

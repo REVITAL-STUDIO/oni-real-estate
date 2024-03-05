@@ -13,6 +13,7 @@ model User {
   email               String    @unique
   image               String?
   passwordHash        String
+  number              String?
   role                String    @default("user")
   favoriteListingsIds Int[]     @default([])
   hashedResetToken    String?   @unique

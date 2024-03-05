@@ -1,27 +1,28 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/database/client";
+import sgMail from "@sendgrid/mail"
 
 const getRandomColor = () => {
     // Array of Tailwind CSS color classes
     const colors = [
-      'bg-red-400',
-      'bg-red-100',
-      'bg-blue-400',
-      'bg-blue-100',
-      'bg-green-400',
-      'bg-green-100',
-      'bg-green-400',
-      'bg-emerald-300',
-      'bg-teal-400',
-      'bg-cyan-300',
-      'bg-fuchsia-400',
-      'bg-indigo-600',
-      'bg-yellow-400',
-      'bg-purple-400',
-      'bg-orange-300',
-      'bg-lime-300',
+        'bg-red-400',
+        'bg-red-100',
+        'bg-blue-400',
+        'bg-blue-100',
+        'bg-green-400',
+        'bg-green-100',
+        'bg-green-400',
+        'bg-emerald-300',
+        'bg-teal-400',
+        'bg-cyan-300',
+        'bg-fuchsia-400',
+        'bg-indigo-600',
+        'bg-yellow-400',
+        'bg-purple-400',
+        'bg-orange-300',
+        'bg-lime-300',
 
-      // Add more colors as needed
+        // Add more colors as needed
     ];
 
     // Generate a random index
@@ -29,7 +30,7 @@ const getRandomColor = () => {
 
     // Return the randomly selected color class
     return colors[randomIndex];
-  };
+};
 
 interface postRequestBody {
     name: string,
@@ -42,7 +43,6 @@ interface postRequestBody {
 // api handler for creating a new lead
 export async function POST(request: Request) {
     const body: postRequestBody = await request.json();
-    console.log("############ IN create lead endpoint body: ", body)
 
     try {
 
@@ -56,13 +56,46 @@ export async function POST(request: Request) {
                 color: getRandomColor()
             }
         })
-        console.log("############ IN create lead endpoint newLead: ", newLead)
+
+        // Send email notification to admin 
+        sendAdminNotificationEmail(newLead);
+
         return NextResponse.json(newLead, { status: 200 });
 
     } catch (error) {
         console.error("Error creating Lead on database:", error);
         return NextResponse.json({ error: "failed to Create Lead" }, { status: 500 });
     }
+}
+
+async function sendAdminNotificationEmail(newLead: any) {
+    const emailBody = `This message is to inform you that a new lead has been submitted by a user on your platform ONI Real Estate. Below are the details of the lead:
+
+    Lead Information:
+    - Name: ${newLead.name}
+    - Email: ${newLead.email}
+    - Message: ${newLead.message}
+    - Source: ${newLead.source}
+    
+    Please review the lead and take necessary action accordingly. You can contact the lead using the provided email address or phone number.
+    `;
+
+    const msg = {
+        to: 'dishon.mmanyi@aol.com',
+        from: "dishonmmanyi@outlook.com",
+        subject: "ONI Real Estate - New Lead Submitted",
+        text: emailBody
+    };
+
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY || "");
+
+    await sgMail.send(msg)
+        .then(() => {
+            console.log("###########  LEAD NOTIFICATION EMAIL SENT ###############");
+        })
+        .catch((error) => {
+            console.error("Failed sending email:", error);
+        });
 }
 
 
