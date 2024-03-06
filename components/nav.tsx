@@ -203,7 +203,7 @@ const NavPages = () => {
 
   return (
     <div
-      className={`h-100 w-full flex fixed  flex-col items-center justify-center transition-all duration-300 ease-in-out ${
+      className={`h-100 w-full flex fixed  flex-col items-center justify-center transition-all duration-300 ease-in-out z-50 ${
         color ? "" : ""
       } ${disappear ? "opacity-0 pointer-events-none " : " "}`}
     >
@@ -341,7 +341,7 @@ const NavPages = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -100 }}
                 transition={{ ease: "easeInOut", duration: 0.2 }}
-                className="xl:hidden absolute top-0   right-0 bottom-0 w-full h-screen bg-black shadow-xl "
+                className="xl:hidden absolute top-0   right-0 bottom-0 w-full h-screen bg-black shadow-xl z-40"
               >
                 <Image
                   src={mobileLogo}
@@ -362,10 +362,6 @@ const NavPages = () => {
                       <button onClick={toggleLogin}>
                         <span className="w-full flex  justify-center">
                           Login{" "}
-                          {/* <FontAwesomeIcon
-                            icon={faAngleRight}
-                            className="w-6 h-6"
-                          /> */}
                         </span>
                       </button>
                     </li>
@@ -467,7 +463,7 @@ const NavPages = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ ease: "easeInOut", duration: 0.5 }}
-            className=" fixed top-0 left-0 bg-white/90 w-full h-full "
+            className=" fixed top-0 left-0 bg-white/90 w-full h-full z-50"
           >
             {/* Sign In/ Log In form */}
             <div className="w-full h-full flex justify-center items-center">
@@ -671,12 +667,12 @@ const NavPages = () => {
                       <button
                         disabled={isLoading}
                         onClick={signInUser}
-                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${
+                        className={`p-2 bg-gradient-to-r shadow-md flex justify-center items-center from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${
                           isLoading ? "opacity-75" : "opacity-100"
                         }`}
                       >
                         {isLoading ? (
-                          <div className="h-8 w-8 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                          <div className="h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
                         ) : (
                           "Login"
                         )}

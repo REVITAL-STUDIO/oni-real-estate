@@ -162,13 +162,13 @@ const Listing = () => {
           attention to detail.
         </p>
       </div>
-      <div className="w-full flex flex-col xl:flex-row xl:h-16 h-1/3 font-montserrat bg-white">
+      <div className="w-full flex flex-col xl:flex-row xl:h-16 h-1/3 font-montserrat bg-white z-20">
         {/* Toggle Button RENT and SALE */}
         <div className="xl:w-80 w-60 flex justify-center items-center transition-all">
           <div className="w-5/6 h-11 relative text-xl xl:text-2xl uppercase tracking-wider flex justify-around items-center ">
             <span
               className={` cursor-pointer ${
-                selectedOption === "For Sale" ? "font-bold z-10 text-black" : ""
+                selectedOption === "For Sale" ? "font-bold  text-black" : ""
               }`}
               onClick={() => handleOptionClick("For Sale")}
             >
@@ -176,7 +176,7 @@ const Listing = () => {
             </span>
             <span
               className={`cursor-pointer ${
-                selectedOption === "For Rent" ? "font-bold z-10 text-black" : ""
+                selectedOption === "For Rent" ? "font-bold  text-black" : ""
               }`}
               onClick={() => handleOptionClick("For Rent")}
             >
@@ -190,10 +190,10 @@ const Listing = () => {
           </div>
         </div>
         {/* filters */}
-        <div className=" w-5/6 h-full xl:flex justify-evenly items-center hidden ">
+        <div className=" w-5/6 h-full xl:flex justify-evenly items-center hidden z-40">
           {/* Prices */}
           <div className="relative">
-            <div className="w-52 h-12 border border-gray-300 z-50  rounded-md flex justify-center items-center">
+            <div className="w-52 h-12 border border-gray-300   rounded-md flex justify-center items-center">
               <span className="text-xs  w-[100%] text-center">
                 {selectedPrice.length === 0
                   ? "Price Amount"
@@ -206,7 +206,7 @@ const Listing = () => {
               </div>
             </div>
             {openDropdown === 1 && (
-              <div className="bg-white w-52 h-auto absolute top-full z-30  transition-all ease-in-out duration-200">
+              <div className="bg-white w-52 h-auto absolute top-full   transition-all ease-in-out duration-200">
                 {prices.map((price) => (
                   <div
                     key={price.label}
@@ -221,7 +221,7 @@ const Listing = () => {
           </div>
           {/* Beds */}
           <div className="relative">
-            <div className="w-52 h-12 z-50 border border-gray-300  flex justify-center rounded-md items-center">
+            <div className="w-52 h-12  border border-gray-300  flex justify-center rounded-md items-center">
               {" "}
               <span className="text-xs w-5/6 text-center">{`${
                 selectedBeds || "0"
@@ -237,7 +237,7 @@ const Listing = () => {
               </div>
             </div>
             {openDropdown === 2 && (
-              <div className="bg-white w-52 h-auto absolute top-full z-30   transition-all ease-in-out duration-200">
+              <div className="bg-white w-52 h-auto absolute top-full    transition-all ease-in-out duration-200">
                 {numOfBeds.map((bed) => (
                   <div
                     key={bed}
@@ -252,7 +252,7 @@ const Listing = () => {
           </div>
           {/* Baths */}
           <div className="relative">
-            <div className="w-52 h-12 border border-gray-300 z-10  rounded-md flex justify-center items-center">
+            <div className="w-52 h-12 border border-gray-300   rounded-md flex justify-center items-center">
               <span className="text-xs w-5/6 text-center">{`${
                 selectedBaths || "0"
               }+ Baths`}</span>{" "}
@@ -263,7 +263,7 @@ const Listing = () => {
               </div>
             </div>
             {openDropdown === 3 && (
-              <div className="bg-white w-52 h-auto absolute z-30 top-full   transition-all ease-in-out duration-200">
+              <div className="bg-white w-52 h-auto absolute  top-full   transition-all ease-in-out duration-200">
                 {numOfBaths.map((baths) => (
                   <div
                     key={baths}
@@ -278,7 +278,7 @@ const Listing = () => {
           </div>
           {/* Location */}
           <div className="relative">
-            <div className="w-52 h-12 border border-gray-300  z-10 rounded-md flex justify-center items-center">
+            <div className="w-52 h-12 border border-gray-300   rounded-md flex justify-center items-center">
               <span className="text-xs w-5/6 text-center">
                 {setLocation.length === 0 ? "Location" : setLocation[0].label}
               </span>{" "}
@@ -289,7 +289,7 @@ const Listing = () => {
               </div>
             </div>
             {openDropdown === 4 && (
-              <div className="bg-white w-52 h-auto absolute z-30 top-full  transition-all ease-in-out duration-200">
+              <div className="bg-white w-52 h-auto absolute  top-full  transition-all ease-in-out duration-200">
                 {locations.map((location) => (
                   <div
                     key={location.label}
@@ -304,7 +304,7 @@ const Listing = () => {
           </div>
           {/* Property Type */}
           <div className="relative">
-            <div className="w-52 h-12 border border-gray-300 z-10 rounded-md flex  justify-around items-center">
+            <div className="w-52 h-12 border border-gray-300  rounded-md flex  justify-around items-center">
               <span className="text-xs w-5/6 text-center">
                 {setProperty.length === 0 ? "Type" : setProperty[0].label}
               </span>{" "}
@@ -315,7 +315,7 @@ const Listing = () => {
               </div>
             </div>
             {openDropdown === 5 && (
-              <div className="bg-white w-52 h-auto absolute z-30 top-full  ">
+              <div className="bg-white w-52 h-auto absolute  top-full  ">
                 {property.map((properties) => (
                   <div
                     key={properties.label}
@@ -331,10 +331,10 @@ const Listing = () => {
         </div>
 
         {/* Mobile Responsive filters */}
-        <div className=" w-full h-full flex flex-wrap gap-4 items-center  xl:hidden p-4">
+        <div className=" w-full h-full flex flex-wrap gap-4 items-center  xl:hidden p-4 ">
           {/* Prices */}
           <div className="relative">
-            <div className="w-40 h-12 border border-gray-300 z-10  rounded-md flex justify-center items-center">
+            <div className="w-40 h-12 border border-gray-300   rounded-md flex justify-center items-center">
               <span className="text-xs  w-[100%] text-center">
                 {selectedPrice.length === 0
                   ? "Price Amount"
@@ -347,7 +347,7 @@ const Listing = () => {
               </div>
             </div>
             {openDropdown === 1 && (
-              <div className="bg-white w-40 h-auto absolute top-full z-10  transition-all ease-in-out duration-200">
+              <div className="bg-white w-40 h-auto absolute top-full  z-40 transition-all ease-in-out duration-200">
                 {prices.map((price) => (
                   <div
                     key={price.label}
@@ -362,7 +362,7 @@ const Listing = () => {
           </div>
           {/* Beds */}
           <div className="relative">
-            <div className="w-40 h-12 z-10 border border-gray-300  flex justify-center rounded-md items-center">
+            <div className="w-40 h-12  border border-gray-300  flex justify-center rounded-md items-center">
               {" "}
               <span className="text-xs w-5/6 text-center">{`${
                 selectedBeds || "0"
@@ -378,7 +378,7 @@ const Listing = () => {
               </div>
             </div>
             {openDropdown === 2 && (
-              <div className="bg-white w-40 h-auto absolute top-full z-10   transition-all ease-in-out duration-200">
+              <div className="bg-white w-40 h-auto absolute top-full  z-40  transition-all ease-in-out duration-200">
                 {numOfBeds.map((bed) => (
                   <div
                     key={bed}
@@ -393,7 +393,7 @@ const Listing = () => {
           </div>
           {/* Baths */}
           <div className="relative">
-            <div className="w-40 h-12 border border-gray-300 z-10  rounded-md flex justify-center items-center">
+            <div className="w-40 h-12 border border-gray-300   rounded-md flex justify-center items-center">
               <span className="text-xs w-5/6 text-center">{`${
                 selectedBaths || "0"
               }+ Baths`}</span>{" "}
@@ -404,7 +404,7 @@ const Listing = () => {
               </div>
             </div>
             {openDropdown === 3 && (
-              <div className="bg-white w-40 h-auto absolute z-10 top-full   transition-all ease-in-out duration-200">
+              <div className="bg-white w-40 h-auto absolute  top-full  z-40 transition-all ease-in-out duration-200">
                 {numOfBaths.map((baths) => (
                   <div
                     key={baths}
@@ -419,7 +419,7 @@ const Listing = () => {
           </div>
           {/* Location */}
           <div className="relative">
-            <div className="w-40 h-12 border border-gray-300  z-10 rounded-md flex justify-center items-center">
+            <div className="w-40 h-12 border border-gray-300   rounded-md flex justify-center items-center">
               <span className="text-xs w-5/6 text-center">
                 {setLocation.length === 0 ? "Location" : setLocation[0].label}
               </span>{" "}
@@ -430,7 +430,7 @@ const Listing = () => {
               </div>
             </div>
             {openDropdown === 4 && (
-              <div className="bg-white w-40 h-auto absolute z-10 top-full  transition-all ease-in-out duration-200">
+              <div className="bg-white w-40 h-auto absolute  top-full z-40 transition-all ease-in-out duration-200">
                 {locations.map((location) => (
                   <div
                     key={location.label}
@@ -445,7 +445,7 @@ const Listing = () => {
           </div>
           {/* Property Type */}
           <div className="relative">
-            <div className="w-40 h-12 border border-gray-300 z-10 rounded-md flex  justify-around items-center">
+            <div className="w-40 h-12 border border-gray-300  rounded-md flex  justify-around items-center">
               <span className="text-xs w-5/6 text-center">
                 {setProperty.length === 0 ? "Type" : setProperty[0].label}
               </span>{" "}
@@ -456,7 +456,7 @@ const Listing = () => {
               </div>
             </div>
             {openDropdown === 5 && (
-              <div className="bg-white w-40 h-auto absolute z-10 top-full  ">
+              <div className="bg-white w-40 h-auto absolute top-full  z-40">
                 {property.map((properties) => (
                   <div
                     key={properties.label}

@@ -1,18 +1,11 @@
 import React from "react";
 import Logo from "../public/oni-moon.png";
 import Image from "next/image";
-import FooterLogo from "../public/rvtl_white.png";
 import Link from "next/link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faLinkedin,
-  faInstagram,
-  faFacebook,
-} from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
   return (
-    <div className="w-full h-screen lg:h-600 flex flex-col z-50 relative bg-black">
+    <div className="w-full h-screen lg:h-600 flex flex-col  relative bg-black">
       <div className="flex  h-full  ">
         {/* links */}
         <div className="w-1/2 h-full xl:flex  justify-center items-center hidden">

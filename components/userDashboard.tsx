@@ -13,7 +13,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import Image from "next/image";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
@@ -24,7 +23,6 @@ interface profile {
 
 interface postRequestBody {
   email: string;
-  listingId: number;
 }
 
 interface Listing {
@@ -40,86 +38,98 @@ interface Listing {
 }
 
 interface User {
-  id: string; 
+  id: string;
   name: string;
   email: string;
   number: string;
-  favoriteListingsId: number[];
+  //favoriteListingsId: number[];
 }
 
 const Dashboard = () => {
   const { data: session, status } = useSession(); // Include status to check if session data is loading
-  const [userData, setUserData] = useState<User>()
-  const [userDataEdit, setUserDataEdit] = useState<User>()
-  const [newPassword, setNewPassword] = useState("")
-  const [newPasswordConfirm, setNewPasswordConfirm] = useState("")
-  const [passwordError, setPasswordError] = useState(false)
-  const [noChangeError, setNoChangeError] = useState(false)
-  const [isLoading, setIsLoading] = useState(true)
+  const [userData, setUserData] = useState<User>();
+  const [userDataEdit, setUserDataEdit] = useState<User>();
+  const [newPassword, setNewPassword] = useState("");
+  const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
+  const [noChangeError, setNoChangeError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
-  const handleLogout: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
+  //Signout Button - Log out
+  const handleLogout: React.MouseEventHandler<HTMLButtonElement> = async (
+    e
+  ) => {
     await signOut({ redirect: false });
-    router.push("/")
+    router.push("/");
+  };
 
-  }
-
-  const saveUserData: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
+  //Password and User name Changes || Used for saving user data and making changes
+  const saveUserData: React.MouseEventHandler<HTMLButtonElement> = async (
+    e
+  ) => {
     e.preventDefault();
-    setNoChangeError(false)
-    setPasswordError(false)
-      if(newPassword=="" && userDataEdit == userData) {
-        setNoChangeError(true)
-        throw new Error('No values changed')
-      }
-      if(newPassword != newPasswordConfirm){
-        setPasswordError(true)
-        throw new Error('Passwords do not match')
-      }
-    
+    setNoChangeError(false);
+    setPasswordError(false);
+    if (newPassword == "" && userDataEdit == userData) {
+      // So if the values are empty or the password is the same as the original no change occurs
+      setNoChangeError(true);
+      throw new Error("No values changed");
+    }
+    if (newPassword != newPasswordConfirm) {
+      //If confirmation password is not the same than it throws the password not matching
+      setPasswordError(true);
+      throw new Error("Passwords do not match");
+    }
+
     try {
-        
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user`, {
-            method: 'PUT',
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({...userDataEdit, password: newPassword}),
-        })
-        if (!response.ok) {
-            throw new Error(`HTTP ERROR - Error Saving user information. Status: ${response.status}`)
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...userDataEdit, password: newPassword }),
+          //Spreading "...userDataEdit" allows the data that is changed in the menu to be updated besides the password. It will be sent along with the newpassword
         }
-        let newUserData = await response.json()
-        console.log("NEW USER DATA: ", newUserData)
-        setUserData(newUserData)
-        setOpenMenu(false)
-
+      );
+      if (!response.ok) {
+        throw new Error(
+          `HTTP ERROR - Error Saving user information. Status: ${response.status}`
+        );
+      }
+      let newUserData = await response.json();
+      console.log("NEW USER DATA: ", newUserData);
+      setUserData(newUserData);
+      setOpenMenu(false);
+    } catch (error) {
+      console.error(error);
     }
-    catch (error) {
-        console.error(error)
-    }
-
-}
+  };
 
   // Fetch listing data based on ID
   const fetchUserData = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/${session?.user.email}`, {
-        method: 'GET',
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/${session?.user.email}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      });
+      );
       if (!response.ok) {
-        throw new Error("Error retrieving user infromation")
+        throw new Error("Error retrieving user infromation");
       }
 
-      const user: User = await response.json()
-      setUserData(user)
-      setUserDataEdit(user)
-      setIsLoading(false)
+      const user: User = await response.json();
+      setUserData(user);
+      setUserDataEdit(user);
+      setIsLoading(false);
     } catch (error) {
-      console.log("Error Fetching User Data: ", error)
+      console.log("Error Fetching User Data: ", error);
     }
   };
 
@@ -131,15 +141,14 @@ const Dashboard = () => {
       // Session is still loading, do nothing or show a loading indicator
     } else {
       // No active session, redirect to login page
-      router.push("/");
+      router.push("/listings");
     }
   }, [session, status, router]);
-
 
   //Setting profile name
   const [profile, setProfileName] = useState<profile>({ name: "" });
 
-  let newName = "John Doe";
+  let newName = "";
 
   useEffect(() => {
     setProfileName((prevProfile) => {
@@ -163,33 +172,32 @@ const Dashboard = () => {
 
   const closeSettings = () => {
     setOpenMenu(false);
-    setUserDataEdit(userData)
-    setNewPassword("")
-    setNewPasswordConfirm("")
-    setNoChangeError(false)
-    setPasswordError(false)
+    setUserDataEdit(userData);
+    setNewPassword("");
+    setNewPasswordConfirm("");
+    setNoChangeError(false);
+    setPasswordError(false);
   };
 
   //will contain array of listings data retrieved from db
-  const [homes, setHomes] = useState<postRequestBody[]>([]);
-  //Retrieving listing info
+  const [homes, setHomes] = useState<Listing[]>([]);
 
   //POST request for retrieving the saved listing
-  const receiveListing = async (receive: postRequestBody) => {
+  const receiveListing = async () => {
     try {
+      console.log("Homes:", homes);
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites/`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            email: receive.email,
-            listingId: receive.listingId,
+            email: session?.user.email,
           }),
         }
       );
       if (res.ok) {
-        const data: postRequestBody[] = await res.json();
+        const data: Listing[] = await res.json();
         setHomes(data);
         console.log("Retrieved Favorite", data);
       } else {
@@ -203,23 +211,20 @@ const Dashboard = () => {
   //Used for looking at the details of the home will be used for view the details of property
   const [viewHome, setViewHome] = useState(false);
 
-  const toggleViewHome = async (receive: postRequestBody) => {
+  const toggleViewHome = () => {
     try {
       setViewHome(!viewHome);
-      await receiveListing(receive);
     } catch (error) {
       console.error("Error toggling view home", error);
     }
   };
 
   //deleting favorite listing from user dashboard
-  const removeProperty = async (receive: postRequestBody) => {
+  const removeProperty = async (remove: Listing) => {
     try {
-      const updatedHomes = homes.filter(
-        (home) => home.listingId !== receive.listingId
-      );
+      const updatedHomes = homes.filter((home) => home.id !== remove.id);
       setHomes(updatedHomes);
-      await receiveListing(receive);
+      await receiveListing(); // Pass any necessary parameters here
       console.log("Updated Homes:", updatedHomes);
     } catch (error) {
       console.error("Error Removing Property, please try again later", error);
@@ -227,16 +232,15 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    const initialReceiveData: postRequestBody = {
-      email: "",
-      listingId: 0,
-    };
-    receiveListing(initialReceiveData);
+    receiveListing();
   }, []);
 
-
   if (isLoading) {
-    return <div className="min-h-screen flex justify-center items-center">Loading...</div>
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <div className="h-20 w-20 border-4 border-mint rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+      </div>
+    );
   }
   if (!isLoading && userData && userDataEdit) {
     return (
@@ -261,7 +265,7 @@ const Dashboard = () => {
                         size="lg"
                       />
                       <button
-                        onClick={()=>setOpenMenu(true)}
+                        onClick={() => setOpenMenu(true)}
                         className="w-8 h-8 hover:bg-gray-100/20 rounded-full bg-white shadow-md flex justify-center items-center transition duration-200 ease-in-out"
                       >
                         <FontAwesomeIcon
@@ -276,7 +280,9 @@ const Dashboard = () => {
                       <div className="w-44 h-44 relative rounded-2xl flex justify-center items-center">
                         <div className="w-36 h-36 bg-gray-300/20 inset-0 rounded-2xl shadow-md flex justify-center items-center">
                           <h2 className="text-3xl text-black font-montserrat">
-                            {userData?.name.charAt(0).toUpperCase()}
+                            {userData &&
+                              userData.name &&
+                              userData.name.charAt(0).toUpperCase()}
                           </h2>
                         </div>
                         <div className="absolute w-7 h-7 bg-blue-500 shadow-sm left-0 bottom-0 rounded-full flex justify-center items-center">
@@ -328,23 +334,23 @@ const Dashboard = () => {
                       </p>
                     </div>
                   ) : (
-                    homes.map((listing) => (
+                    homes.map((home) => (
                       <li
-                        // key={listing.id}
+                        key={home.id}
                         className="w-5/6 relative h-1/4 rounded-2xl my-4 hover:scale-105 hover:translate-x-4 shadow-mint/50 shadow-md transition duration-150 ease-in-out"
                       >
-                        {/* <Image
-                          src={listing.pictures[0]}
+                        <Image
+                          src={home.pictures[0]}
                           className=" w-[100%] h-[100%]  object-cover rounded-lg brightness-50 contrast-125 shadow-md"
                           alt="homes"
-                        /> */}
+                        />
                         <div className="absolute top-1/2 w-full flex justify-between">
                           <h2 className=" font-montserrat w-1/3 text-white px-4">
-                            {/* {addresses[index]} */}
+                            {home.address}
                           </h2>
                           <div className="w-1/6 flex justify-evenly">
                             <button
-                              onClick={() => toggleViewHome(listing)}
+                              onClick={() => toggleViewHome()}
                               className="w-10 h-10 flex justify-center items-center"
                             >
                               <svg
@@ -372,7 +378,7 @@ const Dashboard = () => {
                             </button>
 
                             <button
-                              onClick={() => removeProperty(listing)}
+                              onClick={() => removeProperty(home)} // Pass the ID of the property to remove
                               className="w-10 h-10 flex justify-center items-center"
                             >
                               <svg
@@ -450,7 +456,9 @@ const Dashboard = () => {
                 <div className="w-5/6 h-1/4 flex items-center">
                   <div className="w-32 h-32  inset-0 relative rounded-2xl flex justify-center items-center">
                     <div className="w-24 h-24 bg-eggshell inset-0 rounded-2xl shadow-md flex justify-center items-center">
-                      <h2 className="text-5xl text-white font-montserrat">{userData.name.charAt(0).toUpperCase()}</h2>
+                      <h2 className="text-5xl text-white font-montserrat">
+                        {/* {userData.name.charAt(0).toUpperCase()} */}
+                      </h2>
                     </div>
                   </div>
                   <h2 className="text-white text-lg font-agrandir p-4 ">
@@ -468,7 +476,12 @@ const Dashboard = () => {
                       id="Name"
                       name="Name"
                       value={userDataEdit.name}
-                      onChange={e => setUserDataEdit({ ...userDataEdit, name: e.target.value })}
+                      onChange={(e) =>
+                        setUserDataEdit({
+                          ...userDataEdit,
+                          name: e.target.value,
+                        })
+                      }
                       placeholder="Name"
                     />
                   </div>
@@ -481,7 +494,12 @@ const Dashboard = () => {
                       id="Phone"
                       name="Phone"
                       value={userDataEdit.number}
-                      onChange={e => setUserDataEdit({ ...userDataEdit, number: e.target.value })}
+                      onChange={(e) =>
+                        setUserDataEdit({
+                          ...userDataEdit,
+                          number: e.target.value,
+                        })
+                      }
                       placeholder="Phone"
                     />
                   </div>
@@ -494,44 +512,63 @@ const Dashboard = () => {
                       id="Email"
                       name="Email"
                       value={userDataEdit.email}
-                      onChange={e => setUserDataEdit({ ...userDataEdit, email: e.target.value })}
+                      onChange={(e) =>
+                        setUserDataEdit({
+                          ...userDataEdit,
+                          email: e.target.value,
+                        })
+                      }
                       placeholder="Email"
                     />
                   </div>
                   {/* Password */}
                   <div className="flex flex-col w-4/5 mb-[3%]">
-                  <label className="py-4 text-white">Password Change</label>
+                    <label className="py-4 text-white">Password Change</label>
                     <input
-                      className={`p-4 rounded-lg text-white bg-slate-400/10 ${passwordError ? 'border-2 border-red-400' : ''}`}
+                      className={`p-4 rounded-lg text-white bg-slate-400/10 ${
+                        passwordError ? "border-2 border-red-400" : ""
+                      }`}
                       type="password"
                       id="Password"
                       name="Password"
                       value={newPassword}
-                      onChange={e => setNewPassword(e.target.value)}
+                      onChange={(e) => setNewPassword(e.target.value)}
                       placeholder="New Password"
                     />
                   </div>
                   {/* Confirm Password */}
                   <div className="flex flex-col w-4/5 mb-[3%]">
                     <input
-                      className={`p-4 rounded-lg text-white bg-slate-400/10 ${passwordError ? 'border-2 border-red-400' : ''}`}
+                      className={`p-4 rounded-lg text-white bg-slate-400/10 ${
+                        passwordError ? "border-2 border-red-400" : ""
+                      }`}
                       type="password"
                       id="Confirm-Password"
                       name="Confirm Password"
                       value={newPasswordConfirm}
-                      onChange={e => setNewPasswordConfirm(e.target.value )}
+                      onChange={(e) => setNewPasswordConfirm(e.target.value)}
                       placeholder="Confirm New Password"
                     />
                   </div>
-                  {passwordError && <div className="text-red-400">Passwords do not match</div>}
-                  {noChangeError && <div className="text-red-400">No fields changed</div>}
+                  {passwordError && (
+                    <div className="text-red-400">Passwords do not match</div>
+                  )}
+                  {noChangeError && (
+                    <div className="text-red-400">No fields changed</div>
+                  )}
 
                   {/* Log In Button */}
                   <div className="justify-evenly w-full h-1/2 my-4 flex  items-center">
-                    <button onClick={saveUserData} className="p-4 bg-gradient-to-r shadow-md w-1/3 from-pine via-mint/50 to-mint text-base text-black rounded-2xl tracking-wide hover:opacity-80 active:opacity-100">
+                    <button
+                      onClick={saveUserData}
+                      className="p-4 bg-gradient-to-r shadow-md w-1/3 from-pine via-mint/50 to-mint text-base text-black rounded-2xl tracking-wide hover:opacity-80 active:opacity-100"
+                    >
                       Save
                     </button>
-                    <button onClick={handleLogout} className="p-4 bg-red-700 w-1/3 rounded-2xl text-base tracking-wider shadow-md hover:opacity-80 active:opacity-100">
+                    <button
+                      onClick={handleLogout}
+                      className="p-4 bg-red-700 w-1/3 rounded-2xl text-base tracking-wider shadow-md hover:opacity-80 active:opacity-100"
+                    >
                       Logout
                     </button>
                   </div>
@@ -546,6 +583,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-function setHomes(newHomes: StaticImport[]) {
-  throw new Error("Function not implemented.");
-}

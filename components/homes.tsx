@@ -56,7 +56,7 @@ const Homes = () => {
       setError("Error");
     } finally {
       setLoading(false);
-      console.log("Listings", listings);
+      console.log("Listings:", listings);
     }
   };
 
@@ -81,18 +81,18 @@ const Homes = () => {
   const [saveProp, setSaveProp] = useState<SavedListing[]>([]);
   //Data needed for save listing
 
-  const sendFavListing = async (saveList: SavedListing) => {
+  const sendFavListing = async (listingId: SavedListing) => {
     try {
-      console.log("Sending request with updatedSaveProp:", saveList);
+      console.log("Sending request with updatedSaveProp:", listingId);
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites/${session?.user.email}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            email: saveList.email,
-            listingId: saveList.listingId, // Assuming you want to access the first listing's ID
+            email: session?.user.email,
+            listingId: listingId, // Assuming you want to access the first listing's ID
           }),
         }
       );
@@ -169,7 +169,7 @@ const Homes = () => {
 
   if (loading) {
     return (
-      <div className="w-[50%] flex justify-center items-center">
+      <div className="w-[100%] flex justify-center items-center">
         <div className="h-20 w-20 border-4 border-mint rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
       </div>
     );
