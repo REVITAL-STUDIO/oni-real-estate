@@ -187,7 +187,7 @@ const Dashboard = () => {
     try {
       console.log("Homes:", homes);
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites/`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites/${session?.user.email}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

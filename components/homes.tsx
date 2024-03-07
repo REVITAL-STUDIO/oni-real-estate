@@ -81,12 +81,12 @@ const Homes = () => {
   const [saveProp, setSaveProp] = useState<SavedListing[]>([]);
   //Data needed for save listing
 
-  const sendFavListing = async (listingId: SavedListing) => {
+  const sendFavListing = async (listingId: number) => {
     try {
       console.log("Sending request with updatedSaveProp:", listingId);
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites/${session?.user.email}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites/`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -116,7 +116,7 @@ const Homes = () => {
     }
   };
 
-  const toggleSavedListing = async (saveList: SavedListing) => {
+  const toggleSavedListing = async (listingId: number) => {
     if (!session) {
       // Handle case when user is not logged in
       console.log("User not logged in");
@@ -125,10 +125,7 @@ const Homes = () => {
     }
     try {
       // Check if the listing is already saved
-      const isSaved = saveProp.some(
-        (item) =>
-          item.listingId === saveList.listingId && item.email === saveList.email
-      );
+      const isSaved = saveProp.some((item) => item.listingId === listingId);
 
       if (isSaved) {
         console.log("Property already saved");
@@ -136,10 +133,13 @@ const Homes = () => {
       }
 
       // If the listing is not saved, add it
-      const updatedSaveProp = [...saveProp, saveList];
+      const updatedSaveProp = [
+        ...saveProp,
+        { email: session?.user.email, listingId },
+      ];
 
       // Call sendFavListing to update favorites
-      await sendFavListing(saveList); // Pass saveList to sendFavListing
+      await sendFavListing(listingId); // Pass the listing ID to sendFavListing
 
       // Update the saveProp state with the updated list of saved listings
       setSaveProp(updatedSaveProp);
@@ -221,12 +221,7 @@ const Homes = () => {
                 <p className="font-light p-2 text-sm">{`${listing.beds} beds | ${listing.baths} baths |  ${listing.area} sqft`}</p>
                 {session && (
                   <button
-                    onClick={() =>
-                      toggleSavedListing({
-                        listingId: listing.id,
-                        email: session?.user.email,
-                      })
-                    }
+                    onClick={() => toggleSavedListing(listing.id)}
                     className="w-20 h-10 font-agrandir tracking-wide flex justify-evenly items-center p-2"
                   >
                     <span>

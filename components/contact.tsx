@@ -33,13 +33,20 @@ const Contact = () => {
 
     try {
       const fullName = `${firstName} ${lastName}`;
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/leads`, {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ ...leadData, name: fullName, source: 'Homepage form Submission' }),
-      })
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/leads`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...leadData,
+            name: fullName,
+            source: "Homepage form Submission",
+          }),
+        }
+      );
       if (!response.ok) {
         throw new Error(
           `HTTP ERROR - Error creating lead. Status: ${response.status}`
@@ -87,7 +94,7 @@ const Contact = () => {
           initial="hidden"
           animate={control}
           transition={{ duration: 0.6, delay: 0.25 }}
-          className="xl:w-1/4 xl:h-full w-full h-1/4 bg-[url('/houston-contact.jpeg')] brightness-90 bg-cover bg-center rounded-tr-2xl rounded-tl-2xl"
+          className="xl:w-1/4 xl:h-full w-full h-1/4 bg-[url('/houston-contact.jpeg')] brightness-90 bg-cover bg-center rounded-tr-2xl rounded-tl-2xl xl:rounded-tl-none"
         ></motion.div>
         <motion.div
           variants={{
@@ -104,11 +111,15 @@ const Contact = () => {
               Get in touch with us
             </h2>
           </div>
-          {isSuccess ?
-            <div className="h-3/4 flex justify-center items-center text-5xl text-black">Message Sent!</div>
-            :
-
-            <form onSubmit={createlead} className="w-5/6 h-full flex items-center justify-center flex-col rounded-lg  gap-x-4  z-10">
+          {isSuccess ? (
+            <div className="h-3/4 flex justify-center items-center text-5xl text-black">
+              Message Sent!
+            </div>
+          ) : (
+            <form
+              onSubmit={createlead}
+              className="w-5/6 h-full flex items-center justify-center flex-col rounded-lg  gap-x-4  z-10"
+            >
               <div className="w-full flex flex-wrap justify-center gap-4  ">
                 <div className="flex flex-col w-2/5">
                   <label htmlFor="firstName" className="my-2 text-black">
@@ -198,7 +209,7 @@ const Contact = () => {
                 </p>
               </div>
             </form>
-          }
+          )}
         </motion.div>
       </div>
     </div>
