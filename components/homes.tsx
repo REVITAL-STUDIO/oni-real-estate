@@ -78,27 +78,27 @@ const Homes = () => {
   //Saved Listing Function
 
   //will contain the information of the listings being sent to client
-  const [saveProp, setSaveProp] = useState<SavedListing[]>([]);
+  const [saveProp, setSaveProp] = useState<Listing[]>([]);
   //Data needed for save listing
 
-  const sendFavListing = async (listingId: number) => {
+  const sendFavListing = async (id: number) => {
     try {
-      console.log("Sending request with updatedSaveProp:", listingId);
+      console.log("Sending request with updatedSaveProp:", id);
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites/`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites/${session?.user.email}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             email: session?.user.email,
-            listingId: listingId, // Assuming you want to access the first listing's ID
+            listingId: id, // Assuming you want to access the first listing's ID
           }),
         }
       );
 
       if (response.ok) {
-        const data: SavedListing[] = await response.json();
+        const data: Listing[] = await response.json();
         // Verify the structure of the response and update the state accordingly
         if (Array.isArray(data)) {
           setSaveProp(data);
@@ -116,33 +116,21 @@ const Homes = () => {
     }
   };
 
-  const toggleSavedListing = async (listingId: number) => {
+  const toggleSavedListing = async (id: number) => {
     if (!session) {
-      // Handle case when user is not logged in
       console.log("User not logged in");
-      // You might want to show a login modal or redirect the user to the login page
-      return; // Early return if user is not logged in
+      // You might want to handle this case further, such as showing a login modal
+      return;
     }
+
     try {
-      // Check if the listing is already saved
-      const isSaved = saveProp.some((item) => item.listingId === listingId);
-
-      if (isSaved) {
-        console.log("Property already saved");
-        return;
-      }
-
       // If the listing is not saved, add it
-      const updatedSaveProp = [
-        ...saveProp,
-        { email: session?.user.email, listingId },
-      ];
+      const updatedSaveProp = [...saveProp, id];
 
       // Call sendFavListing to update favorites
-      await sendFavListing(listingId); // Pass the listing ID to sendFavListing
+      await sendFavListing(id); // Pass the listing ID to sendFavListing
 
       // Update the saveProp state with the updated list of saved listings
-      setSaveProp(updatedSaveProp);
     } catch (error) {
       console.error("Error toggling saved status", error);
       // Handle error
@@ -226,7 +214,7 @@ const Homes = () => {
                   >
                     <span>
                       {saveProp.some(
-                        (saveList) => saveList.listingId === listing.id
+                        (saveList) => saveList.id === listing.id
                       ) ? (
                         <FontAwesomeIcon
                           icon={faCheck}
@@ -242,9 +230,7 @@ const Homes = () => {
                       )}
                     </span>
                     <span>
-                      {saveProp.some(
-                        (saveList) => saveList.listingId === listing.id
-                      )
+                      {saveProp.some((saveList) => saveList.id === listing.id)
                         ? "Saved"
                         : "Save"}
                     </span>
