@@ -47,7 +47,7 @@ const Google: React.FC = () => {
 
   useEffect(() => {
     const loader = new Loader({
-      apiKey: "AIzaSyBamOgCKEhWHWq-2stqiQ5tLGwwNbErgks", // Replace with your actual API key
+      apiKey: process.env.GOOGLE_MAPS, // Replace with your actual API key
       version: "weekly",
     } as LoaderOptions);
 
@@ -66,7 +66,7 @@ const Google: React.FC = () => {
               const response = await fetch(
                 `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
                   listing.address
-                )}&key=AIzaSyBH_MRG-V66QlZy1zT2eeCrW5Nyx2LBx20`
+                )}&key=${process.env.GOOGLE_GEO}`
               );
               const data = await response.json();
               if (data.results && data.results.length > 0) {
