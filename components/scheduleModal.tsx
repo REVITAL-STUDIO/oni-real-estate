@@ -74,7 +74,7 @@ const ScheduleModal: React.FC<{ handleClose: () => void }> = ({
       className="fixed inset-0 z-100"
     >
       <div
-        className="w-full h-full bg-white/80
+        className="w-full h-full bg-white/90
       flex justify-center items-center z-50"
       >
         <motion.section

@@ -54,7 +54,7 @@ const Schedule = () => {
 
   return (
     <div
-      className=" bg-gradient-to-b from-mint/50 via-white to-white w-full h-screen flex justify-center items-center"
+      className=" bg-gradient-to-b from-mint/50 via-white to-white w-full h-screen flex justify-center items-center z-50"
       ref={parentRef}
     >
       <div
