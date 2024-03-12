@@ -128,16 +128,16 @@ const CreateListing = () => {
               />
             </div>
           )}
-          <div className="flex overflow-y-scroll xl:overflow-y-hidden relative flex-col bg-white w-[90%]  items-center justify-start xl:justify-center md:py-[3rem] rounded-3xl shadow-md max-h-[600px] ">
-            <h1 className=" p-4 w-full text-center text-2xl xl:text-4xl  ">
+          <div className="flex overflow-y-scroll xl:overflow-y-hidden relative flex-col bg-white/50 w-[90%]  items-center justify-start xl:justify-center md:py-[3rem] rounded-3xl shadow-md max-h-[800px] md:max-h-[950px] ">
+            <h1 className=" p-4 w-full text-left text-2xl md:text-4xl  text-white">
               {" "}
               Create a Listing
             </h1>
 
             <div className="flex flex-col xl:flex-row w-full h-auto items-center justify-evenly">
-              <form className="md:w-[85%] xl:w-[40%]  flex flex-col gap-4 p-4">
+              <form className="w-[90%] xl:w-[40%]  flex flex-col gap-4 p-4">
                 <div>
-                  <label className="py-2">Address</label>
+                  <label className="py-2 text-white">Address</label>
                   <input
                     name="address"
                     type="text"
@@ -150,7 +150,7 @@ const CreateListing = () => {
                   />
                 </div>
                 <div>
-                  <label className="py-2">Description</label>
+                  <label className="py-2 text-white">Description</label>
                   <input
                     name="description"
                     type="text"
@@ -163,7 +163,7 @@ const CreateListing = () => {
                   />
                 </div>
                 <div>
-                  <label className="py-2"># Beds</label>
+                  <label className="py-2 text-white"># Beds</label>
                   <input
                     name="description"
                     type="number"
@@ -179,7 +179,7 @@ const CreateListing = () => {
                   />
                 </div>
                 <div>
-                  <label className="py-2"># Baths</label>
+                  <label className="py-2 text-white"># Baths</label>
                   <input
                     name="baths"
                     type="number"
@@ -195,7 +195,7 @@ const CreateListing = () => {
                   />
                 </div>
                 <div>
-                  <label className="py-2">Area</label>
+                  <label className="py-2 text-white">Area</label>
                   <input
                     name="description"
                     type="number"
@@ -211,7 +211,7 @@ const CreateListing = () => {
                   />
                 </div>
                 <div>
-                  <label className="py-2">Price</label>
+                  <label className="py-2 text-white">Price</label>
                   <input
                     name="description"
                     type="number"
@@ -234,7 +234,7 @@ const CreateListing = () => {
                 </button>
               </form>
 
-              <div className="md:w-[45%]  ">
+              <div className="md:w-[85%] xl:w-1/2 ">
                 <p>Photos</p>
                 <FileUpload onFilesSelected={handleFilesSelected} />
               </div>

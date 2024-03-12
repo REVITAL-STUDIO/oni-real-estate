@@ -52,8 +52,10 @@ const FileUpload: React.FC<fileUploadProps> = ({
       >
         <input {...getInputProps()} />
         <Image src={PhotoDrop} alt="photo-drop" className="w-20 h-20 " />
-        <p className="text-center text-sm">Drag and drop your images here</p>
-        <p>or</p>
+        <p className="text-center text-sm text-white">
+          Drag and drop your images here
+        </p>
+        <p className="text-white">or</p>
         <button className="bg-[#B3B3B3] p-4 rounded-lg text-xs hover:opacity-50 active:opacity-100">
           Browse Files
         </button>
