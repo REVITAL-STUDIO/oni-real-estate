@@ -107,17 +107,18 @@ const PropertyInfo: React.FC<{
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ ease: "easeInOut", duration: 1 }}
-        className="bg-white/90 w-full h-full flex flex-col justify-center items-center relative overflow-y-auto another-scrollbar z-50"
+        className="bg-white/90 w-full h-full flex flex-col justify-center items-center  overflow-y-auto another-scrollbar z-50"
       >
         <button
           onClick={handleClose}
-          className="w-auto h-auto absolute top-2 right-2"
+          className="w-10 h-10 absolute top-2 right-2"
         >
-          <FontAwesomeIcon
-            className="hover:text-black/50 text-black duration-100 w-6 h-6"
-            icon={faClose}
-            size="lg"
-          />
+          <span
+            className={`block w-3/4 my-0.5 border absolute border-black rotate-45 transition-transform `}
+          ></span>
+          <span
+            className={`block w-3/4 my-0.5 border absolute border-black -rotate-45 transition-transform `}
+          ></span>
         </button>
         <motion.section
           initial={{ opacity: 0, y: -100 }}
@@ -128,7 +129,7 @@ const PropertyInfo: React.FC<{
         >
           {/* Home and Description */}
           <div className="w-full h-full flex flex-col xl:flex-row justify-around items-center">
-            <div className="xl:w-1/2 w-[100%]  xl:h-5/6 h-1/2 rounded-lg p-4 ">
+            <div className="xl:w-1/2 w-[100%]  xl:h-5/6 h-1/2 rounded-lg p-4 md:p-16 xl:p-4 ">
               {/* this is the main photo of the listing this is where i want the current slide to go or the current photo in the slide */}
               <AnimatePresence mode="wait">
                 <motion.img
@@ -152,7 +153,7 @@ const PropertyInfo: React.FC<{
               <h2 className="text-2xl xl:text-5xl w-2/3 md:w-[82%] text-black font-agrandir tracking-wide font-regular">
                 {selectedListing?.address}
               </h2>
-              <h2 className="  py-2 font-montserrat text-forest font-bold tracking-wide text-2xl xl:text-4xl ">
+              <h2 className="  py-4 font-montserrat text-forest font-bold tracking-wide text-3xl  md:text-5xl ">
                 {selectedListing?.price?.toLocaleString("en-US", {
                   style: "currency",
                   currency: "USD",
@@ -191,24 +192,14 @@ const PropertyInfo: React.FC<{
               </div>
               <div className="w-full h-1/6  flex  items-center">
                 {isInquiryModalOpen && (
-                  <div>
-                    <motion.section
-                      initial={{ opacity: 0, y: -100 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -100 }}
-                      transition={{ ease: "easeInOut", duration: 0.5 }}
-                      className="fixed inset-0 z-50 flex justify-center items-center "
-                    >
-                      <InquiryModal
-                        onClose={handleCloseModal}
-                        listingInquired={selectedListing}
-                      />
-                    </motion.section>
-                  </div>
+                  <InquiryModal
+                    onClose={handleCloseModal}
+                    listingInquired={selectedListing}
+                  />
                 )}
                 <button
                   onClick={handleOpenModal}
-                  className="w-1/2 h-12 mt-4 text-white bg-black tracking-wide  rounded-xl shadow-xl flex justify-center items-center"
+                  className="w-1/3  mt-4 text-white bg-black tracking-wider hover:scale-110 transition duration-200 ease-in-out rounded-xl shadow-xl flex justify-center items-center p-4"
                 >
                   Inquire
                 </button>

@@ -47,9 +47,11 @@ const Google: React.FC = () => {
 
   useEffect(() => {
     const loader = new Loader({
-      apiKey: process.env.GOOGLE_MAPS, // Replace with your actual API key
+      apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS, // Replace with your actual API key
       version: "weekly",
     } as LoaderOptions);
+
+    console.log("apiKey:", loader);
 
     loader
       .load()
@@ -66,7 +68,7 @@ const Google: React.FC = () => {
               const response = await fetch(
                 `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
                   listing.address
-                )}&key=${process.env.GOOGLE_GEO}`
+                )}&key=${process.env.NEXT_PUBLIC_GOOGLE_GEO}`
               );
               const data = await response.json();
               if (data.results && data.results.length > 0) {
@@ -75,6 +77,13 @@ const Google: React.FC = () => {
                   position: { lat, lng },
                   map,
                   title: listing.address,
+                  icon: {
+                    path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+                    fillColor: "#5D5D5D", // your desired color
+                    fillOpacity: 1,
+                    strokeWeight: 0,
+                    scale: 5, // adjust the size of the marker
+                  },
                 });
               } else {
                 throw new Error("No results found");
