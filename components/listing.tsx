@@ -162,7 +162,7 @@ const Listing = () => {
           attention to detail.
         </p>
       </div>
-      <div className="w-full flex flex-col xl:flex-row xl:h-16 h-1/3 font-montserrat bg-white z-20">
+      <div className="w-full flex flex-col xl:flex-row xl:h-16 h-1/3 font-montserrat shadow-lg bg-smoke/50 z-20">
         {/* Toggle Button RENT and SALE */}
         <div className="xl:w-80 w-60 flex justify-center items-center transition-all">
           <div className="w-5/6 h-11 relative text-xl xl:text-2xl uppercase tracking-wider flex justify-around items-center ">

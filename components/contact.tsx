@@ -83,13 +83,13 @@ const Contact = () => {
   return (
     <div ref={parentRef}>
       <div
-        className="xl:h-700 h-screen w-full flex flex-col xl:flex-row"
+        className="xl:h-700 h-900 w-full flex flex-col xl:flex-row"
         ref={ref}
       >
         <motion.div
           variants={{
-            hidden: { opacity: 0 },
-            visible: { opacity: 1 },
+            hidden: { opacity: 0, y: -75 },
+            visible: { opacity: 1, y: 0 },
           }}
           initial="hidden"
           animate={control}
@@ -106,8 +106,8 @@ const Contact = () => {
           transition={{ duration: 0.6, delay: 0.25 }}
           className="xl:w-3/4 xl:h-full w-full h-3/4 bg-white flex flex-col justify-center items-center relative font-montserrat"
         >
-          <div className="w-5/6 xl:3/4 h-[10%] flex justify-center font-agrandir text-2xl  lg:text-4xl text-black my-4 ">
-            <h2 className="w-full relative left-0 text-black block tracking-wider">
+          <div className="w-5/6 xl:3/4 h-[10%] flex items-center  justify-center font-agrandir text-sm  md:text-xl  lg:text-4xl text-black my-4 ">
+            <h2 className="w-fit relative left-0 text-black block tracking-wider p-4 rounded-full border ">
               Get in touch with us
             </h2>
           </div>
@@ -127,7 +127,7 @@ const Contact = () => {
                   </label>
                   <input
                     typeof="firstName"
-                    className="h-12 xl:h-16 lg:h-24 border bg-transparent p-2 xl:p-4 rounded-sm text-black"
+                    className="h-12 xl:h-16 lg:h-24 rounded-2xl border bg-transparent p-2 xl:p-4  text-black"
                     placeholder="First Name"
                     required
                     value={firstName}
@@ -140,7 +140,7 @@ const Contact = () => {
                   </label>
                   <input
                     typeof="lastName"
-                    className="h-12 xl:h-16 lg:h-24 border bg-transparent p-2 xl:p-4rounded-sm text-black"
+                    className="h-12 xl:h-16 lg:h-24 border rounded-2xl bg-transparent p-2 xl:p-4rounded-sm text-black"
                     placeholder="Last Name"
                     required
                     value={lastName}
@@ -153,7 +153,7 @@ const Contact = () => {
                   </label>
                   <input
                     typeof="email"
-                    className="h-12 xl:h-16 lg:h-24 border bg-transparent p-2 xl:p-4rounded-sm text-black"
+                    className="h-12 xl:h-16 lg:h-24 border rounded-2xl bg-transparent p-2 xl:p-4rounded-sm text-black"
                     placeholder="Email"
                     required
                     value={leadData.email}
@@ -168,7 +168,7 @@ const Contact = () => {
                   </label>
                   <input
                     typeof="phone"
-                    className="h-12 xl:h-16 lg:h-24 border bg-transparent p-2 xl:p-4 rounded-sm text-black"
+                    className="h-12 xl:h-16 lg:h-24 border rounded-2xl bg-transparent p-2 xl:p-4  text-black"
                     placeholder="Phone"
                     value={leadData.number}
                     onChange={(e) =>
@@ -182,7 +182,7 @@ const Contact = () => {
                   </label>
                   <textarea
                     typeof="message"
-                    className="h-24 xl:h-32 lg:h-72 border bg-transparent p-2 xl:p-4 rounded-sm text-black"
+                    className="h-44 xl:h-32 lg:h-72 border rounded-2xl bg-transparent p-2 xl:p-4  text-black"
                     placeholder="Message"
                     value={leadData.message}
                     onChange={(e) =>
@@ -194,7 +194,7 @@ const Contact = () => {
               <div className="w-5/6 xl:h-1/4 h-1/2 flex flex-col gap-y-4 justify-center my-8">
                 <button
                   type="submit"
-                  className="xl:w-1/2 w-3/4 h-auto my-2 ml-1 p-2 lg:p-4 xl:p-4 border  text-black rounded-md "
+                  className="xl:w-1/2 w-3/4 h-auto my-2 ml-1 p-2 lg:p-4 xl:p-4 border rounded-2xl text-black "
                 >
                   Send message{" "}
                   <FontAwesomeIcon

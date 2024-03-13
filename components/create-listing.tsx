@@ -128,14 +128,16 @@ const CreateListing = () => {
               />
             </div>
           )}
-          <div className="flex overflow-y-scroll xl:overflow-y-hidden relative flex-col bg-white/50 w-[90%]  items-center justify-start xl:justify-center md:py-[3rem] rounded-3xl shadow-md max-h-[800px] md:max-h-[950px] ">
-            <h1 className=" p-4 w-full text-left text-2xl md:text-4xl  text-white">
-              {" "}
-              Create a Listing
-            </h1>
+          <div className="flex overflow-y-scroll xl:overflow-y-hidden p-4 md:p-8 relative flex-col bg-white/50 w-[95%] md:w-[100%] items-center justify-start xl:justify-center md:py-[3rem] rounded-3xl shadow-md max-h-[800px] md:max-h-[950px] ">
+            <div className="w-full  ">
+              <h1 className=" p-4 w-full text-left text-3xl relative md:left-7 xl:left-10 text-white">
+                {" "}
+                Create a Listing
+              </h1>
+            </div>
 
             <div className="flex flex-col xl:flex-row w-full h-auto items-center justify-evenly">
-              <form className="w-[90%] xl:w-[40%]  flex flex-col gap-4 p-4">
+              <form className="w-[100%] md:w-[90%] xl:w-[40%]  flex flex-col gap-4 p-4">
                 <div>
                   <label className="py-2 text-white">Address</label>
                   <input
@@ -235,7 +237,7 @@ const CreateListing = () => {
               </form>
 
               <div className="md:w-[85%] xl:w-1/2 ">
-                <p>Photos</p>
+                <p className="text-white">Photos</p>
                 <FileUpload onFilesSelected={handleFilesSelected} />
               </div>
             </div>

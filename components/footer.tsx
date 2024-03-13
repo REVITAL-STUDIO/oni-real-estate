@@ -5,11 +5,11 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <div className="w-full h-screen lg:h-600 flex flex-col  relative bg-black -z-10">
+    <div className="w-full h-screen lg:h-400 flex flex-col  relative bg-black -z-10">
       <div className="flex  h-full  ">
         {/* links */}
         <div className="w-1/2 h-full xl:flex  justify-center items-center hidden">
-          <div className="xl:w-64 w-40 h-fit  ">
+          <div className=" w-40 h-fit  ">
             <Image
               src={Logo}
               alt="logo"
@@ -27,7 +27,7 @@ const Footer = () => {
           <div className="flex flex-col xl:flex-row items-center justify-center w-full h-2/5 xl:h-0">
             <div className="border-b-4 rounded-full hidden border-white xl:w-1/2 w-5/6 xl:block xl:left-0"></div>
             <ul
-              className={` text-white text-sm xl:text-sm  p-4  font-agrandir h-full flex flex-col xl:flex-row gap-y-4 justify-evenly xl:justify-around uppercase tracking-widest xl:items-center  w-full transition-colors duration-300 ease-in
+              className={` text-white text-sm xl:text-xs  p-4  font-agrandir h-full flex flex-col xl:flex-row gap-y-4 justify-evenly xl:justify-around uppercase tracking-widest xl:items-center  w-full transition-colors duration-300 ease-in
           `}
             >
               <li className="relative  hover:text-gray-400 duration-200 ease-in-out transition">

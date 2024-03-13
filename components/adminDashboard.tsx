@@ -498,7 +498,7 @@ const AdminDashboard = () => {
           )}
           {/* Opening Add Homes */}
           {editListing && selectedListing && (
-            <div className="fixed left-0 top-0 bg-black/90 w-full h-full z-20">
+            <div className="fixed left-0 top-0 bg-black/90 w-full h-full z-50">
               <button
                 onClick={() => showEditListing(false)}
                 className="absolute right-2 top-2 p-4 flex justify-center items-center z-50"

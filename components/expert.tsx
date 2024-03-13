@@ -35,149 +35,15 @@ const Expert = () => {
 
   return (
     <div
-      className=" h-screen w-full xl:h-1300 bg-gradient-to-b from-white via-mint/50 to-white"
+      className=" w-full h-screen md:h-1000 bg-gradient-to-b  from-white via-pine/50 to-white flex justify-center items-center"
       ref={parentRef}
     >
       {/* Local Support */}
       <div
-        className="h-full w-full  flex flex-col justify-center items-center xl:flex-row"
+        className=" h-full w-full  flex flex-col justify-center  items-center xl:flex-row"
         ref={ref}
       >
-        {/* Flex-row */}
-        <div className="w-full xl:w-1/2 h-3/4  xl:h-full hidden xl:flex xl:flex-col xl:justify-evenly items-center">
-          <motion.h2
-            variants={{
-              hidden: { opacity: 0, y: 75 },
-              visible: { opacity: 1, y: 0 },
-            }}
-            initial="hidden"
-            animate={control}
-            transition={{ duration: 0.6, delay: 0.25 }}
-            className="  w-full  font-agrandir p-4 text-2xl md:text-6xl font-regular uppercase tracking-wide text-black "
-          >
-            LOCAL EXPERTISE HOUSTON CONNECTED
-          </motion.h2>
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, y: 0 },
-              visible: { opacity: 1, y: 0 },
-            }}
-            initial="hidden"
-            animate={control}
-            transition={{ duration: 0.6, delay: 1.5 }}
-            className="w-full h-1/2 relative p-4 bottom-24"
-          >
-            <Image
-              src={Local}
-              alt="local support"
-              className="object-cover object-center h-[100%] w-[100%]  rounded-lg shadow-xl"
-            ></Image>
-          </motion.div>
-        </div>
-        {/* Local Expertise */}
-        <div className="w-full h-1/4 xl:h-5/6  xl:w-1/2 flex items-center flex-col justify-center xl:justify-evenly  xl:items-end  relative">
-          {/* Mobille Responsive */}
-
-          <motion.p
-            variants={{
-              hidden: { opacity: 0, y: 0 },
-              visible: { opacity: 1, y: 0 },
-            }}
-            initial="hidden"
-            animate={control}
-            transition={{ duration: 0.6, delay: 1 }}
-            className="text-base md:text-lg xl:w-full hidden xl:block p-4 text-black/75 mt-2 font-montserrat leading-6 font-regular tracking-wide text-right relative xl:top-6"
-          >
-            Empowering Your Real Estate Journey with Unmatched Local Insight and
-            Houston Connectivity. Navigate the Market Confidently with Our
-            Expertise.
-          </motion.p>
-          <ul className="xl:w-full xl:h-1/2 hidden xl:flex xl:flex-col items-end p-4 justify-evenly font-cinzel text-xl relative top-20">
-            <div className="w-full ">
-              <motion.div
-                initial={{ scaleX: 0 }}
-                animate={control}
-                variants={{
-                  hidden: { scaleX: 0 },
-                  visible: { scaleX: 1 },
-                }}
-                transition={{ duration: 1, delay: 2 }}
-                className="w-full border border-black/50"
-                style={{ transformOrigin: "right" }}
-              ></motion.div>
-              <motion.li
-                variants={{
-                  hidden: { opacity: 0, y: 0 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-                initial="hidden"
-                animate={control}
-                transition={{ duration: 1, delay: 2 }}
-                className="p-4 text-right text-black tracking-wider font-light"
-              >
-                Curated & Exclusive
-              </motion.li>
-            </div>
-            <div className=" w-full ">
-              <motion.div
-                initial={{ scaleX: 0 }}
-                animate={control}
-                variants={{
-                  hidden: { scaleX: 0 },
-                  visible: { scaleX: 1 },
-                }}
-                transition={{ duration: 1, delay: 2.5 }}
-                className="w-full border border-black/50"
-                style={{ transformOrigin: "right" }}
-              ></motion.div>
-              <motion.li
-                variants={{
-                  hidden: { opacity: 0, y: 0 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-                initial="hidden"
-                animate={control}
-                transition={{ duration: 0.6, delay: 2.5 }}
-                className="p-4 text-right text-black tracking-wider font-light"
-              >
-                Redefining Standards
-              </motion.li>
-            </div>
-            <div className="  w-full">
-              <motion.div
-                initial={{ scaleX: 0 }}
-                animate={control}
-                variants={{
-                  hidden: { scaleX: 0 },
-                  visible: { scaleX: 1 },
-                }}
-                transition={{ duration: 1, delay: 3 }}
-                className="w-full border border-black/50"
-                style={{ transformOrigin: "right" }}
-              ></motion.div>
-              <motion.li
-                variants={{
-                  hidden: { opacity: 0, y: 0 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-                initial="hidden"
-                animate={control}
-                transition={{ duration: 0.6, delay: 3 }}
-                className="p-4 text-right text-black tracking-wider font-light"
-              >
-                Uncompromising Efforts
-              </motion.li>
-            </div>
-          </ul>
-          <button className="absolute xl:w-1/3 w-5/6 hidden  h-16 hover:bg-black hover:text-white text-black font-light tracking-wider text-base xl:flex justify-center items-center transition-all duration-300 ease-in-out font-montserrat bottom-[0%] bg-white xl:right-4  bg-opacity-20 backdrop-blur-5 border border-opacity-30 border-black/50 rounded-2xl shadow-sm p-4  group">
-            <span>For Owners </span>
-            <span className="relative left-1 bottom-3 transfrom -rotate-45 flex items-center justify-start w-12 h-12 duration-300 transform translate-y-0 group-hover:-translate-y-[10%] group-hover:translate-x-[25%] group-hover:opacity-100 ease">
-              <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
-            </span>
-          </button>
-        </div>
-
-        {/* flex column */}
+        {/* Flex column */}
         <motion.div
           variants={{
             hidden: { opacity: 0, y: -75 },
@@ -186,12 +52,12 @@ const Expert = () => {
           initial="hidden"
           animate={control}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="w-full h-full md:h-2/3 xl:hidden relative flex flex-col items-center justify-center"
+          className="w-full h-1000 md:h-2/3 xl:hidden  relative flex flex-col items-center justify-center"
         >
-          <motion.h2 className="md:w-full xl:hidden text-right font-agrandir p-4 text-2xl md:text-5xl uppercase tracking-wide text-black ">
-            LOCAL EXPERTISE HOUSTON CONNECTED
+          <motion.h2 className="md:w-full xl:hidden text-left font-agrandir p-4 text-2xl md:text-5xl  tracking-wide text-black ">
+            Local Expertise Houston Connected
           </motion.h2>
-          <motion.p className="text-base md:text-lg xl:w-full xl:hidden p-4 text-black/75 mt-2 font-montserrat leading-6 font-regular tracking-wide text-right relative xl:top-6">
+          <motion.p className="text-sm xl:w-full xl:hidden p-4 text-black/75 mt-2 font-montserrat leading-6 font-regular tracking-wide text-left relative xl:top-6">
             Empowering Your Real Estate Journey with Unmatched Local Insight and
             Houston Connectivity. Navigate the Market Confidently with Our
             Expertise.
@@ -210,6 +76,160 @@ const Expert = () => {
             </span>
           </button>
         </motion.div>
+        {/* Flex-row */}
+        <div className="w-full xl:w-1/2 xl:h-full hidden xl:flex xl:flex-col xl:justify-evenly items-center">
+          <motion.h2
+            variants={{
+              hidden: { opacity: 0, y: 75 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            initial="hidden"
+            animate={control}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            className="  w-full text-left  font-agrandir p-4 text-2xl md:text-6xl font-regular tracking-wide text-black "
+          >
+            Local Expertise Houston Connected
+          </motion.h2>
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, y: 0 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            initial="hidden"
+            animate={control}
+            transition={{ duration: 0.6, delay: 1.5 }}
+            className="w-full h-1/2 relative p-4 bottom-24"
+          >
+            <Image
+              src={Local}
+              alt="local support"
+              className="object-cover object-center h-[100%] w-[100%]  rounded-lg shadow-xl"
+            ></Image>
+          </motion.div>
+          {/* flex column */}
+        </div>
+        {/* Local Expertise */}
+        <div className="w-full h-1/5 xl:h-1/2   xl:w-1/2 flex items-center flex-col justify-center xl:justify-evenly  xl:items-end  relative">
+          {/* Mobille Responsive */}
+          <motion.h2
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1 },
+            }}
+            initial="hidden"
+            animate={control}
+            transition={{ duration: 0.6, delay: 0.75 }}
+            className="p-4 text-5xl font-montserrat hidden xl:block"
+          >
+            A Trustworthy <span className="text-pine font-bold">Network</span>
+          </motion.h2>
+          <motion.p
+            variants={{
+              hidden: { opacity: 0, y: 0 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            initial="hidden"
+            animate={control}
+            transition={{ duration: 0.6, delay: 1 }}
+            className="text-sm xl:w-5/6 hidden xl:block p-4 text-black/75 mt-2 font-montserrat leading-6 font-regular tracking-wide text-jusitfy relative "
+          >
+            Empowering Your Real Estate Journey with Unmatched Local Insight and
+            Houston Connectivity. Navigate the Market Confidently with Our
+            Expertise.
+            <br></br>
+            <br></br>
+            We understand the intricate nuances of the market landscape,
+            allowing us to provide you with tailored solutions that align
+            perfectly with your goals. Whether you're buying, selling, or
+            investing, our expertise ensures that you navigate each step with
+            confidence and clarity. Our team is dedicated to staying ahead of
+            market trends, leveraging our deep-rooted connections to unlock
+            opportunities that others might overlook.
+          </motion.p>
+          {/* <ul className="xl:w-full xl:h-1/2 hidden xl:flex xl:flex-col items-end p-4 justify-evenly font-cinzel text-xl relative top-20">
+            <div className="w-1/2 ">
+              <motion.li
+                variants={{
+                  hidden: { opacity: 0, y: 0 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                initial="hidden"
+                animate={control}
+                transition={{ duration: 1, delay: 2 }}
+                className="p-4 text-right text-black tracking-wider font-light"
+              >
+                Curated & Exclusive
+              </motion.li>
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={control}
+                variants={{
+                  hidden: { scaleX: 0 },
+                  visible: { scaleX: 1 },
+                }}
+                transition={{ duration: 1, delay: 2 }}
+                className="w-full border border-black/50"
+                style={{ transformOrigin: "right" }}
+              ></motion.div>
+            </div>
+            <div className=" w-1/2 ">
+              <motion.li
+                variants={{
+                  hidden: { opacity: 0, y: 0 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                initial="hidden"
+                animate={control}
+                transition={{ duration: 0.6, delay: 2.5 }}
+                className="p-4 text-right text-black tracking-wider font-light"
+              >
+                Redefining Standards
+              </motion.li>
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={control}
+                variants={{
+                  hidden: { scaleX: 0 },
+                  visible: { scaleX: 1 },
+                }}
+                transition={{ duration: 1, delay: 2.5 }}
+                className="w-full border border-black/50"
+                style={{ transformOrigin: "right" }}
+              ></motion.div>
+            </div>
+            <div className="w-1/2">
+              <motion.li
+                variants={{
+                  hidden: { opacity: 0, y: 0 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                initial="hidden"
+                animate={control}
+                transition={{ duration: 0.6, delay: 3 }}
+                className="p-4 text-right text-black tracking-wider font-light"
+              >
+                Uncompromising Efforts
+              </motion.li>
+              <motion.div
+                initial={{ scaleX: 0 }}
+                animate={control}
+                variants={{
+                  hidden: { scaleX: 0 },
+                  visible: { scaleX: 1 },
+                }}
+                transition={{ duration: 1, delay: 3 }}
+                className="w-full border border-black/50"
+                style={{ transformOrigin: "right" }}
+              ></motion.div>
+            </div>
+          </ul> */}
+          <button className="absolute xl:w-1/3 w-5/6 hidden  h-16 hover:bg-black hover:text-white text-black font-light tracking-wider text-base xl:flex justify-center items-center transition-all duration-300 ease-in-out font-montserrat bottom-[0%] bg-white xl:right-4  bg-opacity-20 backdrop-blur-5 border border-opacity-30 border-black/50 rounded-2xl shadow-sm p-4  group">
+            <span>For Owners </span>
+            <span className="relative left-1 bottom-3 transfrom -rotate-45 flex items-center justify-start w-12 h-12 duration-300 transform translate-y-0 group-hover:-translate-y-[10%] group-hover:translate-x-[25%] group-hover:opacity-100 ease">
+              <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
+            </span>
+          </button>
+        </div>
       </div>
     </div>
   );
