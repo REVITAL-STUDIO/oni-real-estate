@@ -155,17 +155,19 @@ const Listing = () => {
   return (
     <div className="">
       <div className="font-agrandir h-1/2 text-black w-[95%]  ">
-        <h2 className="p-4 text-4xl tracking-wide xl:text-6xl">Properties</h2>
-        <p className="font-montserrat text-sm p-4 xl:text-base xl:w-1/2">
+        <h2 className="p-4 text-2xl tracking-wide xl:text-6xl">
+          Featured Properties
+        </h2>
+        <p className="font-montserrat  text-xs  p-4 md:text-base xl:w-1/2">
           Crafting exceptional real estate investments grounded in creativity,
           expert craftsmanship, and an unparalleled commitment to meticulous
           attention to detail.
         </p>
       </div>
-      <div className="w-full flex flex-col xl:flex-row xl:h-16 h-1/3 font-montserrat shadow-lg bg-smoke/50 z-20">
+      <div className="w-full flex flex-col xl:flex-row xl:h-16 h-1/3 font-montserrat shadow-lg border-t border-gray-200 z-20">
         {/* Toggle Button RENT and SALE */}
         <div className="xl:w-80 w-60 flex justify-center items-center transition-all">
-          <div className="w-5/6 h-11 relative text-xl xl:text-2xl uppercase tracking-wider flex justify-around items-center ">
+          <div className="w-5/6 h-16 relative text-sm font-montserrat tracking-wider flex justify-around items-center ">
             <span
               className={` cursor-pointer ${
                 selectedOption === "For Sale" ? "font-bold  text-black" : ""
@@ -183,7 +185,7 @@ const Listing = () => {
               Rent
             </span>
             <div
-              className="w-[50%] h-11  border-b border-black absolute  top-1/2 transform -translate-y-1/2
+              className="w-[50%] h-11  border border-black/50 rounded-full absolute  top-1/2 transform -translate-y-1/2
                       duration-200 ease-in"
               style={{ left: selectedOption === "For Rent" ? "50%" : "0%" }}
             />
@@ -193,7 +195,7 @@ const Listing = () => {
         <div className=" w-5/6 h-full xl:flex justify-evenly items-center hidden z-40">
           {/* Prices */}
           <div className="relative">
-            <div className="w-52 h-12 border border-gray-300   rounded-md flex justify-center items-center">
+            <div className="w-52 h-12 border border-gray-300   rounded-full flex justify-center items-center">
               <span className="text-xs  w-[100%] text-center">
                 {selectedPrice.length === 0
                   ? "Price Amount"
@@ -221,7 +223,7 @@ const Listing = () => {
           </div>
           {/* Beds */}
           <div className="relative">
-            <div className="w-52 h-12  border border-gray-300  flex justify-center rounded-md items-center">
+            <div className="w-52 h-12  border border-gray-300  flex justify-center rounded-full items-center">
               {" "}
               <span className="text-xs w-5/6 text-center">{`${
                 selectedBeds || "0"
@@ -252,7 +254,7 @@ const Listing = () => {
           </div>
           {/* Baths */}
           <div className="relative">
-            <div className="w-52 h-12 border border-gray-300   rounded-md flex justify-center items-center">
+            <div className="w-52 h-12 border border-gray-300   rounded-full flex justify-center items-center">
               <span className="text-xs w-5/6 text-center">{`${
                 selectedBaths || "0"
               }+ Baths`}</span>{" "}
@@ -278,7 +280,7 @@ const Listing = () => {
           </div>
           {/* Location */}
           <div className="relative">
-            <div className="w-52 h-12 border border-gray-300   rounded-md flex justify-center items-center">
+            <div className="w-52 h-12 border border-gray-300   rounded-full flex justify-center items-center">
               <span className="text-xs w-5/6 text-center">
                 {setLocation.length === 0 ? "Location" : setLocation[0].label}
               </span>{" "}
@@ -304,7 +306,7 @@ const Listing = () => {
           </div>
           {/* Property Type */}
           <div className="relative">
-            <div className="w-52 h-12 border border-gray-300  rounded-md flex  justify-around items-center">
+            <div className="w-52 h-12 border border-gray-300  rounded-full flex  justify-around items-center">
               <span className="text-xs w-5/6 text-center">
                 {setProperty.length === 0 ? "Type" : setProperty[0].label}
               </span>{" "}
@@ -334,7 +336,7 @@ const Listing = () => {
         <div className=" w-full h-full flex flex-wrap gap-4 items-center  xl:hidden p-4 ">
           {/* Prices */}
           <div className="relative">
-            <div className="w-40 h-12 border border-gray-300   rounded-md flex justify-center items-center">
+            <div className="w-40 h-12 border border-gray-300   rounded-full flex justify-center items-center">
               <span className="text-xs  w-[100%] text-center">
                 {selectedPrice.length === 0
                   ? "Price Amount"
@@ -362,7 +364,7 @@ const Listing = () => {
           </div>
           {/* Beds */}
           <div className="relative">
-            <div className="w-40 h-12  border border-gray-300  flex justify-center rounded-md items-center">
+            <div className="w-40 h-12  border border-gray-300  flex justify-center rounded-full items-center">
               {" "}
               <span className="text-xs w-5/6 text-center">{`${
                 selectedBeds || "0"
@@ -393,7 +395,7 @@ const Listing = () => {
           </div>
           {/* Baths */}
           <div className="relative">
-            <div className="w-40 h-12 border border-gray-300   rounded-md flex justify-center items-center">
+            <div className="w-40 h-12 border border-gray-300   rounded-full flex justify-center items-center">
               <span className="text-xs w-5/6 text-center">{`${
                 selectedBaths || "0"
               }+ Baths`}</span>{" "}
@@ -419,7 +421,7 @@ const Listing = () => {
           </div>
           {/* Location */}
           <div className="relative">
-            <div className="w-40 h-12 border border-gray-300   rounded-md flex justify-center items-center">
+            <div className="w-40 h-12 border border-gray-300   rounded-full flex justify-center items-center">
               <span className="text-xs w-5/6 text-center">
                 {setLocation.length === 0 ? "Location" : setLocation[0].label}
               </span>{" "}
@@ -445,7 +447,7 @@ const Listing = () => {
           </div>
           {/* Property Type */}
           <div className="relative">
-            <div className="w-40 h-12 border border-gray-300  rounded-md flex  justify-around items-center">
+            <div className="w-40 h-12 border border-gray-300  rounded-full flex  justify-around items-center">
               <span className="text-xs w-5/6 text-center">
                 {setProperty.length === 0 ? "Type" : setProperty[0].label}
               </span>{" "}

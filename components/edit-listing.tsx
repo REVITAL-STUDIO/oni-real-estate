@@ -2,8 +2,8 @@
 import { useState, useEffect } from "react";
 import FileUpload from "@/components/FileUpload";
 import { useEdgeStore } from "@/lib/edgestore";
-import Nav from "@/components/navbar";
 import { IoIosClose } from "react-icons/io";
+import { motion, useAnimation } from "framer-motion";
 
 interface Listing {
   id: number;
@@ -201,15 +201,15 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
     // Data is still loading, you can show a loading indicator or return null
     return (
       <div className="flex justify-center items-center min-h-screen text-white">
-        Loading...
+        <div className="h-8 w-8 border-4 border-white rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
       </div>
     );
   }
 
   return (
     <div className="font-agrandir ">
-      <div className="flex flex-col  justify-end md:justify-center items-center min-h-screen">
-        <div className=" flex flex-col justify-center items-center mt-[8rem] md:mt-[0rem]  w-full md:w-[90%] md:py-[1rem] rounded-md ">
+      <div className="flex flex-col  justify-center md:justify-center items-center min-h-screen">
+        <div className=" flex flex-col justify-center items-center  md:mt-[0rem]  w-full md:w-[90%] md:py-[1rem] rounded-md ">
           {isSuccess && (
             <div className="p-[1rem] bg-green-100 flex gap-3 items-center rounded-lg mb-[2rem]">
               <p className="text-green-700">Saved Listing changes.</p>
@@ -228,8 +228,20 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
               />
             </div>
           )}
-          <div className="relative flex flex-col gap-12 bg-white/50 w-[90%] md:w-[70%] items-center justify-center md:flex-row md:py-[3rem] rounded-3xl shadow-md max-h-[680px]">
-            <h1 className="absolute top-[10%] right-[10%] text-4xl text-white ">
+          <motion.div
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1 },
+            }}
+            transition={{ delay: 0.5 }} // Adding a delay of 0.8 seconds
+            className="relative overflow-y-scroll flex flex-col gap-12 bg-white/75 w-[90%] md:w-[100%] items-center md:justify-center md:flex-row md:py-[3rem] rounded-3xl shadow-md max-h-[800px]"
+          >
+            <div className="w-full h-fit md:hidden flex items-center">
+              <h1 className="  block md:hidden p-4 relative left-4 text-4xl text-white ">
+                Edit Listing
+              </h1>
+            </div>
+            <h1 className="absolute top-[10%] hidden md:block right-[10%] text-4xl text-white ">
               Edit Listing
             </h1>
             <form className="w-[85%] md:w-[40%] flex flex-col gap-4">
@@ -333,14 +345,14 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
                 Save changes
               </button>
             </form>
-            <div className="md:w-[45%] md:mt-[12%]">
+            <div className="w-[85%] md:w-[45%] md:mt-[12%]">
               <p className="text-white">Photos</p>
               <FileUpload
                 onFilesSelected={handleFilesSelected}
                 initialFiles={initialFiles}
               />
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>

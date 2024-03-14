@@ -7,6 +7,7 @@ import Pool from "public/iStock-1453183714.jpg";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useInView } from "react-intersection-observer";
+import Link from "next/link";
 
 const Info = () => {
   const parentRef = useRef<HTMLDivElement>(null);
@@ -108,12 +109,15 @@ const Info = () => {
               className="w-[100%] h-[100%] rounded-lg shadow-md"
             />
           </div>
-          <button className="absolute xl:w-1/3 w-5/6  h-16 hover:bg-black hover:text-white text-black font-light tracking-wider text-base flex justify-center items-center transition-all duration-300 ease-in-out font-montserrat bottom-[0%] xl:top-1/2 bg-white xl:left-4  bg-opacity-20 backdrop-blur-5 border border-opacity-30 border-black/50 rounded-2xl shadow-sm p-4  group">
+          <Link
+            href="/listings"
+            className="absolute xl:w-1/3 w-5/6  h-16 hover:bg-black hover:text-white text-black font-light tracking-wider text-base flex justify-center items-center transition-all duration-300 ease-in-out font-montserrat bottom-[0%] xl:top-1/2 bg-white xl:left-4  bg-opacity-20 backdrop-blur-5 border border-opacity-30 border-black/50 rounded-2xl shadow-sm p-4  group"
+          >
             <span>View Properties </span>
             <span className="relative left-1 bottom-3 transfrom -rotate-45 flex items-center justify-start w-12 h-12 duration-300 transform translate-y-0 group-hover:-translate-y-[10%] group-hover:translate-x-[25%] group-hover:opacity-100 ease">
               <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
             </span>
-          </button>
+          </Link>
         </motion.div>
       </div>
 

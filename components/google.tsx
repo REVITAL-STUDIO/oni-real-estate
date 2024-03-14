@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { Loader, LoaderOptions } from "@googlemaps/js-api-loader";
+import PropertyInfo from "./PropertyInfo";
 
 interface Listing {
   index: number;
@@ -18,6 +19,7 @@ interface Listing {
 const Google: React.FC = () => {
   // State variables for listings, loading state, and error
   const [listings, setListings] = useState<Listing[]>([]);
+  const [selectedListing, setSelectedListing] = useState<Listing | null>(null); // State to track selected listing
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -51,8 +53,6 @@ const Google: React.FC = () => {
       version: "weekly",
     } as LoaderOptions);
 
-    console.log("apiKey:", loader);
-
     loader
       .load()
       .then((googleAPI) => {
@@ -78,12 +78,14 @@ const Google: React.FC = () => {
                   map,
                   title: listing.address,
                   icon: {
-                    path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-                    fillColor: "#5D5D5D", // your desired color
+                    path: googleAPI.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+                    fillColor: "#FF0000", // your desired color
                     fillOpacity: 1,
                     strokeWeight: 0,
                     scale: 5, // adjust the size of the marker
                   },
+                }).addListener("click", () => {
+                  setSelectedListing(listing); // Set the selected listing when marker is clicked
                 });
               } else {
                 throw new Error("No results found");
@@ -101,7 +103,17 @@ const Google: React.FC = () => {
 
   return (
     <div className="w-2/5 hidden xl:block ">
-      <div ref={mapContainerRef} style={{ height: "100%" }}></div>
+      <div ref={mapContainerRef} style={{ height: "100%" }}>
+        {selectedListing && (
+          <div className="absolute top-0 left-0 bg-white p-4">
+            {/* Additional information about the selected listing */}
+            <PropertyInfo
+              selectedListing={selectedListing}
+              handleClose={() => setSelectedListing(null)} // Close the modal when handleClose is called
+            />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

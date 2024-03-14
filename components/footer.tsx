@@ -84,7 +84,7 @@ const Footer = () => {
       {/* Copyright */}
       <div className="h-[8%] w-full flex font-montserrat items-center ">
         <h2 className="text-white   text-xs tracking-wide  w-full  px-4">
-          © 2024 Oni Associates. All rights Reserved. Site by{" "}
+          © 2024 Oni Associates. All rights Reserved. Developed by{" "}
           <span className="font-bold">REVITAL Studio</span>
         </h2>
       </div>

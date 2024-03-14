@@ -195,7 +195,7 @@ const Homes = () => {
                 />
               </div>
               <div className="absolute w-full h-full bg-black/50 opacity-0 duration-300 flex justify-center items-center hover:opacity-100 hover:rounded-lg hover:flex top-0 ease-in-out hover:justify-center hover:items-center">
-                <p className="text-white text-xl font-regular font-montserrat underline underline-offset-8">
+                <p className="text-white text-sm font-regular font-montserrat border rounded-full py-2 px-4">
                   View Home
                 </p>
               </div>

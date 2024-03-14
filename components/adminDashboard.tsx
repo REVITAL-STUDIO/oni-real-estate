@@ -220,10 +220,10 @@ const AdminDashboard = () => {
 
   return (
     <div>
-      <div className="w-full h-screen flex justify-center items-center">
+      <div className="w-full h-1000 md:h-screen flex justify-center items-center">
         <div className="w-[90%] h-4/5   rounded-2xl grid gap-4 grid-cols-2 grid-rows-2">
           {/* Admin Profile */}
-          <div className=" xl:col-span-1 col-span-2 row-span-2 xl:row-span-1 bg-gray-400/10 transition ease-in-out duration-100 relative rounded-2xl flex justify-center items-center shadow-lg">
+          <div className=" xl:col-span-1 col-span-2 row-span-2 xl:row-span-1  bg-gray-400/10 transition ease-in-out duration-100 relative rounded-2xl flex justify-center items-center shadow-lg">
             <div className="w-2/3 h-[90%] rounded-2xl  flex flex-col items-center">
               <div className="w-fit left-5 h-[90%]  absolute flex flex-col justify-between">
                 <h2 className="  font-medium font-agrandir tracking-wider">
@@ -240,10 +240,10 @@ const AdminDashboard = () => {
               {/* Profile Picture */}
               <div className="w-full h-2/3 flex justify-center  items-center">
                 <div className="w-44 h-44 rounded-2xl relative flex justify-center items-center">
-                  <div className="md:w-36 md:h-36 w-24 h-24  bg-white inset-0 rounded-2xl shadow-md flex justify-center items-center">
-                    <h2 className="xL:text-5xl text-3xl font-montserrat">M</h2>
+                  <div className="w-full h-full    bg-white inset-0 rounded-2xl shadow-md flex justify-center items-center">
+                    <h2 className="xl:text-5xl text-3xl font-montserrat">M</h2>
                   </div>
-                  <div className="absolute w-5 h-5 xl:w-7 xl:h-7 bg-blue-500 shadow-sm left-[0%] bottom-0  rounded-full flex justify-center items-center">
+                  <div className="absolute  w-8 h-8 bg-blue-500 shadow-xl left-[-5%] -bottom-2  rounded-full flex justify-center items-center">
                     <FontAwesomeIcon
                       icon={faCheck}
                       size="sm"
@@ -265,95 +265,97 @@ const AdminDashboard = () => {
           </div>
           {/* Leads */}
           <div className=" xl:col-span-1 col-span-2 xl:row-span-1 row-span-2 relative bg-gray-400/10 transition ease-in-out duration-100 rounded-2xl shadow-lg">
-            <div className="w-full absolute flex  justify-between">
-              <h2 className="tracking-wider left-0  font-medium font-agrandir p-4">
-                Leads
-              </h2>
-              <div className=" h-full flex md:p-4 p-2 gap-x-4">
-                <div className="p-4 bg-black rounded-full shadow-lg  py-0 w-32 xl:py-[.5rem]  text-white text-xs flex flex-col items-center justify-center">
-                  <span className="text-xs">Leads</span>
-                  <span className="text-lg">{leads.length}</span>
+            <div className="h-full w-full">
+              <div className="w-full absolute flex  justify-between ">
+                <h2 className="tracking-wider left-0  font-medium font-agrandir p-4">
+                  Leads
+                </h2>
+                <div className=" h-full flex md:p-4 p-2 gap-x-4">
+                  <div className="p-4 bg-black rounded-full shadow-lg  py-0 w-32 xl:py-[.5rem]  text-white text-xs flex flex-col items-center justify-center">
+                    <span className="text-xs">Leads</span>
+                    <span className="text-lg">{leads.length}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <section className="w-full h-full flex justify-evenly items-end">
-              <div className="w-full h-[75%]  rounded-2xl flex justify-center ">
-                <div className="w-5/6 h-full block justify-center p-4  overflow-y-scroll ">
-                  {!fetchedLeadsData ? (
-                    <div className="flex justify-center items-center h-full">
-                      {" "}
-                      <div className=" h-6 w-6 md:h-10 md:w-10  border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
-                    </div>
-                  ) : (
-                    leads.map((lead) => (
-                      <div
-                        key={lead.id}
-                        className="w-full  bg-white rounded-2xl text-black shadow-lg flex justify-between items-center mb-[1rem] py-[1rem]"
-                      >
-                        {/* Client Lead */}
-                        <div className="w-1/2 h-full flex justify-evenly items-center ">
-                          <div
-                            className={`w-10 h-10 rounded-full flex justify-center items-center ${lead.color}`}
-                          >
-                            <span>{lead.name.charAt(0).toUpperCase()}</span>
-                          </div>
-                          <span className="text-sm tracking-wider font-montserrat">
-                            {lead.name}
-                          </span>
-                        </div>
-
-                        <div className="w-1/2 h-full flex justify-between items-center">
-                          <div className="relative ">
-                            <p className="text-semibold">
-                              Status: {colorizeStatus(lead.status)}
-                            </p>
-                          </div>
-                          <button
-                            onClick={() => {
-                              setSelectedLead(lead);
-                              handleOpenLeadInfo();
-                            }}
-                            className="text-lg text-blue-500 hover:text-gray-500 active:text-blue-500"
-                          >
-                            view
-                          </button>
-                          <button className="w-fit px-4 tracking-wider font-montserrat h-8 rounded-full  text-red-500 text-xs">
-                            <svg
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M6.39989 18.3079L5.69189 17.5999L11.2919 11.9999L5.69189 6.39989L6.39989 5.69189L11.9999 11.2919L17.5999 5.69189L18.3079 6.39989L12.7079 11.9999L18.3079 17.5999L17.5999 18.3079L11.9999 12.7079L6.39989 18.3079Z"
-                                fill="#FF0000"
-                              />
-                            </svg>
-                          </button>
-                        </div>
+              <section className="w-full h-full flex justify-evenly items-end">
+                <div className="w-full h-[75%] rounded-2xl flex justify-center ">
+                  <div className="w-5/6 h-full  p-4  overflow-y-scroll ">
+                    {!fetchedLeadsData ? (
+                      <div className="flex justify-center items-center h-full">
+                        {" "}
+                        <div className=" h-6 w-6 md:h-10 md:w-10  border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
                       </div>
-                    ))
-                  )}
-                  {isLeadInfoOpen && selectedLead && (
-                    <div>
-                      <motion.section
-                        initial={{ opacity: 0, y: -100 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -100 }}
-                        transition={{ ease: "easeInOut", duration: 0.5 }}
-                        className="fixed inset-0 z-50 flex justify-center items-center "
-                      >
-                        <LeadInfo
-                          onClose={handleCloseLeadInfo}
-                          selectedLead={selectedLead}
-                        />
-                      </motion.section>
-                    </div>
-                  )}
+                    ) : (
+                      leads.map((lead) => (
+                        <div
+                          key={lead.id}
+                          className="w-full  bg-white rounded-2xl text-black shadow-lg flex justify-between items-center mb-[1rem] py-[1rem]"
+                        >
+                          {/* Client Lead */}
+                          <div className="w-1/2 h-full flex justify-evenly items-center ">
+                            <div
+                              className={`w-10 h-10 rounded-full flex justify-center items-center ${lead.color}`}
+                            >
+                              <span>{lead.name.charAt(0).toUpperCase()}</span>
+                            </div>
+                            <span className="text-sm tracking-wider font-montserrat">
+                              {lead.name}
+                            </span>
+                          </div>
+
+                          <div className="w-1/2 h-full flex justify-between items-center">
+                            <div className="relative ">
+                              <p className="text-semibold">
+                                Status: {colorizeStatus(lead.status)}
+                              </p>
+                            </div>
+                            <button
+                              onClick={() => {
+                                setSelectedLead(lead);
+                                handleOpenLeadInfo();
+                              }}
+                              className="text-lg text-blue-500 hover:text-gray-500 active:text-blue-500"
+                            >
+                              view
+                            </button>
+                            <button className="w-fit px-4 tracking-wider font-montserrat h-8 rounded-full  text-red-500 text-xs">
+                              <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M6.39989 18.3079L5.69189 17.5999L11.2919 11.9999L5.69189 6.39989L6.39989 5.69189L11.9999 11.2919L17.5999 5.69189L18.3079 6.39989L12.7079 11.9999L18.3079 17.5999L17.5999 18.3079L11.9999 12.7079L6.39989 18.3079Z"
+                                  fill="#FF0000"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      ))
+                    )}
+                    {isLeadInfoOpen && selectedLead && (
+                      <div>
+                        <motion.section
+                          initial={{ opacity: 0, y: -100 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -100 }}
+                          transition={{ ease: "easeInOut", duration: 0.5 }}
+                          className="fixed inset-0 z-50 flex justify-center items-center "
+                        >
+                          <LeadInfo
+                            onClose={handleCloseLeadInfo}
+                            selectedLead={selectedLead}
+                          />
+                        </motion.section>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </section>
+              </section>
+            </div>
           </div>
           {/* Listings */}
           <div className="bg-gray-400/10  relative col-span-2 rounded-br-2xl rounded-2xl transition ease-in-out duration-100 shadow-lg">
@@ -363,7 +365,7 @@ const AdminDashboard = () => {
               </h2>
               <button
                 onClick={() => showCreateListing(true)}
-                className="p-4 h-8 w-32 text-white bg-black shadow-lg rounded-full relative right-4 flex justify-evenly items-center text-xs hover:scale-105 active:scale-100"
+                className="p-4 h-8 w-32 text-white bg-black shadow-lg duration-200 ease-in-out transition rounded-full relative right-4 flex justify-evenly items-center text-xs hover:scale-105 active:scale-100"
               >
                 <FontAwesomeIcon icon={faPlus} className="w-4 h-4" /> add
                 listing
@@ -480,39 +482,63 @@ const AdminDashboard = () => {
 
           {/* Opening Add Homes */}
           {createListing && (
-            <div className="fixed left-0 top-0 bg-black/95 w-full h-full z-50">
-              <button
-                onClick={() => showCreateListing(false)}
-                className="absolute right-2 top-2 p-4 flex justify-center items-center z-50"
+            <AnimatePresence>
+              <motion.div
+                variants={{
+                  visible: { opacity: 1 },
+                  exit: { opacity: 0 }, // Define exit variant with opacity 0
+                }}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                transition={{ ease: "easeInOut", duration: 1 }}
+                className="fixed left-0 top-0 bg-black/95 w-full h-full z-50"
               >
-                <span
-                  className={`block w-3/4 my-0.5 border absolute border-white rotate-45 transition-transform `}
-                ></span>
-                <span
-                  className={`block w-3/4 my-0.5 border absolute border-white -rotate-45 transition-transform `}
-                ></span>
-              </button>
+                <button
+                  onClick={() => showCreateListing(false)}
+                  className="absolute right-2 top-2 p-4 flex justify-center items-center z-50"
+                >
+                  <span
+                    className={`block w-3/4 my-0.5 border absolute border-white rotate-45 transition-transform `}
+                  ></span>
+                  <span
+                    className={`block w-3/4 my-0.5 border absolute border-white -rotate-45 transition-transform `}
+                  ></span>
+                </button>
 
-              <CreateListing />
-            </div>
+                <CreateListing />
+              </motion.div>
+            </AnimatePresence>
           )}
           {/* Opening Add Homes */}
           {editListing && selectedListing && (
-            <div className="fixed left-0 top-0 bg-black/90 w-full h-full z-50">
-              <button
-                onClick={() => showEditListing(false)}
-                className="absolute right-2 top-2 p-4 flex justify-center items-center z-50"
+            <AnimatePresence>
+              <motion.div
+                variants={{
+                  visible: { opacity: 1 },
+                  exit: { opacity: 0 }, // Define exit variant with opacity 0
+                }}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                transition={{ ease: "easeInOut", duration: 1 }}
+                className="fixed left-0 top-0 bg-black/90 w-full h-full z-50"
               >
-                <span
-                  className={`block w-3/4 my-0.5 border absolute border-white rotate-45 transition-transform `}
-                ></span>
-                <span
-                  className={`block w-3/4 my-0.5 border absolute border-white -rotate-45 transition-transform `}
-                ></span>
-              </button>
+                <button
+                  onClick={() => showEditListing(false)}
+                  className="absolute right-2 top-2 p-4 flex justify-center items-center z-50"
+                >
+                  <span
+                    className={`block w-3/4 my-0.5 border absolute border-white rotate-45 transition-transform `}
+                  ></span>
+                  <span
+                    className={`block w-3/4 my-0.5 border absolute border-white -rotate-45 transition-transform `}
+                  ></span>
+                </button>
 
-              <EditListing listingId={selectedListing.id} />
-            </div>
+                <EditListing listingId={selectedListing.id} />
+              </motion.div>
+            </AnimatePresence>
           )}
         </div>
         {/* Delete Listing Modal */}

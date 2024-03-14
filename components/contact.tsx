@@ -88,8 +88,8 @@ const Contact = () => {
       >
         <motion.div
           variants={{
-            hidden: { opacity: 0, y: -75 },
-            visible: { opacity: 1, y: 0 },
+            hidden: { opacity: 0 },
+            visible: { opacity: 1 },
           }}
           initial="hidden"
           animate={control}
@@ -98,8 +98,8 @@ const Contact = () => {
         ></motion.div>
         <motion.div
           variants={{
-            hidden: { opacity: 0, y: -75 },
-            visible: { opacity: 1, y: 0 },
+            hidden: { opacity: 0 },
+            visible: { opacity: 1 },
           }}
           initial="hidden"
           animate={control}

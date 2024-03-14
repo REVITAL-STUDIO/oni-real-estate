@@ -107,7 +107,7 @@ const PropertyInfo: React.FC<{
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ ease: "easeInOut", duration: 1 }}
-        className="bg-white/90 w-full h-full flex flex-col justify-center items-center  overflow-y-auto another-scrollbar z-50"
+        className="bg-white/95 w-full h-full flex flex-col justify-center items-center  overflow-y-auto another-scrollbar z-50"
       >
         <button
           onClick={handleClose}

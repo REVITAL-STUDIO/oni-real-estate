@@ -1,10 +1,10 @@
 "use client";
+
 import FileUpload from "@/components/FileUpload";
 import { useState } from "react";
-import toast from "react-hot-toast";
 import { useEdgeStore } from "@/lib/edgestore";
-import Nav from "@/components/navbar";
 import { IoIosClose } from "react-icons/io";
+import { motion, useAnimation } from "framer-motion";
 
 interface FileExtended extends File {
   url?: string;
@@ -128,7 +128,14 @@ const CreateListing = () => {
               />
             </div>
           )}
-          <div className="flex overflow-y-scroll xl:overflow-y-hidden p-4 md:p-8 relative flex-col bg-white/50 w-[95%] md:w-[100%] items-center justify-start xl:justify-center md:py-[3rem] rounded-3xl shadow-md max-h-[800px] md:max-h-[950px] ">
+          <motion.div
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1 },
+            }}
+            transition={{ delay: 0.5 }} // Adding a delay of 0.8 seconds
+            className="flex overflow-y-scroll xl:overflow-y-hidden p-4 md:p-8 relative flex-col bg-white/75 w-[95%] md:w-[100%] items-center justify-start xl:justify-center md:py-[3rem] rounded-3xl shadow-md max-h-[800px] md:max-h-[950px] "
+          >
             <div className="w-full  ">
               <h1 className=" p-4 w-full text-left text-3xl relative md:left-7 xl:left-10 text-white">
                 {" "}
@@ -236,12 +243,12 @@ const CreateListing = () => {
                 </button>
               </form>
 
-              <div className="md:w-[85%] xl:w-1/2 ">
+              <div className="w-[85%] md:w-[45%] xl:w-1/2 ">
                 <p className="text-white">Photos</p>
                 <FileUpload onFilesSelected={handleFilesSelected} />
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>
