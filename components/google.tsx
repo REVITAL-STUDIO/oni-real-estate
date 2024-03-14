@@ -23,6 +23,16 @@ const Google: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Set overflow property when component mounts and unmounts
+  useEffect(() => {
+    document.body.style.overflow = selectedListing ? "hidden" : "auto";
+
+    // Cleanup function
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [selectedListing]);
+
   // Fetch listings and update the state
   useEffect(() => {
     const fetchListings = async () => {
