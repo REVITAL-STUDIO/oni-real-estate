@@ -108,7 +108,7 @@ const Dashboard = () => {
     }
   };
 
-  // Fetch listing data based on ID
+  // Fetch user data
   const fetchUserData = async () => {
     try {
       const response = await fetch(
@@ -137,6 +137,7 @@ const Dashboard = () => {
     // Only fetch user data if session is available and not loading
     if (session && status === "authenticated") {
       fetchUserData();
+      receiveListing();
     } else if (status === "loading") {
       // Session is still loading, do nothing or show a loading indicator
     } else {
@@ -187,7 +188,7 @@ const Dashboard = () => {
     try {
       console.log("Homes:", homes);
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites/${session?.user.email}`,
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -199,9 +200,9 @@ const Dashboard = () => {
       if (res.ok) {
         const data: Listing[] = await res.json();
         setHomes(data);
-        console.log("Retrieved Favorite", data);
+        console.log("Retrieved Favorites: ", data);
       } else {
-        console.log("Failed to retrieve favorites");
+        throw new Error()
       }
     } catch (error) {
       console.error("Error receiving Listing", error);
@@ -231,9 +232,7 @@ const Dashboard = () => {
     }
   };
 
-  useEffect(() => {
-    receiveListing();
-  }, []);
+
 
   if (isLoading) {
     return (
@@ -339,11 +338,16 @@ const Dashboard = () => {
                         key={home.id}
                         className="w-5/6 relative h-1/4 rounded-2xl my-4 hover:scale-105 hover:translate-x-4 shadow-mint/50 shadow-md transition duration-150 ease-in-out"
                       >
+                        <div className="w-[100%] h-[100%]">
                         <Image
                           src={home.pictures[0]}
                           className=" w-[100%] h-[100%]  object-cover rounded-lg brightness-50 contrast-125 shadow-md"
+                          width={1}
+                          height={1}
                           alt="homes"
+                          layout="responsive"
                         />
+                        </div>
                         <div className="absolute top-1/2 w-full flex justify-between">
                           <h2 className=" font-montserrat w-1/3 text-white px-4">
                             {home.address}

@@ -3,8 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { clear } from "console";
 
-type BedType = number;
 type BathType = number;
 interface Price {
   label: string;
@@ -19,11 +19,24 @@ interface Property {
   label: string;
 }
 
+interface Filters {
+  option: string;
+  price: Price;
+  beds: number;
+  baths: number;
+  location: String;
+  property: string;
+}
+
 type DropdownId = 1 | 2 | 3 | 4 | 5 | null;
 
-const Listing = () => {
+interface ListingProps {
+  onFiltersChange: (filters: Filters) => void;
+}
+
+const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
   //For sale for rent
-  const [selectedOption, setSelectedOption] = useState<"For Sale" | "For Rent">(
+  const [selectedOption, setSelectedOption] = useState(
     "For Sale"
   );
 
@@ -32,7 +45,6 @@ const Listing = () => {
   };
 
   //Toggle Dropdown State
-
   const [openDropdown, setOpenDropdown] = useState<DropdownId>(null);
 
   // Toggle functions
@@ -57,7 +69,7 @@ const Listing = () => {
   };
 
   //Price
-  const [selectedPrice, setSelectedPrices] = useState<Price[]>([]);
+  const [selectedPrice, setSelectedPrices] = useState<Price>({ label: "", min: 0, max: Number.MAX_SAFE_INTEGER });
   const prices: Price[] = [
     { label: "$100,000 - $150,000", min: 100000, max: 150000 },
     { label: "$150,000 - $300,000", min: 150000, max: 300000 },
@@ -70,87 +82,80 @@ const Listing = () => {
   const initialPrice: Price = { label: "Price Amount", min: 0, max: 0 };
 
   const togglePrices = (price: Price) => {
-    // Clear existing selected prices
-    setSelectedPrices([]);
+
 
     // Then add the newly clicked price
-    setSelectedPrices((prev) => [...prev, price]);
+    setSelectedPrices(price);
   };
 
-  useEffect(() => {
-    // Set the initial price
-    setSelectedPrices([initialPrice]);
 
-    // Cleanup function (if needed)
-    return () => {
-      // Perform any cleanup here if necessary
-    };
-  }, []);
 
   //Bed
-  const [selectedBeds, setSelectedBeds] = useState<BedType>();
+  const [selectedBeds, setSelectedBeds] = useState<number>(0);
   const initialBedsState = 0;
 
   const numOfBeds = [1, 2, 3, 4, 5, 6];
 
-  useEffect(() => {
-    return () => setSelectedBeds(initialBedsState);
-  }, []);
 
   //Bath
-  const [selectedBaths, setSelectedBaths] = useState<BathType>();
+  const [selectedBaths, setSelectedBaths] = useState<number>(0);
   const initialBathState = 0;
 
   const numOfBaths = [1, 2, 3, 4, 5, 6];
 
-  useEffect(() => {
-    return () => setSelectedBeds(initialBathState);
-  }, []);
+  const [showClearFilter, setShowClearFilter] = useState(false);
+
 
   //Location
-  const [setLocation, setSelectedLocation] = useState<City[]>([]);
-  const locations: City[] = [
-    { label: "Montrose" },
-    { label: "Heights" },
-    { label: "Katy" },
-    { label: "Fort Bend" },
-    { label: "Missouri City" },
-    { label: "Pearland" },
-    { label: "Cinco Ranch" },
+  const [selectedLocation, setSelectedLocation] = useState<String>("");
+  const locations: string[] = [
+    "Montrose",
+    "Heights",
+    "Katy",
+    "Fort Bend",
+    "Missouri City",
+    "Pearland",
+    "Cinco Ranch",
   ];
 
   const initialCity: City = { label: "Location" };
 
-  useEffect(() => {
-    // Set the initial price
-    setSelectedLocation([initialCity]);
-
-    // Cleanup function (if needed)
-    return () => {
-      // Perform any cleanup here if necessary
-    };
-  }, []);
 
   //Property
-  const [setProperty, setSelectedProperty] = useState<Property[]>([]);
-  const property: Property[] = [
-    { label: "Duplex" },
-    { label: "Apartment" },
-    { label: "House" },
-    { label: "Condo" },
+  const [selectedProperty, setSelectedProperty] = useState<string>("");
+  const properties: string[] = [
+    "Duplex",
+    "Apartment",
+    "House",
+    "Condo",
   ];
-
-  const initialProperty: Property = { label: "Type" };
-
   useEffect(() => {
-    // Set the initial price
-    setSelectedProperty([initialProperty]);
+    applyFilters()
+  }, [selectedOption, selectedPrice, selectedBeds, selectedBaths, selectedLocation, selectedProperty]);
 
-    // Cleanup function (if needed)
-    return () => {
-      // Perform any cleanup here if necessary
+  // Function to apply filters and pass them to parent component
+  const applyFilters = () => {
+    const filters = {
+      option: selectedOption,
+      price: selectedPrice,
+      beds: selectedBeds,
+      baths: selectedBaths,
+      location: selectedLocation,
+      property: selectedProperty,
     };
-  }, []);
+
+    // Pass the selected filters to the parent component
+    onFiltersChange(filters);
+  };
+
+  const clearFilters = () => {
+    setSelectedPrices({ label: "", min: 0, max: Number.MAX_SAFE_INTEGER })
+    setSelectedBeds(0)
+    setSelectedBaths(0)
+    setSelectedLocation("")
+    setSelectedProperty("")
+    setShowClearFilter(false)
+  }
 
   return (
     <div className="">
@@ -164,22 +169,20 @@ const Listing = () => {
           attention to detail.
         </p>
       </div>
-      <div className="w-full flex flex-col xl:flex-row xl:h-16 h-1/3 font-montserrat shadow-lg border-t border-gray-200 z-20">
+      <div className="relative w-full flex flex-col xl:flex-row xl:h-16 h-1/3 font-montserrat shadow-lg border-t border-gray-200 z-20">
         {/* Toggle Button RENT and SALE */}
         <div className="xl:w-80 w-60 flex justify-center items-center transition-all">
           <div className="w-5/6 h-16 relative text-sm font-montserrat tracking-wider flex justify-around items-center ">
             <span
-              className={` cursor-pointer ${
-                selectedOption === "For Sale" ? "font-bold  text-black" : ""
-              }`}
+              className={` cursor-pointer ${selectedOption === "For Sale" ? "font-bold  text-black" : ""
+                }`}
               onClick={() => handleOptionClick("For Sale")}
             >
               Sale
             </span>
             <span
-              className={`cursor-pointer ${
-                selectedOption === "For Rent" ? "font-bold  text-black" : ""
-              }`}
+              className={`cursor-pointer ${selectedOption === "For Rent" ? "font-bold  text-black" : ""
+                }`}
               onClick={() => handleOptionClick("For Rent")}
             >
               Rent
@@ -195,140 +198,128 @@ const Listing = () => {
         <div className=" w-5/6 h-full xl:flex justify-evenly items-center hidden z-40">
           {/* Prices */}
           <div className="relative">
-            <div className="w-52 h-12 border border-gray-300   rounded-full flex justify-center items-center">
-              <span className="text-xs  w-[100%] text-center">
-                {selectedPrice.length === 0
-                  ? "Price Amount"
-                  : selectedPrice.map((p) => p.label).join(", ")}{" "}
-              </span>
-              <div className="w-1/6 mr-2">
-                <button onClick={togglePricesDropdown}>
+            <button onClick={togglePricesDropdown} className="hover:bg-[#fafafa]">
+              <div className="w-52 h-12 border border-gray-300   rounded-md flex justify-center items-center">
+                <span className="text-xs  w-[100%] text-center">
+                  {selectedPrice.min == 0
+                    ? "Price Amount"
+                    : selectedPrice.label}{" "}
+                </span>
+                <div className="w-1/6 mr-2">
                   <FontAwesomeIcon icon={faChevronDown} size="sm" />
-                </button>{" "}
+                </div>
               </div>
+            </button>{" "}
+            <div className={` ${openDropdown === 1 ? 'h-[200px] transition-all duration-500 ease-in-out' : 'h-0 transition-all duration-500 ease-in-out'} bg-[#fbfbfb] overflow-hidden w-52 absolute top-full rounded-md`}>
+              {prices.map((price) => (
+                <div
+                  key={price.label}
+                  className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white font-regular tracking-wider text-xs text-center"
+                  onClick={() => { togglePrices(price); togglePricesDropdown(); setShowClearFilter(true) }}
+                >
+                  {price.label}
+                </div>
+              ))}
             </div>
-            {openDropdown === 1 && (
-              <div className="bg-white w-52 h-auto absolute top-full   transition-all ease-in-out duration-200">
-                {prices.map((price) => (
-                  <div
-                    key={price.label}
-                    className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white font-regular tracking-wider text-xs text-center"
-                    onClick={() => togglePrices(price)}
-                  >
-                    {price.label}
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
           {/* Beds */}
           <div className="relative">
-            <div className="w-52 h-12  border border-gray-300  flex justify-center rounded-full items-center">
-              {" "}
-              <span className="text-xs w-5/6 text-center">{`${
-                selectedBeds || "0"
-              }+ Beds`}</span>{" "}
-              <div className="w-1/6 mr-2">
-                <button onClick={toggleBedDropdown} className="">
+            <button onClick={toggleBedDropdown} className="hover:bg-[#fafafa]">
+              <div className="w-52 h-12  border border-gray-300  flex justify-center rounded-md items-center">
+                {" "}
+                <span className="text-xs w-5/6 text-center">{`${selectedBeds || "0"
+                  }+ Beds`}</span>{" "}
+                <div className="w-1/6 mr-2">
                   <FontAwesomeIcon
                     icon={faChevronDown}
                     size="sm"
                     className="text-black"
                   />
-                </button>{" "}
+                </div>
               </div>
+            </button>{" "}
+            <div className={` ${openDropdown === 2 ? 'h-[200px] transition-all duration-500 ease-in-out' : 'h-0 transition-all duration-500 ease-in-out'} bg-[#fbfbfb] overflow-hidden w-52 absolute top-full rounded-md`}>
+              {numOfBeds.map((bed) => (
+                <div
+                  key={bed}
+                  className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white font-regular tracking-wider text-xs text-center"
+                  onClick={() => { setSelectedBeds(bed); toggleBedDropdown(); setShowClearFilter(true) }}
+                >
+                  {bed}
+                </div>
+              ))}
             </div>
-            {openDropdown === 2 && (
-              <div className="bg-white w-52 h-auto absolute top-full    transition-all ease-in-out duration-200">
-                {numOfBeds.map((bed) => (
-                  <div
-                    key={bed}
-                    className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white tracking-wider text-xs text-center transition ease-in-out duration-150"
-                    onClick={() => setSelectedBeds(bed)}
-                  >
-                    {bed}
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
           {/* Baths */}
           <div className="relative">
-            <div className="w-52 h-12 border border-gray-300   rounded-full flex justify-center items-center">
-              <span className="text-xs w-5/6 text-center">{`${
-                selectedBaths || "0"
-              }+ Baths`}</span>{" "}
-              <div className="w-1/6 mr-2">
-                <button onClick={toggleBathDropdown}>
+            <button onClick={toggleBathDropdown} className="hover:bg-[#fafafa]">
+              <div className="w-52 h-12 border border-gray-300   rounded-md flex justify-center items-center">
+                <span className="text-xs w-5/6 text-center">{`${selectedBaths || "0"
+                  }+ Baths`}</span>{" "}
+                <div className="w-1/6 mr-2">
                   <FontAwesomeIcon icon={faChevronDown} size="sm" />
-                </button>{" "}
+                </div>
               </div>
+            </button>
+            <div className={` ${openDropdown === 3 ? 'h-[200px] transition-all duration-500 ease-in-out' : 'h-0 transition-all duration-500 ease-in-out'} bg-[#fbfbfb] overflow-hidden w-52 absolute top-full rounded-md`}>
+              {numOfBaths.map((bath) => (
+                <div
+                  key={bath}
+                  className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white font-regular tracking-wider text-xs text-center"
+                  onClick={() => { setSelectedBaths(bath); toggleBathDropdown(); setShowClearFilter(true) }}
+                >
+                  {bath}
+                </div>
+              ))}
             </div>
-            {openDropdown === 3 && (
-              <div className="bg-white w-52 h-auto absolute  top-full   transition-all ease-in-out duration-200">
-                {numOfBaths.map((baths) => (
-                  <div
-                    key={baths}
-                    className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white tracking-wider text-xs text-center transition ease-in-out duration-150"
-                    onClick={() => setSelectedBaths(baths)}
-                  >
-                    {baths}
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
           {/* Location */}
           <div className="relative">
-            <div className="w-52 h-12 border border-gray-300   rounded-full flex justify-center items-center">
-              <span className="text-xs w-5/6 text-center">
-                {setLocation.length === 0 ? "Location" : setLocation[0].label}
-              </span>{" "}
-              <div className="w-1/6 mr-2">
-                <button onClick={toggleLocationDropdown}>
+            <button onClick={toggleLocationDropdown} className="hover:bg-[#fafafa]">
+              <div className="w-52 h-12 border border-gray-300   rounded-md flex justify-center items-center">
+                <span className="text-xs w-5/6 text-center">
+                  {!selectedLocation ? "Location" : selectedLocation}
+                </span>{" "}
+                <div className="w-1/6 mr-2">
                   <FontAwesomeIcon icon={faChevronDown} size="sm" />
-                </button>{" "}
+                </div>
               </div>
+            </button>
+            <div className={` ${openDropdown === 4 ? 'h-[230px] transition-all duration-500 ease-in-out' : 'h-0 transition-all duration-500 ease-in-out'} bg-[#fbfbfb] overflow-hidden w-52 absolute top-full rounded-md`}>
+              {locations.map((location) => (
+                <div
+                  key={location}
+                  className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white font-regular tracking-wider text-xs text-center"
+                  onClick={() => { setSelectedLocation(location); toggleLocationDropdown(); setShowClearFilter(true) }}
+                >
+                  {location}
+                </div>
+              ))}
             </div>
-            {openDropdown === 4 && (
-              <div className="bg-white w-52 h-auto absolute  top-full  transition-all ease-in-out duration-200">
-                {locations.map((location) => (
-                  <div
-                    key={location.label}
-                    className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white tracking-wider text-xs text-center transition ease-in-out duration-150"
-                    onClick={() => setSelectedLocation([location])}
-                  >
-                    {location.label}
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
           {/* Property Type */}
           <div className="relative">
-            <div className="w-52 h-12 border border-gray-300  rounded-full flex  justify-around items-center">
-              <span className="text-xs w-5/6 text-center">
-                {setProperty.length === 0 ? "Type" : setProperty[0].label}
-              </span>{" "}
-              <div className="w-1/6 mr-2">
-                <button onClick={togglePropertyDropdown}>
+            <button onClick={togglePropertyDropdown}>
+              <div className="w-52 h-12 border border-gray-300  rounded-md flex  justify-around items-center">
+                <span className="text-xs w-5/6 text-center">
+                  {!selectedProperty ? "Type" : selectedProperty}
+                </span>{" "}
+                <div className="w-1/6 mr-2">
                   <FontAwesomeIcon icon={faChevronDown} size="sm" />
-                </button>{" "}
+                </div>
               </div>
+            </button>
+            <div className={` ${openDropdown === 5 ? 'h-[140px] transition-all duration-500 ease-in-out' : 'h-0 transition-all duration-500 ease-in-out'} bg-[#fbfbfb] overflow-hidden w-52 absolute top-full rounded-md`}>
+              {properties.map((property) => (
+                <div
+                  key={property}
+                  className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white font-regular tracking-wider text-xs text-center"
+                  onClick={() => { setSelectedProperty(property); togglePropertyDropdown(); setShowClearFilter(true) }}
+                >
+                  {property}
+                </div>
+              ))}
             </div>
-            {openDropdown === 5 && (
-              <div className="bg-white w-52 h-auto absolute  top-full  ">
-                {property.map((properties) => (
-                  <div
-                    key={properties.label}
-                    className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white tracking-wider text-xs text-center transition ease-in-out duration-150"
-                    onClick={() => setSelectedProperty([properties])}
-                  >
-                    {properties.label}
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
         </div>
 
@@ -338,9 +329,9 @@ const Listing = () => {
           <div className="relative">
             <div className="w-40 h-12 border border-gray-300   rounded-full flex justify-center items-center">
               <span className="text-xs  w-[100%] text-center">
-                {selectedPrice.length === 0
+                {!selectedPrice
                   ? "Price Amount"
-                  : selectedPrice.map((p) => p.label).join(", ")}{" "}
+                  : selectedPrice.label}{" "}
               </span>
               <div className="w-1/6 mr-2">
                 <button onClick={togglePricesDropdown}>
@@ -354,7 +345,7 @@ const Listing = () => {
                   <div
                     key={price.label}
                     className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white font-regular tracking-wider text-xs text-center"
-                    onClick={() => togglePrices(price)}
+                    onClick={() => { togglePrices(price); togglePricesDropdown(); setShowClearFilter(true) }}
                   >
                     {price.label}
                   </div>
@@ -366,9 +357,8 @@ const Listing = () => {
           <div className="relative">
             <div className="w-40 h-12  border border-gray-300  flex justify-center rounded-full items-center">
               {" "}
-              <span className="text-xs w-5/6 text-center">{`${
-                selectedBeds || "0"
-              }+ Beds`}</span>{" "}
+              <span className="text-xs w-5/6 text-center">{`${selectedBeds || "0"
+                }+ Beds`}</span>{" "}
               <div className="w-1/6 mr-2">
                 <button onClick={toggleBedDropdown} className="">
                   <FontAwesomeIcon
@@ -385,7 +375,7 @@ const Listing = () => {
                   <div
                     key={bed}
                     className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white tracking-wider text-xs text-center transition ease-in-out duration-150"
-                    onClick={() => setSelectedBeds(bed)}
+                    onClick={() => { setSelectedBeds(bed); toggleBedDropdown(); setShowClearFilter(true) }}
                   >
                     {bed}
                   </div>
@@ -395,10 +385,9 @@ const Listing = () => {
           </div>
           {/* Baths */}
           <div className="relative">
-            <div className="w-40 h-12 border border-gray-300   rounded-full flex justify-center items-center">
-              <span className="text-xs w-5/6 text-center">{`${
-                selectedBaths || "0"
-              }+ Baths`}</span>{" "}
+            <div className="w-40 h-12 border border-gray-300   rounded-md flex justify-center items-center">
+              <span className="text-xs w-5/6 text-center">{`${selectedBaths || "0"
+                }+ Baths`}</span>{" "}
               <div className="w-1/6 mr-2">
                 <button onClick={toggleBathDropdown}>
                   <FontAwesomeIcon icon={faChevronDown} size="sm" />
@@ -411,7 +400,7 @@ const Listing = () => {
                   <div
                     key={baths}
                     className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white tracking-wider text-xs text-center transition ease-in-out duration-150"
-                    onClick={() => setSelectedBaths(baths)}
+                    onClick={() => { setSelectedBaths(baths); toggleBathDropdown(); setShowClearFilter(true) }}
                   >
                     {baths}
                   </div>
@@ -423,7 +412,7 @@ const Listing = () => {
           <div className="relative">
             <div className="w-40 h-12 border border-gray-300   rounded-full flex justify-center items-center">
               <span className="text-xs w-5/6 text-center">
-                {setLocation.length === 0 ? "Location" : setLocation[0].label}
+                {!selectedLocation ? "Location" : selectedLocation}
               </span>{" "}
               <div className="w-1/6 mr-2">
                 <button onClick={toggleLocationDropdown}>
@@ -435,11 +424,11 @@ const Listing = () => {
               <div className="bg-white w-40 h-auto absolute  top-full z-40 transition-all ease-in-out duration-200">
                 {locations.map((location) => (
                   <div
-                    key={location.label}
+                    key={location}
                     className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white tracking-wider text-xs text-center transition ease-in-out duration-150"
-                    onClick={() => setSelectedLocation([location])}
+                    onClick={() => { setSelectedLocation(location); toggleLocationDropdown;; setShowClearFilter(true) }}
                   >
-                    {location.label}
+                    {location}
                   </div>
                 ))}
               </div>
@@ -449,7 +438,7 @@ const Listing = () => {
           <div className="relative">
             <div className="w-40 h-12 border border-gray-300  rounded-full flex  justify-around items-center">
               <span className="text-xs w-5/6 text-center">
-                {setProperty.length === 0 ? "Type" : setProperty[0].label}
+                {!selectedProperty ? "Type" : selectedProperty}
               </span>{" "}
               <div className="w-1/6 mr-2">
                 <button onClick={togglePropertyDropdown}>
@@ -459,20 +448,25 @@ const Listing = () => {
             </div>
             {openDropdown === 5 && (
               <div className="bg-white w-40 h-auto absolute top-full  z-40">
-                {property.map((properties) => (
+                {properties.map((property) => (
                   <div
-                    key={properties.label}
+                    key={property}
                     className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white tracking-wider text-xs text-center transition ease-in-out duration-150"
-                    onClick={() => setSelectedProperty([properties])}
+                    onClick={() => { setSelectedProperty(property); togglePropertyDropdown(); setShowClearFilter(true) }}
                   >
-                    {properties.label}
+                    {property}
                   </div>
                 ))}
               </div>
             )}
           </div>
         </div>
+        {showClearFilter &&
+          <button onClick={clearFilters} className="absolute top-[4.5rem] left-[22%] p-4 text-white text-sm tracking-wider font-montserrat transition ease-in-out duration-150 bg-forest/90 hover:bg-forest w-fit rounded-xl  hover:shadow-lg active:opacity-100"
+          >Reset Filters</button>
+        }
       </div>
+
     </div>
   );
 };
