@@ -22,11 +22,7 @@ interface Listing {
   price: number;
   availability: string;
   location: string;
-}
-
-interface SavedListing {
-  email: string;
-  listingId: number;
+  type: string;
 }
 
 interface Price {
@@ -134,11 +130,11 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
     console.log("Filters: ", selectedFilters)
     let filtered = listings.filter((listing) => {
 
-      // if (selectedFilters.option) {
-      //   if (listing.availability != selectedFilters.option) {
-      //     return false;
-      //   }
-      // }
+      if (selectedFilters.option) {
+        if (listing.availability != selectedFilters.option) {
+          return false;
+        }
+      }
       if (selectedFilters.price.label != "") {
         if (listing.price < selectedFilters.price.min || listing.price > selectedFilters.price.max) {
           console.log("Listing Price: ", listing.price)
@@ -155,16 +151,16 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
           return false;
         }
       }
-      // if (selectedFilters.location != "") {
-      //   if (listing.location != selectedFilters.location) {
-      //     return false;
-      //   }
-      // }
-      // if (selectedFilters.property != "") {
-      //   if (listing.type != selectedFilters.property) {
-      //     return false;
-      //   }
-      // }
+      if (selectedFilters.location != "") {
+        if (listing.location != selectedFilters.location) {
+          return false;
+        }
+      }
+      if (selectedFilters.property != "") {
+        if (listing.type != selectedFilters.property) {
+          return false;
+        }
+      }
       return true;
     });
 

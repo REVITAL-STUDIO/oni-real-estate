@@ -42,14 +42,17 @@ model Account {
 }
 
 model Listing {
-  id          Int      @id @default(autoincrement())
-  address     String   @unique
-  description String
-  pictures    String[]
-  beds        Int
-  baths       Int
-  area        Int
-  price       Int
+  id           Int      @id @default(autoincrement())
+  address      String   @unique
+  description  String
+  pictures     String[]
+  beds         Int
+  baths        Int
+  area         Int
+  price        Int
+  type         String?
+  location     String?
+  availability String?
 }
 
 model Lead {

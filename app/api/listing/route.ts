@@ -14,6 +14,9 @@ export async function GET() {
                 baths: true,
                 area: true,
                 price: true,
+                type: true,
+                location: true,
+                availability: true
             },
         });
 
@@ -55,6 +58,9 @@ interface postRequestBody {
     baths: number,
     area: number,
     price: number,
+    type: string,
+    location: string,
+    availability: string
 }
 
 // api handler for creating a new listing
@@ -81,7 +87,10 @@ export async function POST(request: Request) {
                 beds: body.beds,
                 baths: body.baths,
                 area: body.area,
-                price: body.price
+                price: body.price,
+                type: body.type,
+                location: body.location,
+                availability: body.availability
             }
         })
 

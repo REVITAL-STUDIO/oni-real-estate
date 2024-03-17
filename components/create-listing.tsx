@@ -14,6 +14,13 @@ const CreateListing = () => {
   const { edgestore } = useEdgeStore();
   const [selectedFiles, setSelectedFiles] = useState<FileExtended[]>([]);
   const imageUrls: string[] = [];
+  const [propertyType, setPropertyType] = useState("");
+  const propertyTypes = ["House", "Apartment", "Duplex", "Townhouse"];
+  const [location, setLocation] = useState("");
+  const locations = ["Montrose", "Heights", "Katy", "Fort Bend", "Missouri City", "Pearland", "Cinco Ranch"];
+  const [availability, setAvailability] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
   const [formData, setFormData] = useState({
     address: "",
     description: "",
@@ -58,13 +65,33 @@ const CreateListing = () => {
   ) => {
     e.preventDefault();
     setIsError(false);
+    setIsLoading(true);
+
+    // Validation: Check if any required fields are empty
+    if (
+      formData.address === "" ||
+      formData.description === "" ||
+      propertyType === "" ||
+      location === "" ||
+      availability === "" ||
+      formData.beds === 0 || !formData.beds ||
+      formData.baths === 0 || !formData.baths ||
+      formData.area === 0 || !formData.area ||
+      formData.price === 0 || !formData.price
+    ) {
+      setErrorMsg("Please fill out all required fields.");
+      setIsError(true);
+      setIsLoading(false);
+      return; // Stop further execution if validation fails
+    }
+
     try {
       await uploadFiles();
 
       try {
         //storing cloud stored image urls to listingdata
         //creating listingdata to be sent to server to create listing
-        let listingData = { ...formData, pictures: imageUrls };
+        let listingData = { ...formData, pictures: imageUrls, type: propertyType, location: location, availability: availability };
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing`,
           {
@@ -88,6 +115,7 @@ const CreateListing = () => {
           );
         } else {
           setIsSuccess(true);
+          setIsLoading(false);
         }
       } catch (error) {
         setIsError(true);
@@ -96,6 +124,7 @@ const CreateListing = () => {
           error
         );
         await deleteFiles();
+      setIsLoading(false);
       }
     } catch (error) {
       setIsError(true);
@@ -103,15 +132,16 @@ const CreateListing = () => {
         "NETWORK ERROR - Unable to upload listing files to the cloud, listing was not created"
       );
       await deleteFiles();
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="font-agrandir  ">
       <div className="flex flex-col  justify-center items-center min-h-screen ">
-        <div className=" flex flex-col justify-center items-center   w-full md:w-[90%] md:py-[1rem] rounded-md ">
+        <div className="relative flex flex-col justify-center items-center   w-full md:w-[90%] md:py-[1rem] rounded-md ">
           {isSuccess && (
-            <div className="p-[1rem] bg-green-100 flex gap-3 items-center rounded-lg mb-[2rem]">
+            <div className="absolute top-[5%] p-[1rem] bg-green-100 flex gap-3 items-center rounded-lg mb-[2rem] z-[1000]">
               <p className="text-green-700">Listing successfully created.</p>
               <IoIosClose
                 className=" text-green-500 h-[2rem] w-[2rem] hover:cursor-pointer"
@@ -120,7 +150,7 @@ const CreateListing = () => {
             </div>
           )}
           {isError && (
-            <div className="p-[1rem] bg-red-100 flex gap-3 items-center rounded-lg mb-[2rem] ">
+            <div className="absolute top-[5%] p-[1rem] bg-red-100 flex gap-3 items-center rounded-lg mb-[2rem] z-[1000]">
               <p className="text-red-400">{errorMsg}</p>
               <IoIosClose
                 className=" text-red-300 h-[2rem] w-[2rem] hover:cursor-pointer"
@@ -187,59 +217,118 @@ const CreateListing = () => {
                     className="block w-[60%] border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm "
                   />
                 </div>
-                <div>
-                  <label className="py-2 text-white"># Baths</label>
-                  <input
-                    name="baths"
-                    type="number"
-                    required
-                    value={formData.baths}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        baths: parseInt(e.target.value, 10),
-                      })
-                    }
-                    className="block w-[60%] border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm "
-                  />
+                <div className="flex justify-between">
+                  <div>
+                    <label className="py-2 text-white"># Baths</label>
+                    <input
+                      name="baths"
+                      type="number"
+                      required
+                      value={formData.baths}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          baths: parseInt(e.target.value, 10),
+                        })
+                      }
+                      className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm "
+                    />
+                  </div>
+                  <div className="w-[35%]">
+                    <label className="py-2 text-white">Property Type</label>
+                    <select
+                      required
+                      value={propertyType}
+                      onChange={(e) => { setPropertyType(e.target.value) }}
+                      className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm hover:cursor-pointer"
+                    >
+                      <option value="">Select Type</option>
+                      {propertyTypes.map((type, index) => (
+                        <option key={index} value={type}>
+                          {type}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
-                <div>
-                  <label className="py-2 text-white">Area</label>
-                  <input
-                    name="description"
-                    type="number"
-                    required
-                    value={formData.area}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        area: parseInt(e.target.value, 10),
-                      })
-                    }
-                    className="block w-[60%] border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm "
-                  />
+                <div className="flex justify-between">
+                  <div>
+                    <label className="py-2 text-white">Area</label>
+                    <input
+                      name="description"
+                      type="number"
+                      required
+                      value={formData.area}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          area: parseInt(e.target.value, 10),
+                        })
+                      }
+                      className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm "
+                    />
+                  </div>
+                  <div className="w-[35%]">
+                    <label className="py-2 text-white">Location</label>
+                    <select
+                      required
+                      value={location}
+                      onChange={(e) => { setLocation(e.target.value) }}
+                      className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm hover:cursor-pointer"
+                    >
+                      <option value="">Select Location</option>
+                      {locations.map((type, index) => (
+                        <option key={index} value={type}>
+                          {type}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
-                <div>
-                  <label className="py-2 text-white">Price</label>
-                  <input
-                    name="description"
-                    type="number"
-                    required
-                    value={formData.price}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        price: parseInt(e.target.value, 10),
-                      })
-                    }
-                    className="block w-[60%] border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm "
-                  />
+                <div className="flex justify-between">
+                  <div>
+                    <label className="py-2 text-white">Price</label>
+                    <input
+                      name="description"
+                      type="number"
+                      required
+                      value={formData.price}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          price: parseInt(e.target.value, 10),
+                        })
+                      }
+                      className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm "
+                    />
+                  </div>
+                  <div className="w-[35%]">
+                    <label className="py-2 text-white">Availability</label>
+                    <select
+                      required
+                      value={availability}
+                      onChange={(e) => { setAvailability(e.target.value) }}
+                      className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm hover:cursor-pointer"
+                    >
+                      <option value="">Select Availability</option>
+                      <option value="Sale">
+                        For Sale
+                      </option>
+                      <option value="Rent">
+                        For Rent
+                      </option>
+                    </select>
+                  </div>
                 </div>
                 <button
                   onClick={createListing}
                   className="p-4 text-white text-sm tracking-wider font-montserrat transition ease-in-out duration-150 bg-forest/90 hover:bg-forest w-fit rounded-xl  hover:shadow-lg active:opacity-100"
                 >
-                  Create Listing
+                  {isLoading ? (
+                    <div className="h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                  ) : (
+                    "Create Listing"
+                  )}
                 </button>
               </form>
 

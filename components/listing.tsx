@@ -37,10 +37,10 @@ interface ListingProps {
 const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
   //For sale for rent
   const [selectedOption, setSelectedOption] = useState(
-    "For Sale"
+    "Sale"
   );
 
-  const handleOptionClick = (option: "For Sale" | "For Rent") => {
+  const handleOptionClick = (option: string) => {
     setSelectedOption(option);
   };
 
@@ -127,7 +127,7 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
     "Duplex",
     "Apartment",
     "House",
-    "Condo",
+    "Townhouse",
   ];
   useEffect(() => {
     applyFilters()
@@ -174,23 +174,23 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
         <div className="xl:w-80 w-60 flex justify-center items-center transition-all">
           <div className="w-5/6 h-16 relative text-sm font-montserrat tracking-wider flex justify-around items-center ">
             <span
-              className={` cursor-pointer ${selectedOption === "For Sale" ? "font-bold  text-black" : ""
+              className={` cursor-pointer ${selectedOption === "Sale" ? "font-bold  text-black" : ""
                 }`}
-              onClick={() => handleOptionClick("For Sale")}
+              onClick={() => handleOptionClick("Sale")}
             >
               Sale
             </span>
             <span
-              className={`cursor-pointer ${selectedOption === "For Rent" ? "font-bold  text-black" : ""
+              className={`cursor-pointer ${selectedOption === "Rent" ? "font-bold  text-black" : ""
                 }`}
-              onClick={() => handleOptionClick("For Rent")}
+              onClick={() => handleOptionClick("Rent")}
             >
               Rent
             </span>
             <div
               className="w-[50%] h-11  border border-black/50 rounded-full absolute  top-1/2 transform -translate-y-1/2
                       duration-200 ease-in"
-              style={{ left: selectedOption === "For Rent" ? "50%" : "0%" }}
+              style={{ left: selectedOption === "Rent" ? "50%" : "0%" }}
             />
           </div>
         </div>

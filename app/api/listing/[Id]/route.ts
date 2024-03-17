@@ -29,6 +29,9 @@ interface putRequestBody {
     baths: number,
     area: number,
     price: number,
+    type: string,
+    location: string,
+    availability: string
 }
 
 // api handler for updating a listing
@@ -47,7 +50,10 @@ export async function PUT(request: Request, { params }: { params: { Id: string }
                 beds: body.beds,
                 baths: body.baths,
                 area: body.area,
-                price: body.price
+                price: body.price,
+                type: body.type,
+                location: body.location,
+                availability: body.availability
             }
         })
         return NextResponse.json({ status: 200 })

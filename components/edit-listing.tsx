@@ -14,6 +14,9 @@ interface Listing {
   baths: number;
   area: number;
   price: number;
+  availability: string;
+  location: string;
+  type: string;
 }
 
 interface FileExtended extends File {
@@ -33,12 +36,18 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
     baths: 0,
     area: 0,
     price: 0,
+    type: "",
+    location: "",
+    availability: "",
   });
   const [errorMsg, setErrorMsg] = useState(
     "A network issue occured. Please check your internet connection and try again."
   );
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const propertyTypes = ["House", "Apartment", "Duplex", "Townhouse"];
+  const locations = ["Montrose", "Heights", "Katy", "Fort Bend", "Missouri City", "Pearland", "Cinco Ranch"];
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchListingData();
@@ -69,6 +78,9 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
         baths: listing.baths,
         area: listing.area,
         price: listing.price,
+        type: listing.type,
+        location: listing.location,
+        availability: listing.availability,
       });
 
       let files = await Promise.all(
@@ -80,6 +92,7 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
       setInitialFiles(files);
       setSelectedFiles(files);
       setFetchedListingData(true);
+      console.log("###### listing Data: ", listing)
     } catch (error) {
       console.log("Error Fetching Listing Data: ", error);
     }
@@ -141,6 +154,26 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
   const saveListing: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
     e.preventDefault();
     setIsError(false);
+    setIsLoading(true);
+
+    // Validation: Check if any required fields are empty
+    if (
+      listingData.address === "" ||
+      listingData.description === "" ||
+      listingData.type === "" ||
+      listingData.location === "" ||
+      listingData.availability === "" ||
+      listingData.beds === 0 || !listingData.beds ||
+      listingData.baths === 0 || !listingData.baths ||
+      listingData.area === 0 || !listingData.area ||
+      listingData.price === 0 || !listingData.price 
+    ) {
+      setErrorMsg("Please fill out all required fields.");
+      setIsError(true);
+      setIsLoading(false);
+      return; // Stop further execution if validation fails
+    }
+
     //added files don't have a url yet
     let filesToUpload = selectedFiles.filter((file) => !file.url);
     let newUrls: string[] = [];
@@ -162,7 +195,7 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
       }
 
       //storing cloud stored image urls to listingdata
-      //creating listingdata to be sent to server to create listing
+      //creating listingdata to be sent to server to edit listing
       let data = { ...listingData, pictures: urlsToStore };
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/${listingId}`,
@@ -187,13 +220,14 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
           `HTTP ERROR - Error editing Listing. Status: ${response.status}`
         );
       }
-
+      setIsLoading(false);
       setIsSuccess(true);
     } catch (error) {
       setIsError(true);
       console.error(
         "NETWORK ERROR - Unable to upload listing files to the cloud, listing was not created"
       );
+      setIsLoading(false);
     }
   };
 
@@ -207,11 +241,11 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
   }
 
   return (
-    <div className="font-agrandir ">
+    <div className="font-agrandir">
       <div className="flex flex-col  justify-center md:justify-center items-center min-h-screen">
-        <div className=" flex flex-col justify-center items-center  md:mt-[0rem]  w-full md:w-[90%] md:py-[1rem] rounded-md ">
+        <div className=" relative flex flex-col justify-center items-center  md:mt-[0rem]  w-full md:w-[90%] md:py-[1rem] rounded-md ">
           {isSuccess && (
-            <div className="p-[1rem] bg-green-100 flex gap-3 items-center rounded-lg mb-[2rem]">
+            <div className="absolute top-[5%] p-[1rem] bg-green-100 flex gap-3 items-center rounded-lg mb-[2rem] z-[1000]">
               <p className="text-green-700">Saved Listing changes.</p>
               <IoIosClose
                 className=" text-green-500 h-[2rem] w-[2rem] hover:cursor-pointer"
@@ -220,7 +254,7 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
             </div>
           )}
           {isError && (
-            <div className="p-[1rem] bg-red-100 flex gap-3 items-center rounded-lg mb-[2rem] ">
+            <div className="absolute top-[5%] p-[1rem] bg-red-100 flex gap-3 items-center rounded-lg mb-[2rem] z-[1000]">
               <p className="text-red-400">{errorMsg}</p>
               <IoIosClose
                 className=" text-red-300 h-[2rem] w-[2rem] hover:cursor-pointer"
@@ -290,59 +324,123 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
                   className="block w-[60%]  py-3 px-3 text-gray-900 shadow-sm rounded-full  border border-white focus:outline-none sm:text-sm "
                 />
               </div>
-              <div>
-                <label className="py-2 text-white"># Baths</label>
-                <input
-                  name="baths"
-                  type="number"
-                  required
-                  value={listingData.baths}
-                  onChange={(e) =>
-                    setListingData({
-                      ...listingData,
-                      baths: parseInt(e.target.value, 10),
-                    })
-                  }
-                  className="block w-[60%]  py-3 px-3 text-gray-900 shadow-sm rounded-full  border border-white focus:outline-none sm:text-sm "
-                />
+              <div className="flex justify-between">
+                <div>
+                  <label className="py-2 text-white"># Baths</label>
+                  <input
+                    name="baths"
+                    type="number"
+                    required
+                    value={listingData.baths}
+                    onChange={(e) =>
+                      setListingData({
+                        ...listingData,
+                        baths: parseInt(e.target.value, 10),
+                      })
+                    }
+                    className="block w-full  py-3 px-3 text-gray-900 shadow-sm rounded-full  border border-white focus:outline-none sm:text-sm "
+                  />
+                </div>
+                <div className="w-[35%]">
+                  <label className="py-2 text-white">Property Type</label>
+                  <select
+                    required
+                    value={listingData.type}
+                    onChange={(e) =>
+                      setListingData({ ...listingData, type: e.target.value })
+                    } className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm hover:cursor-pointer"
+                  >
+                    <option value="">Select Type</option>
+                    {propertyTypes.map((type, index) => (
+                      <option key={index} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
-              <div>
-                <label className="py-2 text-white">Area</label>
-                <input
-                  name="description"
-                  type="number"
-                  required
-                  value={listingData.area}
-                  onChange={(e) =>
-                    setListingData({
-                      ...listingData,
-                      area: parseInt(e.target.value, 10),
-                    })
-                  }
-                  className="block w-[60%]  py-3 px-3 text-gray-900 shadow-sm rounded-full  border border-white focus:outline-none sm:text-sm "
-                />
+              <div className="flex justify-between">
+                <div>
+                  <label className="py-2 text-white">Area</label>
+                  <input
+                    name="description"
+                    type="number"
+                    required
+                    value={listingData.area}
+                    onChange={(e) =>
+                      setListingData({
+                        ...listingData,
+                        area: parseInt(e.target.value, 10),
+                      })
+                    }
+                    className="block w-full  py-3 px-3 text-gray-900 shadow-sm rounded-full  border border-white focus:outline-none sm:text-sm "
+                  />
+                </div>
+                <div className="w-[35%]">
+                  <label className="py-2 text-white">Location</label>
+                  <select
+                    required
+                    value={listingData.location}
+                    onChange={(e) =>
+                      setListingData({ ...listingData, location: e.target.value })
+                    } className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm hover:cursor-pointer"
+                  >
+                    <option value="">Select Location</option>
+                    {locations.map((type, index) => (
+                      <option key={index} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
+
+                </div>
               </div>
-              <div>
-                <label className="py-2 text-white">Price</label>
-                <input
-                  name="description"
-                  type="number"
-                  required
-                  value={listingData.price}
-                  onChange={(e) =>
-                    setListingData({
-                      ...listingData,
-                      price: parseInt(e.target.value, 10),
-                    })
-                  }
-                  className="block w-[60%]  py-3 px-3 text-gray-900 shadow-sm rounded-full placeholder:text-gray-400 border border-white focus:outline-none sm:text-sm "
-                />
+              <div className="flex justify-between">
+                <div>
+                  <label className="py-2 text-white">Price</label>
+                  <input
+                    name="description"
+                    type="number"
+                    required
+                    value={listingData.price}
+                    onChange={(e) =>
+                      setListingData({
+                        ...listingData,
+                        price: parseInt(e.target.value, 10),
+                      })
+                    }
+                    className="block w-full  py-3 px-3 text-gray-900 shadow-sm rounded-full placeholder:text-gray-400 border border-white focus:outline-none sm:text-sm "
+                  />
+                </div>
+                <div className="w-[35%]">
+                  <label className="py-2 text-white">Availability</label>
+                  <select
+                    required
+                    value={listingData.availability}
+                    onChange={(e) =>
+                      setListingData({ ...listingData, availability: e.target.value })
+                    } className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm hover:cursor-pointer"
+                  >
+                    <option value="">Select Availability</option>
+                    <option value="Sale">
+                      For Sale
+                    </option>
+                    <option value="Rent">
+                      For Rent
+                    </option>
+                  </select>
+
+                </div>
               </div>
               <button
                 onClick={saveListing}
                 className="p-4 text-white text-sm tracking-wider font-montserrat mt-4 bg-forest w-fit rounded-xl hover:opacity-80 hover:shadow-lg active:opacity-100"
               >
-                Save changes
+                {isLoading ? (
+                  <div className="h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                ) : (
+                  "Save Changes"
+                )}
               </button>
             </form>
             <div className="w-[85%] md:w-[45%] md:mt-[12%]">

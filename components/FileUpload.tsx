@@ -61,7 +61,7 @@ const FileUpload: React.FC<fileUploadProps> = ({
         </button>
       </div>
       <div>
-        <div className="grid grid-cols-3 gap-2 py-4 max-h-[12rem]  px-2">
+        <div className="grid grid-cols-3 gap-2 py-4 max-h-[8.5rem] overflow-y-auto px-2">
           {" "}
           {/* Grid container with 3 columns and gap */}
           {selectedFiles.map((file) => (
