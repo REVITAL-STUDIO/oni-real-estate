@@ -60,7 +60,7 @@ const Seller = () => {
           initial="hidden"
           animate={control}
           transition={{ duration: 1.2, delay: 2.8 }}
-          className="font-montserrat p-4 text-black/60 text-xs md:text-sm lg:text-lg font-medium xl:text-base"
+          className="font-montserrat p-4 text-black/60 text-sm leading-16  font-medium "
         >
           We understand that selling your home is a significant milestone, and
           we're here to ensure that you not only achieve but surpass your

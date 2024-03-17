@@ -345,36 +345,28 @@ const Nav = () => {
               className="xl:hidden absolute top-0  right-0 bottom-0  flex justify-center items-center w-full  h-screen bg-mist  "
             >
               <motion.div
-                initial={{ opacity: 0, y: -100 }}
+                initial={{ opacity: 0, y: 100 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -100 }}
-                transition={{ ease: "easeInOut", duration: 0.2 }}
-                className="xl:hidden absolute top-0   right-0 bottom-0 w-full h-screen bg-black shadow-xl "
+                transition={{ ease: "easeInOut", duration: 1 }}
+                className="xl:hidden absolute top-0   right-0 bottom-0 w-full h-screen bg-eggshell shadow-xl "
               >
                 <Image
                   src={mobileLogo}
                   alt="oni real estate logo"
-                  className="invert w-24 p-4"
+                  className="invert w-32 p-4"
                 />
                 <ul
-                  className={` gap-y-4 font-medium  flex flex-col items-center justify-center font-agrandir w-full h-2/3
+                  className={` gap-y-4 font-medium text-black flex flex-col items-center  justify-center font-agrandir w-full h-2/3
           `}
                 >
-                  <li className="relative   w-full p-4 text-xl md:text-4xl tracking-wider font-extralight  ">
-                    <Link href="/" className="w-full flex justify-between">
-                      Home
-                    </Link>
+                  <li className="relative   w-full p-4 text-3xl md:text-5xl tracking-wider font-extralight  ">
+                    <Link href="/">Home</Link>
                   </li>
                   {!session && (
-                    <li className="relative   w-full p-4 text-xl md:text-4xl tracking-wider font-extralight">
+                    <li className="relative   w-full p-4 text-3xl md:text-5xl tracking-wider font-extralight">
                       <button onClick={toggleLogin}>
-                        <span className="w-full flex  justify-center">
-                          Login{" "}
-                          {/* <FontAwesomeIcon
-                            icon={faAngleRight}
-                            className="w-6 h-6"
-                          /> */}
-                        </span>
+                        <span>Login </span>
                       </button>
                     </li>
                   )}
@@ -383,7 +375,7 @@ const Nav = () => {
                       className={`
                    
                     font-regular
-                    relative   w-full p-4 text-lg md:text-4xl tracking-wider font-extralight
+                    relative   w-full p-4 text-3xl md:text-5xl tracking-wider font-extralight
                   `}
                       href="/admin"
                     >
@@ -394,7 +386,7 @@ const Nav = () => {
                   )}
                   {session && session?.user.role !== "admin" && (
                     <div className="relative w-full h-auto duration-300  transition ease- z-10  rounded-md">
-                      <li className="relative   w-full p-4 text-xl md:text-4xl tracking-wider font-extralight flex  justify-between">
+                      <li className="relative   w-full p-4 text-3xl md:text-5xl tracking-wider font-extralight flex  justify-between">
                         <Link className="w-full" href="/user">
                           <span className=" w-full ">Property Hub</span>
                         </Link>
@@ -404,17 +396,17 @@ const Nav = () => {
                           className={
                             openLogOut
                               ? "w-6 h-6 transform rotate-90 transition ease-in-out duration-200"
-                              : "w-6 h-6 "
+                              : "w-6 h-6 transition ease-in-out duration-200"
                           }
                         />
                       </li>
                       {openLogOut && (
                         <div
-                          className={`overflow-hidden transition-max-h ${
-                            openLogOut ? "max-h-40 bg-black" : "max-h-0"
-                          } transition-all duration-300 ease-in-out`}
+                          className={`transition-max-h ${
+                            openLogOut ? "max-h-40 " : "max-h-0"
+                          } transition duration-300 ease-in-out`}
                         >
-                          <button className="text-left w-full p-4 h-fit flex items-center text-white ">
+                          <button className="text-left w-full p-4 h-fit flex items-center text-black ">
                             <FontAwesomeIcon
                               icon={faGears}
                               size="lg"
@@ -424,30 +416,23 @@ const Nav = () => {
                           </button>
                           <button
                             onClick={handleLogout}
-                            className="text-left w-full p-4 h-fit flex  items-center  text-white"
+                            className="text-left w-full p-4 h-fit flex  items-center  text-black"
                           >
                             <FontAwesomeIcon
                               className="transform scale-x(-1) ml-4"
                               icon={faArrowRightFromBracket}
                               size="lg"
                             />{" "}
-                            <span className="px-2 text-red-500 text-base">
-                              Log out
-                            </span>
+                            <span className="px-2  text-base">Log out</span>
                           </button>
                         </div>
                       )}
                     </div>
                   )}
-                  <li className="relative  flex justify-between  w-full p-4 text-xl md:text-4xl tracking-wider font-extralight  ">
-                    <Link
-                      href="/owners"
-                      className="w-full flex justify-between"
-                    >
-                      Ownership
-                    </Link>
+                  <li className="relative  flex  w-full  p-4 text-3xl md:text-5xl tracking-wider font-extralight  ">
+                    <Link href="/owners">Ownership</Link>
                   </li>
-                  <li className="relative  flex justify-between  w-full p-4 text-xl md:text-4xl tracking-wider font-extralight  ">
+                  <li className="relative w-full flex p-4 text-3xl md:text-5xl tracking-wider font-extralight  ">
                     <Link
                       href="/listings"
                       className="w-full flex justify-between"
@@ -457,7 +442,7 @@ const Nav = () => {
                   </li>
                 </ul>
                 <div className="w-full flex justify-center items-center">
-                  <button className="font-agrandir w-3/4 h-1/3 bg-white text-black border border-white p-4 text-lg rounded-xl">
+                  <button className="font-agrandir shadow-lg w-3/4 h-1/3 bg-white text-black border border-white p-4 text-lg rounded-xl">
                     Contact Us.
                   </button>
                 </div>

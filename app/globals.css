@@ -92,9 +92,6 @@
     animation: spin 1.3s linear infinite;
   }
   
-  @keyframes spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  
+  .transition-max-h {
+    transition: max-height 0.3s ease-in-out;
+}

@@ -48,11 +48,10 @@ interface User {
 }
 
 interface HomesProps {
-  selectedFilters: Filters
+  selectedFilters: Filters;
 }
 
 const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
-
   const { data: session } = useSession();
 
   //will contain array of listings data retrieved from db
@@ -66,9 +65,8 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
   // variable to keep track of which listing user selects to view
   const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
   const [user, setUser] = useState<User>();
-  const [savedListings, setsavedListings] = useState<number[]>([]);
-  const [favListingsID, setFavListingsID] = useState<number[]>([]);
-
+  // const [savedListings, setsavedListings] = useState<number[]>([]);
+  // const [favListingsID, setFavListingsID] = useState<number[]>([]);
 
   // Fetch listings and update the state
   const fetchListings = async () => {
@@ -81,7 +79,7 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
       const data: Listing[] = await response.json();
       //setting listings data to Listings state variable
       setListings(data);
-      setFilteredListings(data)
+      setFilteredListings(data);
       console.log("Data:", data);
       if (session) {
         await fetchUserData();
@@ -112,32 +110,31 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
       }
 
       let data = await response.json();
-      await setUser(data)
-      console.log("############ user info: ", user)
-      console.log("Fav listings: ", user?.favoriteListingsIds)
+      await setUser(data);
+      console.log("############ user info: ", user);
+      console.log("Fav listings: ", user?.favoriteListingsIds);
     } catch (error) {
       console.log("Error Fetching User Data: ", error);
     }
   };
 
-
-
-
   useEffect(() => {
     // Filter logic based on the selected filters
-    console.log("Session: ", session?.user)
+    console.log("Session: ", session?.user);
 
-    console.log("Filters: ", selectedFilters)
+    console.log("Filters: ", selectedFilters);
     let filtered = listings.filter((listing) => {
-
       if (selectedFilters.option) {
         if (listing.availability != selectedFilters.option) {
           return false;
         }
       }
       if (selectedFilters.price.label != "") {
-        if (listing.price < selectedFilters.price.min || listing.price > selectedFilters.price.max) {
-          console.log("Listing Price: ", listing.price)
+        if (
+          listing.price < selectedFilters.price.min ||
+          listing.price > selectedFilters.price.max
+        ) {
+          console.log("Listing Price: ", listing.price);
           return false;
         }
       }
@@ -165,20 +162,16 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
     });
 
     // Update the filtered listings state
-    console.log("Filtered Listings: ", filtered)
+    console.log("Filtered Listings: ", filtered);
     setFilteredListings(filtered);
-
   }, [selectedFilters, listings]);
-
 
   // use effect so that listing data is fetched as component is loaded
   useEffect(() => {
     fetchListings();
   }, [session]);
 
-  useEffect(() => {
-  }, [user?.favoriteListingsIds]);
-
+  useEffect(() => {}, [user?.favoriteListingsIds]);
 
   const handlePropertyInfo = (listing: Listing) => {
     //the listing to show in the property info page
@@ -189,7 +182,6 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
   const handleClose = () => {
     openPropertyInfo(false);
   };
-
 
   //function to save listing
   const favoriteListing = async (id: number) => {
@@ -208,7 +200,7 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
         }
       );
       if (!response.ok) {
-        throw new Error("Favoriting Listing Error")
+        throw new Error("Favoriting Listing Error");
       }
     } catch (error) {
       console.error("Error updating favorites", error);
@@ -216,11 +208,9 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
     }
     if (user) {
       const updatedFavoriteListingsIds = [...user.favoriteListingsIds, id];
-      setUser({ ...user, favoriteListingsIds: updatedFavoriteListingsIds, });
+      setUser({ ...user, favoriteListingsIds: updatedFavoriteListingsIds });
     }
   };
-
-
 
   //Open Info Page & close
   const [propertyInfo, openPropertyInfo] = useState(false);
