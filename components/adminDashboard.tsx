@@ -221,7 +221,7 @@ const AdminDashboard = () => {
   return (
     <div>
       <div className="w-full h-1000 md:h-screen flex justify-center items-center">
-        <div className="w-[90%] h-4/5   rounded-2xl grid gap-4 grid-cols-2 grid-rows-2">
+        <div className="w-[90%] h-4/5 bg-gray-200  rounded-2xl grid gap-4 grid-cols-2 grid-rows-2">
           {/* Admin Profile */}
           <div className=" xl:col-span-1 col-span-2 row-span-2 xl:row-span-1  bg-gray-400/10 transition ease-in-out duration-100 relative rounded-2xl flex justify-center items-center shadow-lg">
             <div className="w-2/3 h-[90%] rounded-2xl  flex flex-col items-center">

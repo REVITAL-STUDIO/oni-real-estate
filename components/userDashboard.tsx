@@ -202,7 +202,7 @@ const Dashboard = () => {
         setHomes(data);
         console.log("Retrieved Favorites: ", data);
       } else {
-        throw new Error()
+        throw new Error();
       }
     } catch (error) {
       console.error("Error receiving Listing", error);
@@ -232,8 +232,6 @@ const Dashboard = () => {
     }
   };
 
-
-
   if (isLoading) {
     return (
       <div className="min-h-screen flex justify-center items-center">
@@ -244,7 +242,12 @@ const Dashboard = () => {
   if (!isLoading && userData && userDataEdit) {
     return (
       <div className="w-full h-screen flex justify-center items-center ">
-        <div className="w-[90%] h-3/4 bg-gray-400/10  shadow-lg rounded-2xl flex flex-col xl:flex-row">
+        <motion.div
+          initial={{ opacity: 0, y: 75 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ ease: "easeIn", duration: 0.8 }}
+          className="w-[90%] h-3/4 bg-gray-200  shadow-2xl rounded-2xl flex flex-col xl:flex-row"
+        >
           {/* Profile */}
           <AnimatePresence>
             {viewHome ? (
@@ -336,17 +339,17 @@ const Dashboard = () => {
                     homes.map((home) => (
                       <li
                         key={home.id}
-                        className="w-5/6 relative h-1/4 rounded-2xl my-4 hover:scale-105 hover:translate-x-4 shadow-mint/50 shadow-md transition duration-150 ease-in-out"
+                        className="w-5/6 relative h-1/4 rounded-2xl my-4 hover:scale-105 hover:translate-x-4 bg-to-gradient-l from-black via-white/30 to-transparent shadow-md transition duration-150 ease-in-out"
                       >
-                        <div className="w-[100%] h-[100%]">
-                        <Image
-                          src={home.pictures[0]}
-                          className=" w-[100%] h-[100%]  object-cover rounded-lg brightness-50 contrast-125 shadow-md"
-                          width={1}
-                          height={1}
-                          alt="homes"
-                          layout="responsive"
-                        />
+                        <div className="w-full h-full  ">
+                          <Image
+                            src={home.pictures[0]}
+                            className=" w-[100%] h-[100%]  object-cover rounded-lg brightness-50 contrast-125 shadow-md"
+                            width={1}
+                            height={1}
+                            alt="homes"
+                            layout="fixed"
+                          />
                         </div>
                         <div className="absolute top-1/2 w-full flex justify-between">
                           <h2 className=" font-montserrat w-1/3 text-white px-4">
@@ -423,7 +426,7 @@ const Dashboard = () => {
               </div>
             )}
           </AnimatePresence>
-        </div>
+        </motion.div>
 
         {/* Handling Opening Menu */}
         <AnimatePresence>

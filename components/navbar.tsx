@@ -291,14 +291,14 @@ const Nav = () => {
                 <span className=" text-white">Property Hub</span>
               </Link>
               {openLogOut && (
-                <div className="absolute top-4/6 right-0 w-full h-auto bg-white shadow-lg rounded-2xl ">
-                  <button className="text-left w-full p-4 h-fit flex items-center justify-evenly text-black/50 ">
+                <div className="absolute top-5/6 right-0 w-full  h-auto justify-evenly bg-black/75 shadow-xl rounded-md ">
+                  <button className="text-left w-full h-fit flex p-4 items-center justify-evenly text-white ">
                     <FontAwesomeIcon icon={faGears} size="lg" />
                     Settings
                   </button>
                   <button
                     onClick={handleLogout}
-                    className="text-left w-full p-4 h-fit flex items-center justify-evenly text-black/50 "
+                    className="text-left w-full h-fit flex p-4 items-center justify-evenly text-white "
                   >
                     <FontAwesomeIcon
                       className="transform scale-x(-1)"
@@ -662,11 +662,11 @@ const Nav = () => {
                       />
                     </div>
                     {/* Log In Button */}
-                    <div className="flex flex-col justify-evenly w-4/5 h-1/2 my-4">
+                    <div className="flex flex-col justify-center w-4/5 h-1/2 ">
                       <button
                         disabled={isLoading}
                         onClick={signInUser}
-                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint flex justify-center items-center text-base text-black rounded-full tracking-wide hover:opacity-75 ${
+                        className={`p-2 bg-gradient-to-r shadow-md from-pine my-4 via-mint/50 to-mint flex justify-center items-center text-base text-black rounded-full tracking-wide hover:opacity-75 ${
                           isLoading ? "opacity-75" : "opacity-100"
                         }`}
                       >

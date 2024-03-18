@@ -168,7 +168,7 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
       </div>
       <div className="relative w-full flex flex-col xl:flex-row xl:h-16 h-1/3 font-montserrat shadow-lg border-t border-gray-200 z-20">
         {/* Toggle Button RENT and SALE */}
-        <div className="xl:w-80 w-60 flex justify-center items-center transition-all">
+        <div className=" w-52  flex justify-center items-center transition-all">
           <div className="w-5/6 h-16 relative text-sm font-montserrat tracking-wider flex justify-around items-center ">
             <span
               className={` cursor-pointer ${
@@ -194,7 +194,7 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
           </div>
         </div>
         {/* filters */}
-        <div className=" w-5/6 h-full xl:flex justify-evenly items-center hidden z-40">
+        <div className=" w-full h-full xl:flex justify-evenly items-center hidden z-40">
           {/* Prices */}
           <div className="relative">
             <button
@@ -394,15 +394,21 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
               ))}
             </div>
           </div>
+          <button
+            onClick={clearFilters}
+            className=" w-40 h-12 text-white text-xs tracking-wider font-montserrat transition ease-in-out duration-150 bg-black hover:bg-black/90  rounded-xl  hover:shadow-lg active:opacity-100"
+          >
+            Reset Filters
+          </button>
         </div>
 
         {/* Mobile Responsive filters */}
         <div className=" w-full h-full flex flex-wrap gap-4 items-center  xl:hidden p-4 ">
           {/* Prices */}
           <div className="relative">
-            <div className="w-40 h-12 border border-gray-300   rounded-full flex justify-center items-center">
-              <span className="text-xs  w-[100%] text-center">
-                {!selectedPrice ? "Price Amount" : selectedPrice.label}{" "}
+            <div className="w-40 h-12 border border-gray-300   rounded-md flex justify-center items-center">
+              <span className="text-xs text-black w-[100%] text-center">
+                {selectedPrice ? "Price Amount" : selectedPrice.label}{" "}
               </span>
               <div className="w-1/6 mr-2">
                 <button onClick={togglePricesDropdown}>
@@ -430,7 +436,7 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
           </div>
           {/* Beds */}
           <div className="relative">
-            <div className="w-40 h-12  border border-gray-300  flex justify-center rounded-full items-center">
+            <div className="w-40 h-12  border border-gray-300  flex justify-center rounded-md items-center">
               {" "}
               <span className="text-xs w-5/6 text-center">{`${
                 selectedBeds || "0"
@@ -495,7 +501,7 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
           </div>
           {/* Location */}
           <div className="relative">
-            <div className="w-40 h-12 border border-gray-300   rounded-full flex justify-center items-center">
+            <div className="w-40 h-12 border border-gray-300   rounded-md flex justify-center items-center">
               <span className="text-xs w-5/6 text-center">
                 {!selectedLocation ? "Location" : selectedLocation}
               </span>{" "}
@@ -525,7 +531,7 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
           </div>
           {/* Property Type */}
           <div className="relative">
-            <div className="w-40 h-12 border border-gray-300  rounded-full flex  justify-around items-center">
+            <div className="w-40 h-12 border border-gray-300  rounded-md flex  justify-around items-center">
               <span className="text-xs w-5/6 text-center">
                 {!selectedProperty ? "Type" : selectedProperty}
               </span>{" "}
@@ -553,15 +559,13 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
               </div>
             )}
           </div>
-        </div>
-        {showClearFilter && (
           <button
             onClick={clearFilters}
-            className="absolute top-[4.5rem] left-[22%] p-4 text-white text-sm tracking-wider font-montserrat transition ease-in-out duration-150 bg-forest/90 hover:bg-forest w-fit rounded-xl  hover:shadow-lg active:opacity-100"
+            className=" w-40 h-12 text-white text-xs tracking-wider font-montserrat transition ease-in-out duration-150 bg-black hover:bg-black/90  rounded-md  hover:shadow-lg active:opacity-100"
           >
             Reset Filters
           </button>
-        )}
+        </div>
       </div>
     </div>
   );

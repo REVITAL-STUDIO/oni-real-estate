@@ -65,8 +65,8 @@ const config: Config = {
         storm: "#D3D3D3",
         mellow: "#5D5D5D",
         shadow: "#363636",
-        eggshell: "#f0ead6"
-        
+        eggshell: "#f0ead6",
+        brown: "#964B00"
       },
       rotate: {
         '90': '90deg',
