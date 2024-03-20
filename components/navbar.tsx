@@ -262,10 +262,11 @@ const Nav = () => {
           </li>
           {!session && (
             <li className="relative p-4">
-              <button onClick={toggleLogin}>
-                <span className="inline-block uppercase transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-10 before:w-0 before:h-0.5 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-white before:via-white/30 before:to-white hover:before:w-full hover:before:opacity-100">
-                  Login
-                </span>
+              <button
+                className=" rounded-full border px-4 py-1   text-white hover:text-black border-eggshell shadow-xl hover:bg-gradient-to-r from-eggshell via-eggshell to-black/90 transition duration-300 ease-in-out"
+                onClick={toggleLogin}
+              >
+                <span className="inline-block uppercase  ">Login</span>
               </button>
             </li>
           )}
@@ -273,32 +274,32 @@ const Nav = () => {
             <Link
               className={`
                     relative
-                    font-regular
+                    font-regular border rounded-full px-4 py-1  text-white hover:text-black border-eggshell shadow-xl hover:bg-gradient-to-r from-eggshell via-eggshell to-black/90 transition duration-300 ease-in-out
                   `}
               href="/admin"
             >
-              <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-mint before:via-mint/30 before:to-mint hover:before:w-full hover:before:opacity-100">
+              <span className="inline-block transition-all duration-500 ">
                 Admin Portal
               </span>
             </Link>
           )}
           {session && session?.user.role !== "admin" && (
             <div
-              className="relative w-fit h-auto duration-300  transition ease- z-10  rounded-md"
+              className="relative  h-auto  z-10 "
               onMouseEnter={() => setLogOut(true)}
               onMouseLeave={() => setLogOut(false)}
             >
               <Link
                 className={`
            
-            font-regular
+            font-regular  rounded-full  z-10  px-4 py-1  text-white hover:text-black hover:bg-gradient-to-r border-eggshell shadow-xl from-eggshell via-eggshell to-black/90 transition duration-300 ease-in-out
           `}
                 href="/user"
               >
-                <span className=" text-white">Property Hub</span>
+                <span className=" text-black">Property Hub</span>
               </Link>
               {openLogOut && (
-                <div className="absolute top-5/6 right-0 w-full h-32 flex flex-col justify-evenly bg-black/75 shadow-xl rounded-md ">
+                <div className="absolute top-[100%] mt-4 right-0 w-full h-32 flex flex-col justify-evenly bg-black/75 shadow-xl rounded-md ">
                   <button
                     onClick={toggleSetting}
                     className="text-left w-full   flex items-center justify-evenly text-white "
@@ -374,7 +375,7 @@ const Nav = () => {
                     <Link href="/">Home</Link>
                   </li>
                   {!session && (
-                    <li className="relative   w-full p-4 text-3xl md:text-5xl tracking-wider font-extralight">
+                    <li className="relative  w-full p-4 text-3xl md:text-5xl tracking-wider font-extralight">
                       <button onClick={toggleLogin}>
                         <span>Login </span>
                       </button>
@@ -410,33 +411,33 @@ const Nav = () => {
                           }
                         />
                       </li>
-                      {openLogOut && (
-                        <div
-                          className={`transition-max-h ${
-                            openLogOut ? "max-h-40 " : "max-h-0"
-                          } transition duration-300 ease-in-out`}
+                      <div
+                        className={` ${
+                          openLogOut
+                            ? "h-[100px] opacity-1 transition-all duration-500 ease-in-out"
+                            : "h-0 opacity-0 transition-all duration-500 ease-in-out"
+                        } `}
+                      >
+                        <button className="text-left w-full p-4 h-fit flex items-center text-black ">
+                          <FontAwesomeIcon
+                            icon={faGears}
+                            size="lg"
+                            className="ml-4"
+                          />
+                          <span className="px-2 text-lg">Settings</span>
+                        </button>
+                        <button
+                          onClick={handleLogout}
+                          className="text-left w-full p-4 h-fit flex  items-center  text-black"
                         >
-                          <button className="text-left w-full p-4 h-fit flex items-center text-black ">
-                            <FontAwesomeIcon
-                              icon={faGears}
-                              size="lg"
-                              className="ml-4"
-                            />
-                            <span className="px-2 text-base">Settings</span>
-                          </button>
-                          <button
-                            onClick={handleLogout}
-                            className="text-left w-full p-4 h-fit flex  items-center  text-black"
-                          >
-                            <FontAwesomeIcon
-                              className="transform scale-x(-1) ml-4"
-                              icon={faArrowRightFromBracket}
-                              size="lg"
-                            />{" "}
-                            <span className="px-2  text-base">Log out</span>
-                          </button>
-                        </div>
-                      )}
+                          <FontAwesomeIcon
+                            className="transform scale-x(-1) ml-4"
+                            icon={faArrowRightFromBracket}
+                            size="lg"
+                          />{" "}
+                          <span className="px-2  text-lg">Log out</span>
+                        </button>
+                      </div>
                     </div>
                   )}
                   <li className="relative  flex  w-full  p-4 text-3xl md:text-5xl tracking-wider font-extralight  ">

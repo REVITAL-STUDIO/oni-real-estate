@@ -249,7 +249,7 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
 
   return (
     <div className="w-full xl:w-3/5   h-full flex flex-col  overflow-y-auto custom-scrollbar">
-      <div className="flex flex-start justify-evenly gap-4 w-full items-start  p-4">
+      <div className="flex flex-col xl:justify-start xl:flex-row justify-evenly gap-4 w-full items-start  p-4">
         {filteredListings.map((listing) => (
           <div
             className="xl:w-[50%] w-[100%] flex flex-col p-4 shadow-xl"

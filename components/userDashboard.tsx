@@ -134,7 +134,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     // Only fetch user data if session is available and not loading
-    if (session && status === "authenticated" && session.user.role == 'user') {
+    if (session && status === "authenticated" && session.user.role == "user") {
       fetchUserData();
       receiveListing();
     } else if (status === "loading") {
@@ -224,8 +224,7 @@ const Dashboard = () => {
     try {
       const updatedHomes = homes.filter((home) => home.id !== remove.id);
       setHomes(updatedHomes);
-      await receiveListing(); // Pass any necessary parameters here
-      console.log("Updated Homes:", updatedHomes);
+      console.log("Removing Home:", updatedHomes);
     } catch (error) {
       console.error("Error Removing Property, please try again later", error);
     }
@@ -245,7 +244,7 @@ const Dashboard = () => {
           initial={{ opacity: 0, y: 75 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ ease: "easeIn", duration: 0.8 }}
-          className="w-[90%] h-3/4 bg-gray-200  shadow-2xl rounded-2xl flex flex-col xl:flex-row"
+          className="w-[90%] h-[80%] bg-gray-200  shadow-2xl rounded-2xl flex flex-col xl:flex-row"
         >
           {/* Profile */}
           <AnimatePresence>
@@ -355,10 +354,7 @@ const Dashboard = () => {
                             {home.address}
                           </h2>
                           <div className="w-1/6 flex justify-evenly">
-                            <button
-                              onClick={() => toggleViewHome()}
-                              className="w-10 h-10 flex justify-center items-center"
-                            >
+                            <button className="w-10 h-10 flex justify-center items-center">
                               <svg
                                 width="25"
                                 height="25"
@@ -413,17 +409,6 @@ const Dashboard = () => {
               </div>
               {/* House details */}
             </motion.div>
-            {viewHome && (
-              <div className="w-1/3 h-full  flex flex-col justify-center gap-y-4 items-center">
-                <div className="border-2 border-blue-400 w-full h-2/5"></div>
-                <button className="xl:w-1/2 w-5/6 hidden  h-16 hover:bg-black hover:text-white text-black font-light tracking-wider text-base xl:flex justify-center items-center transition-all duration-300 ease-in-out font-montserrat bottom-[0%] bg-white xl:right-4  bg-opacity-20 backdrop-blur-5 border border-opacity-30 border-black/50 rounded-2xl shadow-sm p-4  group">
-                  <span>View Home</span>
-                  <span className="relative left-1 bottom-3 transfrom -rotate-45 flex items-center justify-start w-12 h-12 duration-300 transform translate-y-0 group-hover:-translate-y-[10%] group-hover:translate-x-[25%] group-hover:opacity-100 ease">
-                    <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
-                  </span>
-                </button>
-              </div>
-            )}
           </AnimatePresence>
         </motion.div>
 
