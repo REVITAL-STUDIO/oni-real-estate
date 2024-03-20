@@ -688,7 +688,7 @@ const Nav = () => {
                       </button>
                       <button
                         onClick={toggleSignUp}
-                        className="p-2 border border-black to-mint text-base text-black rounded-full tracking-wide"
+                        className="p-2 border  to-mint text-base hover:bg-black hover:text-white text-black duration-300 transition ease-in-out rounded-full tracking-wide"
                       >
                         Register
                       </button>

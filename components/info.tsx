@@ -74,32 +74,6 @@ const Info = () => {
               </h2>
             </div>
           </div>
-          {/* <div className="xl:w-full xl:h-2/5  gap-y-4  hidden xl:block font-montserrat font-light text-xl">
-            <div className="w-full h-1/3">
-              <div className="flex  items-center px-4">
-                <span className="font-montserrat text-sm ">1</span>
-                <p className="text-black p-4 tracking-wide text-black/75 ">
-                  Acquisition
-                </p>
-              </div>
-            </div>
-            <div className="w-full h-1/3">
-              <div className="flex  items-center px-4">
-                <span className="font-montserrat text-sm ">2</span>
-                <p className="text-black p-4 tracking-wide text-black/75 ">
-                  Client Interaction
-                </p>
-              </div>
-            </div>
-            <div className="w-full h-1/3">
-              <div className="flex  items-center px-4">
-                <span className="font-montserrat text-sm ">3</span>
-                <p className="text-black p-4 tracking-wide text-black/75 ">
-                  Premium Property Network
-                </p>
-              </div>
-            </div>
-          </div> */}
 
           {/* Mobile Responsive */}
           <div className="h-2/5 md:h-3/5 w-[100%] rounded-lg md:bottom-20 flex justify-center items-center overflow-hidden relative xl:hidden p-4">

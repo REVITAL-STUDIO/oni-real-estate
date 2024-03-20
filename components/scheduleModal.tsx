@@ -91,7 +91,11 @@ const ScheduleModal: React.FC<{ handleClose: () => void }> = ({
             <FontAwesomeIcon icon={faClose} className="w-6 h-6 text-white " />
           </button>
           <div className="w-full h-[95%] flex flex-col justify-center items-center z-100">
-            <Image src={Logo} alt="company logo" className="w-1/3 invert " />
+            <Image
+              src={Logo}
+              alt="company logo"
+              className="md:w-1/3 w-1/4 invert "
+            />
             <h2 className="text-2xl font-agrandir tracking-wide mt-4 font-bold text-white">
               Let's Talk.
             </h2>
@@ -102,10 +106,10 @@ const ScheduleModal: React.FC<{ handleClose: () => void }> = ({
               ) : (
                 <form
                   onSubmit={createLead}
-                  className="bg-transparent rounded  w-3/4 h-5/6 text-gray-300"
+                  className="bg-transparent rounded flex flex-col items-center justify-center w-full h-2/3 text-gray-300"
                 >
                   {/* First Name */}
-                  <div className="mb-4">
+                  <div className="mb-4 w-3/4">
                     <label className="block text-white font-montserrat  text-sm font-medium mb-2">
                       First Name
                     </label>
@@ -120,7 +124,7 @@ const ScheduleModal: React.FC<{ handleClose: () => void }> = ({
                     />
                   </div>
                   {/* Last Name */}
-                  <div className="mb-4">
+                  <div className="mb-4 w-3/4">
                     <label className="block text-white font-montserrat  text-sm font-medium mb-2">
                       Last Name
                     </label>
@@ -135,7 +139,7 @@ const ScheduleModal: React.FC<{ handleClose: () => void }> = ({
                     />
                   </div>
                   {/* Last Name */}
-                  <div className="mb-4">
+                  <div className="mb-4 w-3/4">
                     <label className="block text-white font-montserrat  text-sm font-medium mb-2">
                       Email
                     </label>
@@ -152,12 +156,12 @@ const ScheduleModal: React.FC<{ handleClose: () => void }> = ({
                     />
                   </div>
                   {/* Submission Field */}
-                  <div className="mb-4">
+                  <div className="mb-4 w-3/4">
                     <label className="block text-white font-montserrat  text-sm font-medium mb-2">
                       Message
                     </label>
                     <textarea
-                      className="resize-none shadow font-montserrat  appearance-none bg-transparent border rounded w-full py-6 px-3 text-gray-300 leading-tight focus:outline-none focus:shadow-outline"
+                      className="resize-none shadow font-montserrat appearance-none bg-transparent border rounded w-full p-4 text-gray-300 leading-tight focus:outline-none focus:shadow-outline"
                       id="message"
                       placeholder="Type your message here..."
                       required
@@ -166,7 +170,7 @@ const ScheduleModal: React.FC<{ handleClose: () => void }> = ({
                         setLeadData({ ...leadData, message: e.target.value })
                       }
                     ></textarea>
-                    <div className="my-2 h-1/5 w-full flex justify-center items-center ">
+                    <div className="mt-4 w-full flex justify-center items-center ">
                       <button
                         className="w-3/4 border font-montserrat text-sm rounded-full text-white font-bold p-2"
                         type="submit"

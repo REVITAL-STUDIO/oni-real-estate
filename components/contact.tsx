@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { motion, useAnimation, useScroll } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
@@ -194,14 +194,12 @@ const Contact = () => {
               <div className="w-5/6 xl:h-1/4 h-1/2 flex flex-col gap-y-4 justify-center my-8">
                 <button
                   type="submit"
-                  className="xl:w-1/2 w-3/4 h-auto my-2 ml-1 p-2 lg:p-4 xl:p-4 border rounded-2xl text-black "
+                  className="xl:w-1/2 w-3/4 h-auto flex items-center justify-center my-2 ml-1 p-2 lg:p-4 xl:p-4 border  rounded-2xl  hover:bg-black hover:text-white text-black transition-all duration-300 ease-in-out bg-opacity-20 backdrop-blur-5  border-opacity-30 shadow-sm  group"
                 >
-                  Send message{" "}
-                  <FontAwesomeIcon
-                    icon={faPaperPlane}
-                    size="sm"
-                    className="text-pine ml-2 w-4 h-4"
-                  />
+                  Send Message{" "}
+                  <span className="relative left-1 bottom-3 transfrom -rotate-45 flex items-center justify-start w-12 h-12 duration-300 transform translate-y-0 group-hover:-translate-y-[10%] group-hover:translate-x-[25%] group-hover:opacity-100 ease">
+                    <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
+                  </span>
                 </button>
                 <p className="xl:w-3/4 w-full  hidden xl:block text-sm xl:text-md text-black font-montserrat tracking-wide">
                   Please do not hesitate to contact us directly. Alternatively,
