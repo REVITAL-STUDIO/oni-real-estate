@@ -201,6 +201,13 @@ const NavPages = () => {
     setLogOut(!openLogOut);
   };
 
+  //Opening Settings
+  const [setting, setSetting] = useState(false);
+
+  const toggleSetting = () => {
+    setSetting(!setting);
+  };
+
   return (
     <div
       className={`h-100 w-full flex fixed  flex-col items-center justify-center transition-all duration-300 ease-in-out z-50 ${
@@ -283,14 +290,17 @@ const NavPages = () => {
                 <span className=" text-black">Property Hub</span>
               </Link>
               {openLogOut && (
-                <div className="absolute top-5/6 right-0 w-full h-auto justify-evenly bg-black/75 shadow-xl rounded-md ">
-                  <button className="text-left w-full  h-fit flex items-center justify-evenly text-white ">
+                <div className="absolute top-5/6 right-0 w-full h-32 flex flex-col justify-evenly bg-black/75 shadow-xl rounded-md ">
+                  <button
+                    onClick={toggleSetting}
+                    className="text-left w-full   flex items-center justify-evenly text-white "
+                  >
                     <FontAwesomeIcon icon={faGears} size="lg" />
                     Settings
                   </button>
                   <button
                     onClick={handleLogout}
-                    className="text-left w-full  h-fit flex items-center justify-evenly text-white "
+                    className="text-left w-full   flex items-center justify-evenly text-white "
                   >
                     <FontAwesomeIcon
                       className="transform scale-x(-1)"
@@ -396,7 +406,7 @@ const NavPages = () => {
                         <div
                           className={`transition-max-h ${
                             openLogOut ? "max-h-40 " : "max-h-0"
-                          } transition duration-300 ease-in-out`}
+                          } transition-all duration-300 ease-in-out`}
                         >
                           <button className="text-left w-full p-4 h-fit flex items-center text-black ">
                             <FontAwesomeIcon
@@ -404,7 +414,7 @@ const NavPages = () => {
                               size="lg"
                               className="ml-4"
                             />
-                            <span className="px-2 text-base">Settings</span>
+                            <span className="px-2 text-lg">Settings</span>
                           </button>
                           <button
                             onClick={handleLogout}
@@ -415,7 +425,7 @@ const NavPages = () => {
                               icon={faArrowRightFromBracket}
                               size="lg"
                             />{" "}
-                            <span className="px-2  text-base">Log out</span>
+                            <span className="px-2  text-lg">Log out</span>
                           </button>
                         </div>
                       )}
@@ -461,7 +471,7 @@ const NavPages = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -100 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="bg-white w-[95%] md:w-1/2 h-5/6 relative rounded-xl shadow-lg flex flex-col items-center"
+                className="bg-white w-[95%] md:w-1/2 h-5/6 relative rounded-xl shadow-xl flex flex-col items-center"
               >
                 {/* Close Button */}
                 <div className="absolute w-fit right-2">

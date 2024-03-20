@@ -42,7 +42,6 @@ interface User {
   name: string;
   email: string;
   number: string;
-  //favoriteListingsId: number[];
 }
 
 const Dashboard = () => {

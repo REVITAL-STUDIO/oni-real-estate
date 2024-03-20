@@ -209,6 +209,13 @@ const Nav = () => {
     setLogOut(!openLogOut);
   };
 
+  //Opening Settings
+  const [setting, setSetting] = useState(false);
+
+  const toggleSetting = () => {
+    setSetting(!setting);
+  };
+
   return (
     <div
       className={`h-80 w-full flex fixed bg-gradient-to-b from-black/50 via-black/30 to-transparent z-50 flex-col items-center justify-center transition-all duration-300 ease-in-out ${
@@ -291,14 +298,17 @@ const Nav = () => {
                 <span className=" text-white">Property Hub</span>
               </Link>
               {openLogOut && (
-                <div className="absolute top-5/6 right-0 w-full  h-auto justify-evenly bg-black/75 shadow-xl rounded-md ">
-                  <button className="text-left w-full h-fit flex p-4 items-center justify-evenly text-white ">
+                <div className="absolute top-5/6 right-0 w-full h-32 flex flex-col justify-evenly bg-black/75 shadow-xl rounded-md ">
+                  <button
+                    onClick={toggleSetting}
+                    className="text-left w-full   flex items-center justify-evenly text-white "
+                  >
                     <FontAwesomeIcon icon={faGears} size="lg" />
                     Settings
                   </button>
                   <button
                     onClick={handleLogout}
-                    className="text-left w-full h-fit flex p-4 items-center justify-evenly text-white "
+                    className="text-left w-full   flex items-center justify-evenly text-white "
                   >
                     <FontAwesomeIcon
                       className="transform scale-x(-1)"
@@ -591,7 +601,7 @@ const Nav = () => {
                           }`}
                         >
                           {isLoading ? (
-                            <div className="h-20 w-20 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                            <div className="h-8 w-8 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
                           ) : (
                             "Sign Up"
                           )}
