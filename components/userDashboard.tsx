@@ -134,7 +134,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     // Only fetch user data if session is available and not loading
-    if (session && status === "authenticated") {
+    if (session && status === "authenticated" && session.user.role == 'user') {
       fetchUserData();
       receiveListing();
     } else if (status === "loading") {
@@ -463,7 +463,7 @@ const Dashboard = () => {
                   <div className="w-32 h-32  inset-0 relative rounded-2xl flex justify-center items-center">
                     <div className="w-24 h-24 bg-eggshell inset-0 rounded-2xl shadow-md flex justify-center items-center">
                       <h2 className="text-5xl text-white font-montserrat">
-                        {/* {userData.name.charAt(0).toUpperCase()} */}
+                        {userData.name.charAt(0).toUpperCase()}
                       </h2>
                     </div>
                   </div>
