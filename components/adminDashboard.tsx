@@ -148,35 +148,35 @@ const AdminDashboard = () => {
     setPasswordError(false);
   };
 
-    // Fetch user data
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/${session?.user.email}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Error retrieving user infromation");
+  // Fetch user data
+  const fetchUserData = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/${session?.user.email}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-  
-        const user: User = await response.json();
-        setUserData(user);
-        setUserDataEdit(user);
-        setIsLoading(false);
-      } catch (error) {
-        console.log("Error Fetching User Data: ", error);
+      );
+      if (!response.ok) {
+        throw new Error("Error retrieving user infromation");
       }
-    };
 
-    useEffect(() => {
-      if (session && status === "authenticated") {
-        fetchUserData();
-      }
+      const user: User = await response.json();
+      setUserData(user);
+      setUserDataEdit(user);
+      setIsLoading(false);
+    } catch (error) {
+      console.log("Error Fetching User Data: ", error);
+    }
+  };
+
+  useEffect(() => {
+    if (session && status === "authenticated") {
+      fetchUserData();
+    }
   }, [session, status]);
 
   const handlePropertyInfo = (listing: Listing) => {
@@ -221,9 +221,7 @@ const AdminDashboard = () => {
       );
       const data: Lead[] = await response.json();
       //setting listings data to Listings state variable
-      console.log("LEADS: ", data);
       data.sort((a, b) => a.name.localeCompare(b.name));
-      console.log("LEADS: ", data);
       setLeads(data);
       setFetchedLeadsData(true);
     } catch (error) {
@@ -236,7 +234,28 @@ const AdminDashboard = () => {
       console.log("Leads: ", leads);
     }
   };
+  const deleteLead = async (leadId: number) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/leads`,
+        {
+          method: 'DELETE',
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(leadId)
+        });
 
+      if (!response.ok) {
+        throw new Error("Failed to delete Lead")
+      }
+      fetchLeads()
+    } catch (error) {
+      console.error(error);
+
+    }
+
+  }
   const deleteListing = async (id: number) => {
     setIsError(false);
     try {
@@ -440,7 +459,7 @@ const AdminDashboard = () => {
                               >
                                 view
                               </button>
-                              <button className="w-fit px-4 tracking-wider font-montserrat h-8 rounded-full  text-red-500 text-xs">
+                              <button onClick={()=>deleteLead(lead.id)} className="w-fit px-4 tracking-wider font-montserrat h-8 rounded-full  text-red-500 text-xs">
                                 <svg
                                   width="24"
                                   height="24"
@@ -816,7 +835,7 @@ const AdminDashboard = () => {
                       placeholder="Name"
                     />
                   </div>
-                 
+
                   {/* Email */}
                   <div className="flex flex-col w-4/5">
                     <label className="py-4 text-white">Email</label>

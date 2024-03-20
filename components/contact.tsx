@@ -27,10 +27,11 @@ const Contact = () => {
 
   const [errorMsg, setErrorMsg] = useState("");
   const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const createlead: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true)
     try {
       const fullName = `${firstName} ${lastName}`;
       const response = await fetch(
@@ -53,6 +54,7 @@ const Contact = () => {
         );
       } else {
         setIsSuccess(true);
+        setIsLoading
       }
     } catch (error) {
       setIsError(true);
@@ -194,14 +196,20 @@ const Contact = () => {
               <div className="w-5/6 xl:h-1/4 h-1/2 flex flex-col gap-y-4 justify-center my-8">
                 <button
                   type="submit"
-                  className="xl:w-1/2 w-3/4 h-auto my-2 ml-1 p-2 lg:p-4 xl:p-4 border rounded-2xl text-black "
+                  className="xl:w-1/2 w-3/4 h-auto my-2 ml-1 p-2 lg:p-4 xl:p-4 border rounded-2xl text-black hover:bg-lime-100 active:bg-white"
                 >
-                  Send message{" "}
-                  <FontAwesomeIcon
-                    icon={faPaperPlane}
-                    size="sm"
-                    className="text-pine ml-2 w-4 h-4"
-                  />
+                  {isLoading ? (
+                    <div className="mx-auto h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                  ) : (
+                    <div>
+                      Send message{" "}
+                      <FontAwesomeIcon
+                        icon={faPaperPlane}
+                        size="sm"
+                        className="text-pine ml-2 w-4 h-4"
+                      />
+                    </div>
+                  )}
                 </button>
                 <p className="xl:w-3/4 w-full  hidden xl:block text-sm xl:text-md text-black font-montserrat tracking-wide">
                   Please do not hesitate to contact us directly. Alternatively,
