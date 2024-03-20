@@ -16,12 +16,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import { IoIosClose } from "react-icons/io";
+import ProfileSettings from "./ProfileSettings";
 
 const NavPages = () => {
   const { data: session } = useSession();
   const router = useRouter();
   const [color, setColor] = useState<boolean>(false);
   const [disappear, setDisappear] = useState<boolean>(false);
+  const [openUserSettings, setOpenUserSettings] = useState(false);
 
   const changeColor = () => {
     if (typeof window !== "undefined") {
@@ -204,10 +206,6 @@ const NavPages = () => {
   //Opening Settings
   const [setting, setSetting] = useState(false);
 
-  const toggleSetting = () => {
-    setSetting(!setting);
-  };
-
   return (
     <div
       className={`h-100 w-full flex fixed  flex-col items-center justify-center transition-all duration-300 ease-in-out z-50 ${
@@ -290,11 +288,8 @@ const NavPages = () => {
                 <span className=" text-black">Property Hub</span>
               </Link>
               {openLogOut && (
-                <div className="absolute top-5/6 right-0 w-full h-32 flex flex-col justify-evenly bg-black/75 shadow-xl rounded-md ">
-                  <button
-                    onClick={toggleSetting}
-                    className="text-left w-full   flex items-center justify-evenly text-white "
-                  >
+                <div className="absolute top-5/6 right-0 w-full h-auto justify-evenly bg-black/75 shadow-xl rounded-md ">
+                  <button onClick={()=>setOpenUserSettings(true)} className="text-left w-full  h-fit flex items-center justify-evenly text-white ">
                     <FontAwesomeIcon icon={faGears} size="lg" />
                     Settings
                   </button>
@@ -747,6 +742,8 @@ const NavPages = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      <ProfileSettings openMenu={openUserSettings} setOpenMenu={setOpenUserSettings}/>
+
     </div>
   );
 };

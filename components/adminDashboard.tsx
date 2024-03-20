@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Footer from "./footer";
 import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
-
 import {
   faPenToSquare,
   faCheck,
@@ -22,6 +21,7 @@ import PropertyInfo from "./PropertyInfo";
 import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import ProfileSettings from "./ProfileSettings";
 
 interface Lead {
   id: number;
@@ -49,6 +49,7 @@ interface User {
   id: string;
   name: string;
   email: string;
+  number: string;
 }
 
 const AdminDashboard = () => {
@@ -74,6 +75,8 @@ const AdminDashboard = () => {
 
   const [showDeleteListing, setShowDeleteListing] = useState(false);
   const [isError, setIsError] = useState(false);
+  const [listingsError, setListingsError] = useState(false);
+  const [leadsError, setLeadsError] = useState(false);
   const [isLeadInfoOpen, setIsLeadInfoOpen] = useState(false);
   const [propertyInfo, openPropertyInfo] = useState(false);
 
@@ -148,35 +151,35 @@ const AdminDashboard = () => {
     setPasswordError(false);
   };
 
-    // Fetch user data
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/${session?.user.email}`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        if (!response.ok) {
-          throw new Error("Error retrieving user infromation");
+  // Fetch user data
+  const fetchUserData = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/${session?.user.email}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-  
-        const user: User = await response.json();
-        setUserData(user);
-        setUserDataEdit(user);
-        setIsLoading(false);
-      } catch (error) {
-        console.log("Error Fetching User Data: ", error);
+      );
+      if (!response.ok) {
+        throw new Error("Error retrieving user infromation");
       }
-    };
 
-    useEffect(() => {
-      if (session && status === "authenticated") {
-        fetchUserData();
-      }
+      const user: User = await response.json();
+      setUserData(user);
+      setUserDataEdit(user);
+      setIsLoading(false);
+    } catch (error) {
+      console.log("Error Fetching User Data: ", error);
+    }
+  };
+
+  useEffect(() => {
+    if (session && status === "authenticated") {
+      fetchUserData();
+    }
   }, [session, status]);
 
   const handlePropertyInfo = (listing: Listing) => {
@@ -213,12 +216,18 @@ const AdminDashboard = () => {
 
   const fetchLeads = async () => {
     setFetchedLeadsData(false);
+    setLeadsError(false);
+    setLoadingLeads(true);
     try {
       //requet to get listing data from api
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/leads`,
         { method: "GET" }
       );
+
+      if (!response.ok) {
+        throw new Error("Error fetching Leads")
+      }
       const data: Lead[] = await response.json();
       //setting listings data to Listings state variable
       console.log("LEADS: ", data);
@@ -227,13 +236,10 @@ const AdminDashboard = () => {
       setLeads(data);
       setFetchedLeadsData(true);
     } catch (error) {
-      console.error("Error fetching data:", error);
-      seterrorMsg(
-        "Unable to show leads at this time, check network connection and try again."
-      );
+      console.error(error);
+      setLeadsError(true);
     } finally {
       setLoadingLeads(false);
-      console.log("Leads: ", leads);
     }
   };
 
@@ -275,20 +281,27 @@ const AdminDashboard = () => {
 
   const fetchListings = async () => {
     setFetchedListingsData(false);
+    setLoadingListings(true);
+    setListingsError(false);
     try {
       //requet to get listing data from api
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing`,
         { method: "GET" }
       );
+
+      if (!response.ok) {
+        throw new Error("Error fetching listings")
+      }
       const data: Listing[] = await response.json();
       //setting listings data to Listings state variable
       setListings(data);
       setFetchedListingsData(true);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error(error);
+      setListingsError(true)
       seterrorMsg(
-        "Unable to show listings at this time, check network connection and try again."
+        "Error loading listings, check network connection and try again."
       );
     } finally {
       setLoadingListings(false);
@@ -402,61 +415,71 @@ const AdminDashboard = () => {
                 <section className="w-full h-full flex justify-evenly items-end">
                   <div className="w-full h-[75%] rounded-2xl flex justify-center ">
                     <div className="w-5/6 h-full  p-4  overflow-y-scroll ">
-                      {!fetchedLeadsData ? (
+                      {!fetchedLeadsData && loadingLeads ? (
                         <div className="flex justify-center items-center h-full">
                           {" "}
                           <div className=" h-6 w-6 md:h-10 md:w-10  border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
                         </div>
                       ) : (
-                        leads.map((lead) => (
-                          <div
-                            key={lead.id}
-                            className="w-full  bg-white rounded-2xl text-black shadow-lg flex justify-between items-center mb-[1rem] py-[1rem]"
-                          >
-                            {/* Client Lead */}
-                            <div className="w-1/2 h-full flex justify-evenly items-center ">
-                              <div
-                                className={`w-10 h-10 rounded-full flex justify-center items-center ${lead.color}`}
-                              >
-                                <span>{lead.name.charAt(0).toUpperCase()}</span>
-                              </div>
-                              <span className="text-sm tracking-wider font-montserrat">
-                                {lead.name}
-                              </span>
-                            </div>
 
-                            <div className="w-1/2 h-full flex justify-between items-center">
-                              <div className="relative ">
-                                <p className="text-semibold">
-                                  Status: {colorizeStatus(lead.status)}
-                                </p>
-                              </div>
-                              <button
-                                onClick={() => {
-                                  setSelectedLead(lead);
-                                  handleOpenLeadInfo();
-                                }}
-                                className="text-lg text-blue-500 hover:text-gray-500 active:text-blue-500"
+                        <div>
+                          {!leadsError &&
+                            leads.map((lead) => (
+                              <div
+                                key={lead.id}
+                                className="w-full  bg-white rounded-2xl text-black shadow-lg flex justify-between items-center mb-[1rem] py-[1rem]"
                               >
-                                view
-                              </button>
-                              <button className="w-fit px-4 tracking-wider font-montserrat h-8 rounded-full  text-red-500 text-xs">
-                                <svg
-                                  width="24"
-                                  height="24"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M6.39989 18.3079L5.69189 17.5999L11.2919 11.9999L5.69189 6.39989L6.39989 5.69189L11.9999 11.2919L17.5999 5.69189L18.3079 6.39989L12.7079 11.9999L18.3079 17.5999L17.5999 18.3079L11.9999 12.7079L6.39989 18.3079Z"
-                                    fill="#FF0000"
-                                  />
-                                </svg>
-                              </button>
+                                {/* Client Lead */}
+                                <div className="w-1/2 h-full flex justify-evenly items-center ">
+                                  <div
+                                    className={`w-10 h-10 rounded-full flex justify-center items-center ${lead.color}`}
+                                  >
+                                    <span>{lead.name.charAt(0).toUpperCase()}</span>
+                                  </div>
+                                  <span className="text-sm tracking-wider font-montserrat">
+                                    {lead.name}
+                                  </span>
+                                </div>
+
+                                <div className="w-1/2 h-full flex justify-between items-center">
+                                  <div className="relative ">
+                                    <p className="text-semibold">
+                                      Status: {colorizeStatus(lead.status)}
+                                    </p>
+                                  </div>
+                                  <button
+                                    onClick={() => {
+                                      setSelectedLead(lead);
+                                      handleOpenLeadInfo();
+                                    }}
+                                    className="text-lg text-blue-500 hover:text-gray-500 active:text-blue-500"
+                                  >
+                                    view
+                                  </button>
+                                  <button className="w-fit px-4 tracking-wider font-montserrat h-8 rounded-full  text-red-500 text-xs">
+                                    <svg
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      fill="none"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M6.39989 18.3079L5.69189 17.5999L11.2919 11.9999L5.69189 6.39989L6.39989 5.69189L11.9999 11.2919L17.5999 5.69189L18.3079 6.39989L12.7079 11.9999L18.3079 17.5999L17.5999 18.3079L11.9999 12.7079L6.39989 18.3079Z"
+                                        fill="#FF0000"
+                                      />
+                                    </svg>
+                                  </button>
+                                </div>
+                              </div>
+                            ))}
+                          {leadsError &&
+                            <div className="w-full h-full flex flex-col gap-3 justify-center items-center">
+                              <p>Oops! Something went wrong. Please try loading leads again.</p>
+                              <button onClick={() => fetchLeads()} className="w-40 h-12 text-white text-xs tracking-wider font-montserrat transition ease-in-out duration-150 bg-black hover:bg-black/60  rounded-xl  hover:shadow-lg active:bg-black">Retry</button>
                             </div>
-                          </div>
-                        ))
+                          }
+                        </div>
                       )}
                       {isLeadInfoOpen && selectedLead && (
                         <div>
@@ -494,110 +517,120 @@ const AdminDashboard = () => {
                 </button>
               </div>
               <div className="w-full h-5/6  overflow-y-scroll block  p-4 ">
-                {!fetchedListingsData ? (
+                {!fetchedListingsData && loadingListings ? (
                   <div className="flex justify-center items-center h-full">
                     <div className="h-6 w-6 md:h-10 md:w-10  border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
                   </div>
                 ) : (
-                  listings.map((listing) => (
-                    <div
-                      key={listing.id}
-                      className="xl:w-3/4 w-full h-28 bg-white rounded-2xl relative  shadow-lg float-right flex justify-between mb-8"
-                    >
-                      <Image
-                        src={listing.pictures[0]}
-                        alt="homes"
-                        layout="responsive"
-                        width={1}
-                        height={1}
-                        className="w-[100%] object-cover brightness-50 object-center contrast-125 rounded-2xl"
-                      />
-                      <div className="absolute flex justify-between items-center w-full h-full">
-                        <span className="px-4  font-montserrat text-white text-xs xl:text-sm xl:w-1/4 w-1/2">
-                          {listing.address}
-                        </span>
-                        <div className="w-1/4 h-full flex justify-end relative items-center right-2 ">
-                          <button
-                            onClick={() => handlePropertyInfo(listing)}
-                            className=" p-4 tracking-wider font-montserrat hover:bg-white/40 hover:shadow-md  flex justify-center items-center rounded-full  text-xs "
-                          >
-                            <svg
-                              width="25"
-                              height="25"
-                              viewBox="0 0 25 25"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M3.125 13.5415C6.875 5.20817 18.125 5.20817 21.875 13.5415"
-                                stroke="white"
-                                stroke-width="1.5"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              />
-                              <path
-                                d="M12.5 17.708C12.0896 17.708 11.6833 17.6272 11.3041 17.4701C10.925 17.3131 10.5805 17.0829 10.2903 16.7927C10.0001 16.5025 9.76992 16.158 9.61288 15.7789C9.45583 15.3998 9.375 14.9934 9.375 14.583C9.375 14.1726 9.45583 13.7663 9.61288 13.3871C9.76992 13.008 10.0001 12.6635 10.2903 12.3733C10.5805 12.0831 10.925 11.8529 11.3041 11.6959C11.6833 11.5388 12.0896 11.458 12.5 11.458C13.3288 11.458 14.1237 11.7872 14.7097 12.3733C15.2958 12.9593 15.625 13.7542 15.625 14.583C15.625 15.4118 15.2958 16.2067 14.7097 16.7927C14.1237 17.3788 13.3288 17.708 12.5 17.708Z"
-                                stroke="white"
-                                stroke-width="1.5"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              />
-                            </svg>
-                          </button>
-                          <button
-                            onClick={() => {
-                              setSelectedListing(listing);
-                              showEditListing(true);
-                            }}
-                            className=" p-4 tracking-wider font-montserrat hover:bg-white/40 hover:shadow-md rounded-full  text-xs"
-                          >
-                            <svg
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M7 7H6C5.46957 7 4.96086 7.21071 4.58579 7.58579C4.21071 7.96086 4 8.46957 4 9V18C4 18.5304 4.21071 19.0391 4.58579 19.4142C4.96086 19.7893 5.46957 20 6 20H15C15.5304 20 16.0391 19.7893 16.4142 19.4142C16.7893 19.0391 17 18.5304 17 18V17"
-                                stroke="white"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              />
-                              <path
-                                d="M16 5.00011L19 8.00011M20.385 6.58511C20.7788 6.19126 21.0001 5.65709 21.0001 5.10011C21.0001 4.54312 20.7788 4.00895 20.385 3.61511C19.9912 3.22126 19.457 3 18.9 3C18.343 3 17.8088 3.22126 17.415 3.61511L9 12.0001V15.0001H12L20.385 6.58511Z"
-                                stroke="white"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                              />
-                            </svg>
-                          </button>
-                          <button
-                            onClick={() => {
-                              setSelectedListing(listing);
-                              setShowDeleteListing(true);
-                            }}
-                            className=" p-4 tracking-wider font-montserrat hover:bg-white/40 hover:shadow-md rounded-full  text-xs"
-                          >
-                            <svg
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M6.39989 18.3079L5.69189 17.5999L11.2919 11.9999L5.69189 6.39989L6.39989 5.69189L11.9999 11.2919L17.5999 5.69189L18.3079 6.39989L12.7079 11.9999L18.3079 17.5999L17.5999 18.3079L11.9999 12.7079L6.39989 18.3079Z"
-                                fill="#FF0000"
-                              />
-                            </svg>
-                          </button>
+                  <div>
+                    {!listingsError &&
+                      listings.map((listing) => (
+                        <div
+                          key={listing.id}
+                          className="xl:w-3/4 w-full h-28 bg-white rounded-2xl relative  shadow-lg float-right flex justify-between mb-8"
+                        >
+                          <Image
+                            src={listing.pictures[0]}
+                            alt="homes"
+                            layout="responsive"
+                            width={1}
+                            height={1}
+                            className="w-[100%] object-cover brightness-50 object-center contrast-125 rounded-2xl"
+                          />
+                          <div className="absolute flex justify-between items-center w-full h-full">
+                            <span className="px-4  font-montserrat text-white text-xs xl:text-sm xl:w-1/4 w-1/2">
+                              {listing.address}
+                            </span>
+                            <div className="w-1/4 h-full flex justify-end relative items-center right-2 ">
+                              <button
+                                onClick={() => handlePropertyInfo(listing)}
+                                className=" p-4 tracking-wider font-montserrat hover:bg-white/40 hover:shadow-md  flex justify-center items-center rounded-full  text-xs "
+                              >
+                                <svg
+                                  width="25"
+                                  height="25"
+                                  viewBox="0 0 25 25"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M3.125 13.5415C6.875 5.20817 18.125 5.20817 21.875 13.5415"
+                                    stroke="white"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                  />
+                                  <path
+                                    d="M12.5 17.708C12.0896 17.708 11.6833 17.6272 11.3041 17.4701C10.925 17.3131 10.5805 17.0829 10.2903 16.7927C10.0001 16.5025 9.76992 16.158 9.61288 15.7789C9.45583 15.3998 9.375 14.9934 9.375 14.583C9.375 14.1726 9.45583 13.7663 9.61288 13.3871C9.76992 13.008 10.0001 12.6635 10.2903 12.3733C10.5805 12.0831 10.925 11.8529 11.3041 11.6959C11.6833 11.5388 12.0896 11.458 12.5 11.458C13.3288 11.458 14.1237 11.7872 14.7097 12.3733C15.2958 12.9593 15.625 13.7542 15.625 14.583C15.625 15.4118 15.2958 16.2067 14.7097 16.7927C14.1237 17.3788 13.3288 17.708 12.5 17.708Z"
+                                    stroke="white"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                  />
+                                </svg>
+                              </button>
+                              <button
+                                onClick={() => {
+                                  setSelectedListing(listing);
+                                  showEditListing(true);
+                                }}
+                                className=" p-4 tracking-wider font-montserrat hover:bg-white/40 hover:shadow-md rounded-full  text-xs"
+                              >
+                                <svg
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M7 7H6C5.46957 7 4.96086 7.21071 4.58579 7.58579C4.21071 7.96086 4 8.46957 4 9V18C4 18.5304 4.21071 19.0391 4.58579 19.4142C4.96086 19.7893 5.46957 20 6 20H15C15.5304 20 16.0391 19.7893 16.4142 19.4142C16.7893 19.0391 17 18.5304 17 18V17"
+                                    stroke="white"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                  />
+                                  <path
+                                    d="M16 5.00011L19 8.00011M20.385 6.58511C20.7788 6.19126 21.0001 5.65709 21.0001 5.10011C21.0001 4.54312 20.7788 4.00895 20.385 3.61511C19.9912 3.22126 19.457 3 18.9 3C18.343 3 17.8088 3.22126 17.415 3.61511L9 12.0001V15.0001H12L20.385 6.58511Z"
+                                    stroke="white"
+                                    stroke-width="2"
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                  />
+                                </svg>
+                              </button>
+                              <button
+                                onClick={() => {
+                                  setSelectedListing(listing);
+                                  setShowDeleteListing(true);
+                                }}
+                                className=" p-4 tracking-wider font-montserrat hover:bg-white/40 hover:shadow-md rounded-full  text-xs"
+                              >
+                                <svg
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M6.39989 18.3079L5.69189 17.5999L11.2919 11.9999L5.69189 6.39989L6.39989 5.69189L11.9999 11.2919L17.5999 5.69189L18.3079 6.39989L12.7079 11.9999L18.3079 17.5999L17.5999 18.3079L11.9999 12.7079L6.39989 18.3079Z"
+                                    fill="#FF0000"
+                                  />
+                                </svg>
+                              </button>
+                            </div>
+                          </div>
                         </div>
+                      ))
+                    }
+                    {listingsError &&
+                      <div className="w-full h-full flex flex-col gap-3 justify-center items-center">
+                        <p>Oops! Something went wrong. Please try loading listings again.</p>
+                        <button onClick={() => fetchListings()} className="w-40 h-12 text-white text-xs tracking-wider font-montserrat transition ease-in-out duration-150 bg-black hover:bg-black/60  rounded-xl  hover:shadow-lg active:bg-black">Retry</button>
                       </div>
-                    </div>
-                  ))
+                    }
+                  </div>
                 )}
               </div>
             </div>
@@ -752,143 +785,9 @@ const AdminDashboard = () => {
           !showDeleteListing &&
           !propertyInfo && <Footer />}
 
-        {/* Handling Opening Menu */}
-        <AnimatePresence>
-          {openMenu && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-              className="bg-white/75 w-full h-full fixed top-0 left-0 z-50"
-            >
-              <motion.div
-                initial={{ opacity: 0, left: -100 }}
-                animate={{ opacity: 1, left: 0 }}
-                exit={{ opacity: 0, left: -100 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="xl:w-1/3 w-3/4 bg-black h-full flex flex-col items-center relative"
-              >
-                {/* Close Button */}
-                <div className="absolute w-fit right-2 p-4">
-                  <button
-                    onClick={() => closeSettings()}
-                    className="w-8 h-8 flex flex-col relative justify-center items-center rounded-full  space-x-reverse  z-10"
-                  >
-                    <span
-                      className={`block w-3/4 my-0.5 border absolute border-white rotate-45 transition-transform `}
-                    ></span>
-                    <span
-                      className={`block w-3/4 my-0.5 border absolute border-white -rotate-45 transition-transform `}
-                    ></span>
-                  </button>
-                </div>
-                {/* Profile  */}
-                <div className="w-5/6 h-1/4 flex items-center">
-                  <div className="w-32 h-32  inset-0 relative rounded-2xl flex justify-center items-center">
-                    <div className="w-24 h-24 bg-eggshell inset-0 rounded-2xl shadow-md flex justify-center items-center">
-                      <h2 className="text-5xl text-white font-montserrat">
-                        {userData.name.charAt(0).toUpperCase()}
-                      </h2>
-                    </div>
-                  </div>
-                  <h2 className="text-white text-lg font-agrandir p-4 ">
-                    Edit Profile
-                  </h2>
-                </div>
-                {/* Form */}
-                <form className="w-full h-full  text-sm flex flex-col font-agrandir items-center ">
-                  {/* Name */}
-                  <div className="flex flex-col w-4/5">
-                    <label className="py-4 text-white">Name</label>
-                    <input
-                      className="p-4 rounded-lg text-white bg-slate-400/10"
-                      type="text"
-                      id="Name"
-                      name="Name"
-                      value={userDataEdit.name}
-                      onChange={(e) =>
-                        setUserDataEdit({
-                          ...userDataEdit,
-                          name: e.target.value,
-                        })
-                      }
-                      placeholder="Name"
-                    />
-                  </div>
-                 
-                  {/* Email */}
-                  <div className="flex flex-col w-4/5">
-                    <label className="py-4 text-white">Email</label>
-                    <input
-                      className="p-4 rounded-lg text-white bg-slate-400/10"
-                      type="text"
-                      id="Email"
-                      name="Email"
-                      value={userDataEdit.email}
-                      onChange={(e) =>
-                        setUserDataEdit({
-                          ...userDataEdit,
-                          email: e.target.value,
-                        })
-                      }
-                      placeholder="Email"
-                    />
-                  </div>
-                  {/* Password */}
-                  <div className="flex flex-col w-4/5 mb-[3%]">
-                    <label className="py-4 text-white">Password Change</label>
-                    <input
-                      className={`p-4 rounded-lg text-white bg-slate-400/10 ${passwordError ? "border-2 border-red-400" : ""
-                        }`}
-                      type="password"
-                      id="Password"
-                      name="Password"
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                      placeholder="New Password"
-                    />
-                  </div>
-                  {/* Confirm Password */}
-                  <div className="flex flex-col w-4/5 mb-[3%]">
-                    <input
-                      className={`p-4 rounded-lg text-white bg-slate-400/10 ${passwordError ? "border-2 border-red-400" : ""
-                        }`}
-                      type="password"
-                      id="Confirm-Password"
-                      name="Confirm Password"
-                      value={newPasswordConfirm}
-                      onChange={(e) => setNewPasswordConfirm(e.target.value)}
-                      placeholder="Confirm New Password"
-                    />
-                  </div>
-                  {passwordError && (
-                    <div className="text-red-400">Passwords do not match</div>
-                  )}
-                  {noChangeError && (
-                    <div className="text-red-400">No fields changed</div>
-                  )}
+        {/* User Profile settings */}
+        <ProfileSettings openMenu={openMenu} setOpenMenu={setOpenMenu} userInfo={userData} setUserInfo={setUserData}/>
 
-                  {/* Log In Button */}
-                  <div className="justify-evenly w-full h-1/2 my-4 flex  items-center">
-                    <button
-                      onClick={saveUserData}
-                      className="p-4 bg-gradient-to-r shadow-md w-1/3 from-pine via-mint/50 to-mint text-base text-black rounded-2xl tracking-wide hover:opacity-80 active:opacity-100"
-                    >
-                      Save
-                    </button>
-                    <button
-                      onClick={handleLogout}
-                      className="p-4 bg-red-700 w-1/3 rounded-2xl text-base tracking-wider shadow-md hover:opacity-80 active:opacity-100"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                </form>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
       </div>
 
     );
