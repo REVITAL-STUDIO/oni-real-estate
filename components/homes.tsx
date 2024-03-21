@@ -65,8 +65,6 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
   // variable to keep track of which listing user selects to view
   const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
   const [user, setUser] = useState<User>();
-  // const [savedListings, setsavedListings] = useState<number[]>([]);
-  // const [favListingsID, setFavListingsID] = useState<number[]>([]);
 
   // Fetch listings and update the state
   const fetchListings = async () => {
@@ -79,7 +77,7 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
       );
 
       if (!response.ok) {
-        throw new Error("Error fetching Listings")
+        throw new Error("Error fetching Listings");
       }
       const data: Listing[] = await response.json();
       //setting listings data to Listings state variable
@@ -169,7 +167,7 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
     fetchListings();
   }, [session]);
 
-  useEffect(() => { }, [user?.favoriteListingsIds]);
+  useEffect(() => {}, [user?.favoriteListingsIds]);
 
   const handlePropertyInfo = (listing: Listing) => {
     //the listing to show in the property info page
@@ -184,7 +182,6 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
   //function to save listing
   const favoriteListing = async (id: number) => {
     try {
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites/`,
         {
@@ -239,7 +236,12 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
     return (
       <div className="w-3/5 h-full flex flex-col gap-3 justify-center items-center">
         <p>Oops! Something went wrong. Please try loading listings again.</p>
-        <button onClick={() => fetchListings()} className="w-40 h-12 text-white text-xs tracking-wider font-montserrat transition ease-in-out duration-150 bg-black hover:bg-black/60  rounded-xl  hover:shadow-lg active:bg-black">Retry</button>
+        <button
+          onClick={() => fetchListings()}
+          className="w-40 h-12 text-white text-xs tracking-wider font-montserrat transition ease-in-out duration-150 bg-black hover:bg-black/60  rounded-xl  hover:shadow-lg active:bg-black"
+        >
+          Retry
+        </button>
       </div>
     );
   }

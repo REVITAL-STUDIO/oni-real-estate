@@ -7,7 +7,6 @@ import {
   faPenToSquare,
   faCheck,
   faPlus,
-  faArrowRight,
   faUser,
   faHouse,
 } from "@fortawesome/free-solid-svg-icons";
@@ -20,10 +19,6 @@ import ProfileSettings from "./ProfileSettings";
 
 interface profile {
   name: string;
-}
-
-interface postRequestBody {
-  email: string;
 }
 
 interface Listing {
@@ -209,10 +204,9 @@ const Dashboard = () => {
     }
   };
 
-  //POST request for deleting the saved listing
-  const deleteListing = async () => {
+  //Delete request for deleting the saved listing
+  const deleteListing = async (id: number) => {
     try {
-      console.log("Homes:", homes);
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites`,
         {
@@ -220,6 +214,7 @@ const Dashboard = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             email: session?.user.email,
+            listingId: id,
           }),
         }
       );
@@ -239,7 +234,7 @@ const Dashboard = () => {
   const removeProperty = async (id: number) => {
     try {
       // Call deleteListing function to delete the property from the server
-      await deleteListing();
+      await deleteListing(id);
 
       // Update the homes state after successful deletion
       if (homes) {
@@ -320,7 +315,9 @@ const Dashboard = () => {
                     <h2 className="font-agrandir py-1 px-4 flex justify-center items-center text-sm  bg-black/75 rounded-full text-white tracking-wider">
                       {userData.name}
                     </h2>
-                    <h2>{userData.email}</h2>
+                    <h2 className="text-sm font-montserrat">
+                      {userData.email}
+                    </h2>
                   </div>
                 </div>
               </div>
