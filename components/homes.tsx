@@ -70,17 +70,21 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
 
   // Fetch listings and update the state
   const fetchListings = async () => {
+    setLoading(true);
     try {
       //request to get listing data from api
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing`,
         { method: "GET" }
       );
+
+      if (!response.ok) {
+        throw new Error("Error fetching Listings")
+      }
       const data: Listing[] = await response.json();
       //setting listings data to Listings state variable
       setListings(data);
       setFilteredListings(data);
-      console.log("Data:", data);
       if (session) {
         await fetchUserData();
       }
@@ -111,18 +115,14 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
 
       let data = await response.json();
       await setUser(data);
-      console.log("############ user info: ", user);
-      console.log("Fav listings: ", user?.favoriteListingsIds);
     } catch (error) {
-      console.log("Error Fetching User Data: ", error);
+      console.error("Error Fetching User Data: ", error);
     }
   };
 
   useEffect(() => {
     // Filter logic based on the selected filters
-    console.log("Session: ", session?.user);
 
-    console.log("Filters: ", selectedFilters);
     let filtered = listings.filter((listing) => {
       if (selectedFilters.option) {
         if (listing.availability != selectedFilters.option) {
@@ -134,7 +134,6 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
           listing.price < selectedFilters.price.min ||
           listing.price > selectedFilters.price.max
         ) {
-          console.log("Listing Price: ", listing.price);
           return false;
         }
       }
@@ -162,7 +161,6 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
     });
 
     // Update the filtered listings state
-    console.log("Filtered Listings: ", filtered);
     setFilteredListings(filtered);
   }, [selectedFilters, listings]);
 
@@ -171,7 +169,7 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
     fetchListings();
   }, [session]);
 
-  useEffect(() => {}, [user?.favoriteListingsIds]);
+  useEffect(() => { }, [user?.favoriteListingsIds]);
 
   const handlePropertyInfo = (listing: Listing) => {
     //the listing to show in the property info page
@@ -186,7 +184,6 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
   //function to save listing
   const favoriteListing = async (id: number) => {
     try {
-      console.log("Sending request with updatedSaveProp:", id);
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites/`,
@@ -240,19 +237,19 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
 
   if (error) {
     return (
-      <div className="w-3/5 h-full flex justify-center items-center">
-        <p>Oops! Something went wrong. Please try again.</p>
-        <button onClick={fetchListings}>Retry</button>
+      <div className="w-3/5 h-full flex flex-col gap-3 justify-center items-center">
+        <p>Oops! Something went wrong. Please try loading listings again.</p>
+        <button onClick={() => fetchListings()} className="w-40 h-12 text-white text-xs tracking-wider font-montserrat transition ease-in-out duration-150 bg-black hover:bg-black/60  rounded-xl  hover:shadow-lg active:bg-black">Retry</button>
       </div>
     );
   }
 
   return (
-    <div className="w-full xl:w-3/5 h-full flex flex-col items-center overflow-y-auto custom-scrollbar">
-      <div className="flex flex-wrap justify-around gap-y-4 w-full  p-4">
+    <div className="w-full xl:w-3/5   h-full flex flex-col  overflow-y-auto custom-scrollbar">
+      <div className="flex flex-col xl:justify-start xl:flex-row justify-evenly gap-4 w-full items-start  p-4">
         {filteredListings.map((listing) => (
           <div
-            className="xl:w-[50%] w-[100%] flex flex-col p-4 "
+            className="xl:w-[50%] w-[100%] flex flex-col p-4 shadow-xl"
             key={listing.id}
           >
             <div

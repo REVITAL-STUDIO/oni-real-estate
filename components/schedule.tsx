@@ -83,7 +83,7 @@ const Schedule = () => {
         <div className="h-1/4 w-full flex p-4 items-center">
           <motion.button
             onClick={handleOpen}
-            className=" backdrop-filter font-montserrat  pulse-btn font-regular  text-black text-base  tracking-widest backdrop-blur-md shadow-xl shadow-black transition ease-in-out duration-300 rounded-full border border-black w-2/3 xl:w-1/4 h-1/3"
+            className=" backdrop-filter font-montserrat  pulse-btn font-regular  text-black text-base  tracking-widest backdrop-blur-md shadow-xl shadow-black transition ease-in-out duration-300 rounded-full border border-black w-1/2 md:w-1/4 p-4"
             variants={{
               hidden: { opacity: 0 },
               visible: { opacity: 1 },

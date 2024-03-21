@@ -16,6 +16,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
+import ProfileSettings from "./ProfileSettings";
 
 interface profile {
   name: string;
@@ -134,7 +135,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     // Only fetch user data if session is available and not loading
-    if (session && status === "authenticated" && session.user.role == 'user') {
+    if (session && status === "authenticated" && session.user.role == "user") {
       fetchUserData();
       receiveListing();
     } else if (status === "loading") {
@@ -224,8 +225,7 @@ const Dashboard = () => {
     try {
       const updatedHomes = homes.filter((home) => home.id !== remove.id);
       setHomes(updatedHomes);
-      await receiveListing(); // Pass any necessary parameters here
-      console.log("Updated Homes:", updatedHomes);
+      console.log("Removing Home:", updatedHomes);
     } catch (error) {
       console.error("Error Removing Property, please try again later", error);
     }
@@ -245,7 +245,7 @@ const Dashboard = () => {
           initial={{ opacity: 0, y: 75 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ ease: "easeIn", duration: 0.8 }}
-          className="w-[90%] h-3/4 bg-gray-200  shadow-2xl rounded-2xl flex flex-col xl:flex-row"
+          className="w-[90%] h-[80%] bg-gray-200  shadow-2xl rounded-2xl flex flex-col xl:flex-row"
         >
           {/* Profile */}
           <AnimatePresence>
@@ -355,10 +355,7 @@ const Dashboard = () => {
                             {home.address}
                           </h2>
                           <div className="w-1/6 flex justify-evenly">
-                            <button
-                              onClick={() => toggleViewHome()}
-                              className="w-10 h-10 flex justify-center items-center"
-                            >
+                            <button className="w-10 h-10 flex justify-center items-center">
                               <svg
                                 width="25"
                                 height="25"
@@ -413,176 +410,10 @@ const Dashboard = () => {
               </div>
               {/* House details */}
             </motion.div>
-            {viewHome && (
-              <div className="w-1/3 h-full  flex flex-col justify-center gap-y-4 items-center">
-                <div className="border-2 border-blue-400 w-full h-2/5"></div>
-                <button className="xl:w-1/2 w-5/6 hidden  h-16 hover:bg-black hover:text-white text-black font-light tracking-wider text-base xl:flex justify-center items-center transition-all duration-300 ease-in-out font-montserrat bottom-[0%] bg-white xl:right-4  bg-opacity-20 backdrop-blur-5 border border-opacity-30 border-black/50 rounded-2xl shadow-sm p-4  group">
-                  <span>View Home</span>
-                  <span className="relative left-1 bottom-3 transfrom -rotate-45 flex items-center justify-start w-12 h-12 duration-300 transform translate-y-0 group-hover:-translate-y-[10%] group-hover:translate-x-[25%] group-hover:opacity-100 ease">
-                    <FontAwesomeIcon icon={faArrowRight} className="w-4 h-4" />
-                  </span>
-                </button>
-              </div>
-            )}
           </AnimatePresence>
         </motion.div>
-
-        {/* Handling Opening Menu */}
-        <AnimatePresence>
-          {openMenu && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-              className="bg-white/75 w-full h-full fixed top-0 left-0 z-50"
-            >
-              <motion.div
-                initial={{ opacity: 0, left: -100 }}
-                animate={{ opacity: 1, left: 0 }}
-                exit={{ opacity: 0, left: -100 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="xl:w-1/3 w-3/4 bg-black h-full flex flex-col items-center relative"
-              >
-                {/* Close Button */}
-                <div className="absolute w-fit right-2 p-4">
-                  <button
-                    onClick={() => closeSettings()}
-                    className="w-8 h-8 flex flex-col relative justify-center items-center rounded-full  space-x-reverse  z-10"
-                  >
-                    <span
-                      className={`block w-3/4 my-0.5 border absolute border-white rotate-45 transition-transform `}
-                    ></span>
-                    <span
-                      className={`block w-3/4 my-0.5 border absolute border-white -rotate-45 transition-transform `}
-                    ></span>
-                  </button>
-                </div>
-                {/* Profile  */}
-                <div className="w-5/6 h-1/4 flex items-center">
-                  <div className="w-32 h-32  inset-0 relative rounded-2xl flex justify-center items-center">
-                    <div className="w-24 h-24 bg-eggshell inset-0 rounded-2xl shadow-md flex justify-center items-center">
-                      <h2 className="text-5xl text-white font-montserrat">
-                        {userData.name.charAt(0).toUpperCase()}
-                      </h2>
-                    </div>
-                  </div>
-                  <h2 className="text-white text-lg font-agrandir p-4 ">
-                    Edit Profile
-                  </h2>
-                </div>
-                {/* Form */}
-                <form className="w-full h-full  text-sm flex flex-col font-agrandir items-center ">
-                  {/* Name */}
-                  <div className="flex flex-col w-4/5">
-                    <label className="py-4 text-white">Name</label>
-                    <input
-                      className="p-4 rounded-lg text-white bg-slate-400/10"
-                      type="text"
-                      id="Name"
-                      name="Name"
-                      value={userDataEdit.name}
-                      onChange={(e) =>
-                        setUserDataEdit({
-                          ...userDataEdit,
-                          name: e.target.value,
-                        })
-                      }
-                      placeholder="Name"
-                    />
-                  </div>
-                  {/* Phone */}
-                  <div className="flex flex-col w-4/5">
-                    <label className="py-4 text-white">Phone</label>
-                    <input
-                      className="p-4 rounded-lg text-white bg-slate-400/10"
-                      type="text"
-                      id="Phone"
-                      name="Phone"
-                      value={userDataEdit.number}
-                      onChange={(e) =>
-                        setUserDataEdit({
-                          ...userDataEdit,
-                          number: e.target.value,
-                        })
-                      }
-                      placeholder="Phone"
-                    />
-                  </div>
-                  {/* Email */}
-                  <div className="flex flex-col w-4/5">
-                    <label className="py-4 text-white">Email</label>
-                    <input
-                      className="p-4 rounded-lg text-white bg-slate-400/10"
-                      type="text"
-                      id="Email"
-                      name="Email"
-                      value={userDataEdit.email}
-                      onChange={(e) =>
-                        setUserDataEdit({
-                          ...userDataEdit,
-                          email: e.target.value,
-                        })
-                      }
-                      placeholder="Email"
-                    />
-                  </div>
-                  {/* Password */}
-                  <div className="flex flex-col w-4/5 mb-[3%]">
-                    <label className="py-4 text-white">Password Change</label>
-                    <input
-                      className={`p-4 rounded-lg text-white bg-slate-400/10 ${
-                        passwordError ? "border-2 border-red-400" : ""
-                      }`}
-                      type="password"
-                      id="Password"
-                      name="Password"
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                      placeholder="New Password"
-                    />
-                  </div>
-                  {/* Confirm Password */}
-                  <div className="flex flex-col w-4/5 mb-[3%]">
-                    <input
-                      className={`p-4 rounded-lg text-white bg-slate-400/10 ${
-                        passwordError ? "border-2 border-red-400" : ""
-                      }`}
-                      type="password"
-                      id="Confirm-Password"
-                      name="Confirm Password"
-                      value={newPasswordConfirm}
-                      onChange={(e) => setNewPasswordConfirm(e.target.value)}
-                      placeholder="Confirm New Password"
-                    />
-                  </div>
-                  {passwordError && (
-                    <div className="text-red-400">Passwords do not match</div>
-                  )}
-                  {noChangeError && (
-                    <div className="text-red-400">No fields changed</div>
-                  )}
-
-                  {/* Log In Button */}
-                  <div className="justify-evenly w-full h-1/2 my-4 flex  items-center">
-                    <button
-                      onClick={saveUserData}
-                      className="p-4 bg-gradient-to-r shadow-md w-1/3 from-pine via-mint/50 to-mint text-base text-black rounded-2xl tracking-wide hover:opacity-80 active:opacity-100"
-                    >
-                      Save
-                    </button>
-                    <button
-                      onClick={handleLogout}
-                      className="p-4 bg-red-700 w-1/3 rounded-2xl text-base tracking-wider shadow-md hover:opacity-80 active:opacity-100"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                </form>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* User Profile settings */}
+        <ProfileSettings openMenu={openMenu} setOpenMenu={setOpenMenu} userInfo={userData} setUserInfo={setUserData}/>
       </div>
     );
   }

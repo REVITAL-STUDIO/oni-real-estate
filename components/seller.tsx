@@ -101,7 +101,7 @@ const Seller = () => {
             initial="hidden"
             animate={control}
             transition={{ duration: 1.2, delay: 0.5 }}
-            className="xl:text-7xl text-5xl text-mint font-agrandir text-right p-4"
+            className="xl:text-7xl text-4xl text-mint font-agrandir text-right p-4"
           >
             Seller Process
           </motion.h2>

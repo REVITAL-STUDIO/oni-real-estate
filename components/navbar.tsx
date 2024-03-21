@@ -16,12 +16,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import { IoIosClose } from "react-icons/io";
+import ProfileSettings from "./ProfileSettings";
 
 const Nav = () => {
   const { data: session } = useSession();
   const router = useRouter();
   const [color, setColor] = useState<boolean>(false);
   const [disappear, setDisappear] = useState<boolean>(false);
+  const [openUserSettings, setOpenUserSettings] = useState(false);
 
   const changeColor = () => {
     if (typeof window !== "undefined") {
@@ -209,6 +211,13 @@ const Nav = () => {
     setLogOut(!openLogOut);
   };
 
+  //Opening Settings
+  const [setting, setSetting] = useState(false);
+
+  const toggleSetting = () => {
+    setSetting(!setting);
+  };
+
   return (
     <div
       className={`h-80 w-full flex fixed bg-gradient-to-b from-black/50 via-black/30 to-transparent z-50 flex-col items-center justify-center transition-all duration-300 ease-in-out ${
@@ -255,10 +264,11 @@ const Nav = () => {
           </li>
           {!session && (
             <li className="relative p-4">
-              <button onClick={toggleLogin}>
-                <span className="inline-block uppercase transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-10 before:w-0 before:h-0.5 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-white before:via-white/30 before:to-white hover:before:w-full hover:before:opacity-100">
-                  Login
-                </span>
+              <button
+                className=" rounded-full border px-4 py-1   text-white hover:text-black border-eggshell shadow-xl hover:bg-gradient-to-r from-eggshell via-eggshell to-black/90 transition duration-300 ease-in-out"
+                onClick={toggleLogin}
+              >
+                <span className="inline-block uppercase  ">Login</span>
               </button>
             </li>
           )}
@@ -266,39 +276,42 @@ const Nav = () => {
             <Link
               className={`
                     relative
-                    font-regular
+                    font-regular border rounded-full px-4 py-1  text-white hover:text-black border-eggshell shadow-xl hover:bg-gradient-to-r from-eggshell via-eggshell to-black/90 transition duration-300 ease-in-out
                   `}
               href="/admin"
             >
-              <span className="inline-block transition-all duration-500 before:content-[''] before:absolute before:left-0 before:top-6 before:w-0 before:h-1 before:rounded-full before:opacity-0 before:transition-all before:duration-500 before:bg-gradient-to-r  before:from-mint before:via-mint/30 before:to-mint hover:before:w-full hover:before:opacity-100">
+              <span className="inline-block transition-all duration-500 ">
                 Admin Portal
               </span>
             </Link>
           )}
           {session && session?.user.role !== "admin" && (
             <div
-              className="relative w-fit h-auto duration-300  transition ease- z-10  rounded-md"
+              className="relative  h-auto  z-10 "
               onMouseEnter={() => setLogOut(true)}
               onMouseLeave={() => setLogOut(false)}
             >
               <Link
                 className={`
            
-            font-regular
+            font-regular  rounded-full  z-10  px-4 py-1  text-white hover:text-black hover:bg-gradient-to-r border-eggshell shadow-xl from-eggshell via-eggshell to-black/90 transition duration-300 ease-in-out
           `}
                 href="/user"
               >
-                <span className=" text-white">Property Hub</span>
+                <span className=" text-black">Property Hub</span>
               </Link>
               {openLogOut && (
-                <div className="absolute top-5/6 right-0 w-full  h-auto justify-evenly bg-black/75 shadow-xl rounded-md ">
-                  <button className="text-left w-full h-fit flex p-4 items-center justify-evenly text-white ">
+                <div className="absolute top-[100%] mt-4 right-0 w-full  h-auto justify-evenly bg-black/75 shadow-xl rounded-md ">
+                  <button
+                    onClick={() => setOpenUserSettings(true)}
+                    className="text-left w-full h-fit flex p-4 items-center justify-evenly text-white "
+                  >
                     <FontAwesomeIcon icon={faGears} size="lg" />
                     Settings
                   </button>
                   <button
                     onClick={handleLogout}
-                    className="text-left w-full h-fit flex p-4 items-center justify-evenly text-white "
+                    className="text-left w-full   flex items-center justify-evenly text-white "
                   >
                     <FontAwesomeIcon
                       className="transform scale-x(-1)"
@@ -364,7 +377,7 @@ const Nav = () => {
                     <Link href="/">Home</Link>
                   </li>
                   {!session && (
-                    <li className="relative   w-full p-4 text-3xl md:text-5xl tracking-wider font-extralight">
+                    <li className="relative  w-full p-4 text-3xl md:text-5xl tracking-wider font-extralight">
                       <button onClick={toggleLogin}>
                         <span>Login </span>
                       </button>
@@ -400,33 +413,33 @@ const Nav = () => {
                           }
                         />
                       </li>
-                      {openLogOut && (
-                        <div
-                          className={`transition-max-h ${
-                            openLogOut ? "max-h-40 " : "max-h-0"
-                          } transition duration-300 ease-in-out`}
+                      <div
+                        className={` ${
+                          openLogOut
+                            ? "h-[100px] opacity-1 transition-all duration-500 ease-in-out"
+                            : "h-0 opacity-0 transition-all duration-500 ease-in-out"
+                        } `}
+                      >
+                        <button className="text-left w-full p-4 h-fit flex items-center text-black ">
+                          <FontAwesomeIcon
+                            icon={faGears}
+                            size="lg"
+                            className="ml-4"
+                          />
+                          <span className="px-2 text-lg">Settings</span>
+                        </button>
+                        <button
+                          onClick={handleLogout}
+                          className="text-left w-full p-4 h-fit flex  items-center  text-black"
                         >
-                          <button className="text-left w-full p-4 h-fit flex items-center text-black ">
-                            <FontAwesomeIcon
-                              icon={faGears}
-                              size="lg"
-                              className="ml-4"
-                            />
-                            <span className="px-2 text-base">Settings</span>
-                          </button>
-                          <button
-                            onClick={handleLogout}
-                            className="text-left w-full p-4 h-fit flex  items-center  text-black"
-                          >
-                            <FontAwesomeIcon
-                              className="transform scale-x(-1) ml-4"
-                              icon={faArrowRightFromBracket}
-                              size="lg"
-                            />{" "}
-                            <span className="px-2  text-base">Log out</span>
-                          </button>
-                        </div>
-                      )}
+                          <FontAwesomeIcon
+                            className="transform scale-x(-1) ml-4"
+                            icon={faArrowRightFromBracket}
+                            size="lg"
+                          />{" "}
+                          <span className="px-2  text-lg">Log out</span>
+                        </button>
+                      </div>
                     </div>
                   )}
                   <li className="relative  flex  w-full  p-4 text-3xl md:text-5xl tracking-wider font-extralight  ">
@@ -591,7 +604,7 @@ const Nav = () => {
                           }`}
                         >
                           {isLoading ? (
-                            <div className="h-20 w-20 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                            <div className="h-8 w-8 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
                           ) : (
                             "Sign Up"
                           )}
@@ -678,7 +691,7 @@ const Nav = () => {
                       </button>
                       <button
                         onClick={toggleSignUp}
-                        className="p-2 border border-black to-mint text-base text-black rounded-full tracking-wide"
+                        className="p-2 border  to-mint text-base hover:bg-black hover:text-white text-black duration-300 transition ease-in-out rounded-full tracking-wide"
                       >
                         Register
                       </button>
@@ -747,6 +760,10 @@ const Nav = () => {
           </motion.div>
         )}
       </AnimatePresence>
+      <ProfileSettings
+        openMenu={openUserSettings}
+        setOpenMenu={setOpenUserSettings}
+      />
     </div>
   );
 };

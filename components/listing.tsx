@@ -15,10 +15,6 @@ interface City {
   label: string;
 }
 
-interface Property {
-  label: string;
-}
-
 interface Filters {
   option: string;
   price: Price;
@@ -76,9 +72,8 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
     { label: "$100,000 - $150,000", min: 100000, max: 150000 },
     { label: "$150,000 - $300,000", min: 150000, max: 300000 },
     { label: "$300,000 - $750,000", min: 300000, max: 750000 },
-    { label: "$750,000 - $1,000,000", min: 150000, max: 300000 },
-    { label: "$1,000,000 - $5,000,000", min: 1000000, max: 5000000 },
-    { label: "$5,000,000 - $15,000,000", min: 5000000, max: 15000000 },
+    { label: "$750,000 - $1,000,000", min: 750000, max: 1000000 },
+    { label: "$1,000,000+", min: 1000000, max: 15000000 },
   ];
 
   const initialPrice: Price = { label: "Price Amount", min: 0, max: 0 };
@@ -219,7 +214,7 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
             <div
               className={` ${
                 openDropdown === 1
-                  ? "h-[200px] transition-all duration-500 ease-in-out"
+                  ? "h-[165px] transition-all duration-500 ease-in-out"
                   : "h-0 transition-all duration-500 ease-in-out"
               } bg-[#fbfbfb] overflow-hidden w-52 absolute top-full rounded-md`}
             >
@@ -396,19 +391,19 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
           </div>
           <button
             onClick={clearFilters}
-            className=" w-40 h-12 text-white text-xs tracking-wider font-montserrat transition ease-in-out duration-150 bg-black hover:bg-black/90  rounded-xl  hover:shadow-lg active:opacity-100"
+            className=" w-40 h-12 text-white text-xs tracking-wider font-montserrat transition ease-in-out duration-150 bg-black hover:bg-black/60  rounded-xl  hover:shadow-lg active:bg-black"
           >
             Reset Filters
           </button>
         </div>
 
         {/* Mobile Responsive filters */}
-        <div className=" w-full h-full flex flex-wrap gap-4 items-center  xl:hidden p-4 ">
+        <div className=" w-[100%] h-full flex flex-wrap gap-4 justify-center md:justify-start xl:justify-center items-center  xl:hidden p-4 ">
           {/* Prices */}
           <div className="relative">
             <div className="w-40 h-12 border border-gray-300   rounded-md flex justify-center items-center">
               <span className="text-xs text-black w-[100%] text-center">
-                {selectedPrice ? "Price Amount" : selectedPrice.label}{" "}
+                {selectedPrice.min == 0 ? "Price Amount" : selectedPrice.label}{" "}
               </span>
               <div className="w-1/6 mr-2">
                 <button onClick={togglePricesDropdown}>
@@ -416,23 +411,28 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
                 </button>{" "}
               </div>
             </div>
-            {openDropdown === 1 && (
-              <div className="bg-white w-40 h-auto absolute top-full  z-40 transition-all ease-in-out duration-200">
-                {prices.map((price) => (
-                  <div
-                    key={price.label}
-                    className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white font-regular tracking-wider text-xs text-center"
-                    onClick={() => {
-                      togglePrices(price);
-                      togglePricesDropdown();
-                      setShowClearFilter(true);
-                    }}
-                  >
-                    {price.label}
-                  </div>
-                ))}
-              </div>
-            )}
+
+            <div
+              className={` ${
+                openDropdown === 1
+                  ? "h-[175px] transition-all duration-500 ease-in-out"
+                  : "h-0 transition-all duration-500 ease-in-out"
+              } bg-[#fbfbfb] overflow-hidden w-40 absolute top-full rounded-md z-50`}
+            >
+              {prices.map((price) => (
+                <div
+                  key={price.label}
+                  className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white font-regular tracking-wider text-xs text-center"
+                  onClick={() => {
+                    togglePrices(price);
+                    togglePricesDropdown();
+                    setShowClearFilter(true);
+                  }}
+                >
+                  {price.label}
+                </div>
+              ))}
+            </div>
           </div>
           {/* Beds */}
           <div className="relative">
@@ -451,23 +451,27 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
                 </button>{" "}
               </div>
             </div>
-            {openDropdown === 2 && (
-              <div className="bg-white w-40 h-auto absolute top-full  z-40  transition-all ease-in-out duration-200">
-                {numOfBeds.map((bed) => (
-                  <div
-                    key={bed}
-                    className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white tracking-wider text-xs text-center transition ease-in-out duration-150"
-                    onClick={() => {
-                      setSelectedBeds(bed);
-                      toggleBedDropdown();
-                      setShowClearFilter(true);
-                    }}
-                  >
-                    {bed}
-                  </div>
-                ))}
-              </div>
-            )}
+            <div
+              className={` ${
+                openDropdown === 2
+                  ? "h-[200px] transition-all duration-500 ease-in-out"
+                  : "h-0 transition-all duration-500 ease-in-out"
+              } bg-[#fbfbfb] overflow-hidden w-40 absolute top-full rounded-md z-50`}
+            >
+              {numOfBeds.map((bed) => (
+                <div
+                  key={bed}
+                  className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white font-regular tracking-wider text-xs text-center"
+                  onClick={() => {
+                    setSelectedBeds(bed);
+                    toggleBedDropdown();
+                    setShowClearFilter(true);
+                  }}
+                >
+                  {bed}
+                </div>
+              ))}
+            </div>
           </div>
           {/* Baths */}
           <div className="relative">
@@ -481,23 +485,27 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
                 </button>{" "}
               </div>
             </div>
-            {openDropdown === 3 && (
-              <div className="bg-white w-40 h-auto absolute  top-full  z-40 transition-all ease-in-out duration-200">
-                {numOfBaths.map((baths) => (
-                  <div
-                    key={baths}
-                    className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white tracking-wider text-xs text-center transition ease-in-out duration-150"
-                    onClick={() => {
-                      setSelectedBaths(baths);
-                      toggleBathDropdown();
-                      setShowClearFilter(true);
-                    }}
-                  >
-                    {baths}
-                  </div>
-                ))}
-              </div>
-            )}
+            <div
+              className={` ${
+                openDropdown === 3
+                  ? "h-[200px] transition-all duration-500 ease-in-out"
+                  : "h-0 transition-all duration-500 ease-in-out"
+              } bg-[#fbfbfb] overflow-hidden w-40 absolute top-full rounded-md z-50`}
+            >
+              {numOfBaths.map((bath) => (
+                <div
+                  key={bath}
+                  className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white font-regular tracking-wider text-xs text-center"
+                  onClick={() => {
+                    setSelectedBaths(bath);
+                    toggleBathDropdown();
+                    setShowClearFilter(true);
+                  }}
+                >
+                  {bath}
+                </div>
+              ))}
+            </div>
           </div>
           {/* Location */}
           <div className="relative">
@@ -511,23 +519,27 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
                 </button>{" "}
               </div>
             </div>
-            {openDropdown === 4 && (
-              <div className="bg-white w-40 h-auto absolute  top-full z-40 transition-all ease-in-out duration-200">
-                {locations.map((location) => (
-                  <div
-                    key={location}
-                    className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white tracking-wider text-xs text-center transition ease-in-out duration-150"
-                    onClick={() => {
-                      setSelectedLocation(location);
-                      toggleLocationDropdown;
-                      setShowClearFilter(true);
-                    }}
-                  >
-                    {location}
-                  </div>
-                ))}
-              </div>
-            )}
+            <div
+              className={` ${
+                openDropdown === 4
+                  ? "h-[230px] transition-all duration-500 ease-in-out"
+                  : "h-0 transition-all duration-500 ease-in-out"
+              } bg-[#fbfbfb] overflow-hidden w-40 absolute top-full rounded-md z-50`}
+            >
+              {locations.map((location) => (
+                <div
+                  key={location}
+                  className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white font-regular tracking-wider text-xs text-center"
+                  onClick={() => {
+                    setSelectedLocation(location);
+                    toggleLocationDropdown();
+                    setShowClearFilter(true);
+                  }}
+                >
+                  {location}
+                </div>
+              ))}
+            </div>
           </div>
           {/* Property Type */}
           <div className="relative">
@@ -541,23 +553,27 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
                 </button>{" "}
               </div>
             </div>
-            {openDropdown === 5 && (
-              <div className="bg-white w-40 h-auto absolute top-full  z-40">
-                {properties.map((property) => (
-                  <div
-                    key={property}
-                    className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white tracking-wider text-xs text-center transition ease-in-out duration-150"
-                    onClick={() => {
-                      setSelectedProperty(property);
-                      togglePropertyDropdown();
-                      setShowClearFilter(true);
-                    }}
-                  >
-                    {property}
-                  </div>
-                ))}
-              </div>
-            )}
+            <div
+              className={` ${
+                openDropdown === 5
+                  ? "h-[140px] transition-all duration-500 ease-in-out"
+                  : "h-0 transition-all duration-500 ease-in-out"
+              } bg-[#fbfbfb] overflow-hidden w-40 absolute top-full rounded-md z-50`}
+            >
+              {properties.map((property) => (
+                <div
+                  key={property}
+                  className="p-2 cursor-pointer hover:bg-pine shadow-black hover:rounded-sm hover:text-white font-regular tracking-wider text-xs text-center"
+                  onClick={() => {
+                    setSelectedProperty(property);
+                    togglePropertyDropdown();
+                    setShowClearFilter(true);
+                  }}
+                >
+                  {property}
+                </div>
+              ))}
+            </div>
           </div>
           <button
             onClick={clearFilters}

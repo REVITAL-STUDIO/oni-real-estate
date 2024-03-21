@@ -41,7 +41,7 @@ const Buyer = () => {
           viewBox="0 0 370 370"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-[125px] h-[125px] md:w-[250px] md:h-[250px]"
+          className="w-[200px] h-[200px] md:w-[250px] md:h-[250px]"
         >
           <path
             d="M53.9583 208.125V238.958C53.9583 255.313 60.4553 270.998 72.0201 282.563C83.5848 294.128 99.27 300.625 115.625 300.625C127.891 300.625 139.655 295.752 148.329 287.078C157.002 278.405 161.875 266.641 161.875 254.375V215.833C161.875 209.7 164.311 203.818 168.648 199.481C172.985 195.144 178.867 192.708 185 192.708C191.133 192.708 197.015 195.144 201.352 199.481C205.689 203.818 208.125 209.7 208.125 215.833V254.375C208.125 266.641 212.998 278.405 221.671 287.078C230.345 295.752 242.109 300.625 254.375 300.625C270.73 300.625 286.415 294.128 297.98 282.563C309.545 270.998 316.042 255.313 316.042 238.958V208.125"
@@ -76,7 +76,7 @@ const Buyer = () => {
           viewBox="0 0 370 370"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-[125px] h-[125px] md:w-[250px] md:h-[250px]"
+          className="w-[200px] h-[200px] md:w-[250px] md:h-[250px]"
         >
           <path
             d="M77.0833 323.75C68.6042 323.75 61.3481 320.733 55.315 314.7C49.2819 308.667 46.2603 301.406 46.25 292.917V77.0833C46.25 68.6042 49.2717 61.3481 55.315 55.315C61.3583 49.2819 68.6144 46.2603 77.0833 46.25H292.917C301.396 46.25 308.657 49.2717 314.7 55.315C320.744 61.3583 323.76 68.6144 323.75 77.0833H200.417C182.174 77.0833 167.338 82.8029 155.909 94.2421C144.48 105.681 138.76 120.517 138.75 138.75V231.25C138.75 249.493 144.47 264.334 155.909 275.773C167.348 287.213 182.184 292.927 200.417 292.917H323.75C323.75 301.396 320.733 308.657 314.7 314.7C308.667 320.744 301.406 323.76 292.917 323.75H77.0833ZM200.417 262.083C191.937 262.083 184.681 259.067 178.648 253.034C172.615 247.001 169.594 239.739 169.583 231.25V138.75C169.583 130.271 172.605 123.015 178.648 116.982C184.692 110.949 191.948 107.927 200.417 107.917H308.333C316.812 107.917 324.074 110.938 330.117 116.982C336.16 123.025 339.177 130.281 339.167 138.75V231.25C339.167 239.729 336.15 246.99 330.117 253.034C324.084 259.077 316.823 262.094 308.333 262.083H200.417ZM246.667 208.125C253.347 208.125 258.872 205.941 263.24 201.573C267.608 197.205 269.792 191.681 269.792 185C269.792 178.319 267.608 172.795 263.24 168.427C258.872 164.059 253.347 161.875 246.667 161.875C239.986 161.875 234.462 164.059 230.094 168.427C225.726 172.795 223.542 178.319 223.542 185C223.542 191.681 225.726 197.205 230.094 201.573C234.462 205.941 239.986 208.125 246.667 208.125Z"
@@ -103,7 +103,7 @@ const Buyer = () => {
           viewBox="0 0 333 287"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
-          className="w-[125px] h-[125px] md:w-[250px] md:h-[250px]"
+          className="w-[200px] h-[200px] md:w-[250px] md:h-[250px]"
         >
           <g filter="url(#filter0_d_1999_14)">
             <path
@@ -167,7 +167,7 @@ const Buyer = () => {
   return (
     <div className="w-full  bg-white ">
       {/* Buyer Process */}
-      <div className="w-full h-700 flex flex-col justify-center bg-gradient-to-b from-white  via-white to-mint/30">
+      <div className="w-full h-700 flex flex-col justify-center bg-gradient-to-b from-white  via-white to-mint/20">
         <motion.div
           variants={{
             hidden: { opacity: 0, y: -75 },
@@ -178,10 +178,10 @@ const Buyer = () => {
           transition={{ duration: 1, delay: 0.25 }}
           className="w-[95%] h-5/6 flex flex-col gap-x-2 justify-center bg-[url('/living-room-interior-design-zoom-calls-with-chair.jpg')] bg-cover bg-center rounded-tr-xl rounded-br-xl shadow-xl"
         >
-          <div className="md:text-7xl text-5xl p-4 font-agrandir w-full text-mint">
+          <div className="md:text-7xl text-4xl p-4 font-agrandir w-full text-mint">
             Buyer Process
           </div>
-          <h2 className="md:text-base w-3/4 text-sm text-white font-montserrat font-medium tracking-widest  p-4">
+          <h2 className="md:text-base w-5/6 text-xs text-white font-montserrat font-medium tracking-widest  p-4">
             We Know the Ropes, Let Us Guide You to your Dream Home. Our
             dedicated team is committed to guiding you through every step of the
             home buying process. From understanding your unique preferences to
@@ -191,7 +191,7 @@ const Buyer = () => {
         </motion.div>
       </div>
       <div
-        className="w-full h-screen bg-gradient-to-b from-mint/30  via-white to-white"
+        className="w-full h-screen bg-gradient-to-b from-mint/20  via-white to-white"
         ref={parentRef}
       >
         {/* Slides */}
@@ -206,15 +206,15 @@ const Buyer = () => {
             className="w-full h-full flex flex-col xl:flex-row overflow-x-hidden"
           >
             <motion.div className="xl:w-1/2 w-full xl:h-3/4 h-1/3 flex xl:flex-col xl:justify-around justify-start items-center px-4 my-8">
-              <div className="rounded-full border-2 border-forest  md:h-96 md:w-96 h-64 w-64 drop-shadow-lg flex flex-col justify-center items-center pulse-btn">
-                <h2 className="font-agrandir text-base md:text-xl lg:text-4xl  tracking-wider font-regular">
+              <div className="rounded-full  xl:h-96 xl:w-96 h-64 w-64 drop-shadow-lg flex flex-col  items-center ">
+                <h2 className="font-agrandir  text-2xl lg:text-5xl  tracking-wider font-regular">
                   {currentSlidePick.name}
                 </h2>
                 {currentSlidePick.icon}
               </div>
             </motion.div>
             <motion.div className="xl:w-1/2 w-full xl:h-5/6 h-full flex flex-col justify-evenly  xl:justify-end ">
-              <h1 className="p-4 xl:mb-4 shadow-lg xl:ml-0 bg-forest text-white ml-4 text-base md:text-xl w-fit  rounded-full  font-montserrat  font-medium tracking-wide">
+              <h1 className="p-4 xl:mb-4 pulse-btn shadow-lg xl:ml-0 border border-black text-black ml-4 text-xs md:text-xl w-2/3 md:w-1/3 flex justify-center items-center rounded-full  font-montserrat  font-medium tracking-wide">
                 {currentSlidePick.title}
               </h1>
 
@@ -223,7 +223,7 @@ const Buyer = () => {
               </p>
               <ul className="w-3/4 xl:h-2/5 h-1/2 flex flex-col justify-around text-sm md:text-base  font-montserrat tracking-wider p-4 xl:p-0 xl:mb-4">
                 {currentSlidePick.info.map((item, index) => (
-                  <li key={index} className="border-t border-black py-4">
+                  <li key={index} className="border-t  py-4">
                     {item}
                   </li>
                 ))}
@@ -234,12 +234,12 @@ const Buyer = () => {
           {/* Next Button */}
           <button
             onClick={toggleSlide}
-            className="absolute top-1/2 hover:bg-forest hover:text-pine duration-200 ease-in-out right-4 w-10 h-10 xl:w-16 xl:h-16 p-4 rounded-full border border-black flex justify-center items-center"
+            className="absolute top-1/2  hover:text-pine duration-200 ease-in-out right-4 w-10 h-10 xl:w-16 xl:h-16 p-4 flex justify-center items-center"
           >
             <FontAwesomeIcon
               icon={faChevronRight}
               size="lg"
-              className="xl:w-8 xl:h-8 w-6 h-6 "
+              className="xl:w-8 xl:h-8 md:w-6 md:h-6 w-4 h-4 "
             />
           </button>
         </div>

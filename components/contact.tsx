@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { motion, useAnimation, useScroll } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-
+import {faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 const Contact = () => {
   const parentRef = useRef<HTMLDivElement>(null);
   const control = useAnimation();
@@ -196,7 +196,7 @@ const Contact = () => {
               <div className="w-5/6 xl:h-1/4 h-1/2 flex flex-col gap-y-4 justify-center my-8">
                 <button
                   type="submit"
-                  className="xl:w-1/2 w-3/4 h-auto my-2 ml-1 p-2 lg:p-4 xl:p-4 border rounded-2xl text-black hover:bg-lime-100 active:bg-white"
+                  className="xl:w-1/2 w-3/4 h-auto flex items-center justify-center my-2 ml-1 p-2 lg:p-4 xl:p-4 border  rounded-2xl  hover:bg-black hover:text-white text-black transition-all duration-300 ease-in-out bg-opacity-20 backdrop-blur-5  border-opacity-30 shadow-sm  group"
                 >
                   {isLoading ? (
                     <div className="mx-auto h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
