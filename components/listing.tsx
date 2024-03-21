@@ -391,7 +391,7 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
           </div>
           <button
             onClick={clearFilters}
-            className=" w-40 h-12 text-white text-xs tracking-wider font-montserrat transition ease-in-out duration-150 bg-black hover:bg-black/90  rounded-xl  hover:shadow-lg active:opacity-100"
+            className=" w-40 h-12 text-white text-xs tracking-wider font-montserrat transition ease-in-out duration-150 bg-black hover:bg-black/60  rounded-xl  hover:shadow-lg active:bg-black"
           >
             Reset Filters
           </button>
