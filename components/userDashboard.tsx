@@ -209,23 +209,46 @@ const Dashboard = () => {
     }
   };
 
-  //Used for looking at the details of the home will be used for view the details of property
-  const [viewHome, setViewHome] = useState(false);
-
-  const toggleViewHome = () => {
+  //POST request for deleting the saved listing
+  const deleteListing = async () => {
     try {
-      setViewHome(!viewHome);
+      console.log("Homes:", homes);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites`,
+        {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: session?.user.email,
+          }),
+        }
+      );
+      if (res.ok) {
+        const data: Listing[] = await res.json();
+        setHomes(data);
+        console.log("Delete Favorites: ", data);
+      } else {
+        throw new Error();
+      }
     } catch (error) {
-      console.error("Error toggling view home", error);
+      console.error("Error deleting Listing", error);
     }
   };
 
   //deleting favorite listing from user dashboard
-  const removeProperty = async (remove: Listing) => {
+  const removeProperty = async (id: number) => {
     try {
-      const updatedHomes = homes.filter((home) => home.id !== remove.id);
-      setHomes(updatedHomes);
-      console.log("Removing Home:", updatedHomes);
+      // Call deleteListing function to delete the property from the server
+      await deleteListing();
+
+      // Update the homes state after successful deletion
+      if (homes) {
+        const updatedHomes = homes.filter((home) => home.id !== id);
+        setHomes(updatedHomes);
+        console.log("Removing Home:", updatedHomes);
+      } else {
+        throw new Error("Homes state is null or undefined.");
+      }
     } catch (error) {
       console.error("Error Removing Property, please try again later", error);
     }
@@ -249,63 +272,59 @@ const Dashboard = () => {
         >
           {/* Profile */}
           <AnimatePresence>
-            {viewHome ? (
-              ""
-            ) : (
-              <motion.div
-                key="profile"
-                className="xl:w-1/3 w-full  h-full flex justify-center items-center "
-              >
-                {/* Profile Circle */}
-                <div className="w-full  flex justify-center items-center">
-                  <div className="w-4/5 h-5/6 xl:w-3/5 xl:h-3/6 rounded-2xl bg-white shadow-md  flex flex-col  items-center py-2">
-                    <div className="w-5/6 h-1/6 flex items-center justify-between">
+            <motion.div
+              key="profile"
+              className="xl:w-1/3 w-full  h-full flex justify-center items-center "
+            >
+              {/* Profile Circle */}
+              <div className="w-full  flex justify-center items-center">
+                <div className="w-4/5 h-5/6 xl:w-3/5 xl:h-3/6 rounded-2xl bg-white shadow-md  flex flex-col  items-center py-2">
+                  <div className="w-5/6 h-1/6 flex items-center justify-between">
+                    <FontAwesomeIcon
+                      className="text-mint"
+                      icon={faUser}
+                      size="lg"
+                    />
+                    <button
+                      onClick={() => setOpenMenu(true)}
+                      className="w-8 h-8 hover:bg-gray-100/20 rounded-full bg-white shadow-md flex justify-center items-center transition duration-200 ease-in-out"
+                    >
                       <FontAwesomeIcon
-                        className="text-mint"
-                        icon={faUser}
+                        icon={faPenToSquare}
                         size="lg"
+                        className="w-5 h-5 text-black"
                       />
-                      <button
-                        onClick={() => setOpenMenu(true)}
-                        className="w-8 h-8 hover:bg-gray-100/20 rounded-full bg-white shadow-md flex justify-center items-center transition duration-200 ease-in-out"
-                      >
+                    </button>
+                  </div>
+                  {/* Profile Picture */}
+                  <div className="w-full h-2/3 flex justify-center items-center">
+                    <div className="w-44 h-44 relative rounded-2xl flex justify-center items-center">
+                      <div className="w-36 h-36 bg-gray-300/20 inset-0 rounded-2xl shadow-md flex justify-center items-center">
+                        <h2 className="text-3xl text-black font-montserrat">
+                          {userData &&
+                            userData.name &&
+                            userData.name.charAt(0).toUpperCase()}
+                        </h2>
+                      </div>
+                      <div className="absolute w-7 h-7 bg-blue-500 shadow-sm left-0 bottom-0 rounded-full flex justify-center items-center">
                         <FontAwesomeIcon
-                          icon={faPenToSquare}
-                          size="lg"
-                          className="w-5 h-5 text-black"
+                          icon={faCheck}
+                          size="sm"
+                          className="w-4  h-4 text-white"
                         />
-                      </button>
-                    </div>
-                    {/* Profile Picture */}
-                    <div className="w-full h-2/3 flex justify-center items-center">
-                      <div className="w-44 h-44 relative rounded-2xl flex justify-center items-center">
-                        <div className="w-36 h-36 bg-gray-300/20 inset-0 rounded-2xl shadow-md flex justify-center items-center">
-                          <h2 className="text-3xl text-black font-montserrat">
-                            {userData &&
-                              userData.name &&
-                              userData.name.charAt(0).toUpperCase()}
-                          </h2>
-                        </div>
-                        <div className="absolute w-7 h-7 bg-blue-500 shadow-sm left-0 bottom-0 rounded-full flex justify-center items-center">
-                          <FontAwesomeIcon
-                            icon={faCheck}
-                            size="sm"
-                            className="w-4  h-4 text-white"
-                          />
-                        </div>
                       </div>
                     </div>
-                    {/* User info */}
-                    <div className=" h-1/6 flex flex-col justify-center items-center gap-2">
-                      <h2 className="font-agrandir py-1 px-4 flex justify-center items-center text-sm  bg-black/75 rounded-full text-white tracking-wider">
-                        {userData.name}
-                      </h2>
-                      <h2>{userData.email}</h2>
-                    </div>
+                  </div>
+                  {/* User info */}
+                  <div className=" h-1/6 flex flex-col justify-center items-center gap-2">
+                    <h2 className="font-agrandir py-1 px-4 flex justify-center items-center text-sm  bg-black/75 rounded-full text-white tracking-wider">
+                      {userData.name}
+                    </h2>
+                    <h2>{userData.email}</h2>
                   </div>
                 </div>
-              </motion.div>
-            )}
+              </div>
+            </motion.div>
           </AnimatePresence>
           {/* Saved Listing */}
           <AnimatePresence>
@@ -381,7 +400,7 @@ const Dashboard = () => {
                             </button>
 
                             <button
-                              onClick={() => removeProperty(home)} // Pass the ID of the property to remove
+                              onClick={() => removeProperty(home.id)} // Pass the ID of the property to remove
                               className="w-10 h-10 flex justify-center items-center"
                             >
                               <svg
@@ -413,7 +432,12 @@ const Dashboard = () => {
           </AnimatePresence>
         </motion.div>
         {/* User Profile settings */}
-        <ProfileSettings openMenu={openMenu} setOpenMenu={setOpenMenu} userInfo={userData} setUserInfo={setUserData}/>
+        <ProfileSettings
+          openMenu={openMenu}
+          setOpenMenu={setOpenMenu}
+          userInfo={userData}
+          setUserInfo={setUserData}
+        />
       </div>
     );
   }

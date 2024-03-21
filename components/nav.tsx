@@ -253,7 +253,7 @@ const NavPages = () => {
           {!session && (
             <li className="relative p-4">
               <button
-                className=" rounded-full border px-4 py-1 transition duration-300 ease-in-out text-black hover:text-black border-eggshell shadow-xl hover:bg-gradient-to-r from-eggshell via-eggshell to-eggshell"
+                className=" rounded-full px-4 py-1  text-black hover:text-black border border-eggshell shadow-xl hover:bg-gradient-to-l hover:from-eggshell hover:via-eggshell hover:to-white transition duration-300 ease-in-out"
                 onClick={toggleLogin}
               >
                 <span className="inline-block uppercase  ">Login</span>
@@ -264,7 +264,7 @@ const NavPages = () => {
             <Link
               className={`
                     relative
-                    font-regular border rounded-full px-4 py-1 transition duration-300 ease-in-out text-black hover:text-black border-eggshell shadow-xl hover:bg-gradient-to-r from-eggshell via-eggshell to-eggshell
+                    font-regular rounded-full px-4 py-1  text-black hover:text-black shadow-xl border border-eggshell  hover:bg-gradient-to-r from-eggshell via-eggshell to-white transition duration-300 ease-in-out
                   `}
               href="/admin"
             >
@@ -282,14 +282,14 @@ const NavPages = () => {
               <Link
                 className={`
            
-            font-regular duration-300  transition rounded-full ease-in-out z-10  px-4 py-1  text-black hover:text-black hover:bg-gradient-to-r border-eggshell shadow-xl from-eggshell via-eggshell to-eggshell
+            font-regular  rounded-full  z-10  px-4 py-1  text-black hover:text-black hover:bg-gradient-to-r border border-eggshell  shadow-xl hover:from-eggshell hover:via-eggshell hover:to-white transition duration-300 ease-in-out
           `}
                 href="/user"
               >
                 <span className=" text-black">Property Hub</span>
               </Link>
               {openLogOut && (
-                <div className="absolute top-[100%] mt-4 right-0 w-full h-auto justify-evenly bg-black/75 shadow-xl rounded-md ">
+                <div className="absolute top-[100%] mt-4 right-0 w-full h-36 flex flex-col justify-evenly  bg-black/75 shadow-xl rounded-md ">
                   <button
                     onClick={() => setOpenUserSettings(true)}
                     className="text-left w-full  h-fit flex items-center justify-evenly text-white "
@@ -299,7 +299,7 @@ const NavPages = () => {
                   </button>
                   <button
                     onClick={handleLogout}
-                    className="text-left w-full   flex items-center justify-evenly text-white "
+                    className="text-left w-full h-fit  flex items-center justify-evenly text-white "
                   >
                     <FontAwesomeIcon
                       className="transform scale-x(-1)"

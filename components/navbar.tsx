@@ -265,7 +265,7 @@ const Nav = () => {
           {!session && (
             <li className="relative p-4">
               <button
-                className=" rounded-full border px-4 py-1   text-white hover:text-black border-eggshell shadow-xl hover:bg-gradient-to-r from-eggshell via-eggshell to-black/90 transition duration-300 ease-in-out"
+                className=" rounded-full border px-4 py-1   text-white hover:text-black border-eggshell shadow-xl hover:bg-gradient-to-r hover:from-eggshell hover:via-eggshell hover:to-white transition duration-300 ease-in-out"
                 onClick={toggleLogin}
               >
                 <span className="inline-block uppercase  ">Login</span>
@@ -276,7 +276,7 @@ const Nav = () => {
             <Link
               className={`
                     relative
-                    font-regular border rounded-full px-4 py-1  text-white hover:text-black border-eggshell shadow-xl hover:bg-gradient-to-r from-eggshell via-eggshell to-black/90 transition duration-300 ease-in-out
+                    font-regular border rounded-full px-4 py-1  text-white hover:text-black  border-eggshell shadow-xl hover:bg-gradient-to-r hover:from-eggshell hover:via-eggshell hover:to-white transition duration-300 ease-in-out
                   `}
               href="/admin"
             >
@@ -294,24 +294,24 @@ const Nav = () => {
               <Link
                 className={`
            
-            font-regular  rounded-full  z-10  px-4 py-1  text-white hover:text-black hover:bg-gradient-to-r border-eggshell shadow-xl from-eggshell via-eggshell to-black/90 transition duration-300 ease-in-out
+            font-regular  rounded-full  z-10  px-4 py-1  text-white hover:text-black hover:bg-gradient-to-r border border-eggshell shadow-xl hover:from-eggshell hover:via-eggshell hover:to-white transition duration-300 ease-in-out
           `}
                 href="/user"
               >
-                <span className=" text-black">Property Hub</span>
+                <span>Property Hub</span>
               </Link>
               {openLogOut && (
-                <div className="absolute top-[100%] mt-4 right-0 w-full  h-auto justify-evenly bg-black/75 shadow-xl rounded-md ">
+                <div className="absolute top-[100%] mt-4 right-0 w-full h-36 flex flex-col justify-evenly  bg-black/75 shadow-xl rounded-md ">
                   <button
                     onClick={() => setOpenUserSettings(true)}
-                    className="text-left w-full h-fit flex p-4 items-center justify-evenly text-white "
+                    className="text-left w-full  h-fit flex items-center justify-evenly text-white "
                   >
                     <FontAwesomeIcon icon={faGears} size="lg" />
                     Settings
                   </button>
                   <button
                     onClick={handleLogout}
-                    className="text-left w-full   flex items-center justify-evenly text-white "
+                    className="text-left w-full h-fit  flex items-center justify-evenly text-white "
                   >
                     <FontAwesomeIcon
                       className="transform scale-x(-1)"
