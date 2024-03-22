@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { motion, useAnimation, useScroll } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import {faPaperPlane} from "@fortawesome/free-solid-svg-icons";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 const Contact = () => {
   const parentRef = useRef<HTMLDivElement>(null);
   const control = useAnimation();
@@ -31,7 +31,7 @@ const Contact = () => {
 
   const createlead: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const fullName = `${firstName} ${lastName}`;
       const response = await fetch(
@@ -54,7 +54,7 @@ const Contact = () => {
         );
       } else {
         setIsSuccess(true);
-        setIsLoading
+        setIsLoading;
       }
     } catch (error) {
       setIsError(true);
@@ -201,13 +201,14 @@ const Contact = () => {
                   {isLoading ? (
                     <div className="mx-auto h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
                   ) : (
-                    <div>
+                    <div className="flex justify-center items-center">
                       Send message{" "}
-                      <FontAwesomeIcon
-                        icon={faPaperPlane}
-                        size="sm"
-                        className="text-pine ml-2 w-4 h-4"
-                      />
+                      <span className="relative left-1 bottom-3 transfrom -rotate-45 flex items-center justify-start w-12 h-12 duration-300 transform translate-y-0 group-hover:-translate-y-[10%] group-hover:translate-x-[25%] group-hover:opacity-100 ease">
+                        <FontAwesomeIcon
+                          icon={faArrowRight}
+                          className="w-4 h-4"
+                        />
+                      </span>
                     </div>
                   )}
                 </button>

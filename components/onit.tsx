@@ -50,7 +50,7 @@ const Onit = () => {
           className=" w-[90%] h-3/4 bg-[url('/neighborhood2.jpg')] relative bg-cover bg-bottom rounded-2xl shadow-xl flex flex-col justify-center items-center"
         >
           <div className="w-full h-full absolute bg-black/75 opacity-0 rounded-2xl transition ease-out duration-200 hover:opacity-100 flex justify-center items-center">
-            <button className=" xl:w-1/4 w-5/6 flex h-16 hover:bg-black/50 text-white border border-white font-light tracking-wider text-sm justify-center items-center transition-all duration-300 ease-in-out font-montserrat bottom-[0%] bg-white xl:left-4  bg-opacity-20 backdrop-blur-5  rounded-2xl shadow-sm p-4  group">
+            <button className=" xl:w-1/4 w-5/6 flex h-16 hover:bg-black/50 text-white border border-white font-light tracking-wider text-xs md:text-sm justify-center items-center transition-all duration-300 ease-in-out font-montserrat bottom-[0%] bg-white xl:left-4  bg-opacity-20 backdrop-blur-5  rounded-2xl shadow-sm p-4  group">
               <span>Your Dream Property Awaits </span>
               <span className="relative left-1 bottom-3 transfrom -rotate-45 flex items-center justify-start w-12 h-12 duration-300 transform translate-y-0 group-hover:-translate-y-[10%] group-hover:translate-x-[25%] group-hover:opacity-100 ease">
                 <FontAwesomeIcon
