@@ -113,7 +113,7 @@ const NavPages = () => {
     e.preventDefault();
     setIsLoading(true);
     setIsLoginError(false);
-    signIn("credentials", { ...signInData, redirect: false }).then(
+    await signIn("credentials", { ...signInData, redirect: false }).then(
       (callback) => {
         if (callback?.error) {
           setErrorMsg(callback.error);
@@ -227,7 +227,7 @@ const NavPages = () => {
           />
         </Link>
         <ul
-          className={` text-black font-medium text-sm hidden uppercase font-regular font-montserrat h-full xl:flex justify-between  tracking-widest items-center gap-x-8  w-1/2 transition-colors duration-300 ease-in
+          className={` text-black font-medium text-sm hidden uppercase font-regular font-montserrat h-full xl:flex justify-between  tracking-widest items-center gap-x-8   transition-colors duration-300 ease-in
           `}
         >
           <li className="relative p-4">
@@ -302,7 +302,7 @@ const NavPages = () => {
                 className={` w-full ${
                   openLogOut
                     ? "h-[150px]  bg-black/90 absolute right-0 top-10 opacity-1 rounded-lg flex flex-col justify-evenly items-center transition-all duration-500 ease-in-out"
-                    : "h-0 opacity-0 transition-all absolute top-full duration-500 ease-in-out flex flex-col justify-evenly items-center"
+                    : "h-0 opacity-0 transition-all absolute right-0 top-10  duration-500 ease-in-out flex flex-col justify-evenly items-center"
                 } `}
               >
                 <button

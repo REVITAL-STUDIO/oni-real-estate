@@ -121,7 +121,7 @@ const Nav = () => {
     e.preventDefault(); //prevents the form submission from a pager reload
     setIsLoading(true); //signals loading in progress
     setIsLoginError(false); // indicates there's currently no login error
-    signIn("credentials", { ...signInData, redirect: false }).then(
+    await signIn("credentials", { ...signInData, redirect: false }).then(
       //autheticates the user with provided creds
       (callback) => {
         if (callback?.error) {

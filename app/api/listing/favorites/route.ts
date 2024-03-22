@@ -66,9 +66,16 @@ export async function DELETE(request: Request) {
 
         if (user && user.favoriteListingsIds.includes(body.listingId)) {
             user.favoriteListingsIds = user.favoriteListingsIds.filter(id => id !== body.listingId);
-
-
         }
+
+        await prisma.user.update({
+            where: {
+                email: body.email,
+            },
+            data: {
+                favoriteListingsIds: user?.favoriteListingsIds
+            },
+        });
 
         return NextResponse.json(null, { status: 200 });
 
