@@ -16,6 +16,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import ProfileSettings from "./ProfileSettings";
+import PropertyInfo from "./PropertyInfo";
 
 interface profile {
   name: string;
@@ -50,6 +51,8 @@ const Dashboard = () => {
   const [noChangeError, setNoChangeError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+  const [propertyInfo, openPropertyInfo] = useState(false);
+  const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
 
   //Signout Button - Log out
   const handleLogout: React.MouseEventHandler<HTMLButtonElement> = async (
@@ -57,6 +60,19 @@ const Dashboard = () => {
   ) => {
     await signOut({ redirect: false });
     router.push("/");
+  };
+
+  const handlePropertyInfo = (listing: Listing) => {
+    //the listing to show in the property info page
+    setSelectedListing(listing);
+    openPropertyInfo((prevOpen) => !prevOpen);
+    document.body.style.overflow = 'hidden';
+
+  };
+
+  const handleClose = () => {
+    openPropertyInfo(false);
+    document.body.style.overflow = 'auto';
   };
 
   //Password and User name Changes || Used for saving user data and making changes
@@ -371,7 +387,8 @@ const Dashboard = () => {
                             {home.address}
                           </h2>
                           <div className="w-1/6 flex justify-evenly">
-                            <button className="w-10 h-10 flex justify-center items-center">
+                            <button onClick={() => handlePropertyInfo(home)}
+                              className="w-10 h-10 flex justify-center items-center">
                               <svg
                                 width="25"
                                 height="25"
@@ -428,6 +445,14 @@ const Dashboard = () => {
             </motion.div>
           </AnimatePresence>
         </motion.div>
+        <AnimatePresence>
+          {propertyInfo && selectedListing && (
+            <PropertyInfo
+              selectedListing={selectedListing}
+              handleClose={handleClose}
+            />
+          )}
+        </AnimatePresence>
         {/* User Profile settings */}
         <ProfileSettings
           openMenu={openMenu}
