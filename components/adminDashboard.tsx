@@ -73,6 +73,7 @@ const AdminDashboard = () => {
   const [fetchedListingsData, setFetchedListingsData] = useState(false);
   const [fetchedLeadsData, setFetchedLeadsData] = useState(false);
 
+  const [showDeleteLead, setShowDeleteLead] = useState(false);
   const [showDeleteListing, setShowDeleteListing] = useState(false);
   const [isError, setIsError] = useState(false);
   const [listingsError, setListingsError] = useState(false);
@@ -257,6 +258,7 @@ const AdminDashboard = () => {
         throw new Error("Failed to delete Lead")
       }
       fetchLeads()
+      setShowDeleteLead(false);
     } catch (error) {
       console.error(error);
 
@@ -352,7 +354,7 @@ const AdminDashboard = () => {
   };
 
   useEffect(() => {
-    if (createListing || editListing || showDeleteListing) {
+    if (createListing || editListing || showDeleteListing || showDeleteLead) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
@@ -361,7 +363,7 @@ const AdminDashboard = () => {
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, [createListing, editListing, showDeleteListing]);
+  }, [createListing, editListing, showDeleteListing, showDeleteLead]);
 
 
   if (isLoading) {
@@ -476,7 +478,10 @@ const AdminDashboard = () => {
                                   >
                                     view
                                   </button>
-                                  <button onClick={()=>deleteLead(lead.id)} className="w-fit px-4 tracking-wider font-montserrat h-8 rounded-full  text-red-500 text-xs">
+                                  <button onClick={() => {
+                                    setSelectedLead(lead);
+                                    setShowDeleteLead(true);
+                                  }} className="w-fit px-4 tracking-wider font-montserrat h-8 rounded-full  text-red-500 text-xs">
                                     <svg
                                       width="24"
                                       height="24"
@@ -791,6 +796,75 @@ const AdminDashboard = () => {
               </div>
             </div>
           )}
+          {/* Delete Lead Modal */}
+          {showDeleteLead && selectedLead && (
+            <div className="fixed left-0 top-0 bg-black/90 w-full h-full z-20 flex justify-center items-center">
+              <button
+                onClick={() => setShowDeleteLead(false)}
+                className="absolute right-2 top-2 p-4 flex justify-center items-center z-50"
+              >
+                <span
+                  className={`block w-3/4 my-0.5 border absolute border-white rotate-45 transition-transform `}
+                ></span>
+                <span
+                  className={`block w-3/4 my-0.5 border absolute border-white -rotate-45 transition-transform `}
+                ></span>
+              </button>
+
+              <div className="bg-white w-[40%] flex flex-col items-center text-center py-4 rounded-md">
+                {isError && (
+                  <div className="p-[1rem] bg-red-100 flex gap-3 items-center rounded-lg mb-[2rem] ">
+                    <p className="text-red-400">{errorMsg}</p>
+                    <IoIosClose
+                      className=" text-red-300 h-[2rem] w-[2rem] hover:cursor-pointer"
+                      onClick={() => setIsError(false)}
+                    />
+                  </div>
+                )}
+
+                <div className="flex flex-col items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-12 h-12 text-red-500"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"
+                    />
+                  </svg>
+                  <p className="font-semibold text-3xl">Confirm Delete</p>
+                </div>
+                <p className="mt-[5%] text-gray-400">
+                  Are you sure you want to delete lead? This action cannot be
+                  undone.
+                </p>
+                <div className="mt-[2%] w-[30%]">
+                <p className="text-gray-900 font-semibold text-lg">{selectedLead.name}</p>
+
+                  <p className="text-gray-600">"{selectedLead.message}"</p>
+                </div>
+                <div className="mt-[8%] flex gap-4">
+                  <button
+                    onClick={() => setShowDeleteLead(false)}
+                    className="text-lg  ring-2 ring-gray-300 px-16 py-4 rounded-md hover:bg-gray-300 active:bg-white"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => deleteLead(selectedLead.id)}
+                    className="text-lg text-white bg-red-500 px-16 py-4 rounded-md hover:bg-red-700 active:bg-red-500"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
           <AnimatePresence>
             {propertyInfo && selectedListing && (
               <PropertyInfo
@@ -806,7 +880,7 @@ const AdminDashboard = () => {
           !propertyInfo && <Footer />}
 
         {/* User Profile settings */}
-        <ProfileSettings openMenu={openMenu} setOpenMenu={setOpenMenu} userInfo={userData} setUserInfo={setUserData}/>
+        <ProfileSettings openMenu={openMenu} setOpenMenu={setOpenMenu} userInfo={userData} setUserInfo={setUserData} />
 
       </div>
 
