@@ -485,12 +485,12 @@ const NavPages = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -100 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="bg-white w-[95%] md:w-1/2 h-5/6 relative rounded-xl shadow-xl flex flex-col items-center"
+                className="bg-white w-[95%] md:w-1/2 min-h-[90%] relative rounded-xl shadow-xl flex flex-col items-center"
               >
                 {/* Close Button */}
                 <div className="absolute w-fit right-2">
                   <button
-                    onClick={() => setOpenLogin(false)}
+                    onClick={() => {setOpenLogin(false); setIsRegisterError(false); setIsLoginError(false);}}
                     className="w-8 h-8 flex flex-col relative justify-center items-center rounded-full  space-x-reverse  z-10"
                   >
                     <span

@@ -28,10 +28,11 @@ const InquiryModal: React.FC<{
     email: "",
     message: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const createLead: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-
+setIsLoading(true);
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/leads`,
@@ -62,6 +63,8 @@ const InquiryModal: React.FC<{
         "NETWORK ERROR - Unable to reach the server or network issue. Error Message: ",
         error
       );
+    }finally{
+      setIsLoading(false);
     }
   };
 
@@ -92,7 +95,7 @@ const InquiryModal: React.FC<{
           ></span>
         </button>
         {isSuccess ? (
-          <div className="flex justify-center items-center">Message Sent!</div>
+          <div className="flex justify-center items-center text-white min-h-full">Message Sent!</div>
         ) : (
           <div className="w-full h-full ">
             <h2 className="text-3xl font-semibold mb-4 text-white">
@@ -163,7 +166,12 @@ const InquiryModal: React.FC<{
                 type="submit"
                 className="w-full bg-forest text-white tracking-wider rounded-xl p-4 hover:bg-forest/80 transition duration-200 ease-in-out"
               >
-                Submit
+                {isLoading ? <div className="mx-auto h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                  :
+                  <div>
+                    Submit
+                  </div>
+                }
               </button>
             </form>
           </div>

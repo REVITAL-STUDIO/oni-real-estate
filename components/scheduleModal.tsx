@@ -25,10 +25,11 @@ const ScheduleModal: React.FC<{ handleClose: () => void }> = ({
     email: "",
     message: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const createLead: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-
+setIsLoading(true);
     try {
       const fullName = `${firstName} ${lastName}`;
 
@@ -62,6 +63,8 @@ const ScheduleModal: React.FC<{ handleClose: () => void }> = ({
         "NETWORK ERROR - Unable to reach the server or network issue. Error Message: ",
         error
       );
+    } finally{
+      setIsLoading(false);
     }
   };
 
@@ -175,7 +178,12 @@ const ScheduleModal: React.FC<{ handleClose: () => void }> = ({
                         className="w-3/4 border font-montserrat text-sm rounded-full text-white font-bold p-2"
                         type="submit"
                       >
-                        Submit.
+                        {isLoading ? <div className="mx-auto h-6 w-6 border-4 border-white rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                  :
+                  <div>
+                    Submit.
+                  </div>
+                }
                       </button>
                     </div>
                   </div>

@@ -13,8 +13,6 @@ import {
   faAngleRight,
   faGears,
   faArrowRightFromBracket,
-  faAngleDown,
-  faAngleUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import { IoIosClose } from "react-icons/io";
@@ -288,55 +286,42 @@ const Nav = () => {
             </Link>
           )}
           {session && session?.user.role !== "admin" && (
-            <div className="relative  h-auto rounded-full flex z-10 justify-between  items-center px-6 py-1  text-white hover:text-black hover:bg-gradient-to-r border border-eggshell shadow-xl hover:from-eggshell hover:via-eggshell hover:to-white transition duration-300 ease-in-out">
+            <div
+              className="relative  h-auto  z-10 "
+              onMouseEnter={() => setLogOut(true)}
+              onMouseLeave={() => setLogOut(false)}
+            >
               <Link
                 className={`
            
-            font-regular     
+            font-regular  rounded-full  z-10  px-4 py-1  text-white hover:text-black hover:bg-gradient-to-r border border-eggshell shadow-xl hover:from-eggshell hover:via-eggshell hover:to-white transition duration-300 ease-in-out
           `}
                 href="/user"
               >
                 <span>Property Hub</span>
               </Link>
-              <button
-                onClick={togglelogOutMenu}
-                className="w-6 h-6 flex justify-center items-center "
-              >
-                <FontAwesomeIcon
-                  icon={faAngleDown}
-                  className={
-                    openLogOut
-                      ? "w-4 h-4 transform rotate-180 transition ease-in-out duration-300 px-2 z-20"
-                      : "w-4 h-4 transition ease-in-out duration-300 px-2 z-20"
-                  }
-                />
-              </button>
-              <div
-                className={` w-full ${
-                  openLogOut
-                    ? "h-[150px]  bg-black/90 absolute right-0 top-10 rounded-lg opacity-1 flex flex-col justify-evenly items-center transition-all duration-500 ease-in-out"
-                    : "h-0 opacity-0 transition-all absolute top-full duration-500 ease-in-out flex flex-col justify-evenly items-center"
-                } `}
-              >
-                <button
-                  onClick={() => setOpenUserSettings(true)}
-                  className="text-left w-full  h-fit flex items-center justify-evenly text-white "
-                >
-                  <FontAwesomeIcon icon={faGears} size="lg" />
-                  Settings
-                </button>
-                <button
-                  onClick={handleLogout}
-                  className="text-left w-full h-fit  flex items-center justify-evenly text-white "
-                >
-                  <FontAwesomeIcon
-                    className="transform scale-x(-1)"
-                    icon={faArrowRightFromBracket}
-                    size="lg"
-                  />{" "}
-                  Log out
-                </button>
-              </div>
+              {openLogOut && (
+                <div className="absolute top-[100%] mt-4 right-0 w-full h-36 flex flex-col justify-evenly  bg-black/75 shadow-xl rounded-md ">
+                  <button
+                    onClick={() => setOpenUserSettings(true)}
+                    className="text-left w-full  h-fit flex items-center justify-evenly text-white "
+                  >
+                    <FontAwesomeIcon icon={faGears} size="lg" />
+                    Settings
+                  </button>
+                  <button
+                    onClick={handleLogout}
+                    className="text-left w-full h-fit  flex items-center justify-evenly text-white "
+                  >
+                    <FontAwesomeIcon
+                      className="transform scale-x(-1)"
+                      icon={faArrowRightFromBracket}
+                      size="lg"
+                    />{" "}
+                    Log out
+                  </button>
+                </div>
+              )}
             </div>
           )}
         </ul>
@@ -497,12 +482,12 @@ const Nav = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -100 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="bg-white w-[95%] md:w-1/2 h-5/6 relative rounded-xl shadow-lg flex flex-col items-center"
+                className="bg-white w-[95%] md:w-1/2 min-h-[90%] relative rounded-xl shadow-lg flex flex-col items-center"
               >
                 {/* Close Button */}
                 <div className="absolute w-fit right-2">
                   <button
-                    onClick={() => setOpenLogin(false)}
+                    onClick={() => {setOpenLogin(false); setIsRegisterError(false); setIsLoginError(false);}}
                     className="w-8 h-8 flex flex-col relative justify-center items-center rounded-full  space-x-reverse  z-10"
                   >
                     <span
@@ -699,7 +684,7 @@ const Nav = () => {
                         }`}
                       >
                         {isLoading ? (
-                          <div className="h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                          <div className="h-8 w-8 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
                         ) : (
                           "Login"
                         )}

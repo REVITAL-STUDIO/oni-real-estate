@@ -187,10 +187,12 @@ const AdminDashboard = () => {
     //the listing to show in the property info page
     setSelectedListing(listing);
     openPropertyInfo((prevOpen) => !prevOpen);
+    document.body.style.overflow = 'hidden';
   };
 
   const handleClose = () => {
     openPropertyInfo(false);
+    document.body.style.overflow = 'auto';
   };
 
   const handleOpenLeadInfo = () => {
