@@ -372,16 +372,13 @@ const Dashboard = () => {
                         key={home.id}
                         className="w-5/6 relative h-1/4 rounded-2xl my-4 hover:scale-105 hover:translate-x-4 bg-to-gradient-l from-black via-white/30 to-transparent shadow-md transition duration-150 ease-in-out"
                       >
-                        <div className="w-full h-full  ">
-                          <Image
+                        <Image
                             src={home.pictures[0]}
-                            className=" w-[100%] h-[100%]  object-cover rounded-lg brightness-50 contrast-125 shadow-md"
-                            width={1}
-                            height={1}
                             alt="homes"
-                            layout="fixed"
+                            layout="fill"
+           
+                            className="w-[100%] object-cover brightness-50 object-center contrast-125 rounded-2xl"
                           />
-                        </div>
                         <div className="absolute top-1/2 w-full flex justify-between">
                           <h2 className=" font-montserrat w-1/3 text-white px-4">
                             {home.address}
