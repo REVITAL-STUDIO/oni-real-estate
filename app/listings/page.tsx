@@ -63,7 +63,7 @@ export default function Listings() {
       <NavPages />
       <div className="w-full h-[20%]"></div>
       {showSuccessMessage && (
-        <div className="absolute p-[1rem] bg-green-100/80 flex items-center justify-center rounded-lg mb-[2rem] w-[40%] left-[32%]">
+        <div className="absolute p-[1rem] bg-green-100/80 flex items-center justify-center rounded-lg mb-[2rem] w-[40%] top-[15%] left-[32%] ">
           <p className="text-green-700">
             Registration Successfull! We thank you for making an account with
             us.

@@ -189,11 +189,11 @@ const Nav = () => {
           if (callback?.ok && !callback.error) {
             // log in user and go to listings page
             router.push("/listings?success=true");
+          setOpenLogin(false);
           }
           setIsLoading(false);
         }
       );
-      toggleSignUp();
       setRegisterData({ name: "", email: "", password: "" });
       setConfirmPassword("");
     } catch (error) {
