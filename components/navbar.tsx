@@ -497,12 +497,16 @@ const Nav = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -100 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="bg-white w-[95%] md:w-1/2 min-h-[90%] relative rounded-xl shadow-lg flex flex-col items-center"
+                className="bg-white w-[95%] md:w-1/2 min-h-[80%] md:min-h-[90%] relative rounded-xl shadow-lg flex flex-col justify-center items-center"
               >
                 {/* Close Button */}
-                <div className="absolute w-fit right-2">
+                <div className="absolute w-fit top-2 right-2">
                   <button
-                    onClick={() => { setOpenLogin(false); setIsRegisterError(false); setIsLoginError(false); }}
+                    onClick={() => {
+                      setOpenLogin(false);
+                      setIsRegisterError(false);
+                      setIsLoginError(false);
+                    }}
                     className="w-8 h-8 flex flex-col relative justify-center items-center rounded-full  space-x-reverse  z-10"
                   >
                     <span
@@ -614,12 +618,12 @@ const Nav = () => {
                       <div className="flex flex-col justify-evenly w-4/5 h-1/2 my-4">
                         <button
                           onClick={registerUser}
-                          className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${
+                          className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 flex items-center justify-center ${
                             isLoading ? "opacity-75" : "opacity-100"
                           }`}
                         >
                           {isLoading ? (
-                            <div className="h-8 w-8 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin m-auto"></div>
+                            <div className="h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
                           ) : (
                             "Sign Up"
                           )}

@@ -185,7 +185,6 @@ const NavPages = () => {
             setOpenLogin(false);
           }
           setIsLoading(false);
-
         }
       );
       setOpenLogin(false);
@@ -211,8 +210,9 @@ const NavPages = () => {
 
   return (
     <div
-      className={`h-100 w-full flex fixed  flex-col items-center justify-center transition-all duration-300 ease-in-out z-50 ${color ? "" : ""
-        } ${disappear ? "opacity-0 pointer-events-none " : " "}`}
+      className={`h-100 w-full flex fixed  flex-col items-center justify-center transition-all duration-300 ease-in-out z-50 ${
+        color ? "" : ""
+      } ${disappear ? "opacity-0 pointer-events-none " : " "}`}
     >
       <motion.div
         variants={variants}
@@ -300,10 +300,11 @@ const NavPages = () => {
                 />
               </button>
               <div
-                className={` w-full ${openLogOut
-                  ? "h-[150px]  bg-black/90 absolute right-0 top-10 opacity-1 rounded-lg flex flex-col justify-evenly items-center transition-all duration-500 ease-in-out"
-                  : "h-0 opacity-0 transition-all absolute right-0 top-10  duration-500 ease-in-out flex flex-col justify-evenly items-center"
-                  } `}
+                className={` w-full ${
+                  openLogOut
+                    ? "h-[150px]  bg-black/90 absolute right-0 top-10 opacity-1 rounded-lg flex flex-col justify-evenly items-center transition-all duration-500 ease-in-out"
+                    : "h-0 opacity-0 transition-all absolute right-0 top-10  duration-500 ease-in-out flex flex-col justify-evenly items-center"
+                } `}
               >
                 <button
                   onClick={() => setOpenUserSettings(true)}
@@ -334,16 +335,18 @@ const NavPages = () => {
           className="w-12 h-12 flex flex-col relative justify-center items-center rounded-full  space-x-reverse xl:hidden z-50"
         >
           <span
-            className={`block w-3/4 my-0.5 border border-black ${openMenu
-              ? "rotate-45 transition-transform duration-300 ease-in-out border-white"
-              : "transition-transform duration-300 ease-in-out relative top-0.5 "
-              }`}
+            className={`block w-3/4 my-0.5 border border-black ${
+              openMenu
+                ? "rotate-45 transition-transform duration-300 ease-in-out border-white"
+                : "transition-transform duration-300 ease-in-out relative top-0.5 "
+            }`}
           ></span>
           <span
-            className={`block w-3/4 my-0.5 border border-black ${openMenu
-              ? "-rotate-45 w-3/4 absolute top-2/5 transition-transform duration-300 ease-in-out border-white"
-              : "transition-transform duration-300 ease-in-out relative top-0.5"
-              }`}
+            className={`block w-3/4 my-0.5 border border-black ${
+              openMenu
+                ? "-rotate-45 w-3/4 absolute top-2/5 transition-transform duration-300 ease-in-out border-white"
+                : "transition-transform duration-300 ease-in-out relative top-0.5"
+            }`}
           ></span>
         </button>
 
@@ -415,10 +418,11 @@ const NavPages = () => {
                       </li>
 
                       <div
-                        className={` ${openLogOut
-                          ? "h-[100px] opacity-1 transition-all duration-500 ease-in-out"
-                          : "h-0 opacity-0 transition-all duration-500 ease-in-out"
-                          } `}
+                        className={` ${
+                          openLogOut
+                            ? "h-[100px] opacity-1 transition-all duration-500 ease-in-out"
+                            : "h-0 opacity-0 transition-all duration-500 ease-in-out"
+                        } `}
                       >
                         <button className="text-left w-full p-4 h-fit flex items-center text-black ">
                           <FontAwesomeIcon
@@ -482,12 +486,16 @@ const NavPages = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -100 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="bg-white w-[95%] md:w-1/2 min-h-[90%] relative rounded-xl shadow-xl flex flex-col items-center"
+                className="bg-white w-[95%] md:w-1/2 min-h-[80%] md:min-h-[90%] relative rounded-xl shadow-lg flex flex-col justify-center items-center"
               >
                 {/* Close Button */}
-                <div className="absolute w-fit right-2">
+                <div className="absolute w-fit top-2 right-2">
                   <button
-                    onClick={() => { setOpenLogin(false); setIsRegisterError(false); setIsLoginError(false); }}
+                    onClick={() => {
+                      setOpenLogin(false);
+                      setIsRegisterError(false);
+                      setIsLoginError(false);
+                    }}
                     className="w-8 h-8 flex flex-col relative justify-center items-center rounded-full  space-x-reverse  z-10"
                   >
                     <span
@@ -598,12 +606,13 @@ const NavPages = () => {
                     <div className="flex flex-col justify-evenly w-4/5 h-1/2 my-4 ">
                       <button
                         onClick={registerUser}
-                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${isLoading ? "opacity-75" : "opacity-100"
-                          }`}
+                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${
+                          isLoading ? "opacity-75" : "opacity-100"
+                        }`}
                       >
                         {isLoading ? (
-                            <div className="h-8 w-8 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin m-auto"></div>
-                            ) : (
+                          <div className="h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                        ) : (
                           "Sign Up"
                         )}
                       </button>
@@ -676,8 +685,9 @@ const NavPages = () => {
                       <button
                         disabled={isLoading}
                         onClick={signInUser}
-                        className={`p-2 bg-gradient-to-r shadow-md flex my-4 justify-center items-center from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${isLoading ? "opacity-75" : "opacity-100"
-                          }`}
+                        className={`p-2 bg-gradient-to-r shadow-md flex my-4 justify-center items-center from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${
+                          isLoading ? "opacity-75" : "opacity-100"
+                        }`}
                       >
                         {isLoading ? (
                           <div className="h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
@@ -725,7 +735,7 @@ const NavPages = () => {
                       />
                       Continue with Google
                     </button>
-                   
+
                     {showSignUpForm ? (
                       <div className="w-full flex justify-center items-center mt-[3%]">
                         <h2>Already a member?</h2>

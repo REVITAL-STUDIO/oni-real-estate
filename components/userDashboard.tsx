@@ -66,13 +66,12 @@ const Dashboard = () => {
     //the listing to show in the property info page
     setSelectedListing(listing);
     openPropertyInfo((prevOpen) => !prevOpen);
-    document.body.style.overflow = 'hidden';
-
+    document.body.style.overflow = "hidden";
   };
 
   const handleClose = () => {
     openPropertyInfo(false);
-    document.body.style.overflow = 'auto';
+    document.body.style.overflow = "auto";
   };
 
   //Password and User name Changes || Used for saving user data and making changes
@@ -370,22 +369,23 @@ const Dashboard = () => {
                     homes.map((home) => (
                       <li
                         key={home.id}
-                        className="w-5/6 relative h-1/4 rounded-2xl my-4 hover:scale-105 hover:translate-x-4 bg-to-gradient-l from-black via-white/30 to-transparent shadow-md transition duration-150 ease-in-out"
+                        className="md:w-5/6 w-[90%] relative h-1/3 md:h-1/4 rounded-2xl my-4  bg-to-gradient-l from-black via-white/30 to-transparent shadow-md transition duration-150 ease-in-out"
                       >
                         <Image
-                            src={home.pictures[0]}
-                            alt="homes"
-                            layout="fill"
-           
-                            className="w-[100%] object-cover brightness-50 object-center contrast-125 rounded-2xl"
-                          />
-                        <div className="absolute top-1/2 w-full flex justify-between">
-                          <h2 className=" font-montserrat w-1/3 text-white px-4">
+                          src={home.pictures[0]}
+                          alt="homes"
+                          layout="fill"
+                          className="w-[100%] object-cover brightness-50 object-center contrast-125 rounded-2xl"
+                        />
+                        <div className="absolute top-1/4 md:top-2/5 w-full flex  justify-between">
+                          <h2 className=" font-montserrat w-3/4 md:w-1/3 text-sm md:text-base text-white px-4">
                             {home.address}
                           </h2>
-                          <div className="w-1/6 flex justify-evenly">
-                            <button onClick={() => handlePropertyInfo(home)}
-                              className="w-10 h-10 flex justify-center items-center">
+                          <div className="md:w-1/6 w-1/3 flex justify-evenly">
+                            <button
+                              onClick={() => handlePropertyInfo(home)}
+                              className="md:w-10 md:h-10 w-6 h-6 flex justify-center items-center"
+                            >
                               <svg
                                 width="25"
                                 height="25"
@@ -412,7 +412,7 @@ const Dashboard = () => {
 
                             <button
                               onClick={() => removeProperty(home.id)} // Pass the ID of the property to remove
-                              className="w-10 h-10 flex justify-center items-center"
+                              className="md:w-10 md:h-10 w-6 h-6 flex justify-center items-center"
                             >
                               <svg
                                 width="25"
