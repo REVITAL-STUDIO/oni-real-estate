@@ -306,7 +306,7 @@ const NavPages = () => {
                   } `}
               >
                 <button
-                  // onClick={() => setOpenUserSettings(true)}
+                  onClick={() => setOpenUserSettings(true)}
                   className="text-left w-full  h-fit flex items-center justify-evenly text-white "
                 >
                   <FontAwesomeIcon icon={faGears} size="lg" />
@@ -687,13 +687,13 @@ const NavPages = () => {
                       </button>
                       <button
                         onClick={toggleSignUp}
-                        className="p-2 border border-black to-mint text-base text-black rounded-full tracking-wide"
+                        className="p-2 border  to-mint text-base hover:bg-black hover:text-white text-black duration-300 transition ease-in-out rounded-full tracking-wide"
                       >
                         Register
                       </button>
                       <a
                         href="/forgot-password"
-                        className="tracking-wide p-2 w-fit flex justify-center items-center"
+                        className="tracking-wide p-2 w-fit flex justify-center items-center hover:underline"
                       >
                         Forgot Password?
                       </a>
@@ -713,7 +713,7 @@ const NavPages = () => {
                   </div>
                   {/* Sign In Options Google and Facebook */}
 
-                  <div className="h-3/5 w-3/4 ">
+                  <div className="h-3/5 w-3/4 mt-[3%]">
                     <button
                       onClick={() => signIn("google")}
                       className="w-full my-2 p-4 flex items-center justify-center bg-black text-white text-sm rounded-2xl"
@@ -723,25 +723,15 @@ const NavPages = () => {
                         alt="google icon"
                         className="w-5 mr-4"
                       />
-                      Sign in with Google
+                      Continue with Google
                     </button>
-                    <button
-                      onClick={() => signIn("facebook")}
-                      className="w-full my-2 p-4 flex items-center justify-center bg-black text-white text-sm rounded-2xl"
-                    >
-                      <Image
-                        src={AppleIcon}
-                        alt="Apple icon"
-                        className="w-5 mr-4"
-                      />
-                      Sign in with Apple
-                    </button>
+                   
                     {showSignUpForm ? (
-                      <div className="w-full flex justify-center items-center">
+                      <div className="w-full flex justify-center items-center mt-[3%]">
                         <h2>Already a member?</h2>
                         <button
                           onClick={() => toggleSignUp()}
-                          className="text-blue-500 font-bold ml-2"
+                          className="text-blue-500 font-bold ml-2 hover:underline"
                         >
                           Sign in
                         </button>

@@ -16,16 +16,12 @@ export const options: NextAuthOptions = {
             clientSecret: process.env.GOOGLE_SECRET as string,
             // profile(profile) {
             //     return {
-            //         id: profile.id,
+            //         id: "",
             //         name: profile.name,
             //         email: profile.email,
-            //         role: profile.role ?? 'user'
+            //         role: 'user'
             //     }
             // }
-        }),
-        FacebookProvider({
-            clientId: process.env.FACEBOOK_CLIENT_ID as string,
-            clientSecret: process.env.FACEBOOK_SECRET as string,
         }),
         CredentialsProvider({
             name: "credentials",
@@ -42,7 +38,6 @@ export const options: NextAuthOptions = {
                 }
             },
             async authorize(credentials): Promise<any> {
-                console.log("################### IN CREDENTIALS AUTHORIZE FUNC")
 
                 if (!credentials?.email || !credentials.password) {
                     throw new Error('Please enter an email and password');
