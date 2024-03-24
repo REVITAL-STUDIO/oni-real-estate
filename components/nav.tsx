@@ -602,8 +602,8 @@ const NavPages = () => {
                           }`}
                       >
                         {isLoading ? (
-                          <div className="md:h-20 md:w-20  border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
-                        ) : (
+                            <div className="h-8 w-8 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin m-auto"></div>
+                            ) : (
                           "Sign Up"
                         )}
                       </button>
