@@ -83,7 +83,7 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
         availability: listing.availability,
       });
 
-      let files = await Promise.all(
+      const files = await Promise.all(
         listing.pictures.map(async (url) => {
           return await urlToFile(url);
         })
@@ -101,7 +101,7 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
   //function to upload listing images to cloud storage
   // returns an array of newly uploaded files urls
   const uploadFiles = async (files: FileExtended[]) => {
-    let fileUrls = [];
+    const fileUrls = [];
     for (const file of files) {
       const res = await edgestore.publicFiles.upload({
         file,
@@ -134,18 +134,18 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
     const response = await fetch(url);
     const blob = await response.blob();
     const filename = url.substring(url.lastIndexOf("/") + 1);
-    let file: FileExtended = new File([blob], filename, { type: blob.type });
+    const file: FileExtended = new File([blob], filename, { type: blob.type });
     file.url = url;
     return file;
   };
 
   const getFilesToDelete = () => {
-    let urlsInSelected = selectedFiles.map((file) => {
+    const urlsInSelected = selectedFiles.map((file) => {
       if (file.url) {
         return file.url;
       }
     });
-    let filesToDelete = initialFiles.filter(
+    const filesToDelete = initialFiles.filter(
       (file) => !urlsInSelected.includes(file.url)
     );
     return filesToDelete;
@@ -175,10 +175,10 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
     }
 
     //added files don't have a url yet
-    let filesToUpload = selectedFiles.filter((file) => !file.url);
+    const filesToUpload = selectedFiles.filter((file) => !file.url);
     let newUrls: string[] = [];
-    let filesToDelete = getFilesToDelete();
-    let urlsToDelete: any[] = filesToDelete.map((file) => file.url);
+    const filesToDelete = getFilesToDelete();
+    const urlsToDelete: any[] = filesToDelete.map((file) => file.url);
     let urlsToStore: any[] = initialUrls;
 
     try {
@@ -196,7 +196,7 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
 
       //storing cloud stored image urls to listingdata
       //creating listingdata to be sent to server to edit listing
-      let data = { ...listingData, pictures: urlsToStore };
+      const data = { ...listingData, pictures: urlsToStore };
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/${listingId}`,
         {

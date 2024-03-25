@@ -52,7 +52,7 @@ const LeadInfo: React.FC<{ onClose: () => void, selectedLead: Lead }> = ({ onClo
         setIsLoading(false)
     }
 
-    const colorizeStatus = (status: String) => {
+    const colorizeStatus = (status: string) => {
         console.log("In colorize func: ", status)
         switch (status) {
             case 'new':

@@ -28,7 +28,7 @@ const ProfileSettings: React.FC<profileProps> = ({
 }) => {
   const { data: session, status } = useSession(); // Include status to check if session data is loading
   let userData: User = userInfo || { id: "", name: "", email: "", number: "" };
-  let setUserData =
+  const setUserData =
     setUserInfo ||
     ((info: User) => {
       userData = info;
@@ -94,7 +94,7 @@ const ProfileSettings: React.FC<profileProps> = ({
           `HTTP ERROR - Error Saving user information. Status: ${response.status}`
         );
       }
-      let newUserData = await response.json();
+      const newUserData = await response.json();
       console.log("NEW USER DATA: ", newUserData);
       setUserData(newUserData);
       setOpenMenu(false);

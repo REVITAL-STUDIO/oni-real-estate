@@ -126,7 +126,7 @@ const AdminDashboard = () => {
           `HTTP ERROR - Error Saving user information. Status: ${response.status}`
         );
       }
-      let newUserData = await response.json();
+      const newUserData = await response.json();
       console.log("NEW USER DATA: ", newUserData);
       setUserData(newUserData);
       setOpenMenu(false);
@@ -203,7 +203,7 @@ const AdminDashboard = () => {
     setIsLeadInfoOpen(false);
     fetchLeads();
   };
-  const colorizeStatus = (status: String) => {
+  const colorizeStatus = (status: string) => {
     console.log("In colorize func: ", status);
     switch (status) {
       case "new":

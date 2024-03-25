@@ -91,7 +91,7 @@ const CreateListing = () => {
       try {
         //storing cloud stored image urls to listingdata
         //creating listingdata to be sent to server to create listing
-        let listingData = { ...formData, pictures: imageUrls, type: propertyType, location: location, availability: availability };
+        const listingData = { ...formData, pictures: imageUrls, type: propertyType, location: location, availability: availability };
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing`,
           {

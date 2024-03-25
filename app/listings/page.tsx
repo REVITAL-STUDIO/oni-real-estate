@@ -17,7 +17,7 @@ interface Filters {
   price: Price;
   beds: number;
   baths: number;
-  location: String;
+  location: string;
   property: string;
 }
 export default function Listings() {
