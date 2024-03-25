@@ -278,17 +278,17 @@ const Dashboard = () => {
           initial={{ opacity: 0, y: 75 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ ease: "easeIn", duration: 0.8 }}
-          className="w-[90%] h-[80%] bg-gray-200  shadow-2xl rounded-2xl flex flex-col xl:flex-row"
+          className="w-[90%] h-[80%] md:h-90% bg-gray-200  shadow-2xl rounded-2xl flex flex-col xl:flex-row"
         >
           {/* Profile */}
           <AnimatePresence>
-            <motion.div
+            <div
               key="profile"
-              className="xl:w-1/3 w-full  h-full flex justify-center items-center "
+              className="xl:w-1/3 w-full  h-full md:h-1/2 xl:h-full flex justify-center items-center "
             >
               {/* Profile Circle */}
-              <div className="w-full  flex justify-center items-center">
-                <div className="w-4/5 h-5/6 xl:w-3/5 xl:h-3/6 rounded-2xl bg-white shadow-md  flex flex-col  items-center py-2">
+              <div className="w-full md:h-full flex justify-center items-center">
+                <div className="w-4/5 md:w-5/6 h-5/6 md:h-4/6  xl:w-3/5 xl:h-3/6 rounded-2xl bg-white shadow-md  flex flex-col  items-center xl:py-2">
                   <div className="w-5/6 h-1/6 flex items-center justify-between">
                     <FontAwesomeIcon
                       className="text-mint"
@@ -336,19 +336,19 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </AnimatePresence>
           {/* Saved Listing */}
           <AnimatePresence>
-            <motion.div className="xl:w-2/3 w-full h-full flex justify-center items-center ">
-              <div className="xl:w-[95%] xl:h-[90%] w-4/5 h-5/6 rounded-2xl bg-white shadow-md ">
+            <div className="xl:w-2/3 w-full h-full md:h-1/2 xl:h-full  flex justify-center items-center ">
+              <div className="xl:w-[95%] xl:h-[90%] w-4/5 h-[80%]  rounded-2xl bg-white shadow-md overflow-y-scroll">
                 <section className="w-1/4 h-1/6 xl:w-[10%] flex justify-center">
                   <FontAwesomeIcon
                     className="text-mint p-4 w-6 h-6"
                     icon={faHouse}
                   />
                 </section>
-                <ul className="w-full h-5/6 flex flex-col items-center overflow-y-scroll">
+                <ul className="w-full h-5/6 flex flex-col items-center ">
                   {homes.length === 0 ? (
                     <div className="w-full h-5/6 flex flex-col justify-evenly items-center">
                       <Link
@@ -369,7 +369,7 @@ const Dashboard = () => {
                     homes.map((home) => (
                       <li
                         key={home.id}
-                        className="md:w-5/6 w-[90%] relative h-1/3 md:h-1/4 rounded-2xl my-4  bg-to-gradient-l from-black via-white/30 to-transparent shadow-md transition duration-150 ease-in-out"
+                        className="md:w-5/6 w-[90%] relative h-1/3  rounded-2xl my-4  bg-to-gradient-l from-black via-white/30 to-transparent shadow-md transition duration-150 ease-in-out"
                       >
                         <Image
                           src={home.pictures[0]}
@@ -439,7 +439,7 @@ const Dashboard = () => {
                 </ul>
               </div>
               {/* House details */}
-            </motion.div>
+            </div>
           </AnimatePresence>
         </motion.div>
         <AnimatePresence>

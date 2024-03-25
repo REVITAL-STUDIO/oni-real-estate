@@ -486,7 +486,7 @@ const NavPages = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -100 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="bg-white w-[95%] md:w-1/2 min-h-[80%] md:min-h-[90%] relative rounded-xl shadow-lg flex flex-col justify-center items-center"
+                className="bg-white xl:w-[50%] w-[95%]  min-h-[80%] md:min-h-[90%] relative rounded-xl shadow-lg flex flex-col justify-center items-center"
               >
                 {/* Close Button */}
                 <div className="absolute w-fit top-2 right-2">
