@@ -64,7 +64,7 @@ const Dashboard = () => {
   const fetchUserData = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/${session?.user.email}`,
+        `/api/user/${session?.user.email}`,
         {
           method: "GET",
           headers: {
@@ -121,7 +121,7 @@ const Dashboard = () => {
     try {
       console.log("Homes:", homes);
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites`,
+        `/api/listing/favorites`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -146,7 +146,7 @@ const Dashboard = () => {
   const deleteListing = async (id: number) => {
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites`,
+        `/api/listing/favorites`,
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },

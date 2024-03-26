@@ -88,7 +88,7 @@ const AdminDashboard = () => {
   const fetchUserData = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/${session?.user.email}`,
+        `/api/user/${session?.user.email}`,
         {
           method: "GET",
           headers: {
@@ -156,7 +156,7 @@ const AdminDashboard = () => {
     try {
       //requet to get listing data from api
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/leads`,
+        `/api/leads`,
         { method: "GET" }
       );
 
@@ -179,7 +179,7 @@ const AdminDashboard = () => {
   const deleteLead = async (leadId: number) => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/leads`,
+        `/api/leads`,
         {
           method: 'DELETE',
           headers: {
@@ -203,7 +203,7 @@ const AdminDashboard = () => {
     try {
       //requet to get listing data from api
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing`,
+        `/api/listing`,
         { method: "DELETE", body: JSON.stringify(id) }
       );
       if (!response.ok) {
@@ -241,7 +241,7 @@ const AdminDashboard = () => {
     try {
       //requet to get listing data from api
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing`,
+        `/api/listing`,
         { method: "GET" }
       );
 

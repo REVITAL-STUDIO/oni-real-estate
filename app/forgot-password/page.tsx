@@ -19,7 +19,7 @@ export default function ForgotPassword() {
     setIsError(false)
     console.log("in handle submit")
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/forgot-password`, {
+      const response = await fetch(`/api/forgot-password`, {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",

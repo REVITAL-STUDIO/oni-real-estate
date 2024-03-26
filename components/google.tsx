@@ -37,7 +37,7 @@ const Google: React.FC = () => {
     const fetchListings = async () => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing`,
+          `/api/listing`,
           { method: "GET" }
         );
         const data: Listing[] = await response.json();

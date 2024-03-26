@@ -27,7 +27,7 @@ const LeadInfo: React.FC<{ onClose: () => void, selectedLead: Lead }> = ({ onClo
     const handleSaveStatus = async () => {
         setIsLoading(true)
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/leads/${selectedLead.id}`, {
+            const response = await fetch(`/api/leads/${selectedLead.id}`, {
                 method: 'PUT',
                 headers: {
                     "Content-Type": "application/json",

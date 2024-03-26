@@ -29,7 +29,7 @@ const ResetPassword = () => {
         throw new Error("Passwords do not match")
       }
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/reset-password`, {
+      const response = await fetch(`/api/reset-password`, {
         method: 'PUT',
         headers: {
           "Content-Type": "application/json",

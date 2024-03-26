@@ -80,7 +80,7 @@ const ProfileSettings: React.FC<profileProps> = ({
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user`,
+        `/api/user`,
         {
           method: "PUT",
           headers: {
@@ -113,7 +113,7 @@ const ProfileSettings: React.FC<profileProps> = ({
   const fetchUserData = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/${session?.user.email}`,
+        `/api/user/${session?.user.email}`,
         {
           method: "GET",
           headers: {

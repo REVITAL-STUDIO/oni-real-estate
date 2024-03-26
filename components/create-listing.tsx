@@ -111,7 +111,7 @@ const CreateListing = () => {
           availability: availability,
         };
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing`,
+          `/api/listing`,
           {
             method: "POST",
             headers: {

@@ -33,7 +33,7 @@ const Contact = () => {
     try {
       const fullName = `${firstName} ${lastName}`;
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/leads`,
+        `/api/leads`,
         {
           method: "POST",
           headers: {

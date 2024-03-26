@@ -74,7 +74,7 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
   const fetchListingData = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/${listingId}`,
+        `/api/listing/${listingId}`,
         {
           method: "GET",
           headers: {
@@ -215,7 +215,7 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
         //creating listingdata to be sent to server to edit listing
         const data = { ...listingData, pictures: urlsToStore };
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/${listingId}`,
+          `/api/listing/${listingId}`,
           {
             method: "PUT",
             headers: {

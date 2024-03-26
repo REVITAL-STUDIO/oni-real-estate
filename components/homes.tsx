@@ -71,7 +71,7 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
     try {
       //request to get listing data from api
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing`,
+        `/api/listing`,
         { method: "GET" }
       );
 
@@ -97,7 +97,7 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
   const fetchUserData = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user/${session?.user.email}`,
+        `/api/user/${session?.user.email}`,
         {
           method: "GET",
           headers: {
@@ -182,7 +182,7 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
   const favoriteListing = async (id: number) => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/favorites/`,
+        `/api/listing/favorites/`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

@@ -38,8 +38,7 @@ export async function POST(request: Request) {
     existingUser.resetTokenExpiry = new Date(passwordResetExpires);
 
     //constructing password reset url to be emailed
-    const resetUrl = `${process.env.NEXT_PUBLIC_API_BASE_URL}/reset-password/?resetToken=${resetToken}&resetExpiry=${encodeURIComponent(new Date(passwordResetExpires).toISOString())}`;
-    console.log("################# ResetExpiry: ", passwordResetExpires)
+    const resetUrl = `/reset-password/?resetToken=${resetToken}&resetExpiry=${encodeURIComponent(new Date(passwordResetExpires).toISOString())}`;
     const emailBody = "Click the following to reset your Password: " + resetUrl;
 
     const msg = {
