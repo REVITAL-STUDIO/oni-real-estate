@@ -1,7 +1,6 @@
 "use client"
 import NavPages from "@/components/nav";
 import React from "react";
-import Footer from "@/components/footer";
 import AdminDashboard from "@/components/adminDashboard";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";

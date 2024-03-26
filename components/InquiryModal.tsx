@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface Listing {
   id: number;
@@ -20,8 +20,6 @@ const InquiryModal: React.FC<{
   listingInquired: Listing;
 }> = ({ onClose, listingInquired }) => {
   const [isSuccess, setIsSuccess] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
-  const [isError, setIsError] = useState(false);
   const [leadData, setLeadData] = useState({
     name: "",
     number: "",
@@ -55,10 +53,6 @@ setIsLoading(true);
         setIsSuccess(true);
       }
     } catch (error) {
-      setIsError(true);
-      setErrorMsg(
-        "A network issue occured. Please check your internet connection and try again."
-      );
       console.error(
         "NETWORK ERROR - Unable to reach the server or network issue. Error Message: ",
         error
@@ -104,7 +98,7 @@ setIsLoading(true);
 
             <form
               onSubmit={createLead}
-              className="text-gray-800 h-5/6 flex flex-col gap-y-2"
+              className="text-white h-5/6 flex flex-col gap-y-2"
             >
               <div className="mb-4 ">
                 <label

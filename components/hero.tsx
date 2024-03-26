@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Logo2 from "../public/oni-moon.png";
-import { motion, useAnimation, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   const variants = {

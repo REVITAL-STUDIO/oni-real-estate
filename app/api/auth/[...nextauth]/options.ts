@@ -1,13 +1,27 @@
 import type { NextAuthOptions } from "next-auth";
 import GoogleProvider from 'next-auth/providers/google'
-import FacebookProvider from 'next-auth/providers/facebook'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import { prisma } from "@/lib/database/client";
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
+
+interface User {
+    id: string;
+    name: string;
+    email: string;
+    emailVerified: string | null;
+    image: string | null;
+    passwordHash: string;
+    number: string | null;
+    role: 'admin' | 'user'; // Assuming role can be either 'admin' or 'user'
+    favoriteListingsIds: string[];
+    hashedResetToken: string | null;
+    resetTokenExpiry: string | null;
+    createdAt: string;
+    updatedAt: string;
+  }
 
 // options object for nextauth configuration
-
 export const options: NextAuthOptions = {
     adapter: PrismaAdapter(prisma),
     providers: [
@@ -37,7 +51,7 @@ export const options: NextAuthOptions = {
                     placeholder: "Passowrd"
                 }
             },
-            async authorize(credentials): Promise<any> {
+            async authorize(credentials): Promise<User> {
 
                 if (!credentials?.email || !credentials.password) {
                     throw new Error('Please enter an email and password');
@@ -61,6 +75,10 @@ export const options: NextAuthOptions = {
                     return user;
 
                 }
+                else {
+                    throw new Error('Failed to authenticate user');
+
+                }
 
             }
         })
@@ -75,7 +93,7 @@ export const options: NextAuthOptions = {
             }
             return token
         },
-        async session({ session, user, token }) {
+        async session({ session, token }) {
             return {
                 ...session,
                 user: {

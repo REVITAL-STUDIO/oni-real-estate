@@ -7,7 +7,7 @@ export async function GET(request: Request, { params }: { params: { Id: string }
     try {
         const listing = await prisma.listing.findUnique({
             where: {
-                id: parseInt(params.Id,10)
+                id: parseInt(params.Id, 10)
             }
         });
 
@@ -39,9 +39,9 @@ export async function PUT(request: Request, { params }: { params: { Id: string }
     const body: putRequestBody = await request.json();
 
     try {
-        const updatedListing = await prisma.listing.update({
+        await prisma.listing.update({
             where: {
-                id: parseInt(params.Id,10)
+                id: parseInt(params.Id, 10)
             },
             data: {
                 address: body.address,

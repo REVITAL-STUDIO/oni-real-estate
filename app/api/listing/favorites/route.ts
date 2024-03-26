@@ -25,7 +25,7 @@ export async function PUT(request: Request) {
 
         if (user && !user.favoriteListingsIds.includes(body.listingId)) {
             // Update the user's favorite listings only if the listingId is not already present
-            const updatedUser = await prisma.user.update({
+            await prisma.user.update({
                 where: {
                     email: body.email,
                 },

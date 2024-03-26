@@ -40,6 +40,13 @@ interface postRequestBody {
     source: string
 }
 
+interface Lead {
+    name: string;
+    email: string;
+    message: string;
+    source: string;
+  }
+
 // api handler for creating a new lead
 export async function POST(request: Request) {
     const body: postRequestBody = await request.json();
@@ -68,7 +75,7 @@ export async function POST(request: Request) {
     }
 }
 
-async function sendAdminNotificationEmail(newLead: any) {
+async function sendAdminNotificationEmail(newLead: Lead) {
     const emailBody = `This message is to inform you that a new lead has been submitted by a user on your platform ONI Real Estate. Below are the details of the lead:
 
     Lead Information:
@@ -129,7 +136,7 @@ export async function DELETE(request: Request) {
     const leadId = await request.json();
 
     try {
-        const deleteLead = await prisma.lead.delete({
+        await prisma.lead.delete({
             where: {
                 id: leadId
             }

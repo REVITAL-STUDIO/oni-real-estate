@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { motion, useAnimation, useScroll } from "framer-motion";
+import { motion, useAnimation} from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 const Buyer = () => {

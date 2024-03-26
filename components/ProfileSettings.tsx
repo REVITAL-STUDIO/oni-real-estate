@@ -1,5 +1,5 @@
 "use client";
-import { AnimatePresence, motion, useAnimation } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -26,7 +26,7 @@ const ProfileSettings: React.FC<profileProps> = ({
   userInfo,
   setUserInfo,
 }) => {
-  const { data: session, status } = useSession(); // Include status to check if session data is loading
+  const { data: session} = useSession(); 
   let userData: User = userInfo || { id: "", name: "", email: "", number: "" };
   const setUserData =
     setUserInfo ||
@@ -279,7 +279,7 @@ const ProfileSettings: React.FC<profileProps> = ({
                     )}
 
                     {/* Log In Button */}
-                    <div className="justify-evenly w-full h-1/2 my-4 flex  items-center">
+                    <div className="justify-evenly w-full h-1/2 my-4 flex  items-start ">
                       <button
                         onClick={saveUserData}
                         className="p-4 bg-gradient-to-r shadow-md w-1/3 from-pine via-mint/50 to-mint text-base text-black rounded-2xl tracking-wide hover:opacity-80 active:opacity-100"

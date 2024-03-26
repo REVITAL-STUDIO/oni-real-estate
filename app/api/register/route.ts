@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
 import { prisma } from "@/lib/database/client";
 import { NextResponse } from "next/server";
 
@@ -9,7 +9,7 @@ interface requestBody {
     password: string,
 }
 // route handler for creating a user
-export async function POST(request: Request){
+export async function POST(request: Request) {
     const body: requestBody = await request.json();
 
 
@@ -28,7 +28,7 @@ export async function POST(request: Request){
     const hashedPassword = await bcrypt.hash(body.password, 10);
 
     // creating user in db
-    const user = await prisma.user.create({
+    await prisma.user.create({
         data: {
             name: body.name,
 

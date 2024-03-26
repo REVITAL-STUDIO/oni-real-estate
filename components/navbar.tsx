@@ -4,17 +4,15 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import GoogleIcon from "public/google.png";
-import AppleIcon from "public/apple-32.png";
 import Logo from "public/logo-real.png";
 import mobileLogo from "public/oni-moon.png";
-import { AnimatePresence, motion, useAnimation } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleRight,
   faGears,
   faArrowRightFromBracket,
   faAngleDown,
-  faAngleUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 import { IoIosClose } from "react-icons/io";
@@ -213,12 +211,7 @@ const Nav = () => {
     setLogOut(!openLogOut);
   };
 
-  //Opening Settings
-  const [setting, setSetting] = useState(false);
 
-  const toggleSetting = () => {
-    setSetting(!setting);
-  };
 
   return (
     <div

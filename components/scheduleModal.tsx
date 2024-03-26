@@ -1,22 +1,18 @@
 "use client";
 
-import { AnimatePresence, motion, useAnimation } from "framer-motion";
+import { motion } from "framer-motion";
 import { useState } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Logo from "public/logo-real.png";
 import {
   faClose,
-  faMobile,
-  faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 
 const ScheduleModal: React.FC<{ handleClose: () => void }> = ({
   handleClose,
 }) => {
   const [isSuccess, setIsSuccess] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
-  const [isError, setIsError] = useState(false);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [leadData, setLeadData] = useState({
@@ -55,10 +51,6 @@ setIsLoading(true);
         setIsSuccess(true);
       }
     } catch (error) {
-      setIsError(true);
-      setErrorMsg(
-        "A network issue occured. Please check your internet connection and try again."
-      );
       console.error(
         "NETWORK ERROR - Unable to reach the server or network issue. Error Message: ",
         error

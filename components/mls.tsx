@@ -1,4 +1,3 @@
-import Home from "@/app/page";
 import React from "react";
 import Homes from "./homes";
 import Google from "./google";

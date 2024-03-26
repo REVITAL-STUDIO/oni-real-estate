@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { motion, useAnimation, useScroll } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import Image from "next/image";
 import Pool from "public/iStock-1453183714.jpg";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";

@@ -3,9 +3,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { motion, useAnimation, useScroll } from "framer-motion";
+import { motion, useAnimation} from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 const Contact = () => {
   const parentRef = useRef<HTMLDivElement>(null);
   const control = useAnimation();
@@ -25,8 +24,7 @@ const Contact = () => {
     message: "",
   });
 
-  const [errorMsg, setErrorMsg] = useState("");
-  const [isError, setIsError] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
 
   const createlead: React.FormEventHandler<HTMLFormElement> = async (e) => {
@@ -57,10 +55,6 @@ const Contact = () => {
         setIsLoading;
       }
     } catch (error) {
-      setIsError(true);
-      setErrorMsg(
-        "A network issue occured. Please check your internet connection and try again."
-      );
       console.error(
         "NETWORK ERROR - Unable to reach the server or network issue. Error Message: ",
         error

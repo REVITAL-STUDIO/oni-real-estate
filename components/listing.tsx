@@ -3,16 +3,11 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { clear } from "console";
 
-type BathType = number;
 interface Price {
   label: string;
   min: number;
   max: number;
-}
-interface City {
-  label: string;
 }
 
 interface Filters {
@@ -76,7 +71,6 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
     { label: "$1,000,000+", min: 1000000, max: 15000000 },
   ];
 
-  const initialPrice: Price = { label: "Price Amount", min: 0, max: 0 };
 
   const togglePrices = (price: Price) => {
     // Then add the newly clicked price
@@ -85,17 +79,14 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
 
   //Bed
   const [selectedBeds, setSelectedBeds] = useState<number>(0);
-  const initialBedsState = 0;
 
   const numOfBeds = [1, 2, 3, 4, 5, 6];
 
   //Bath
   const [selectedBaths, setSelectedBaths] = useState<number>(0);
-  const initialBathState = 0;
 
   const numOfBaths = [1, 2, 3, 4, 5, 6];
 
-  const [showClearFilter, setShowClearFilter] = useState(false);
 
   //Location
   const [selectedLocation, setSelectedLocation] = useState<string>("");
@@ -109,7 +100,6 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
     "Cinco Ranch",
   ];
 
-  const initialCity: City = { label: "Location" };
 
   //Property
   const [selectedProperty, setSelectedProperty] = useState<string>("");
@@ -146,7 +136,6 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
     setSelectedBaths(0);
     setSelectedLocation("");
     setSelectedProperty("");
-    setShowClearFilter(false);
   };
 
   return (
@@ -225,7 +214,6 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
                   onClick={() => {
                     togglePrices(price);
                     togglePricesDropdown();
-                    setShowClearFilter(true);
                   }}
                 >
                   {price.label}
@@ -264,7 +252,6 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
                   onClick={() => {
                     setSelectedBeds(bed);
                     toggleBedDropdown();
-                    setShowClearFilter(true);
                   }}
                 >
                   {bed}
@@ -302,7 +289,6 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
                   onClick={() => {
                     setSelectedBaths(bath);
                     toggleBathDropdown();
-                    setShowClearFilter(true);
                   }}
                 >
                   {bath}
@@ -343,7 +329,6 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
                   onClick={() => {
                     setSelectedLocation(location);
                     toggleLocationDropdown();
-                    setShowClearFilter(true);
                   }}
                 >
                   {location}
@@ -381,7 +366,6 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
                   onClick={() => {
                     setSelectedProperty(property);
                     togglePropertyDropdown();
-                    setShowClearFilter(true);
                   }}
                 >
                   {property}
@@ -426,7 +410,6 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
                   onClick={() => {
                     togglePrices(price);
                     togglePricesDropdown();
-                    setShowClearFilter(true);
                   }}
                 >
                   {price.label}
@@ -465,7 +448,6 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
                   onClick={() => {
                     setSelectedBeds(bed);
                     toggleBedDropdown();
-                    setShowClearFilter(true);
                   }}
                 >
                   {bed}
@@ -499,7 +481,6 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
                   onClick={() => {
                     setSelectedBaths(bath);
                     toggleBathDropdown();
-                    setShowClearFilter(true);
                   }}
                 >
                   {bath}
@@ -533,7 +514,6 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
                   onClick={() => {
                     setSelectedLocation(location);
                     toggleLocationDropdown();
-                    setShowClearFilter(true);
                   }}
                 >
                   {location}
@@ -567,7 +547,6 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
                   onClick={() => {
                     setSelectedProperty(property);
                     togglePropertyDropdown();
-                    setShowClearFilter(true);
                   }}
                 >
                   {property}

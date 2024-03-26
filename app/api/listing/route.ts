@@ -36,7 +36,7 @@ export async function DELETE(request: Request) {
     const listingId = await request.json();
 
     try {
-        const deleteListing = await prisma.listing.delete({
+        await prisma.listing.delete({
             where: {
                 id: listingId
             }

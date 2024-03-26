@@ -1,14 +1,7 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import Image from "next/image";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPlus,
-  faClose,
-  faCheck,
-  faChevronLeft,
-  faChevronRight,
-} from "@fortawesome/free-solid-svg-icons";
+
+
 import { AnimatePresence, motion } from "framer-motion";
 import InquiryModal from "./InquiryModal";
 
@@ -46,7 +39,9 @@ const PropertyInfo: React.FC<{
     const handleMouseDown = (event: MouseEvent) => {
       isDraggingRef.current = true;
       startXRef.current = event.pageX;
-      startScrollLeftRef.current = thumbnailContainerRef.current?.scrollLeft!;
+      if (thumbnailContainerRef.current) {
+        startScrollLeftRef.current = thumbnailContainerRef.current.scrollLeft;
+      }    
     };
 
     const handleMouseMove = (event: MouseEvent) => {
@@ -78,19 +73,6 @@ const PropertyInfo: React.FC<{
     scrollToThumbnail(index);
   };
 
-  const nextSlide = () => {
-    const nextIndex = (currentSlide + 1) % selectedListing?.pictures.length;
-    setCurrentSlide(nextIndex);
-    scrollToThumbnail(nextIndex);
-  };
-
-  const prevSlide = () => {
-    const prevIndex =
-      (currentSlide - 1 + selectedListing?.pictures.length) %
-      selectedListing?.pictures.length;
-    setCurrentSlide(prevIndex);
-    scrollToThumbnail(prevIndex);
-  };
 
   const scrollToThumbnail = (index: number) => {
     if (!thumbnailContainerRef.current) return;

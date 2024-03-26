@@ -1,7 +1,7 @@
 import crypto from "crypto"
 import { prisma } from "@/lib/database/client";
 import { NextResponse } from "next/server";
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
 
 interface putRequestBody {
     newPassword: string,
@@ -29,7 +29,7 @@ export async function PUT(request: Request){
 
         const newHashedPassword = await bcrypt.hash(body.newPassword, 10);
 
-        const resonse = await prisma.user.update({
+        await prisma.user.update({
             where: {
                 hashedResetToken: hashedResetToken
             },

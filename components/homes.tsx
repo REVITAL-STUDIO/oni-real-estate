@@ -2,11 +2,10 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faClose, faCheck } from "@fortawesome/free-solid-svg-icons";
-import { AnimatePresence, motion } from "framer-motion";
+import { faPlus, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { AnimatePresence } from "framer-motion";
 import { useSession } from "next-auth/react";
 import PropertyInfo from "./PropertyInfo";
-import Email from "next-auth/providers/email";
 
 // Home Info
 

@@ -10,17 +10,12 @@ import {
   faUser,
   faHouse,
 } from "@fortawesome/free-solid-svg-icons";
-import { AnimatePresence, motion, useAnimation } from "framer-motion";
+import { AnimatePresence, motion  } from "framer-motion";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { signOut } from "next-auth/react";
 import ProfileSettings from "./ProfileSettings";
 import PropertyInfo from "./PropertyInfo";
-
-interface profile {
-  name: string;
-}
 
 interface Listing {
   index: number;
@@ -45,22 +40,11 @@ const Dashboard = () => {
   const { data: session, status } = useSession(); // Include status to check if session data is loading
   const [userData, setUserData] = useState<User>();
   const [userDataEdit, setUserDataEdit] = useState<User>();
-  const [newPassword, setNewPassword] = useState("");
-  const [newPasswordConfirm, setNewPasswordConfirm] = useState("");
-  const [passwordError, setPasswordError] = useState(false);
-  const [noChangeError, setNoChangeError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const [propertyInfo, openPropertyInfo] = useState(false);
   const [selectedListing, setSelectedListing] = useState<Listing | null>(null);
 
-  //Signout Button - Log out
-  const handleLogout: React.MouseEventHandler<HTMLButtonElement> = async (
-    e
-  ) => {
-    await signOut({ redirect: false });
-    router.push("/");
-  };
 
   const handlePropertyInfo = (listing: Listing) => {
     //the listing to show in the property info page
@@ -74,49 +58,7 @@ const Dashboard = () => {
     document.body.style.overflow = "auto";
   };
 
-  //Password and User name Changes || Used for saving user data and making changes
-  const saveUserData: React.MouseEventHandler<HTMLButtonElement> = async (
-    e
-  ) => {
-    e.preventDefault();
-    setNoChangeError(false);
-    setPasswordError(false);
-    if (newPassword == "" && userDataEdit == userData) {
-      // So if the values are empty or the password is the same as the original no change occurs
-      setNoChangeError(true);
-      throw new Error("No values changed");
-    }
-    if (newPassword != newPasswordConfirm) {
-      //If confirmation password is not the same than it throws the password not matching
-      setPasswordError(true);
-      throw new Error("Passwords do not match");
-    }
 
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/user`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ ...userDataEdit, password: newPassword }),
-          //Spreading "...userDataEdit" allows the data that is changed in the menu to be updated besides the password. It will be sent along with the newpassword
-        }
-      );
-      if (!response.ok) {
-        throw new Error(
-          `HTTP ERROR - Error Saving user information. Status: ${response.status}`
-        );
-      }
-      const newUserData = await response.json();
-      console.log("NEW USER DATA: ", newUserData);
-      setUserData(newUserData);
-      setOpenMenu(false);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   // Fetch user data
   const fetchUserData = async () => {
@@ -156,19 +98,8 @@ const Dashboard = () => {
     }
   }, [session, status, router]);
 
-  //Setting profile name
-  const [profile, setProfileName] = useState<profile>({ name: "" });
-
-  const newName = "";
-
-  useEffect(() => {
-    setProfileName((prevProfile) => {
-      return { ...prevProfile, name: newName };
-    });
-  }, []);
 
   //Open menu
-
   const [openMenu, setOpenMenu] = useState(false);
 
   // Set overflow property when component mounts and unmounts
@@ -181,14 +112,6 @@ const Dashboard = () => {
     };
   }, [openMenu]);
 
-  const closeSettings = () => {
-    setOpenMenu(false);
-    setUserDataEdit(userData);
-    setNewPassword("");
-    setNewPasswordConfirm("");
-    setNoChangeError(false);
-    setPasswordError(false);
-  };
 
   //will contain array of listings data retrieved from db
   const [homes, setHomes] = useState<Listing[]>([]);

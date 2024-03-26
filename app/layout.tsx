@@ -1,9 +1,6 @@
 // Import necessary modules and components
 import "./globals.css";
 import type { Metadata } from "next";
-import Nav from "@/components/navbar";
-import Footer from "@/components/footer";
-import { Cinzel, Montserrat } from "next/font/google";
 import Provider from "@/components/Provider";
 import { EdgeStoreProvider } from "../lib/edgestore";
 import ToasterProvider from "@/components/ToasterProvider";

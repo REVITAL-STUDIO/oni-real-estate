@@ -1,4 +1,4 @@
-const bcrypt = require('bcrypt');
+import bcrypt from 'bcrypt';
 import { prisma } from "@/lib/database/client";
 import { NextResponse } from "next/server";
 

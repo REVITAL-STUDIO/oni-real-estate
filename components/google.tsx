@@ -20,8 +20,7 @@ const Google: React.FC = () => {
   // State variables for listings, loading state, and error
   const [listings, setListings] = useState<Listing[]>([]);
   const [selectedListing, setSelectedListing] = useState<Listing | null>(null); // State to track selected listing
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+
 
   // Set overflow property when component mounts and unmounts
   useEffect(() => {
@@ -45,10 +44,7 @@ const Google: React.FC = () => {
         setListings(data);
       } catch (error) {
         console.error("Error fetching data:", error);
-        setError("Error fetching data");
-      } finally {
-        setLoading(false);
-      }
+      } 
     };
 
     fetchListings();

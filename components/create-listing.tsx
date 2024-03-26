@@ -4,7 +4,7 @@ import FileUpload from "@/components/FileUpload";
 import { useState } from "react";
 import { useEdgeStore } from "@/lib/edgestore";
 import { IoIosClose } from "react-icons/io";
-import { motion, useAnimation } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface FileExtended extends File {
   url?: string;

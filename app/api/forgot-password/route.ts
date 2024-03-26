@@ -53,7 +53,7 @@ export async function POST(request: Request) {
 
     await sgMail.send(msg).then(() => {
         console.log("###########   PASSWORD RESET EMAIL SENT ###############3")
-    }).catch(async (error) => {
+    }).catch(async () => {
         existingUser.hashedResetToken = "";
         existingUser.resetTokenExpiry = null;
 

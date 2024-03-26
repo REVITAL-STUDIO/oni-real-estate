@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { HiOutlinePhone } from "react-icons/hi2";
 import { HiOutlineMail } from "react-icons/hi";
 import { FaQuoteLeft } from "react-icons/fa";
@@ -17,44 +17,33 @@ interface Lead {
   color: string;
 }
 
-const LeadInfo: React.FC<{ onClose: () => void; selectedLead: Lead }> = ({
-  onClose,
-  selectedLead,
-}) => {
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
-  const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [showStatusEdit, setShowStatusEdit] = useState(false);
+const LeadInfo: React.FC<{ onClose: () => void, selectedLead: Lead }> = ({ onClose, selectedLead }) => {
+    
+    const [isLoading, setIsLoading] = useState(false)
+    const [showStatusEdit, setShowStatusEdit] = useState(false)
 
   const [selectedStatus, setSelectedStatus] = useState(selectedLead.status); // State for selected dropdown value
 
-  const handleSaveStatus = async () => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/leads/${selectedLead.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(selectedStatus),
+    const handleSaveStatus = async () => {
+        setIsLoading(true)
+        try {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/leads/${selectedLead.id}`, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(selectedStatus),
+            })
+            if (!response.ok) {
+                throw new Error("Error saving lead status, check connection and please try again");
+            }
+            setSelectedStatus(await response.json())
+            setShowStatusEdit(false)
+        } catch (error) {
+            console.error(error);
         }
-      );
-      if (!response.ok) {
-        setErrorMsg(
-          "Error saving lead status, check connection and please try again"
-        );
-        setIsError(true);
-      }
-      setSelectedStatus(await response.json());
-      setShowStatusEdit(false);
-    } catch (error) {
-      console.error(error);
+        setIsLoading(false)
     }
-    setIsLoading(false);
-  };
 
   const colorizeStatus = (status: string) => {
     console.log("In colorize func: ", status);
