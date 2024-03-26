@@ -46,7 +46,15 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
   const [isError, setIsError] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const propertyTypes = ["House", "Apartment", "Duplex", "Townhouse"];
-  const locations = ["Montrose", "Heights", "Katy", "Fort Bend", "Missouri City", "Pearland", "Cinco Ranch"];
+  const locations = [
+    "Montrose",
+    "Heights",
+    "Katy",
+    "Fort Bend",
+    "Missouri City",
+    "Pearland",
+    "Cinco Ranch",
+  ];
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -83,7 +91,7 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
         availability: listing.availability,
       });
 
-      let files = await Promise.all(
+      const files = await Promise.all(
         listing.pictures.map(async (url) => {
           return await urlToFile(url);
         })
@@ -92,7 +100,7 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
       setInitialFiles(files);
       setSelectedFiles(files);
       setFetchedListingData(true);
-      console.log("###### listing Data: ", listing)
+      console.log("###### listing Data: ", listing);
     } catch (error) {
       console.log("Error Fetching Listing Data: ", error);
     }
@@ -101,7 +109,7 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
   //function to upload listing images to cloud storage
   // returns an array of newly uploaded files urls
   const uploadFiles = async (files: FileExtended[]) => {
-    let fileUrls = [];
+    const fileUrls = [];
     for (const file of files) {
       const res = await edgestore.publicFiles.upload({
         file,
@@ -140,12 +148,12 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
   };
 
   const getFilesToDelete = () => {
-    let urlsInSelected = selectedFiles.map((file) => {
+    const urlsInSelected = selectedFiles.map((file) => {
       if (file.url) {
         return file.url;
       }
     });
-    let filesToDelete = initialFiles.filter(
+    const filesToDelete = initialFiles.filter(
       (file) => !urlsInSelected.includes(file.url)
     );
     return filesToDelete;
@@ -163,10 +171,14 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
       listingData.type === "" ||
       listingData.location === "" ||
       listingData.availability === "" ||
-      listingData.beds === 0 || !listingData.beds ||
-      listingData.baths === 0 || !listingData.baths ||
-      listingData.area === 0 || !listingData.area ||
-      listingData.price === 0 || !listingData.price 
+      listingData.beds === 0 ||
+      !listingData.beds ||
+      listingData.baths === 0 ||
+      !listingData.baths ||
+      listingData.area === 0 ||
+      !listingData.area ||
+      listingData.price === 0 ||
+      !listingData.price
     ) {
       setErrorMsg("Please fill out all required fields.");
       setIsError(true);
@@ -175,10 +187,10 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
     }
 
     //added files don't have a url yet
-    let filesToUpload = selectedFiles.filter((file) => !file.url);
+    const filesToUpload = selectedFiles.filter((file) => !file.url);
     let newUrls: string[] = [];
-    let filesToDelete = getFilesToDelete();
-    let urlsToDelete: any[] = filesToDelete.map((file) => file.url);
+    const filesToDelete = getFilesToDelete();
+    const urlsToDelete: any[] = filesToDelete.map((file) => file.url);
     let urlsToStore: any[] = initialUrls;
 
     try {
@@ -196,7 +208,7 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
 
       //storing cloud stored image urls to listingdata
       //creating listingdata to be sent to server to edit listing
-      let data = { ...listingData, pictures: urlsToStore };
+      const data = { ...listingData, pictures: urlsToStore };
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing/${listingId}`,
         {
@@ -348,7 +360,8 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
                     value={listingData.type}
                     onChange={(e) =>
                       setListingData({ ...listingData, type: e.target.value })
-                    } className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm hover:cursor-pointer"
+                    }
+                    className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm hover:cursor-pointer"
                   >
                     <option value="">Select Type</option>
                     {propertyTypes.map((type, index) => (
@@ -382,8 +395,12 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
                     required
                     value={listingData.location}
                     onChange={(e) =>
-                      setListingData({ ...listingData, location: e.target.value })
-                    } className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm hover:cursor-pointer"
+                      setListingData({
+                        ...listingData,
+                        location: e.target.value,
+                      })
+                    }
+                    className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm hover:cursor-pointer"
                   >
                     <option value="">Select Location</option>
                     {locations.map((type, index) => (
@@ -392,7 +409,6 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
                       </option>
                     ))}
                   </select>
-
                 </div>
               </div>
               <div className="flex justify-between">
@@ -418,18 +434,17 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
                     required
                     value={listingData.availability}
                     onChange={(e) =>
-                      setListingData({ ...listingData, availability: e.target.value })
-                    } className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm hover:cursor-pointer"
+                      setListingData({
+                        ...listingData,
+                        availability: e.target.value,
+                      })
+                    }
+                    className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm hover:cursor-pointer"
                   >
                     <option value="">Select Availability</option>
-                    <option value="Sale">
-                      For Sale
-                    </option>
-                    <option value="Rent">
-                      For Rent
-                    </option>
+                    <option value="Sale">For Sale</option>
+                    <option value="Rent">For Rent</option>
                   </select>
-
                 </div>
               </div>
               <button

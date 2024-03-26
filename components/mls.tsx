@@ -14,12 +14,12 @@ interface Filters {
   price: Price;
   beds: number;
   baths: number;
-  location: String;
+  location: string;
   property: string;
 }
 
 interface MLSProps {
-  selectedFilters: Filters
+  selectedFilters: Filters;
 }
 
 const MLS: React.FC<MLSProps> = ({ selectedFilters }) => {

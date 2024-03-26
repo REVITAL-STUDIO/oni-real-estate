@@ -36,7 +36,7 @@ interface Filters {
   price: Price;
   beds: number;
   baths: number;
-  location: String;
+  location: string;
   property: string;
 }
 interface User {
@@ -111,7 +111,7 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
         throw new Error("Error retrieving user infromation");
       }
 
-      let data = await response.json();
+      const data = await response.json();
       await setUser(data);
     } catch (error) {
       console.error("Error Fetching User Data: ", error);
@@ -121,7 +121,7 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
   useEffect(() => {
     // Filter logic based on the selected filters
 
-    let filtered = listings.filter((listing) => {
+    const filtered = listings.filter((listing) => {
       if (selectedFilters.option) {
         if (listing.availability != selectedFilters.option) {
           return false;

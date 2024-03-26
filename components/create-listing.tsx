@@ -17,7 +17,15 @@ const CreateListing = () => {
   const [propertyType, setPropertyType] = useState("");
   const propertyTypes = ["House", "Apartment", "Duplex", "Townhouse"];
   const [location, setLocation] = useState("");
-  const locations = ["Montrose", "Heights", "Katy", "Fort Bend", "Missouri City", "Pearland", "Cinco Ranch"];
+  const locations = [
+    "Montrose",
+    "Heights",
+    "Katy",
+    "Fort Bend",
+    "Missouri City",
+    "Pearland",
+    "Cinco Ranch",
+  ];
   const [availability, setAvailability] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -74,10 +82,14 @@ const CreateListing = () => {
       propertyType === "" ||
       location === "" ||
       availability === "" ||
-      formData.beds === 0 || !formData.beds ||
-      formData.baths === 0 || !formData.baths ||
-      formData.area === 0 || !formData.area ||
-      formData.price === 0 || !formData.price
+      formData.beds === 0 ||
+      !formData.beds ||
+      formData.baths === 0 ||
+      !formData.baths ||
+      formData.area === 0 ||
+      !formData.area ||
+      formData.price === 0 ||
+      !formData.price
     ) {
       setErrorMsg("Please fill out all required fields.");
       setIsError(true);
@@ -91,7 +103,13 @@ const CreateListing = () => {
       try {
         //storing cloud stored image urls to listingdata
         //creating listingdata to be sent to server to create listing
-        let listingData = { ...formData, pictures: imageUrls, type: propertyType, location: location, availability: availability };
+        const listingData = {
+          ...formData,
+          pictures: imageUrls,
+          type: propertyType,
+          location: location,
+          availability: availability,
+        };
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/listing`,
           {
@@ -124,7 +142,7 @@ const CreateListing = () => {
           error
         );
         await deleteFiles();
-      setIsLoading(false);
+        setIsLoading(false);
       }
     } catch (error) {
       setIsError(true);
@@ -239,7 +257,9 @@ const CreateListing = () => {
                     <select
                       required
                       value={propertyType}
-                      onChange={(e) => { setPropertyType(e.target.value) }}
+                      onChange={(e) => {
+                        setPropertyType(e.target.value);
+                      }}
                       className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm hover:cursor-pointer"
                     >
                       <option value="">Select Type</option>
@@ -273,7 +293,9 @@ const CreateListing = () => {
                     <select
                       required
                       value={location}
-                      onChange={(e) => { setLocation(e.target.value) }}
+                      onChange={(e) => {
+                        setLocation(e.target.value);
+                      }}
                       className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm hover:cursor-pointer"
                     >
                       <option value="">Select Location</option>
@@ -307,16 +329,14 @@ const CreateListing = () => {
                     <select
                       required
                       value={availability}
-                      onChange={(e) => { setAvailability(e.target.value) }}
+                      onChange={(e) => {
+                        setAvailability(e.target.value);
+                      }}
                       className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm hover:cursor-pointer"
                     >
                       <option value="">Select Availability</option>
-                      <option value="Sale">
-                        For Sale
-                      </option>
-                      <option value="Rent">
-                        For Rent
-                      </option>
+                      <option value="Sale">For Sale</option>
+                      <option value="Rent">For Rent</option>
                     </select>
                   </div>
                 </div>

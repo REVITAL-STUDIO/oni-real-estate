@@ -20,7 +20,7 @@ interface Filters {
   price: Price;
   beds: number;
   baths: number;
-  location: String;
+  location: string;
   property: string;
 }
 
@@ -98,7 +98,7 @@ const Listing: React.FC<ListingProps> = ({ onFiltersChange }) => {
   const [showClearFilter, setShowClearFilter] = useState(false);
 
   //Location
-  const [selectedLocation, setSelectedLocation] = useState<String>("");
+  const [selectedLocation, setSelectedLocation] = useState<string>("");
   const locations: string[] = [
     "Montrose",
     "Heights",

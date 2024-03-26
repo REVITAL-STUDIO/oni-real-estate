@@ -90,8 +90,6 @@ const AdminDashboard = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-
-
   const saveUserData: React.MouseEventHandler<HTMLButtonElement> = async (
     e
   ) => {
@@ -126,7 +124,7 @@ const AdminDashboard = () => {
           `HTTP ERROR - Error Saving user information. Status: ${response.status}`
         );
       }
-      let newUserData = await response.json();
+      const newUserData = await response.json();
       console.log("NEW USER DATA: ", newUserData);
       setUserData(newUserData);
       setOpenMenu(false);
@@ -187,12 +185,12 @@ const AdminDashboard = () => {
     //the listing to show in the property info page
     setSelectedListing(listing);
     openPropertyInfo((prevOpen) => !prevOpen);
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
   };
 
   const handleClose = () => {
     openPropertyInfo(false);
-    document.body.style.overflow = 'auto';
+    document.body.style.overflow = "auto";
   };
 
   const handleOpenLeadInfo = () => {
@@ -203,7 +201,7 @@ const AdminDashboard = () => {
     setIsLeadInfoOpen(false);
     fetchLeads();
   };
-  const colorizeStatus = (status: String) => {
+  const colorizeStatus = (status: string) => {
     console.log("In colorize func: ", status);
     switch (status) {
       case "new":
@@ -229,7 +227,7 @@ const AdminDashboard = () => {
       );
 
       if (!response.ok) {
-        throw new Error("Error fetching Leads")
+        throw new Error("Error fetching Leads");
       }
       const data: Lead[] = await response.json();
       //setting listings data to Listings state variable
@@ -249,24 +247,23 @@ const AdminDashboard = () => {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/leads`,
         {
-          method: 'DELETE',
+          method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(leadId)
-        });
+          body: JSON.stringify(leadId),
+        }
+      );
 
       if (!response.ok) {
-        throw new Error("Failed to delete Lead")
+        throw new Error("Failed to delete Lead");
       }
-      fetchLeads()
+      fetchLeads();
       setShowDeleteLead(false);
     } catch (error) {
       console.error(error);
-
     }
-
-  }
+  };
   const deleteListing = async (id: number) => {
     setIsError(false);
     try {
@@ -315,7 +312,7 @@ const AdminDashboard = () => {
       );
 
       if (!response.ok) {
-        throw new Error("Error fetching listings")
+        throw new Error("Error fetching listings");
       }
       const data: Listing[] = await response.json();
       //setting listings data to Listings state variable
@@ -323,7 +320,7 @@ const AdminDashboard = () => {
       setFetchedListingsData(true);
     } catch (error) {
       console.error(error);
-      setListingsError(true)
+      setListingsError(true);
       seterrorMsg(
         "Error loading listings, check network connection and try again."
       );
@@ -367,7 +364,6 @@ const AdminDashboard = () => {
     };
   }, [createListing, editListing, showDeleteListing, showDeleteLead]);
 
-
   if (isLoading) {
     return (
       <div className="min-h-screen flex justify-center items-center">
@@ -388,7 +384,10 @@ const AdminDashboard = () => {
                   <h2 className="  font-medium font-agrandir tracking-wider">
                     Profile
                   </h2>
-                  <button onClick={() => setOpenMenu(true)} className="w-8 h-8 bg-white hover:bg-gray-200/20 rounded-full shadow-md flex justify-center items-center transition duration-200 ease-in-out">
+                  <button
+                    onClick={() => setOpenMenu(true)}
+                    className="w-8 h-8 bg-white hover:bg-gray-200/20 rounded-full shadow-md flex justify-center items-center transition duration-200 ease-in-out"
+                  >
                     <FontAwesomeIcon
                       icon={faPenToSquare}
                       size="sm"
@@ -400,7 +399,9 @@ const AdminDashboard = () => {
                 <div className="w-full h-2/3 flex justify-center  items-center">
                   <div className="w-44 h-44 rounded-2xl relative flex justify-center items-center">
                     <div className="w-full h-full    bg-white inset-0 rounded-2xl shadow-md flex justify-center items-center">
-                      <h2 className="xl:text-5xl text-3xl font-montserrat">M</h2>
+                      <h2 className="xl:text-5xl text-3xl font-montserrat">
+                        M
+                      </h2>
                     </div>
                     <div className="absolute  w-8 h-8 bg-blue-500 shadow-xl left-[-5%] -bottom-2  rounded-full flex justify-center items-center">
                       <FontAwesomeIcon
@@ -445,7 +446,6 @@ const AdminDashboard = () => {
                           <div className=" h-6 w-6 md:h-10 md:w-10  border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
                         </div>
                       ) : (
-
                         <div>
                           {!leadsError &&
                             leads.map((lead) => (
@@ -458,7 +458,9 @@ const AdminDashboard = () => {
                                   <div
                                     className={`w-10 h-10 rounded-full flex justify-center items-center ${lead.color}`}
                                   >
-                                    <span>{lead.name.charAt(0).toUpperCase()}</span>
+                                    <span>
+                                      {lead.name.charAt(0).toUpperCase()}
+                                    </span>
                                   </div>
                                   <span className="text-sm tracking-wider font-montserrat">
                                     {lead.name}
@@ -480,10 +482,13 @@ const AdminDashboard = () => {
                                   >
                                     view
                                   </button>
-                                  <button onClick={() => {
-                                    setSelectedLead(lead);
-                                    setShowDeleteLead(true);
-                                  }} className="w-fit px-4 tracking-wider font-montserrat h-8 rounded-full  text-red-500 text-xs">
+                                  <button
+                                    onClick={() => {
+                                      setSelectedLead(lead);
+                                      setShowDeleteLead(true);
+                                    }}
+                                    className="w-fit px-4 tracking-wider font-montserrat h-8 rounded-full  text-red-500 text-xs"
+                                  >
                                     <svg
                                       width="24"
                                       height="24"
@@ -500,12 +505,20 @@ const AdminDashboard = () => {
                                 </div>
                               </div>
                             ))}
-                          {leadsError &&
+                          {leadsError && (
                             <div className="w-full h-full flex flex-col gap-3 justify-center items-center">
-                              <p>Oops! Something went wrong. Please try loading leads again.</p>
-                              <button onClick={() => fetchLeads()} className="w-40 h-12 text-white text-xs tracking-wider font-montserrat transition ease-in-out duration-150 bg-black hover:bg-black/60  rounded-xl  hover:shadow-lg active:bg-black">Retry</button>
+                              <p>
+                                Oops! Something went wrong. Please try loading
+                                leads again.
+                              </p>
+                              <button
+                                onClick={() => fetchLeads()}
+                                className="w-40 h-12 text-white text-xs tracking-wider font-montserrat transition ease-in-out duration-150 bg-black hover:bg-black/60  rounded-xl  hover:shadow-lg active:bg-black"
+                              >
+                                Retry
+                              </button>
                             </div>
-                          }
+                          )}
                         </div>
                       )}
                       {isLeadInfoOpen && selectedLead && (
@@ -649,14 +662,21 @@ const AdminDashboard = () => {
                             </div>
                           </div>
                         </div>
-                      ))
-                    }
-                    {listingsError &&
+                      ))}
+                    {listingsError && (
                       <div className="w-full h-full flex flex-col gap-3 justify-center items-center">
-                        <p>Oops! Something went wrong. Please try loading listings again.</p>
-                        <button onClick={() => fetchListings()} className="w-40 h-12 text-white text-xs tracking-wider font-montserrat transition ease-in-out duration-150 bg-black hover:bg-black/60  rounded-xl  hover:shadow-lg active:bg-black">Retry</button>
+                        <p>
+                          Oops! Something went wrong. Please try loading
+                          listings again.
+                        </p>
+                        <button
+                          onClick={() => fetchListings()}
+                          className="w-40 h-12 text-white text-xs tracking-wider font-montserrat transition ease-in-out duration-150 bg-black hover:bg-black/60  rounded-xl  hover:shadow-lg active:bg-black"
+                        >
+                          Retry
+                        </button>
                       </div>
-                    }
+                    )}
                   </div>
                 )}
               </div>
@@ -846,9 +866,11 @@ const AdminDashboard = () => {
                   undone.
                 </p>
                 <div className="mt-[2%] w-[30%]">
-                <p className="text-gray-900 font-semibold text-lg">{selectedLead.name}</p>
+                  <p className="text-gray-900 font-semibold text-lg">
+                    {selectedLead.name}
+                  </p>
 
-                  <p className="text-gray-600">"{selectedLead.message}"</p>
+                  <p className="text-gray-600">{selectedLead.message}</p>
                 </div>
                 <div className="mt-[8%] flex gap-4">
                   <button
@@ -882,10 +904,13 @@ const AdminDashboard = () => {
           !propertyInfo && <Footer />}
 
         {/* User Profile settings */}
-        <ProfileSettings openMenu={openMenu} setOpenMenu={setOpenMenu} userInfo={userData} setUserInfo={setUserData} />
-
+        <ProfileSettings
+          openMenu={openMenu}
+          setOpenMenu={setOpenMenu}
+          userInfo={userData}
+          setUserInfo={setUserData}
+        />
       </div>
-
     );
   }
 };

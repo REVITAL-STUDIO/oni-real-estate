@@ -109,7 +109,7 @@ const Dashboard = () => {
           `HTTP ERROR - Error Saving user information. Status: ${response.status}`
         );
       }
-      let newUserData = await response.json();
+      const newUserData = await response.json();
       console.log("NEW USER DATA: ", newUserData);
       setUserData(newUserData);
       setOpenMenu(false);
@@ -159,7 +159,7 @@ const Dashboard = () => {
   //Setting profile name
   const [profile, setProfileName] = useState<profile>({ name: "" });
 
-  let newName = "";
+  const newName = "";
 
   useEffect(() => {
     setProfileName((prevProfile) => {
