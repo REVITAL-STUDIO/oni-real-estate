@@ -57,7 +57,7 @@ export const options: NextAuthOptions = {
                     throw new Error('Please enter an email and password');
                 }
                 //fetching user by db query from api route
-                const response = await fetch(`/api/login`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/login`, {
                     method: 'POST',
                     body: JSON.stringify({ email: credentials?.email }),
                 })
