@@ -112,7 +112,7 @@ const NavPages = () => {
     e.preventDefault();
     setIsLoading(true);
     setIsLoginError(false);
-    await signIn("credentials", { ...signInData, redirect: false, callbackUrl: process.env.NEXTAUTH_URL }).then(
+    await signIn("credentials", { ...signInData, redirect: false}).then(
       (callback) => {
         if (callback?.error) {
           setErrorMsg(callback.error);

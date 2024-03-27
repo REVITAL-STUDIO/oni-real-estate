@@ -178,7 +178,7 @@ const Nav = () => {
           `HTTP Error: Error creating user status ${response.status}`
         );
       }
-      signIn("credentials", { ...registerData, redirect: false, callbackUrl: process.env.NEXTAUTH_URL }).then(
+      signIn("credentials", { ...registerData, redirect: false}).then(
         //autheticates the user with provided creds
         (callback) => {
           if (callback?.error) {
