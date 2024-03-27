@@ -14,7 +14,7 @@ import {
   faArrowRightFromBracket,
   faAngleDown,
 } from "@fortawesome/free-solid-svg-icons";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { IoIosClose } from "react-icons/io";
 import ProfileSettings from "./ProfileSettings";
 
