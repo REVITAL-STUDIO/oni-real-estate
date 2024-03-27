@@ -14,7 +14,7 @@ import {
   faArrowRightFromBracket,
   faAngleDown,
 } from "@fortawesome/free-solid-svg-icons";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { IoIosClose } from "react-icons/io";
 import ProfileSettings from "./ProfileSettings";
 
@@ -112,7 +112,7 @@ const NavPages = () => {
     e.preventDefault();
     setIsLoading(true);
     setIsLoginError(false);
-    await signIn("credentials", { ...signInData, redirect: false }).then(
+    await signIn("credentials", { ...signInData, redirect: false, callbackUrl: process.env.NEXTAUTH_URL }).then(
       (callback) => {
         if (callback?.error) {
           setErrorMsg(callback.error);

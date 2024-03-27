@@ -119,7 +119,7 @@ const Nav = () => {
     e.preventDefault(); //prevents the form submission from a pager reload
     setIsLoading(true); //signals loading in progress
     setIsLoginError(false); // indicates there's currently no login error
-    signIn("credentials", { ...signInData, redirect: false }).then(
+    signIn("credentials", { ...signInData, redirect: false, callbackUrl: process.env.NEXTAUTH_URL }).then(
       //autheticates the user with provided creds
       (callback) => {
         if (callback?.error) {
@@ -178,7 +178,7 @@ const Nav = () => {
           `HTTP Error: Error creating user status ${response.status}`
         );
       }
-      signIn("credentials", { ...registerData, redirect: false }).then(
+      signIn("credentials", { ...registerData, redirect: false, callbackUrl: process.env.NEXTAUTH_URL }).then(
         //autheticates the user with provided creds
         (callback) => {
           if (callback?.error) {
