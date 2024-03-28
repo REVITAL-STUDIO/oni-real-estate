@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { motion, useAnimation} from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 const Contact = () => {
   const parentRef = useRef<HTMLDivElement>(null);
@@ -24,7 +24,6 @@ const Contact = () => {
     message: "",
   });
 
-
   const [isLoading, setIsLoading] = useState(false);
 
   const createlead: React.FormEventHandler<HTMLFormElement> = async (e) => {
@@ -32,20 +31,17 @@ const Contact = () => {
     setIsLoading(true);
     try {
       const fullName = `${firstName} ${lastName}`;
-      const response = await fetch(
-        `/api/leads`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            ...leadData,
-            name: fullName,
-            source: "Homepage form Submission",
-          }),
-        }
-      );
+      const response = await fetch(`/api/leads`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...leadData,
+          name: fullName,
+          source: "Homepage form Submission",
+        }),
+      });
       if (!response.ok) {
         throw new Error(
           `HTTP ERROR - Error creating lead. Status: ${response.status}`
@@ -102,7 +98,7 @@ const Contact = () => {
           transition={{ duration: 0.6, delay: 0.25 }}
           className="xl:w-3/4 xl:h-full w-full h-3/4 bg-white flex flex-col justify-center items-center relative font-montserrat"
         >
-          <div className="w-5/6 xl:3/4 h-[10%] flex items-center  justify-center font-agrandir text-sm  md:text-xl  lg:text-4xl text-black my-4 ">
+          <div className="w-5/6 xl:3/4 h-[10%] flex items-center  justify-center font-agrandir text-lg  md:text-xl  lg:text-4xl text-black my-4 ">
             <h2 className="w-fit relative left-0 text-black block tracking-wider p-4 rounded-full border ">
               Get in touch with us
             </h2>
@@ -116,8 +112,8 @@ const Contact = () => {
               onSubmit={createlead}
               className="w-5/6 h-full flex items-center justify-center flex-col rounded-lg  gap-x-4  z-10"
             >
-              <div className="w-full flex flex-wrap justify-center gap-4  ">
-                <div className="flex flex-col w-2/5">
+              <div className="w-full flex flex-wrap justify-center gap-4  text-sm">
+                <div className="flex flex-col w-[40%]">
                   <label htmlFor="firstName" className="my-2 text-black">
                     First Name
                   </label>
@@ -130,7 +126,7 @@ const Contact = () => {
                     onChange={(e) => setFirstName(e.target.value)}
                   ></input>
                 </div>
-                <div className="flex flex-col w-2/5">
+                <div className="flex flex-col w-[40%] text-sm">
                   <label htmlFor="lastName" className="my-2 text-black">
                     Last Name
                   </label>
@@ -143,7 +139,7 @@ const Contact = () => {
                     onChange={(e) => setLastName(e.target.value)}
                   ></input>
                 </div>
-                <div className="flex flex-col w-2/5">
+                <div className="flex flex-col w-[40%] text-sm">
                   <label htmlFor="email" className="my-2 text-black">
                     Email
                   </label>
@@ -158,7 +154,7 @@ const Contact = () => {
                     }
                   ></input>
                 </div>
-                <div className="flex flex-col w-2/5">
+                <div className="flex flex-col w-[40%] text-sm">
                   <label htmlFor="phone" className="my-2 text-black">
                     Phone
                   </label>
@@ -172,7 +168,7 @@ const Contact = () => {
                     }
                   ></input>
                 </div>
-                <div className="flex flex-col w-[82%]">
+                <div className="flex flex-col w-[82%] text-sm">
                   <label htmlFor="message" className="my-2 text-black">
                     Message
                   </label>
@@ -195,7 +191,7 @@ const Contact = () => {
                   {isLoading ? (
                     <div className="mx-auto h-6 w-6 border-4 border-white rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
                   ) : (
-                    <div className="flex justify-center items-center">
+                    <div className="flex justify-center items-center text-sm">
                       Send message{" "}
                       <span className="relative left-1 bottom-3 transfrom -rotate-45 flex items-center justify-start w-12 h-12 duration-300 transform translate-y-0 group-hover:-translate-y-[10%] group-hover:translate-x-[25%] group-hover:opacity-100 ease">
                         <FontAwesomeIcon

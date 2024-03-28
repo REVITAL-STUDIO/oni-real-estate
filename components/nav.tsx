@@ -112,7 +112,7 @@ const NavPages = () => {
     e.preventDefault();
     setIsLoading(true);
     setIsLoginError(false);
-    await signIn("credentials", { ...signInData, redirect: false}).then(
+    await signIn("credentials", { ...signInData, redirect: false }).then(
       (callback) => {
         if (callback?.error) {
           setErrorMsg(callback.error);
@@ -150,16 +150,13 @@ const NavPages = () => {
         throw new Error("Passwords do not match");
       }
 
-      const response = await fetch(
-        `/api/register`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(registerData),
-        }
-      );
+      const response = await fetch(`/api/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(registerData),
+      });
       if (!response.ok) {
         if (response.status == 400) {
           setErrorMsg("Email already in use!");
@@ -203,8 +200,6 @@ const NavPages = () => {
   const togglelogOutMenu = () => {
     setLogOut(!openLogOut);
   };
-
-
 
   return (
     <div
@@ -359,7 +354,7 @@ const NavPages = () => {
               className="xl:hidden absolute top-0  right-0 bottom-0  flex justify-center items-center w-full  h-screen bg-mist  "
             >
               <motion.div
-                initial={{ opacity: 0, y: -100 }}
+                initial={{ opacity: 0, y: 100 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -100 }}
                 transition={{ ease: "easeInOut", duration: 0.8 }}
@@ -371,14 +366,14 @@ const NavPages = () => {
                   className="invert w-32 p-4"
                 />
                 <ul
-                  className={` gap-y-4 font-medium text-black flex flex-col items-center  justify-center font-agrandir w-full h-2/3
+                  className={` gap-y-4 font-medium text-black flex flex-col items-center  justify-center font-agrandir w-full h-3/5
           `}
                 >
-                  <li className="relative   w-full p-4 text-3xl md:text-5xl tracking-wider font-extralight  ">
+                  <li className="relative   w-full p-4 text-2xl md:text-5xl tracking-wider font-extralight  ">
                     <Link href="/">Home</Link>
                   </li>
                   {!session && (
-                    <li className="relative   w-full p-4 text-3xl md:text-5xl tracking-wider font-extralight">
+                    <li className="relative  w-full p-4 text-2xl md:text-5xl tracking-wider font-extralight">
                       <button onClick={toggleLogin}>
                         <span>Login </span>
                       </button>
@@ -389,7 +384,7 @@ const NavPages = () => {
                       className={`
                    
                     font-regular
-                    relative   w-full p-4 text-3xl md:text-5xl tracking-wider font-extralight
+                    relative   w-full p-4 text-2xl md:text-5xl tracking-wider font-extralight
                   `}
                       href="/admin"
                     >
@@ -400,7 +395,7 @@ const NavPages = () => {
                   )}
                   {session && session?.user.role !== "admin" && (
                     <div className="relative w-full h-auto duration-300  transition ease- z-10  rounded-md">
-                      <li className="relative   w-full p-4 text-3xl md:text-5xl tracking-wider font-extralight flex  justify-between">
+                      <li className="relative   w-full p-4 text-2xl md:text-5xl tracking-wider font-extralight flex  justify-between">
                         <Link className="w-full" href="/user">
                           <span className=" w-full ">Property Hub</span>
                         </Link>
@@ -414,7 +409,6 @@ const NavPages = () => {
                           }
                         />
                       </li>
-
                       <div
                         className={` ${
                           openLogOut
@@ -444,10 +438,10 @@ const NavPages = () => {
                       </div>
                     </div>
                   )}
-                  <li className="relative  flex  w-full  p-4 text-3xl md:text-5xl tracking-wider font-extralight  ">
+                  <li className="relative  flex  w-full  p-4 text-2xl md:text-5xl tracking-wider font-extralight  ">
                     <Link href="/owners">Ownership</Link>
                   </li>
-                  <li className="relative w-full flex p-4 text-3xl md:text-5xl tracking-wider font-extralight  ">
+                  <li className="relative w-full flex p-4 text-2xl md:text-5xl tracking-wider font-extralight  ">
                     <Link
                       href="/listings"
                       className="w-full flex justify-between"

@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import Provider from "@/components/Provider";
 import { EdgeStoreProvider } from "../lib/edgestore";
 import ToasterProvider from "@/components/ToasterProvider";
-import { SpeedInsights } from "@vercel/speed-insights/next"
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 // Define metadata for the page
 export const metadata: Metadata = {
@@ -37,7 +37,7 @@ export default function RootLayout({
       <body>
         <Provider>
           <EdgeStoreProvider>
-          <SpeedInsights/>
+            <SpeedInsights />
             <main className="grow">
               {/* Render the child components */}
               <ToasterProvider />

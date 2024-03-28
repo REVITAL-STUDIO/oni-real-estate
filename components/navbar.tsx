@@ -119,7 +119,11 @@ const Nav = () => {
     e.preventDefault(); //prevents the form submission from a pager reload
     setIsLoading(true); //signals loading in progress
     setIsLoginError(false); // indicates there's currently no login error
-    signIn("credentials", { ...signInData, redirect: false, callbackUrl: process.env.NEXTAUTH_URL }).then(
+    signIn("credentials", {
+      ...signInData,
+      redirect: false,
+      callbackUrl: process.env.NEXTAUTH_URL,
+    }).then(
       //autheticates the user with provided creds
       (callback) => {
         if (callback?.error) {
@@ -158,16 +162,13 @@ const Nav = () => {
         throw new Error("Passwords do not match");
       }
 
-      const response = await fetch(
-        `/api/register`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(registerData),
-        }
-      );
+      const response = await fetch(`/api/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(registerData),
+      });
       if (!response.ok) {
         if (response.status == 400) {
           setErrorMsg("Email already in use!");
@@ -178,7 +179,7 @@ const Nav = () => {
           `HTTP Error: Error creating user status ${response.status}`
         );
       }
-      signIn("credentials", { ...registerData, redirect: false}).then(
+      signIn("credentials", { ...registerData, redirect: false }).then(
         //autheticates the user with provided creds
         (callback) => {
           if (callback?.error) {
@@ -210,8 +211,6 @@ const Nav = () => {
   const togglelogOutMenu = () => {
     setLogOut(!openLogOut);
   };
-
-
 
   return (
     <div
@@ -369,7 +368,7 @@ const Nav = () => {
                 initial={{ opacity: 0, y: 100 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -100 }}
-                transition={{ ease: "easeInOut", duration: 1 }}
+                transition={{ ease: "easeInOut", duration: 0.8 }}
                 className="xl:hidden absolute top-0   right-0 bottom-0 w-full h-screen bg-eggshell shadow-xl "
               >
                 <Image
@@ -378,14 +377,14 @@ const Nav = () => {
                   className="invert w-32 p-4"
                 />
                 <ul
-                  className={` gap-y-4 font-medium text-black flex flex-col items-center  justify-center font-agrandir w-full h-2/3
+                  className={` gap-y-4 font-medium text-black flex flex-col items-center  justify-center font-agrandir w-full h-3/5
           `}
                 >
-                  <li className="relative   w-full p-4 text-3xl md:text-5xl tracking-wider font-extralight  ">
+                  <li className="relative   w-full p-4 text-2xl md:text-5xl tracking-wider font-extralight  ">
                     <Link href="/">Home</Link>
                   </li>
                   {!session && (
-                    <li className="relative  w-full p-4 text-3xl md:text-5xl tracking-wider font-extralight">
+                    <li className="relative  w-full p-4 text-2xl md:text-5xl tracking-wider font-extralight">
                       <button onClick={toggleLogin}>
                         <span>Login </span>
                       </button>
@@ -396,7 +395,7 @@ const Nav = () => {
                       className={`
                    
                     font-regular
-                    relative   w-full p-4 text-3xl md:text-5xl tracking-wider font-extralight
+                    relative   w-full p-4 text-2xl md:text-5xl tracking-wider font-extralight
                   `}
                       href="/admin"
                     >
@@ -407,7 +406,7 @@ const Nav = () => {
                   )}
                   {session && session?.user.role !== "admin" && (
                     <div className="relative w-full h-auto duration-300  transition ease- z-10  rounded-md">
-                      <li className="relative   w-full p-4 text-3xl md:text-5xl tracking-wider font-extralight flex  justify-between">
+                      <li className="relative   w-full p-4 text-2xl md:text-5xl tracking-wider font-extralight flex  justify-between">
                         <Link className="w-full" href="/user">
                           <span className=" w-full ">Property Hub</span>
                         </Link>
@@ -450,10 +449,10 @@ const Nav = () => {
                       </div>
                     </div>
                   )}
-                  <li className="relative  flex  w-full  p-4 text-3xl md:text-5xl tracking-wider font-extralight  ">
+                  <li className="relative  flex  w-full  p-4 text-2xl md:text-5xl tracking-wider font-extralight  ">
                     <Link href="/owners">Ownership</Link>
                   </li>
-                  <li className="relative w-full flex p-4 text-3xl md:text-5xl tracking-wider font-extralight  ">
+                  <li className="relative w-full flex p-4 text-2xl md:text-5xl tracking-wider font-extralight  ">
                     <Link
                       href="/listings"
                       className="w-full flex justify-between"
@@ -490,7 +489,7 @@ const Nav = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -100 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="bg-white xl:w-[50%] md:w-[95%] min-h-[80%] md:min-h-[90%] relative rounded-xl shadow-lg flex flex-col justify-center items-center"
+                className="bg-white xl:w-[50%] w-[95%] min-h-[80%] md:min-h-[90%] relative rounded-xl shadow-lg flex flex-col justify-center items-center"
               >
                 {/* Close Button */}
                 <div className="absolute w-fit top-2 right-2">

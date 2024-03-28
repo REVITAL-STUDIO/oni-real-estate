@@ -70,10 +70,7 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
     setLoading(true);
     try {
       //request to get listing data from api
-      const response = await fetch(
-        `/api/listing`,
-        { method: "GET" }
-      );
+      const response = await fetch(`/api/listing`, { method: "GET" });
 
       if (!response.ok) {
         throw new Error("Error fetching Listings");
@@ -96,15 +93,12 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
 
   const fetchUserData = async () => {
     try {
-      const response = await fetch(
-        `/api/user/${session?.user.email}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`/api/user/${session?.user.email}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!response.ok) {
         throw new Error("Error retrieving user infromation");
@@ -181,17 +175,14 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
   //function to save listing
   const favoriteListing = async (id: number) => {
     try {
-      const response = await fetch(
-        `/api/listing/favorites/`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: session?.user.email,
-            listingId: id, // Assuming you want to access the first listing's ID
-          }),
-        }
-      );
+      const response = await fetch(`/api/listing/favorites/`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: session?.user.email,
+          listingId: id, // Assuming you want to access the first listing's ID
+        }),
+      });
       if (!response.ok) {
         throw new Error("Favoriting Listing Error");
       }
@@ -233,8 +224,10 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
 
   if (error) {
     return (
-      <div className="w-3/5 h-full flex flex-col gap-3 justify-center items-center">
-        <p>Oops! Something went wrong. Please try loading listings again.</p>
+      <div className="w-full h-full flex flex-col gap-3 justify-center items-center">
+        <p className="p-4 text-center">
+          Oops! Something went wrong. Please try loading listings again.
+        </p>
         <button
           onClick={() => fetchListings()}
           className="w-40 h-12 text-white text-xs tracking-wider font-montserrat transition ease-in-out duration-150 bg-black hover:bg-black/60  rounded-xl  hover:shadow-lg active:bg-black"

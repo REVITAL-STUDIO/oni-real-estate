@@ -38,7 +38,7 @@ const Hero = () => {
           variants={variants}
           initial="hidden"
           animate="visible"
-          className="w-3/4 md:w-1/2 h-fit text-center text-white flex justify-center items-center"
+          className="w-1/2 h-fit text-center text-white flex justify-center items-center"
         >
           <Image src={Logo2} alt="logo" className="w-96 h-auto invert" />
         </motion.div>
@@ -49,7 +49,7 @@ const Hero = () => {
           className="w-1/2  h-1/2 justify-center items-center flex"
         >
           <h2
-            className="text-white text-center font-agrandir font-medium text-base md:text-4xl lg:text-5xl xl:text-4xl tracking-wider "
+            className="text-white text-center font-agrandir font-medium text-lg md:text-4xl lg:text-5xl xl:text-4xl tracking-wider "
             style={{ textShadow: "0px 4px 4px rgba(0, 0, 0, 0.3)" }}
           >
             Where Houston finds Homes.
