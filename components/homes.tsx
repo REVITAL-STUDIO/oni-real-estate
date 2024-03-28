@@ -269,7 +269,7 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
             {/* Housing Cards */}
             <div className="w-full h-1/2 flex flex-col justify-evenly font-medium text-gray-600 ">
               <div className="flex flex-col justify-center">
-                <h2 className="text-sm md:text-base font-montserrat font-regular p-2 w-3/5">
+                <h2 className="text-base font-montserrat font-regular p-2 w-3/5">
                   {listing.address}
                 </h2>
                 <p className="font-light p-2 text-sm">{`${listing.beds} beds | ${listing.baths} baths |  ${listing.area} sqft`}</p>

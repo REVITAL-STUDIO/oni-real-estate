@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
 
-
 import { AnimatePresence, motion } from "framer-motion";
 import InquiryModal from "./InquiryModal";
 
@@ -41,7 +40,7 @@ const PropertyInfo: React.FC<{
       startXRef.current = event.pageX;
       if (thumbnailContainerRef.current) {
         startScrollLeftRef.current = thumbnailContainerRef.current.scrollLeft;
-      }    
+      }
     };
 
     const handleMouseMove = (event: MouseEvent) => {
@@ -70,17 +69,16 @@ const PropertyInfo: React.FC<{
 
   const handleSlideChange = (index: number) => {
     setCurrentSlide(index);
-    scrollToThumbnail(index);
+    // scrollToThumbnail(index);
   };
 
-
-  const scrollToThumbnail = (index: number) => {
-    if (!thumbnailContainerRef.current) return;
-    const thumbnailWidth =
-      thumbnailContainerRef.current.scrollWidth /
-      selectedListing?.pictures.length;
-    thumbnailContainerRef.current.scrollLeft = index * thumbnailWidth;
-  };
+  // const scrollToThumbnail = (index: number) => {
+  //   if (!thumbnailContainerRef.current) return;
+  //   const thumbnailWidth =
+  //     thumbnailContainerRef.current.scrollWidth /
+  //     selectedListing?.pictures.length;
+  //   thumbnailContainerRef.current.scrollLeft = index * thumbnailWidth;
+  // };
 
   return (
     <div className="fixed inset-0 z-50">
@@ -88,29 +86,31 @@ const PropertyInfo: React.FC<{
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        transition={{ ease: "easeInOut", duration: 1 }}
-        className="bg-white/95 w-full h-full flex flex-col justify-center items-center  overflow-y-auto another-scrollbar z-50"
+        transition={{ ease: "easeInOut", duration: 0.5 }}
+        className="bg-white w-full h-full flex flex-col justify-center items-center overflow-y-auto another-scrollbar"
       >
-        <button
-          onClick={handleClose}
-          className="w-10 h-10 absolute top-2 right-2"
-        >
-          <span
-            className={`block w-3/4 my-0.5 border absolute border-black rotate-45 transition-transform `}
-          ></span>
-          <span
-            className={`block w-3/4 my-0.5 border absolute border-black -rotate-45 transition-transform `}
-          ></span>
-        </button>
+        <div className="float-right w-full h-[25%] xl:h-0 xl:w-0 z-50 ">
+          <button
+            onClick={handleClose}
+            className="w-10 h-10 absolute top-2 right-2"
+          >
+            <span
+              className={`block w-3/4 my-0.5 border absolute border-black rotate-45 transition-transform `}
+            ></span>
+            <span
+              className={`block w-3/4 my-0.5 border absolute border-black -rotate-45 transition-transform `}
+            ></span>
+          </button>
+        </div>
         <motion.section
           initial={{ opacity: 0, y: -100 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -100 }}
           transition={{ ease: "easeInOut", duration: 0.5 }}
-          className=" w-[95%] h-[full]   rounded-2xl flex flex-col justify-evenly items-center  "
+          className=" w-[95%] h-[75%] xl:h-full  flex flex-col justify-center items-center  z-20"
         >
           {/* Home and Description */}
-          <div className="w-full h-full flex flex-col xl:flex-row justify-around items-center">
+          <div className="w-full h-full flex flex-col xl:flex-row justify-around  items-center">
             <div className="xl:w-1/2 w-[100%]  xl:h-5/6 h-1/2 rounded-lg p-4 md:p-16 xl:p-4 ">
               {/* this is the main photo of the listing this is where i want the current slide to go or the current photo in the slide */}
               <AnimatePresence mode="wait">
@@ -132,19 +132,25 @@ const PropertyInfo: React.FC<{
               </AnimatePresence>
             </div>
             <div className="xl:w-2/5 w-[90%] h-full xl:h-5/6 text-black">
-              <h2 className="text-2xl xl:text-5xl w-2/3 md:w-[82%] text-black font-agrandir tracking-wide font-regular">
-                {selectedListing?.address}
-              </h2>
-              <h2 className="  py-4 font-montserrat text-forest font-bold tracking-wide text-3xl  md:text-5xl ">
-                {selectedListing?.price?.toLocaleString("en-US", {
-                  style: "currency",
-                  currency: "USD",
-                  maximumFractionDigits: 0,
-                })}
-              </h2>
-              <p className="text-xs tracking-wider md:flex font-montserrat font-regular text-justify xl:w-3/4 py-2">
-                {selectedListing?.description}
-              </p>
+              <div className="w-full h-1/4 xl:h-1/5 flex items-center">
+                <h2 className="text-2xl xl:text-5xl w-2/3 md:w-[82%] text-black font-agrandir tracking-wide font-bold">
+                  {selectedListing?.address}
+                </h2>
+              </div>
+              <div className="w-full h-[10%] flex items-center">
+                <h2 className="py-2 font-montserrat text-forest font-bold tracking-wide text-3xl  md:text-5xl ">
+                  {selectedListing?.price?.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                    maximumFractionDigits: 0,
+                  })}
+                </h2>
+              </div>
+              <div className="w-full h-1/6 xl:h-[10%] flex items-center">
+                <p className="text-sm tracking-wider md:flex font-montserrat font-regular text-justify xl:w-3/4 py-2">
+                  {selectedListing?.description}
+                </p>
+              </div>
               <p className="text-base font-montserrat font-regular py-4">
                 {selectedListing
                   ? `${selectedListing?.beds} Beds | ${selectedListing?.baths} Baths | ${selectedListing?.area} sqft`
@@ -155,14 +161,18 @@ const PropertyInfo: React.FC<{
                 className="w-full h-[35%] items-center bg-transparent flex gap-[1rem] overflow-hidden"
                 ref={thumbnailContainerRef}
               >
-                <div className="flex gap-[1.1rem] h-[100%] w-[50%] ">
+                <motion.div
+                  drag="x" // Make the container draggable in the x-direction
+                  dragConstraints={{ left: 0, right: 0 }} // Constraint to keep it within the parent container
+                  className="flex gap-[1.1rem] h-[100%] w-[75%] "
+                >
                   {selectedListing?.pictures.map((picture, index) => (
                     <motion.img
                       key={index}
                       src={picture}
-                      className={`w-[100%] object-cover hover:cursor-pointer ${
+                      className={`w-[100%] shadow-xl rounded-2xl object-cover hover:cursor-pointer ${
                         index === currentSlide
-                          ? "border scale-110 brightness-110 shadow-lg transition duration-500"
+                          ? " brightness-110 shadow-lg rounded-2xl transition duration-500"
                           : ""
                       }`}
                       alt={`Thumbnail ${index}`}
@@ -170,7 +180,7 @@ const PropertyInfo: React.FC<{
                       transition={{ duration: 1 }} // Adjust the duration as needed
                     />
                   ))}
-                </div>
+                </motion.div>
               </div>
               <div className="w-full h-1/6  flex  items-center">
                 {isInquiryModalOpen && (
@@ -181,7 +191,7 @@ const PropertyInfo: React.FC<{
                 )}
                 <button
                   onClick={handleOpenModal}
-                  className="w-1/3  mt-4 text-white bg-black tracking-wider hover:scale-110 transition duration-200 ease-in-out rounded-xl shadow-xl flex justify-center items-center p-4"
+                  className="w-1/3  my-4 text-black border border-black tracking-wider hover:scale-110 transition duration-200 ease-in-out rounded-xl shadow-xl flex justify-center items-center p-4"
                 >
                   Inquire
                 </button>
