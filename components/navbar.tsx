@@ -480,7 +480,7 @@ const Nav = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ ease: "easeInOut", duration: 0.5 }}
-            className=" fixed top-0 left-0 bg-white/90 w-full h-full "
+            className=" fixed top-0 left-0 bg-white/90 w-full h-full z-40"
           >
             {/* Sign In/ Log In form */}
             <div className="w-full h-full flex justify-center items-center">
@@ -607,7 +607,7 @@ const Nav = () => {
                         />
                       </div>
                       {/* Log In Button */}
-                      <div className="flex flex-col justify-evenly w-4/5 h-1/3 md:h-1/2 my-4">
+                      <div className="flex flex-col justify-evenly w-4/5 h-[33%] md:h-[50%] my-2">
                         <button
                           onClick={registerUser}
                           className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 flex items-center justify-center ${
