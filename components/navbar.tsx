@@ -607,7 +607,7 @@ const Nav = () => {
                         />
                       </div>
                       {/* Log In Button */}
-                      <div className="flex flex-col justify-evenly w-4/5 h-1/2 my-4">
+                      <div className="flex flex-col justify-evenly w-4/5 h-1/3 md:h-1/2 my-4">
                         <button
                           onClick={registerUser}
                           className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 flex items-center justify-center ${
