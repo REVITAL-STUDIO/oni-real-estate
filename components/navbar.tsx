@@ -728,7 +728,7 @@ const Nav = () => {
                   </div>
                   {/* Sign In Options Google and Facebook */}
 
-                  <div className="h-3/5 w-3/4 mt-[3%]">
+                  <div className="h-2/5 w-3/4 ">
                     <button
                       onClick={() => signIn("google")}
                       className="w-full my-2 p-4 flex items-center justify-center bg-black text-white text-sm rounded-2xl"
