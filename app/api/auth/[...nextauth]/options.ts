@@ -19,7 +19,7 @@ interface User {
     resetTokenExpiry: string | null;
     createdAt: string;
     updatedAt: string;
-  }
+}
 
 // options object for nextauth configuration
 export const options: NextAuthOptions = {
@@ -52,40 +52,40 @@ export const options: NextAuthOptions = {
                 }
             },
             async authorize(credentials): Promise<User> {
-
-                if (!credentials?.email || !credentials.password) {
-                    throw new Error('Please enter an email and password');
-                }
-
                 try {
-                //fetching user by db query from api route
-                const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/login`, {
-                    method: 'POST',
-                    body: JSON.stringify({ email: credentials?.email }),
-                })
-                if (response.ok) {
-                    // Check if user exists
-                    const user = await response.json();
-                    if (!user || !user.passwordHash) {
-                        throw new Error('No user found with the given email address');
+
+                    if (!credentials?.email || !credentials.password) {
+                        throw new Error('Please enter an email and password');
                     }
-                    //  and if credentials match
-                    const passwordMatch = await bcrypt.compare(credentials?.password, user.passwordHash);
-                    if (!passwordMatch) {
-                        throw new Error('Incorrect Password');
+
+                    //fetching user by db query from api route
+                    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/login`, {
+                        method: 'POST',
+                        body: JSON.stringify({ email: credentials?.email }),
+                    })
+                    if (response.ok) {
+                        // Check if user exists
+                        const user = await response.json();
+                        if (!user || !user.passwordHash) {
+                            throw new Error('No user found with the given email address');
+                        }
+                        //  and if credentials match
+                        const passwordMatch = await bcrypt.compare(credentials?.password, user.passwordHash);
+                        if (!passwordMatch) {
+                            throw new Error('Incorrect Password');
+                        }
+                        return user;
+
                     }
-                    return user;
+                    else {
+                        throw new Error('Failed to authenticate user');
+
+                    }
+                } catch (error) {
+                    console.error(error);
+                    throw error;
 
                 }
-                else {
-                    throw new Error('Failed to authenticate user');
-
-                }
-            } catch(error){
-                console.error(error);
-                throw error; 
-
-            }
 
             }
         })
@@ -111,10 +111,10 @@ export const options: NextAuthOptions = {
         },
 
     },
-    secret: process.env.NEXTAUTH_SECRET,
     debug: process.env.NODE_ENV == "development",
     session: {
         // Set to jwt in order for CredentialsProvider to work properly
         strategy: 'jwt'
-    }
+    },
+    secret: 'fjkshgkjsghioehgkdshnkglhwoiref',
 }
