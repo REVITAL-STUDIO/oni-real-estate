@@ -7,18 +7,17 @@ import bcrypt from 'bcrypt';
 
 interface User {
     id: string;
-    name: string;
+    name: string | null;
     email: string;
-    emailVerified: string | null;
+    emailVerified: Date | null;
     image: string | null;
-    passwordHash: string;
+    passwordHash: string | null;
     number: string | null;
-    role: 'admin' | 'user'; // Assuming role can be either 'admin' or 'user'
-    favoriteListingsIds: string[];
+    role: string;
+    favoriteListingsIds: number[];
     hashedResetToken: string | null;
-    resetTokenExpiry: string | null;
-    createdAt: string;
-    updatedAt: string;
+    resetTokenExpiry: Date | null;
+    createdAt: Date;
 }
 
 // options object for nextauth configuration
@@ -58,29 +57,25 @@ export const options: NextAuthOptions = {
                         throw new Error('Please enter an email and password');
                     }
 
-                    //fetching user by db query from api route
-                    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/login`, {
-                        method: 'POST',
-                        body: JSON.stringify({ email: credentials?.email }),
-                    })
-                    if (response.ok) {
-                        // Check if user exists
-                        const user = await response.json();
-                        if (!user || !user.passwordHash) {
-                            throw new Error('No user found with the given email address');
-                        }
-                        //  and if credentials match
-                        const passwordMatch = await bcrypt.compare(credentials?.password, user.passwordHash);
-                        if (!passwordMatch) {
-                            throw new Error('Incorrect Password');
-                        }
-                        return user;
+                    const user = await prisma.user.findUnique({
+                        where: {
+                            email: credentials.email,
+                        },
+                    });
 
+                    if (!user || !user.passwordHash) {
+                        throw new Error('No user found with the given email address');
                     }
-                    else {
-                        throw new Error('Failed to authenticate user');
 
+                    // Check if credentials match
+                    const passwordMatch = await bcrypt.compare(credentials.password, user.passwordHash);
+                    if (!passwordMatch) {
+                        throw new Error('Incorrect Password');
                     }
+
+                    return user;
+
+
                 } catch (error) {
                     console.error(error);
                     throw error;
