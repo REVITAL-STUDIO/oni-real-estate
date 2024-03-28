@@ -336,7 +336,7 @@ const Nav = () => {
         {/* Mobile Button */}
         <button
           onClick={toggleButton}
-          className="w-12 h-12 flex flex-col relative justify-center items-center rounded-full  space-x-reverse xl:hidden z-50"
+          className="w-12 h-12 flex flex-col relative justify-center items-center rounded-full  space-x-reverse xl:hidden z-30"
         >
           <span
             className={`block w-3/4 my-0.5 border border-white ${
@@ -620,7 +620,7 @@ const Nav = () => {
                             "Sign Up"
                           )}
                         </button>
-                        <p className="text-xs p-2">
+                        <p className="text-xs p-2 text-center">
                           By Clicking Sign Up, you agree to the Private Policy
                           and consent to marketing communications.
                         </p>
@@ -717,7 +717,7 @@ const Nav = () => {
                 )}
                 {/* Other sign in options */}
 
-                <div className="w-3/4 h-3/5 flex flex-col items-center ">
+                <div className="w-3/4 xl:h-3/5 h-1/2 flex flex-col items-center ">
                   {/* or */}
                   <div className="flex items-center w-3/4 h-fit ">
                     <hr className="flex-grow border-t-2 border-gray-300"></hr>

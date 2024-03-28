@@ -325,7 +325,7 @@ const NavPages = () => {
         {/* Mobile Button */}
         <button
           onClick={toggleButton}
-          className="w-12 h-12 flex flex-col relative justify-center items-center rounded-full  space-x-reverse xl:hidden z-50"
+          className="w-12 h-12 flex flex-col relative justify-center items-center rounded-full  space-x-reverse xl:hidden z-30"
         >
           <span
             className={`block w-3/4 my-0.5 border border-black ${
