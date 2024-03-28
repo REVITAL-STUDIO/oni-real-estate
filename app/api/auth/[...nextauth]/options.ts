@@ -116,5 +116,5 @@ export const options: NextAuthOptions = {
         // Set to jwt in order for CredentialsProvider to work properly
         strategy: 'jwt'
     },
-    secret: 'fjkshgkjsghioehgkdshnkglhwoiref',
+    secret: process.env.NEXTAUTH_SECRET,
 }
