@@ -24,9 +24,17 @@ const Nav = () => {
   const [color, setColor] = useState<boolean>(false);
   const [disappear, setDisappear] = useState<boolean>(false);
   const [openUserSettings, setOpenUserSettings] = useState(false);
+  const [showSignUpForm, setSignUpForm] = useState<boolean>(false);
+  const [openLogin, setOpenLogin] = useState<boolean>(false);
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
 
   const changeColor = () => {
-    if (typeof window !== "undefined") {
+    if (
+      typeof window !== "undefined" &&
+      !openMenu &&
+      !showSignUpForm &&
+      !openLogin
+    ) {
       const scrollY = window.scrollY;
       setColor(scrollY >= 80);
       setDisappear(scrollY >= 80);
@@ -41,7 +49,19 @@ const Nav = () => {
         window.removeEventListener("scroll", changeColor);
       };
     }
-  }, []);
+  }, [openMenu, showSignUpForm, openLogin]);
+
+  // Set overflow property when component mounts and unmounts
+  useEffect(() => {
+    // Prevent scrolling when either login or menu is open
+    document.body.style.overflow =
+      openLogin || openMenu || showSignUpForm ? "hidden" : "auto";
+
+    // Cleanup function
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [openLogin, openMenu, ]);
 
   //menu animation
   const variants = {
@@ -53,32 +73,19 @@ const Nav = () => {
   };
 
   // Mobile Menu
-  const [openMenu, setOpenMenu] = useState(false);
 
   const toggleButton = () => {
     setOpenMenu((prev) => !prev);
   };
 
   // Log in page
-  const [openLogin, setOpenLogin] = useState(false);
 
   const toggleLogin = () => {
     setIsRegisterError(false);
     setOpenLogin(!openLogin);
   };
 
-  // Set overflow property when component mounts and unmounts
-  useEffect(() => {
-    document.body.style.overflow = openLogin || openMenu ? "hidden" : "auto";
-
-    // Cleanup function
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [openLogin, openMenu]);
-
   //show sign up form
-  const [showSignUpForm, setSignUpForm] = useState(false);
 
   const toggleSignUp = () => {
     setErrorMsg("");
@@ -214,7 +221,7 @@ const Nav = () => {
 
   return (
     <div
-      className={`h-80 w-full flex fixed bg-gradient-to-b from-black/50 via-black/30 to-transparent z-50 flex-col items-center justify-center transition-all duration-300 ease-in-out ${
+      className={`h-80 w-full flex fixed bg-gradient-to-b from-black/50 via-black/30 to-transparent z-40 flex-col items-center justify-center transition-all duration-300 ease-in-out ${
         color ? "" : ""
       } ${disappear ? "opacity-0 pointer-events-none " : " "}`}
     >
@@ -362,12 +369,11 @@ const Nav = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ ease: "easeInOut", duration: 0.5 }}
-              className="xl:hidden absolute top-0  right-0 bottom-0  flex justify-center items-center w-full  h-screen bg-mist  "
+              className="xl:hidden absolute top-0  right-0 bottom-0  flex justify-center items-center w-full  h-screen bg-mist  z-20"
             >
               <motion.div
-                initial={{ opacity: 0, y: 100 }}
+                initial={{ opacity: 0, y: -100 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -100 }}
                 transition={{ ease: "easeInOut", duration: 0.8 }}
                 className="xl:hidden absolute top-0   right-0 bottom-0 w-full h-screen bg-eggshell shadow-xl "
               >
@@ -377,14 +383,14 @@ const Nav = () => {
                   className="invert w-32 p-4"
                 />
                 <ul
-                  className={` gap-y-4 font-medium text-black flex flex-col items-center  justify-center font-agrandir w-full h-3/5
+                  className={` font-medium text-black flex flex-col   justify-center font-agrandir w-full h-3/5
           `}
                 >
-                  <li className="relative   w-full p-4 text-2xl md:text-5xl tracking-wider font-extralight  ">
+                  <li className="relative   w-fit p-4 text-3xl tracking-wider   ">
                     <Link href="/">Home</Link>
                   </li>
                   {!session && (
-                    <li className="relative  w-full p-4 text-2xl md:text-5xl tracking-wider font-extralight">
+                    <li className="relative  w-fit p-4 text-3xl tracking-wider ">
                       <button onClick={toggleLogin}>
                         <span>Login </span>
                       </button>
@@ -395,20 +401,20 @@ const Nav = () => {
                       className={`
                    
                     font-regular
-                    relative   w-full p-4 text-2xl md:text-5xl tracking-wider font-extralight
+                    relative   w-full p-4 text-xl md:text-3xl tracking-wider font-extralight
                   `}
                       href="/admin"
                     >
-                      <span className="w-full flex justify-between">
+                      <span className="w-fit flex justify-between">
                         Admin Portal
                       </span>
                     </Link>
                   )}
                   {session && session?.user.role !== "admin" && (
                     <div className="relative w-full h-auto duration-300  transition ease- z-10  rounded-md">
-                      <li className="relative   w-full p-4 text-2xl md:text-5xl tracking-wider font-extralight flex  justify-between">
+                      <li className="relative   w-full p-4 text-3xl tracking-wider  flex  justify-between">
                         <Link className="w-full" href="/user">
-                          <span className=" w-full ">Property Hub</span>
+                          <span className=" w-fit ">Property Hub</span>
                         </Link>
                         <FontAwesomeIcon
                           onClick={togglelogOutMenu}
@@ -449,20 +455,20 @@ const Nav = () => {
                       </div>
                     </div>
                   )}
-                  <li className="relative  flex  w-full  p-4 text-2xl md:text-5xl tracking-wider font-extralight  ">
+                  <li className="relative  flex  w-fit  p-4 text-3xl tracking-wider   ">
                     <Link href="/owners">Ownership</Link>
                   </li>
-                  <li className="relative w-full flex p-4 text-2xl md:text-5xl tracking-wider font-extralight  ">
+                  <li className="relative w-fit flex p-4 text-3xl tracking-wider   ">
                     <Link
                       href="/listings"
-                      className="w-full flex justify-between"
+                      className="w-fit flex justify-between"
                     >
                       Properties
                     </Link>
                   </li>
                 </ul>
                 <div className="w-full flex justify-center items-center">
-                  <button className="font-agrandir shadow-lg w-3/4 h-1/3 bg-white text-black border border-white p-4 text-lg rounded-xl">
+                  <button className="font-agrandir shadow-lg w-3/4 h-1/3 bg-white text-black border border-white p-4 text-base rounded-xl">
                     Contact Us.
                   </button>
                 </div>
@@ -489,7 +495,7 @@ const Nav = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -100 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="bg-white xl:w-[50%] w-[95%] min-h-[80%] md:min-h-[90%] relative rounded-xl shadow-lg flex flex-col justify-center items-center"
+                className="bg-white xl:w-[50%] w-[95%] min-h-[80%] md:min-h-[90%] relative rounded-xl shadow-lg flex flex-col justify-center items-center z-50"
               >
                 {/* Close Button */}
                 <div className="absolute w-fit top-2 right-2">
@@ -511,122 +517,121 @@ const Nav = () => {
                 </div>
                 {/* Sign Up/Sign In */}
                 <div className="w-3/4 h-1/5  flex justify-center items-center">
-                  <h2 className="text-2xl md:text-4xl font-bold p-4 tracking-wide font-agrandir">
+                  <h2 className="text-2xl md:text-4xl  p-4 tracking-wide font-agrandir">
                     {showSignUpForm ? "Sign Up" : "Sign In"}
                   </h2>
                 </div>
                 {/* Form */}
 
                 {showSignUpForm ? (
-                  <div>
-                    <motion.form
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.5, ease: "easeInOut" }}
-                      className="w-full h-[85%] text-sm flex flex-col font-agrandir items-center  "
-                    >
-                      {isRegisterError && (
-                        <div className="p-[1rem] bg-red-100 flex gap-[1rem] items-center justify-center rounded-lg mb-[2rem]">
-                          <p className="text-red-400">{errorMsg}</p>
-                          <IoIosClose
-                            className=" text-red-300 h-[1rem] w-[1rem] hover:cursor-pointer"
-                            onClick={() => setIsRegisterError(false)}
-                          />
-                        </div>
-                      )}
-                      {/* Name */}
-                      <div className="flex flex-col w-4/5">
-                        <label className="py-2">Name</label>
-                        <input
-                          className="p-2 rounded-lg text-black bg-slate-400/10"
-                          type="text"
-                          id="Name"
-                          name="Name"
-                          placeholder="Name"
-                          required
-                          value={registerData.name}
-                          onChange={(e) =>
-                            setRegisterData({
-                              ...registerData,
-                              name: e.target.value,
-                            })
-                          }
+                  <motion.form
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }}
+                    className="w-3/4 h-[85%] text-sm flex flex-col font-agrandir items-center"
+                    style={{ touchAction: "manipulation" }}
+                  >
+                    {isRegisterError && (
+                      <div className="p-[1rem] bg-red-100 flex gap-[1rem] items-center justify-center rounded-lg mb-[2rem]">
+                        <p className="text-red-400">{errorMsg}</p>
+                        <IoIosClose
+                          className=" text-red-300 h-[1rem] w-[1rem] hover:cursor-pointer"
+                          onClick={() => setIsRegisterError(false)}
                         />
                       </div>
-                      {/* Email */}
-                      <div className="flex flex-col w-4/5">
-                        <label className="py-2">Email</label>
-                        <input
-                          className="p-2 rounded-lg text-black bg-slate-400/10"
-                          type="text"
-                          id="Email"
-                          name="Email"
-                          placeholder="Email"
-                          required
-                          value={registerData.email}
-                          onChange={(e) =>
-                            setRegisterData({
-                              ...registerData,
-                              email: e.target.value,
-                            })
-                          }
-                        />
-                      </div>
-                      {/* Password */}
-                      <div className="flex flex-col w-4/5">
-                        <label className="py-2">Password</label>
-                        <input
-                          className="p-2 rounded-lg text-black bg-slate-400/10"
-                          type="password"
-                          id="Password"
-                          name="Password"
-                          placeholder="Password"
-                          required
-                          value={registerData.password}
-                          onChange={(e) =>
-                            setRegisterData({
-                              ...registerData,
-                              password: e.target.value,
-                            })
-                          }
-                        />
-                      </div>
-                      {/* Confirm Password */}
-                      <div className="flex flex-col w-4/5">
-                        <label className="py-2">Confirm Password</label>
-                        <input
-                          className="p-2 rounded-lg text-black bg-slate-400/10"
-                          type="password"
-                          id="confirm-password"
-                          name="confirm-assword"
-                          placeholder="Password"
-                          required
-                          value={confirmPassword}
-                          onChange={(e) => setConfirmPassword(e.target.value)}
-                        />
-                      </div>
-                      {/* Log In Button */}
-                      <div className="flex flex-col justify-evenly w-4/5 h-[33%] md:h-[50%] my-2">
-                        <button
-                          onClick={registerUser}
-                          className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 flex items-center justify-center ${
-                            isLoading ? "opacity-75" : "opacity-100"
-                          }`}
-                        >
-                          {isLoading ? (
-                            <div className="h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
-                          ) : (
-                            "Sign Up"
-                          )}
-                        </button>
-                        <p className="text-xs p-2 text-center">
-                          By Clicking Sign Up, you agree to the Private Policy
-                          and consent to marketing communications.
-                        </p>
-                      </div>
-                    </motion.form>
-                  </div>
+                    )}
+                    {/* Name */}
+                    <div className="flex flex-col w-4/5">
+                      <label className="py-2">Name</label>
+                      <input
+                        className="p-2 rounded-lg text-black bg-slate-400/10"
+                        type="text"
+                        id="Name"
+                        name="Name"
+                        placeholder="Name"
+                        required
+                        value={registerData.name}
+                        onChange={(e) =>
+                          setRegisterData({
+                            ...registerData,
+                            name: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                    {/* Email */}
+                    <div className="flex flex-col w-4/5">
+                      <label className="py-2">Email</label>
+                      <input
+                        className="p-2 rounded-lg text-black bg-slate-400/10"
+                        type="text"
+                        id="Email"
+                        name="Email"
+                        placeholder="Email"
+                        required
+                        value={registerData.email}
+                        onChange={(e) =>
+                          setRegisterData({
+                            ...registerData,
+                            email: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                    {/* Password */}
+                    <div className="flex flex-col w-4/5">
+                      <label className="py-2">Password</label>
+                      <input
+                        className="p-2 rounded-lg text-black bg-slate-400/10"
+                        type="password"
+                        id="Password"
+                        name="Password"
+                        placeholder="Password"
+                        required
+                        value={registerData.password}
+                        onChange={(e) =>
+                          setRegisterData({
+                            ...registerData,
+                            password: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                    {/* Confirm Password */}
+                    <div className="flex flex-col w-4/5">
+                      <label className="py-2">Confirm Password</label>
+                      <input
+                        className="p-2 rounded-lg text-black bg-slate-400/10"
+                        type="password"
+                        id="confirm-password"
+                        name="confirm-assword"
+                        placeholder="Password"
+                        required
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                      />
+                    </div>
+                    {/* Log In Button */}
+                    <div className="flex flex-col justify-evenly w-4/5 h-[33%] md:h-[50%] my-2">
+                      <button
+                        onClick={registerUser}
+                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 flex items-center justify-center ${
+                          isLoading ? "opacity-75" : "opacity-100"
+                        }`}
+                      >
+                        {isLoading ? (
+                          <div className="h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                        ) : (
+                          "Sign Up"
+                        )}
+                      </button>
+                      <p className="text-xs  text-center p-2">
+                        By signing up, you agree to our Privacy Policy and
+                        marketing communications.
+                      </p>
+                    </div>
+                  </motion.form>
                 ) : (
                   <motion.form
                     key="login"
@@ -634,7 +639,8 @@ const Nav = () => {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.5, ease: "easeInOut" }}
-                    className="w-3/4 h-[85%] text-sm flex flex-col font-agrandir items-center "
+                    className="w-3/4 h-[75%] text-sm flex flex-col font-agrandir items-center z-50"
+                    style={{ touchAction: "manipulation" }}
                   >
                     {isLoginError && (
                       <div className="p-[1rem] bg-red-100 flex gap-[3rem] items-center rounded-lg mb-[2rem]">
@@ -656,6 +662,7 @@ const Nav = () => {
                         name="Email"
                         placeholder="Email"
                         autoComplete="email"
+                        onTouchStart={(e) => e.preventDefault()}
                         required
                         value={signInData.email}
                         onChange={(e) =>
@@ -675,6 +682,7 @@ const Nav = () => {
                         id="Password"
                         name="Password"
                         placeholder="Password"
+                        onTouchStart={(e) => e.preventDefault()}
                         required
                         value={signInData.password}
                         onChange={(e) =>
@@ -741,7 +749,7 @@ const Nav = () => {
                       Continue with Google
                     </button>
                     {showSignUpForm ? (
-                      <div className="w-full flex justify-center items-center">
+                      <div className="w-full flex justify-center items-center py-4">
                         <h2>Already a member?</h2>
                         <button
                           onClick={() => toggleSignUp()}

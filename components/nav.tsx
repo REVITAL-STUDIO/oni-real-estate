@@ -24,12 +24,20 @@ const NavPages = () => {
   const [color, setColor] = useState<boolean>(false);
   const [disappear, setDisappear] = useState<boolean>(false);
   const [openUserSettings, setOpenUserSettings] = useState(false);
+  const [showSignUpForm, setSignUpForm] = useState<boolean>(false);
+  const [openLogin, setOpenLogin] = useState<boolean>(false);
+  const [openMenu, setOpenMenu] = useState<boolean>(false);
 
   const changeColor = () => {
-    if (typeof window !== "undefined") {
+    if (
+      typeof window !== "undefined" &&
+      !openMenu &&
+      !showSignUpForm &&
+      !openLogin
+    ) {
       const scrollY = window.scrollY;
       setColor(scrollY >= 80);
-      setDisappear(scrollY >= 20);
+      setDisappear(scrollY >= 80);
     }
   };
 
@@ -41,44 +49,48 @@ const NavPages = () => {
         window.removeEventListener("scroll", changeColor);
       };
     }
-  }, []);
+  }, [openMenu, showSignUpForm, openLogin]);
+
+  // Set overflow property when component mounts and unmounts
+  useEffect(() => {
+    // Prevent scrolling when either login or menu is open
+    document.body.style.overflow =
+      openLogin || openMenu || showSignUpForm ? "hidden" : "auto";
+
+    // Cleanup function
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [openLogin, openMenu, showSignUpForm]);
 
   //menu animation
   const variants = {
-    hidden: { opacity: 0, y: 0 },
+    hidden: { opacity: 0, y: 0, transition: { delay: 3 } },
     visible: {
       opacity: 1,
-      transition: { delay: 1.5 },
+      transition: { delay: 2.5 },
     },
   };
 
   // Mobile Menu
-  const [openMenu, setOpenMenu] = useState(false);
 
   const toggleButton = () => {
     setOpenMenu((prev) => !prev);
   };
 
   // Log in page
-  const [openLogin, setOpenLogin] = useState(false);
 
   const toggleLogin = () => {
+    setIsRegisterError(false);
     setOpenLogin(!openLogin);
   };
 
-  // Set overflow property when component mounts and unmounts
-  useEffect(() => {
-    document.body.style.overflow = openLogin || openMenu ? "hidden" : "auto";
-
-    // Cleanup function
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  }, [openLogin, openMenu]);
   //show sign up form
-  const [showSignUpForm, setSignUpForm] = useState(false);
 
   const toggleSignUp = () => {
+    setErrorMsg("");
+    setIsRegisterError(false);
+    setIsLoginError(false);
     setSignUpForm((prev) => !prev);
   };
 
@@ -108,11 +120,18 @@ const NavPages = () => {
     router.push("/");
   };
 
+  //Handling Login
+  // Indicating that this function will handle mouse events on HTML button elements in a React application.
   const signInUser: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setIsLoginError(false);
-    await signIn("credentials", { ...signInData, redirect: false }).then(
+    e.preventDefault(); //prevents the form submission from a pager reload
+    setIsLoading(true); //signals loading in progress
+    setIsLoginError(false); // indicates there's currently no login error
+    signIn("credentials", {
+      ...signInData,
+      redirect: false,
+      callbackUrl: process.env.NEXTAUTH_URL,
+    }).then(
+      //autheticates the user with provided creds
       (callback) => {
         if (callback?.error) {
           setErrorMsg(callback.error);
@@ -178,12 +197,11 @@ const NavPages = () => {
           if (callback?.ok && !callback.error) {
             // log in user and go to listings page
             router.push("/listings?success=true");
-            setOpenLogin(false);
           }
           setIsLoading(false);
         }
       );
-      setOpenLogin(false);
+      toggleSignUp();
       setRegisterData({ name: "", email: "", password: "" });
       setConfirmPassword("");
     } catch (error) {
@@ -200,7 +218,6 @@ const NavPages = () => {
   const togglelogOutMenu = () => {
     setLogOut(!openLogOut);
   };
-
   return (
     <div
       className={`h-100 w-full flex fixed  flex-col items-center justify-center transition-all duration-300 ease-in-out z-50 ${
@@ -351,12 +368,11 @@ const NavPages = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ ease: "easeInOut", duration: 0.5 }}
-              className="xl:hidden absolute top-0  right-0 bottom-0  flex justify-center items-center w-full  h-screen bg-mist  "
+              className="xl:hidden absolute top-0  right-0 bottom-0  flex justify-center items-center w-full  h-screen bg-mist  z-20"
             >
               <motion.div
-                initial={{ opacity: 0, y: 100 }}
+                initial={{ opacity: 0, y: -100 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -100 }}
                 transition={{ ease: "easeInOut", duration: 0.8 }}
                 className="xl:hidden absolute top-0   right-0 bottom-0 w-full h-screen bg-eggshell shadow-xl "
               >
@@ -366,14 +382,14 @@ const NavPages = () => {
                   className="invert w-32 p-4"
                 />
                 <ul
-                  className={` gap-y-4 font-medium text-black flex flex-col items-center  justify-center font-agrandir w-full h-3/5
+                  className={` font-medium text-black flex flex-col   justify-center font-agrandir w-full h-3/5
           `}
                 >
-                  <li className="relative   w-full p-4 text-2xl md:text-5xl tracking-wider font-extralight  ">
+                  <li className="relative   w-fit p-4 text-3xl tracking-wider   ">
                     <Link href="/">Home</Link>
                   </li>
                   {!session && (
-                    <li className="relative  w-full p-4 text-2xl md:text-5xl tracking-wider font-extralight">
+                    <li className="relative  w-fit p-4 text-3xl tracking-wider ">
                       <button onClick={toggleLogin}>
                         <span>Login </span>
                       </button>
@@ -384,20 +400,20 @@ const NavPages = () => {
                       className={`
                    
                     font-regular
-                    relative   w-full p-4 text-2xl md:text-5xl tracking-wider font-extralight
+                    relative   w-full p-4 text-xl md:text-3xl tracking-wider font-extralight
                   `}
                       href="/admin"
                     >
-                      <span className="w-full flex justify-between">
+                      <span className="w-fit flex justify-between">
                         Admin Portal
                       </span>
                     </Link>
                   )}
                   {session && session?.user.role !== "admin" && (
                     <div className="relative w-full h-auto duration-300  transition ease- z-10  rounded-md">
-                      <li className="relative   w-full p-4 text-2xl md:text-5xl tracking-wider font-extralight flex  justify-between">
+                      <li className="relative   w-full p-4 text-3xl tracking-wider  flex  justify-between">
                         <Link className="w-full" href="/user">
-                          <span className=" w-full ">Property Hub</span>
+                          <span className=" w-fit ">Property Hub</span>
                         </Link>
                         <FontAwesomeIcon
                           onClick={togglelogOutMenu}
@@ -438,20 +454,20 @@ const NavPages = () => {
                       </div>
                     </div>
                   )}
-                  <li className="relative  flex  w-full  p-4 text-2xl md:text-5xl tracking-wider font-extralight  ">
+                  <li className="relative  flex  w-fit  p-4 text-3xl tracking-wider   ">
                     <Link href="/owners">Ownership</Link>
                   </li>
-                  <li className="relative w-full flex p-4 text-2xl md:text-5xl tracking-wider font-extralight  ">
+                  <li className="relative w-fit flex p-4 text-3xl tracking-wider   ">
                     <Link
                       href="/listings"
-                      className="w-full flex justify-between"
+                      className="w-fit flex justify-between"
                     >
                       Properties
                     </Link>
                   </li>
                 </ul>
                 <div className="w-full flex justify-center items-center">
-                  <button className="font-agrandir shadow-lg w-3/4 h-1/3 bg-white text-black border border-white p-4 text-lg rounded-xl">
+                  <button className="font-agrandir shadow-lg w-3/4 h-1/3 bg-white text-black border border-white p-4 text-base rounded-xl">
                     Contact Us.
                   </button>
                 </div>
@@ -469,7 +485,7 @@ const NavPages = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ ease: "easeInOut", duration: 0.5 }}
-            className=" fixed top-0 left-0 bg-white/90 w-full h-full z-50"
+            className=" fixed top-0 left-0 bg-white/90 w-full h-full z-40"
           >
             {/* Sign In/ Log In form */}
             <div className="w-full h-full flex justify-center items-center">
@@ -478,7 +494,7 @@ const NavPages = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -100 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="bg-white xl:w-[50%] w-[95%]  min-h-[80%] md:min-h-[90%] relative rounded-xl shadow-lg flex flex-col justify-center items-center"
+                className="bg-white xl:w-[50%] w-[95%] min-h-[80%] md:min-h-[90%] relative rounded-xl shadow-lg flex flex-col justify-center items-center z-50"
               >
                 {/* Close Button */}
                 <div className="absolute w-fit top-2 right-2">
@@ -500,7 +516,7 @@ const NavPages = () => {
                 </div>
                 {/* Sign Up/Sign In */}
                 <div className="w-3/4 h-1/5  flex justify-center items-center">
-                  <h2 className="text-2xl md:text-4xl font-bold p-4 tracking-wide font-agrandir">
+                  <h2 className="text-2xl md:text-4xl  p-4 tracking-wide font-agrandir">
                     {showSignUpForm ? "Sign Up" : "Sign In"}
                   </h2>
                 </div>
@@ -512,7 +528,8 @@ const NavPages = () => {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.5, ease: "easeInOut" }}
-                    className="w-3/4 h-[85%] text-sm flex flex-col font-agrandir items-center "
+                    className="w-3/4 h-[85%] text-sm flex flex-col font-agrandir items-center"
+                    style={{ touchAction: "manipulation" }}
                   >
                     {isRegisterError && (
                       <div className="p-[1rem] bg-red-100 flex gap-[1rem] items-center justify-center rounded-lg mb-[2rem]">
@@ -595,10 +612,10 @@ const NavPages = () => {
                       />
                     </div>
                     {/* Log In Button */}
-                    <div className="flex flex-col justify-evenly w-4/5 h-1/2 my-4 ">
+                    <div className="flex flex-col justify-evenly w-4/5 h-[33%] md:h-[50%] my-2">
                       <button
                         onClick={registerUser}
-                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${
+                        className={`p-2 bg-gradient-to-r shadow-md from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 flex items-center justify-center ${
                           isLoading ? "opacity-75" : "opacity-100"
                         }`}
                       >
@@ -608,9 +625,9 @@ const NavPages = () => {
                           "Sign Up"
                         )}
                       </button>
-                      <p className="text-xs p-2">
-                        By Clicking Sign Up, you agree to the Private Policy and
-                        consent to marketing communications.
+                      <p className="text-xs  text-center p-2">
+                        By signing up, you agree to our Privacy Policy and
+                        marketing communications.
                       </p>
                     </div>
                   </motion.form>
@@ -621,7 +638,8 @@ const NavPages = () => {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.5, ease: "easeInOut" }}
-                    className="w-3/4 h-[85%] text-sm flex flex-col font-agrandir items-center "
+                    className="w-3/4 h-[75%] text-sm flex flex-col font-agrandir items-center z-50"
+                    style={{ touchAction: "manipulation" }}
                   >
                     {isLoginError && (
                       <div className="p-[1rem] bg-red-100 flex gap-[3rem] items-center rounded-lg mb-[2rem]">
@@ -643,6 +661,7 @@ const NavPages = () => {
                         name="Email"
                         placeholder="Email"
                         autoComplete="email"
+                        onTouchStart={(e) => e.preventDefault()}
                         required
                         value={signInData.email}
                         onChange={(e) =>
@@ -662,6 +681,7 @@ const NavPages = () => {
                         id="Password"
                         name="Password"
                         placeholder="Password"
+                        onTouchStart={(e) => e.preventDefault()}
                         required
                         value={signInData.password}
                         onChange={(e) =>
@@ -677,7 +697,7 @@ const NavPages = () => {
                       <button
                         disabled={isLoading}
                         onClick={signInUser}
-                        className={`p-2 bg-gradient-to-r shadow-md flex my-4 justify-center items-center from-pine via-mint/50 to-mint text-base text-black rounded-full tracking-wide hover:opacity-75 ${
+                        className={`p-2 bg-gradient-to-r shadow-md from-pine my-4 via-mint/50 to-mint flex justify-center items-center text-base text-black rounded-full tracking-wide hover:opacity-75 ${
                           isLoading ? "opacity-75" : "opacity-100"
                         }`}
                       >
@@ -704,7 +724,7 @@ const NavPages = () => {
                 )}
                 {/* Other sign in options */}
 
-                <div className="w-3/4 h-3/5 flex flex-col items-center ">
+                <div className="w-3/4 xl:h-3/5 h-1/2 flex flex-col items-center ">
                   {/* or */}
                   <div className="flex items-center w-3/4 h-fit ">
                     <hr className="flex-grow border-t-2 border-gray-300"></hr>
@@ -715,7 +735,7 @@ const NavPages = () => {
                   </div>
                   {/* Sign In Options Google and Facebook */}
 
-                  <div className="h-3/5 w-3/4 mt-[3%]">
+                  <div className="h-2/5 w-3/4 ">
                     <button
                       onClick={() => signIn("google")}
                       className="w-full my-2 p-4 flex items-center justify-center bg-black text-white text-sm rounded-2xl"
@@ -727,9 +747,8 @@ const NavPages = () => {
                       />
                       Continue with Google
                     </button>
-
                     {showSignUpForm ? (
-                      <div className="w-full flex justify-center items-center mt-[3%]">
+                      <div className="w-full flex justify-center items-center py-4">
                         <h2>Already a member?</h2>
                         <button
                           onClick={() => toggleSignUp()}

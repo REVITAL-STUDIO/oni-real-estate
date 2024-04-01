@@ -3,7 +3,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { motion, useAnimation} from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 const Buyer = () => {
@@ -91,7 +91,7 @@ const Buyer = () => {
       ],
       name: "Finance",
       paragraph:
-        "From selecting and viewing properties to crafting a compelling offer to purchase, we guide our clients through each stage with expertise and care. Our dedicated team ensures that securing financing is a seamless process, leveraging our extensive network and resources to find the best options tailored to our clients' needs. By your side, you can trust in our commitment to simplifying the complexities of real estate transactions, making your experience both rewarding and stress-free.",
+        "We ensure that securing financing is a seamless process, leveraging our extensive network and resources to find the best options tailored to our clients' needs. By your side, you can trust in our commitment to simplifying the complexities of real estate transactions, making your experience both rewarding and stress-free.",
       title: "Selection to Finance",
     },
 
@@ -153,7 +153,7 @@ const Buyer = () => {
       info: ["Negotiation", "Home Inspection", "Accept Contract"],
       name: "Let's Deal",
       paragraph:
-        "Our experienced team works tirelessly to advocate for our clients, striving to achieve the best possible outcomes. Prior to finalizing any agreement, we conduct meticulous home inspections, ensuring our clients are fully informed about the condition of the property. Once all parties are satisfied, we facilitates the smooth acceptance of contracts, ensuring a seamless transition to the next phase of the transaction. Trust us to navigate you through negotiation, home inspection, and contract acceptance with professionalism and expertise.",
+        "Our experienced team works tirelessly to advocate for our clients, striving to achieve the best possible outcomes. Prior to finalizing any agreement, we conduct meticulous home inspections, ensuring our clients are fully informed about the condition of the property. Trust us to navigate you through negotiation, home inspection, and contract acceptance with professionalism and expertise.",
       title: "Negotiation to Contract Approval",
     },
   ];
@@ -170,8 +170,8 @@ const Buyer = () => {
       <div className="w-full h-700 flex flex-col justify-center bg-gradient-to-b from-white  via-white to-mint/20">
         <motion.div
           variants={{
-            hidden: { opacity: 0, y: -75 },
-            visible: { opacity: 1, y: 0 },
+            hidden: { opacity: 0 },
+            visible: { opacity: 1 },
           }}
           initial="hidden"
           animate="visible"
@@ -205,7 +205,7 @@ const Buyer = () => {
             transition={{ ease: "easeInOut", duration: 1 }}
             className="w-full h-full flex flex-col xl:flex-row overflow-x-hidden"
           >
-            <motion.div className="xl:w-1/2 w-full xl:h-3/4 h-1/3 flex xl:flex-col xl:justify-around justify-start items-center px-4 my-8">
+            <motion.div className="xl:w-1/2 w-full xl:h-3/4 h-1/4 flex xl:flex-col xl:justify-around justify-start items-center px-4 my-8">
               <div className="rounded-full  xl:h-96 xl:w-96 h-64 w-64 drop-shadow-lg flex flex-col  items-center ">
                 <h2 className="font-agrandir  text-2xl lg:text-5xl  tracking-wider font-regular">
                   {currentSlidePick.name}

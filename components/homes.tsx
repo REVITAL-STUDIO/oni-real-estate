@@ -276,7 +276,7 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
                 {session && user && (
                   <button
                     onClick={() => favoriteListing(listing.id)}
-                    className="w-20 h-10 font-agrandir tracking-wide flex justify-evenly items-center p-2 hover:scale-110 hover:text-pine active:scale-100 active:text-gray-600"
+                    className="w-20 h-10 font-agrandir tracking-wide flex justify-evenly items-center p-2 transition duration-200 ease-in-out hover:text-pine active:scale-100 active:text-gray-600"
                   >
                     <span>
                       {user?.favoriteListingsIds.includes(listing.id) ? (
@@ -293,7 +293,7 @@ const Homes: React.FC<HomesProps> = ({ selectedFilters }) => {
                         />
                       )}
                     </span>
-                    <span>
+                    <span className="transition duration-200 ease-in">
                       {user?.favoriteListingsIds.includes(listing.id)
                         ? "Saved"
                         : "Save"}
