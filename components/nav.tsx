@@ -139,7 +139,6 @@ const NavPages = () => {
         }
 
         if (callback?.ok && !callback.error) {
-          // go to listings page
           router.push("/listings");
           toggleLogin();
         }
@@ -273,17 +272,56 @@ const NavPages = () => {
             </li>
           )}
           {session && session?.user.role === "admin" && (
-            <Link
-              className={`
-                    relative
-                    font-regular rounded-full px-4 py-1  text-black hover:text-black shadow-xl border border-eggshell  hover:bg-gradient-to-r from-eggshell via-eggshell to-white transition duration-300 ease-in-out
-                  `}
-              href="/admin"
-            >
-              <span className="inline-block transition-all duration-500 ">
-                Admin Portal
-              </span>
-            </Link>
+            <div className="relative  h-auto rounded-full flex z-10 justify-between  items-center px-6 py-1  text-black hover:text-black hover:bg-gradient-to-r border border-eggshell shadow-xl hover:from-eggshell hover:via-eggshell hover:to-white transition duration-300 ease-in-out">
+              <Link
+                className={`
+         
+          font-regular     
+        `}
+                href="/admin"
+              >
+                <span>Admin</span>
+              </Link>
+              <button
+                onClick={togglelogOutMenu}
+                className="w-6 h-6 flex justify-center items-center "
+              >
+                <FontAwesomeIcon
+                  icon={faAngleDown}
+                  className={
+                    openLogOut
+                      ? "w-4 h-4 transform rotate-180 transition ease-in-out duration-300 px-2 z-20"
+                      : "w-4 h-4 transition ease-in-out duration-300 px-2 z-20"
+                  }
+                />
+              </button>
+              <div
+                className={` w-full ${
+                  openLogOut
+                    ? "h-[150px]  bg-black/90 absolute right-0 top-10 opacity-1 rounded-lg flex flex-col justify-evenly items-center transition-all duration-500 ease-in-out"
+                    : "h-0 opacity-0 transition-all absolute right-0 top-10  duration-500 ease-in-out flex flex-col justify-evenly items-center"
+                } `}
+              >
+                <button
+                  onClick={() => setOpenUserSettings(true)}
+                  className="text-left w-full  h-fit flex items-center justify-evenly text-white "
+                >
+                  <FontAwesomeIcon icon={faGears} size="lg" />
+                  Settings
+                </button>
+                <button
+                  onClick={handleLogout}
+                  className="text-left w-full h-fit  flex items-center justify-evenly text-white "
+                >
+                  <FontAwesomeIcon
+                    className="transform scale-x(-1)"
+                    icon={faArrowRightFromBracket}
+                    size="lg"
+                  />{" "}
+                  Log out
+                </button>
+              </div>
+            </div>
           )}
           {session && session?.user.role !== "admin" && (
             <div className="relative  h-auto rounded-full flex z-10 justify-between  items-center px-6 py-1  text-black hover:text-black hover:bg-gradient-to-r border border-eggshell shadow-xl hover:from-eggshell hover:via-eggshell hover:to-white transition duration-300 ease-in-out">
@@ -396,18 +434,49 @@ const NavPages = () => {
                     </li>
                   )}
                   {session && session?.user.role === "admin" && (
-                    <Link
-                      className={`
-                   
-                    font-regular
-                    relative   w-full p-4 text-xl md:text-3xl tracking-wider font-extralight
-                  `}
-                      href="/admin"
-                    >
-                      <span className="w-fit flex justify-between">
-                        Admin Portal
-                      </span>
-                    </Link>
+                    <div className="relative w-full h-auto duration-300  transition ease- z-10  rounded-md">
+                      <li className="relative   w-full p-4 text-3xl tracking-wider  flex  justify-between">
+                        <Link className="w-fit" href="/admin">
+                          <span className=" w-fit ">Admin</span>
+                        </Link>
+                        <FontAwesomeIcon
+                          onClick={togglelogOutMenu}
+                          icon={faAngleRight}
+                          className={
+                            openLogOut
+                              ? "w-6 h-6 transform rotate-90 transition ease-in-out duration-200"
+                              : "w-6 h-6 transition ease-in-out duration-200"
+                          }
+                        />
+                      </li>
+                      <div
+                        className={` ${
+                          openLogOut
+                            ? "h-[100px] opacity-1 transition-all duration-500 ease-in-out"
+                            : "h-0 opacity-0 transition-all duration-500 ease-in-out"
+                        } `}
+                      >
+                        <button className="text-left w-full p-4 h-fit flex items-center text-black ">
+                          <FontAwesomeIcon
+                            icon={faGears}
+                            size="lg"
+                            className="ml-4"
+                          />
+                          <span className="px-2 text-lg">Settings</span>
+                        </button>
+                        <button
+                          onClick={handleLogout}
+                          className="text-left w-full p-4 h-fit flex  items-center  text-black"
+                        >
+                          <FontAwesomeIcon
+                            className="transform scale-x(-1) ml-4"
+                            icon={faArrowRightFromBracket}
+                            size="lg"
+                          />{" "}
+                          <span className="px-2  text-lg">Log out</span>
+                        </button>
+                      </div>
+                    </div>
                   )}
                   {session && session?.user.role !== "admin" && (
                     <div className="relative w-full h-auto duration-300  transition ease- z-10  rounded-md">

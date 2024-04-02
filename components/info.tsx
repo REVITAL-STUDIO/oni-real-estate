@@ -46,7 +46,7 @@ const Info = () => {
         initial="hidden"
         animate={control}
         transition={{ duration: 0.6, delay: 0.25 }}
-        className="w-full h-full relative flex flex-col justify-start items-center  text-black"
+        className="w-full xl:w-1/2 h-full relative flex flex-col justify-start items-center  text-black"
         ref={ref}
       >
         <div className="w-full h-1/2 flex flex-col justify-center">
@@ -56,7 +56,7 @@ const Info = () => {
           <h3 className="p-4 text-xs md:text-sm font-montserrat font-medium tracking-widest text-black/75">
             Creating a One-of-A-Kind Home Buying Experience
           </h3>
-          <p className="text-sm xl:w-full   text-black/60  font-regular font-montserrat tracking-wide  p-4 xl:leading-6">
+          <p className="text-sm xl:w-full  text-black/60  font-regular font-montserrat tracking-wide  p-4 xl:leading-6">
             For every project, we start with the fundamentals. Reliability,
             quality and a relentless vision for success. From the ground up,
             every detail and every outcome is in trusted hands.
