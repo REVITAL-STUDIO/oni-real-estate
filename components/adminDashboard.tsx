@@ -295,7 +295,7 @@ const AdminDashboard = () => {
   };
 
   useEffect(() => {
-    if (createListing || editListing || showDeleteListing || showDeleteLead) {
+    if (createListing || editListing || showDeleteListing || showDeleteLead || isLeadInfoOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
@@ -304,7 +304,7 @@ const AdminDashboard = () => {
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, [createListing, editListing, showDeleteListing, showDeleteLead]);
+  }, [createListing, editListing, showDeleteListing, showDeleteLead, isLeadInfoOpen]);
 
 
   if (isLoading) {
