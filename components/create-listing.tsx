@@ -10,7 +10,7 @@ interface FileExtended extends File {
   url?: string;
 }
 
-const CreateListing = () => {
+const CreateListing: React.FC<{  onClose: () => void }> = ({ onClose }) => {
   const { edgestore } = useEdgeStore();
   const [selectedFiles, setSelectedFiles] = useState<FileExtended[]>([]);
   const imageUrls: string[] = [];
@@ -182,9 +182,20 @@ const CreateListing = () => {
               visible: { opacity: 1 },
             }}
             transition={{ delay: 0.5 }} // Adding a delay of 0.8 seconds
-            className="flex overflow-y-scroll xl:overflow-y-hidden p-4 md:p-8 relative flex-col bg-white/75 w-[95%] md:w-[100%] items-center justify-start xl:justify-center md:py-[3rem] rounded-3xl shadow-md max-h-[800px] md:max-h-[950px] "
+            className="flex overflow-y-scroll xl:overflow-y-hidden p-4 md:p-8 relative flex-col bg-white/75 w-[100%] items-center justify-start xl:justify-center py-[1rem] md:py-[3rem] rounded-3xl shadow-md max-h-[800px] md:max-h-[950px] "
           >
             <div className="w-full  ">
+            <button
+                    onClick={onClose}
+                    className="absolute right-6 top-6 p-4 flex justify-center items-center z-50"
+                  >
+                    <span
+                      className={`block w-3/4 my-0.5 border absolute border-white rotate-45 transition-transform `}
+                    ></span>
+                    <span
+                      className={`block w-3/4 my-0.5 border absolute border-white -rotate-45 transition-transform `}
+                    ></span>
+                  </button>
               <h1 className=" p-4 w-full text-left text-3xl relative md:left-7 xl:left-10 text-white">
                 {" "}
                 Create a Listing
@@ -342,7 +353,7 @@ const CreateListing = () => {
                 </div>
                 <button
                   onClick={createListing}
-                  className="p-4 text-white text-sm tracking-wider font-montserrat transition ease-in-out duration-150 bg-forest/90 hover:bg-forest w-fit rounded-xl  hover:shadow-lg active:opacity-100"
+                  className="hidden md:block p-4 text-white text-sm tracking-wider font-montserrat transition ease-in-out duration-150 bg-forest/90 hover:bg-forest w-fit rounded-xl  hover:shadow-lg active:opacity-100"
                 >
                   {isLoading ? (
                     <div className="h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
@@ -357,6 +368,16 @@ const CreateListing = () => {
                 <FileUpload onFilesSelected={handleFilesSelected} />
               </div>
             </div>
+           <button
+                  onClick={createListing}
+                  className="md:hidden p-4 text-white text-sm tracking-wider font-montserrat transition ease-in-out duration-150 bg-forest/90 hover:bg-forest w-fit rounded-xl  hover:shadow-lg active:opacity-100 mb-[6rem]"
+                >
+                  {isLoading ? (
+                    <div className="h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                  ) : (
+                    "Create Listing"
+                  )}
+                </button>
           </motion.div>
         </div>
       </div>

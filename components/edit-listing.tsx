@@ -23,7 +23,7 @@ interface FileExtended extends File {
   url?: string;
 }
 
-const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
+const EditListing: React.FC<{ listingId: number, onClose: () => void }> = ({ listingId, onClose }) => {
   const { edgestore } = useEdgeStore();
   const [selectedFiles, setSelectedFiles] = useState<FileExtended[]>([]);
   const [initialFiles, setInitialFiles] = useState<FileExtended[]>([]);
@@ -247,7 +247,7 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
         setIsLoading(false);
       }
     };
-  
+
     if (!fetchedListingData) {
       // Data is still loading, you can show a loading indicator or return null
       return (
@@ -260,7 +260,7 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
     return (
       <div className="font-agrandir">
         <div className="flex flex-col  justify-center md:justify-center items-center min-h-screen">
-          <div className=" relative flex flex-col justify-center items-center  md:mt-[0rem]  w-full md:w-[90%] md:py-[1rem] rounded-md ">
+          <div className=" relative flex flex-col justify-center items-center  md:mt-[0rem]  w-full md:w-[90%]  md:py-[1rem] rounded-md ">
             {isSuccess && (
               <div className="absolute top-[5%] p-[1rem] bg-green-100 flex gap-3 items-center rounded-lg mb-[2rem] z-[1000]">
                 <p className="text-green-700">Saved Listing changes.</p>
@@ -285,8 +285,19 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
                 visible: { opacity: 1 },
               }}
               transition={{ delay: 0.5 }} // Adding a delay of 0.8 seconds
-              className="relative overflow-y-scroll flex flex-col gap-12 bg-white/75 w-[90%] md:w-[100%] items-center md:justify-center md:flex-row md:py-[3rem] rounded-3xl shadow-md max-h-[800px]"
+              className="relative overflow-y-scroll flex flex-col gap-12 bg-white/75 w-[100%] items-center md:justify-center md:flex-row py-[1rem] md:py-[3rem] rounded-3xl shadow-md max-h-[800px]"
             >
+              <button
+                    onClick={onClose}
+                    className="absolute right-6 top-6 p-4 flex justify-center items-center z-50"
+                  >
+                    <span
+                      className={`block w-3/4 my-0.5 border absolute border-white rotate-45 transition-transform `}
+                    ></span>
+                    <span
+                      className={`block w-3/4 my-0.5 border absolute border-white -rotate-45 transition-transform `}
+                    ></span>
+                  </button>
               <div className="w-full h-fit md:hidden flex items-center">
                 <h1 className="  block md:hidden p-4 relative left-4 text-4xl text-white ">
                   Edit Listing
@@ -454,7 +465,7 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
                 </div>
                 <button
                   onClick={saveListing}
-                  className="p-4 text-white text-sm tracking-wider font-montserrat mt-4 bg-forest w-fit rounded-xl hover:opacity-80 hover:shadow-lg active:opacity-100"
+                  className="hidden md:block p-4 text-white text-sm tracking-wider font-montserrat mt-4 bg-forest w-fit rounded-xl hover:opacity-80 hover:shadow-lg active:opacity-100"
                 >
                   {isLoading ? (
                     <div className="h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
@@ -470,6 +481,16 @@ const EditListing: React.FC<{ listingId: number }> = ({ listingId }) => {
                   initialFiles={initialFiles}
                 />
               </div>
+              <button
+                  onClick={saveListing}
+                  className=" md:hidden p-4 text-white text-sm tracking-wider font-montserrat mt-4 bg-forest w-fit rounded-xl hover:opacity-80 hover:shadow-lg active:opacity-100 mb-[6rem]"
+                >
+                  {isLoading ? (
+                    <div className="h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                  ) : (
+                    "Save Changes"
+                  )}
+                </button>
             </motion.div>
           </div>
         </div>

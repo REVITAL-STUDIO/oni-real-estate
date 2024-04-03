@@ -61,7 +61,7 @@ const LeadInfo: React.FC<{ onClose: () => void, selectedLead: Lead }> = ({ onClo
 
   return (
     <div className="fixed inset-0 z-50 flex justify-center items-center bg-black bg-opacity-30">
-      <div className="relative bg-white  rounded-lg px-[2rem] py-[2rem] font-montserrat">
+      <div className="relative bg-white  rounded-lg px-4 md:px-[2rem] py-[2rem] font-montserrat max-w-full">
         <div className="flex justify-between mb-[8%]">
           <p className="text-xl ">Lead</p>
           <p className="text-4xl font-semibold">{selectedLead.name}</p>
@@ -73,9 +73,9 @@ const LeadInfo: React.FC<{ onClose: () => void, selectedLead: Lead }> = ({ onClo
           </button>
         </div>
         <div>
-          <div className="flex justify-around gap-[3rem] mb-[15%]">
+          <div className="flex justify-between md:justify-around gap-6 vmd:gap-[3rem] mb-[30%] md:mb-[15%]">
             <div>
-              <div className="flex flex-col bg-[#F4F4F4] rounded-lg p-[1rem] shadow-md w-[20rem]">
+              <div className="flex flex-col bg-[#F4F4F4] rounded-lg p-[1rem] shadow-md  md:w-[20rem]">
                 <div>
                   <p className="text-2xl mb-[5%]">Message:</p>
                   <FaQuoteLeft className="text-gray-300" />
@@ -84,7 +84,7 @@ const LeadInfo: React.FC<{ onClose: () => void, selectedLead: Lead }> = ({ onClo
               </div>
             </div>
             <div>
-              <div className="flex flex-col bg-[#F4F4F4] rounded-lg py-[1rem] px-[3rem] shadow-md min-w-[18rem]">
+              <div className="flex flex-col bg-[#F4F4F4] rounded-lg py-[1rem] p-[1rem] md:px-[3rem] shadow-md  md:min-w-[18rem]">
                 <p className="text-2xl mb-[15%]">Contact:</p>
                 <div className="mb-[20%]">
                   <HiOutlinePhone className="w-[1.8rem] h-[1.8rem] mb-[5%]" />
