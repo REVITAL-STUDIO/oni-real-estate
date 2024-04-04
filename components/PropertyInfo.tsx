@@ -89,7 +89,7 @@ const PropertyInfo: React.FC<{
         transition={{ ease: "easeInOut", duration: 0.5 }}
         className="bg-white w-full h-full flex flex-col justify-center items-center overflow-y-auto another-scrollbar"
       >
-        <div className="float-right w-full h-[25%] xl:h-0 xl:w-0 z-50 ">
+        <div className="float-right w-full h-[25%] xl:h-0 z-50 relative">
           <button
             onClick={handleClose}
             className="w-10 h-10 absolute top-2 right-2"
@@ -163,8 +163,8 @@ const PropertyInfo: React.FC<{
               >
                 <motion.div
                   drag="x" // Make the container draggable in the x-direction
-                  dragConstraints={{ left: 0, right: 0 }} // Constraint to keep it within the parent container
-                  className="flex gap-[1.1rem] h-[100%] w-[75%] "
+                  dragConstraints={{ left: 100, right: 100 }} // Constraint to keep it within the parent container
+                  className="flex gap-[1.1rem] h-[100%] w-[75%] z-30"
                 >
                   {selectedListing?.pictures.map((picture, index) => (
                     <motion.img
@@ -191,7 +191,7 @@ const PropertyInfo: React.FC<{
                 )}
                 <button
                   onClick={handleOpenModal}
-                  className="w-1/3  my-4 text-black border border-black tracking-wider hover:scale-110 transition duration-200 ease-in-out rounded-xl shadow-xl flex justify-center items-center p-4"
+                  className="w-1/3 h-8 my-4 text-black border border-black tracking-wider hover:scale-110 transition duration-200 ease-in-out rounded-xl shadow-xl flex justify-center items-center p-4"
                 >
                   Inquire
                 </button>

@@ -274,7 +274,7 @@ const Dashboard = () => {
                     </p>
                   </div>
                 ) : (
-                  <ul className="w-full h-[90%] flex flex-col items-center overflow-y-scroll">
+                  <ul className="w-full h-[75%] flex flex-col items-center overflow-y-scroll">
                     {homes.map((home) => (
                       <li
                         key={home.id}
