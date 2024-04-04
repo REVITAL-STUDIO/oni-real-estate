@@ -324,13 +324,13 @@ const AdminDashboard = () => {
               {/* Admin Profile */}
               <div className=" w-full md:w-[35%] bg-gray-400/10 transition ease-in-out duration-100 relative rounded-2xl  items-center shadow-lg p-[1.5rem]">
                 <div className="w-full h-full rounded-2xl  flex flex-col ">
-                  <div className="h-1/6 w-fit">
+                  <div className="h-1/5 w-fit">
                     <h2 className="  font-medium font-agrandir tracking-wider">
                       Profile
                     </h2>
                   </div>
                   {/* Profile Picture */}
-                  <div className="w-full h-full flex justify-center  items-center">
+                  <div className="w-full h-[90%] flex justify-center  items-center">
                     <div className="w-[9rem] h-[9rem] rounded-2xl relative flex justify-center items-center">
                       <div className="w-full h-full    bg-white inset-0 rounded-2xl shadow-md flex justify-center items-center mb-8">
                         <h2 className="xl:text-5xl text-3xl font-montserrat">
@@ -492,7 +492,7 @@ const AdminDashboard = () => {
             </div>
             {/* Listings */}
             <div className="h-[65%] bg-gray-400/10  relative  rounded-br-2xl rounded-2xl transition ease-in-out duration-100 shadow-lg mb-[10%]">
-              <div className="flex justify-between items-center w-full h-1/6 ">
+              <div className="flex justify-between items-center w-full h-1/5 ">
                 <h2 className="p-4  left-0 font-agrandir font-medium tracking-wider">
                   Listings
                 </h2>
