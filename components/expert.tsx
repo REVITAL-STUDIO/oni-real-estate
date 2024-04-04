@@ -62,7 +62,7 @@ const Expert = () => {
             Houston Connectivity. Navigate the Market Confidently with Our
             Expertise.
           </motion.p>
-          <div className="w-full xl:h-5/6 lg:h-3/5 md:h-1/2 h-1/2 rounded-lg p-4   ">
+          <div className="w-full md:w-[75%] xl:h-5/6 md:h-4/5   h-1/2 rounded-lg p-4   ">
             <Image
               src={Local}
               alt="local support"
@@ -71,7 +71,7 @@ const Expert = () => {
           </div>
           <Link
             href="/owners"
-            className="absolute xl:w-1/3 w-5/6  xl:hidden h-16 hover:bg-black hover:text-white text-black font-light tracking-wider text-base flex justify-center items-center transition-all duration-300 ease-in-out font-montserrat bottom-[0%] md:-bottom-5 bg-white xl:right-4  bg-opacity-20 backdrop-blur-5 border border-opacity-30 border-black/50 rounded-2xl shadow-sm p-4  group"
+            className="absolute xl:w-1/3 w-5/6 md:w-[75%]  xl:hidden h-16 hover:bg-black hover:text-white text-black font-light tracking-wider text-base flex justify-center items-center transition-all duration-300 ease-in-out font-montserrat  bottom-[0%] md:bottom-[-20%] bg-white xl:right-4  bg-opacity-20 backdrop-blur-5 border border-opacity-30 border-black/50 rounded-2xl shadow-sm p-4  group z-50"
           >
             <span>For Owners </span>
             <span className="relative left-1 bottom-3 transfrom -rotate-45 flex items-center justify-start w-12 h-12 duration-300 transform translate-y-0 group-hover:-translate-y-[10%] group-hover:translate-x-[25%] group-hover:opacity-100 ease">

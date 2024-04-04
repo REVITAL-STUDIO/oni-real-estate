@@ -119,7 +119,7 @@ const Contact = () => {
                   </label>
                   <input
                     typeof="firstName"
-                    className="h-12 xl:h-16 lg:h-24 rounded-2xl border bg-transparent p-2 xl:p-4  text-black"
+                    className="h-12 xl:h-16  rounded-2xl border bg-transparent p-2 xl:p-4  text-black"
                     placeholder="First Name"
                     required
                     value={firstName}
@@ -132,7 +132,7 @@ const Contact = () => {
                   </label>
                   <input
                     typeof="lastName"
-                    className="h-12 xl:h-16 lg:h-24 border rounded-2xl bg-transparent p-2 xl:p-4rounded-sm text-black"
+                    className="h-12 xl:h-16  border rounded-2xl bg-transparent p-2 xl:p-4rounded-sm text-black"
                     placeholder="Last Name"
                     required
                     value={lastName}
@@ -145,7 +145,7 @@ const Contact = () => {
                   </label>
                   <input
                     typeof="email"
-                    className="h-12 xl:h-16 lg:h-24 border rounded-2xl bg-transparent p-2 xl:p-4rounded-sm text-black"
+                    className="h-12 xl:h-16  border rounded-2xl bg-transparent p-2 xl:p-4rounded-sm text-black"
                     placeholder="Email"
                     required
                     value={leadData.email}
@@ -160,7 +160,7 @@ const Contact = () => {
                   </label>
                   <input
                     typeof="phone"
-                    className="h-12 xl:h-16 lg:h-24 border rounded-2xl bg-transparent p-2 xl:p-4  text-black"
+                    className="h-12 xl:h-16  border rounded-2xl bg-transparent p-2 xl:p-4  text-black"
                     placeholder="Phone"
                     value={leadData.number}
                     onChange={(e) =>
@@ -174,7 +174,7 @@ const Contact = () => {
                   </label>
                   <textarea
                     typeof="message"
-                    className="h-44 xl:h-32 lg:h-72 border rounded-2xl bg-transparent p-2 xl:p-4  text-black"
+                    className="h-44 xl:h-32  border rounded-2xl bg-transparent p-2 xl:p-4  text-black"
                     placeholder="Message"
                     value={leadData.message}
                     onChange={(e) =>

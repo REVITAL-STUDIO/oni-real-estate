@@ -320,7 +320,9 @@ const Nav = () => {
                     icon={faArrowRightFromBracket}
                     size="lg"
                   />{" "}
-                  Log out
+                  <span className="hover:text-red-500 transition ease-in-out duration-200">
+                    Log out
+                  </span>{" "}
                 </button>
               </div>
             </div>
@@ -372,7 +374,9 @@ const Nav = () => {
                     icon={faArrowRightFromBracket}
                     size="lg"
                   />{" "}
-                  Log out
+                  <span className="hover:text-red-500 transition ease-in-out duration-200">
+                    Log out
+                  </span>
                 </button>
               </div>
             </div>
@@ -475,7 +479,9 @@ const Nav = () => {
                             icon={faArrowRightFromBracket}
                             size="lg"
                           />{" "}
-                          <span className="px-2  text-lg">Log out</span>
+                          <span className="hover:text-red-500 px-2 text-lg transition ease-in-out duration-200">
+                            Log out
+                          </span>{" "}
                         </button>
                       </div>
                     </div>
@@ -520,7 +526,9 @@ const Nav = () => {
                             icon={faArrowRightFromBracket}
                             size="lg"
                           />{" "}
-                          <span className="px-2  text-lg">Log out</span>
+                          <span className="hover:text-red-500 transition ease-in-out duration-200">
+                            Log out
+                          </span>{" "}
                         </button>
                       </div>
                     </div>

@@ -56,7 +56,7 @@ const Info = () => {
           <h3 className="p-4 text-xs md:text-sm font-montserrat font-medium tracking-widest text-black/75">
             Creating a One-of-A-Kind Home Buying Experience
           </h3>
-          <p className="text-sm xl:w-full  text-black/60  font-regular font-montserrat tracking-wide  p-4 xl:leading-6">
+          <p className="text-sm w-[90%] xl:w-full  text-black/60  font-regular font-montserrat tracking-wide  p-4 xl:leading-6">
             For every project, we start with the fundamentals. Reliability,
             quality and a relentless vision for success. From the ground up,
             every detail and every outcome is in trusted hands.
@@ -76,7 +76,7 @@ const Info = () => {
         </div>
 
         {/* Mobile Responsive */}
-        <div className="h-2/5  w-[100%] relative rounded-lg md:bottom-20 flex justify-center items-center p-4  xl:hidden ">
+        <div className="md:4/5h-2/5  w-[100%] md:w-[75%] xl:w-[100%] relative rounded-lg md:bottom-20 flex justify-center items-center p-4  xl:hidden ">
           <Image
             src={Pool}
             alt="pool-image"
@@ -85,7 +85,7 @@ const Info = () => {
         </div>
         <Link
           href="/listings"
-          className="absolute xl:w-1/3 w-5/6  h-16 hover:bg-black hover:text-white text-black font-light tracking-wider text-base flex justify-center items-center transition-all duration-300 ease-in-out font-montserrat bottom-[0%] xl:top-1/2 bg-white xl:left-4  bg-opacity-20 backdrop-blur-5 border border-opacity-30 border-black/50 rounded-2xl shadow-sm p-4  group z-40"
+          className="absolute xl:w-1/3 w-5/6 md:w-3/4 h-16 hover:bg-black hover:text-white text-black font-light tracking-wider text-base flex justify-center items-center transition-all duration-300 ease-in-out font-montserrat bottom-[0%] xl:top-1/2 bg-white xl:left-4  bg-opacity-20 backdrop-blur-5 border border-opacity-30 border-black/50 rounded-2xl shadow-sm p-4  group z-40"
         >
           <span>View Properties </span>
           <span className="relative left-1 bottom-3 transfrom -rotate-45 flex items-center justify-start w-12 h-12 duration-300 transform translate-y-0 group-hover:-translate-y-[10%] group-hover:translate-x-[25%] group-hover:opacity-100 ease">

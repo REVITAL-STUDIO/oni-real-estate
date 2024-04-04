@@ -81,21 +81,15 @@ const AdminDashboard = () => {
   const [openMenu, setOpenMenu] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-
-
-
   // Fetch user data
   const fetchUserData = async () => {
     try {
-      const response = await fetch(
-        `/api/user/${session?.user.email}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`/api/user/${session?.user.email}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       if (!response.ok) {
         throw new Error("Error retrieving user infromation");
       }
@@ -119,12 +113,12 @@ const AdminDashboard = () => {
     //the listing to show in the property info page
     setSelectedListing(listing);
     openPropertyInfo((prevOpen) => !prevOpen);
-    document.body.style.overflow = 'hidden';
+    document.body.style.overflow = "hidden";
   };
 
   const handleClose = () => {
     openPropertyInfo(false);
-    document.body.style.overflow = 'auto';
+    document.body.style.overflow = "auto";
   };
 
   const handleOpenLeadInfo = () => {
@@ -149,7 +143,11 @@ const AdminDashboard = () => {
       case "new":
         return <span className="w-4 h-4 rounded-full text-green-500">New</span>;
       case "contacted":
-        return <span className="w-4 h-4 rounded-full text-yellow-500">Contacted</span>;
+        return (
+          <span className="w-4 h-4 rounded-full text-yellow-500">
+            Contacted
+          </span>
+        );
       case "converted":
         return <span className="w-4 h-4 text-red-500">Converted</span>;
       default:
@@ -163,13 +161,10 @@ const AdminDashboard = () => {
     setLoadingLeads(true);
     try {
       //requet to get listing data from api
-      const response = await fetch(
-        `/api/leads`,
-        { method: "GET" }
-      );
+      const response = await fetch(`/api/leads`, { method: "GET" });
 
       if (!response.ok) {
-        throw new Error("Error fetching Leads")
+        throw new Error("Error fetching Leads");
       }
       const data: Lead[] = await response.json();
       //setting listings data to Listings state variable
@@ -186,34 +181,31 @@ const AdminDashboard = () => {
   };
   const deleteLead = async (leadId: number) => {
     try {
-      const response = await fetch(
-        `/api/leads`,
-        {
-          method: 'DELETE',
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(leadId)
-        });
+      const response = await fetch(`/api/leads`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(leadId),
+      });
 
       if (!response.ok) {
-        throw new Error("Failed to delete Lead")
+        throw new Error("Failed to delete Lead");
       }
       fetchLeads();
       setShowDeleteLead(false);
     } catch (error) {
       console.error(error);
-
     }
   };
   const deleteListing = async (id: number) => {
     setIsError(false);
     try {
       //requet to get listing data from api
-      const response = await fetch(
-        `/api/listing`,
-        { method: "DELETE", body: JSON.stringify(id) }
-      );
+      const response = await fetch(`/api/listing`, {
+        method: "DELETE",
+        body: JSON.stringify(id),
+      });
       if (!response.ok) {
         throw new Error("Error deleting Listing");
       }
@@ -248,13 +240,10 @@ const AdminDashboard = () => {
     setListingsError(false);
     try {
       //requet to get listing data from api
-      const response = await fetch(
-        `/api/listing`,
-        { method: "GET" }
-      );
+      const response = await fetch(`/api/listing`, { method: "GET" });
 
       if (!response.ok) {
-        throw new Error("Error fetching listings")
+        throw new Error("Error fetching listings");
       }
       const data: Listing[] = await response.json();
       //setting listings data to Listings state variable
@@ -295,7 +284,13 @@ const AdminDashboard = () => {
   };
 
   useEffect(() => {
-    if (createListing || editListing || showDeleteListing || showDeleteLead || isLeadInfoOpen) {
+    if (
+      createListing ||
+      editListing ||
+      showDeleteListing ||
+      showDeleteLead ||
+      isLeadInfoOpen
+    ) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
@@ -304,8 +299,13 @@ const AdminDashboard = () => {
     return () => {
       document.body.style.overflow = "auto";
     };
-  }, [createListing, editListing, showDeleteListing, showDeleteLead, isLeadInfoOpen]);
-
+  }, [
+    createListing,
+    editListing,
+    showDeleteListing,
+    showDeleteLead,
+    isLeadInfoOpen,
+  ]);
 
   if (isLoading) {
     return (
@@ -321,154 +321,174 @@ const AdminDashboard = () => {
         <div className="w-full h-full md:h-screen flex justify-center items-center mb-4 mt-[30%] md:mt-0">
           <div className="w-[90%] h-[70%]   rounded-2xl  gap-[3rem] md:gap-4 flex flex-col">
             <div className="flex flex-col md:flex-row max-h-[53%] justify-between gap-[3rem] md:gap-0">
-            {/* Admin Profile */}
-            <div className=" w-full md:w-[35%] bg-gray-400/10 transition ease-in-out duration-100 relative rounded-2xl  items-center shadow-lg p-[1.5rem]">
-              <div className="w-full h-full rounded-2xl  flex flex-col ">
-                <div className="">
-                  <h2 className="  font-medium font-agrandir tracking-wider">
-                    Profile
-                  </h2>
-                  <button onClick={() => setOpenMenu(true)} className="w-8 h-8 bg-white hover:bg-gray-200/20 rounded-full shadow-md flex justify-center items-center transition duration-200 ease-in-out">
-                    <FontAwesomeIcon
-                      icon={faPenToSquare}
-                      size="sm"
-                      className="w-4 h-4"
-                    />
-                  </button>
-                </div>
-                {/* Profile Picture */}
-                <div className="w-full h-full flex justify-center  items-center">
-                  <div className="w-[9rem] h-[9rem] rounded-2xl relative flex justify-center items-center">
-                    <div className="w-full h-full    bg-white inset-0 rounded-2xl shadow-md flex justify-center items-center mb-8">
-                      <h2 className="xl:text-5xl text-3xl font-montserrat">{userData.name.charAt(0).toUpperCase()}</h2>
+              {/* Admin Profile */}
+              <div className=" w-full md:w-[35%] bg-gray-400/10 transition ease-in-out duration-100 relative rounded-2xl  items-center shadow-lg p-[1.5rem]">
+                <div className="w-full h-full rounded-2xl  flex flex-col ">
+                  <div className="h-1/6 w-fit">
+                    <h2 className="  font-medium font-agrandir tracking-wider">
+                      Profile
+                    </h2>
+                  </div>
+                  {/* Profile Picture */}
+                  <div className="w-full h-full flex justify-center  items-center">
+                    <div className="w-[9rem] h-[9rem] rounded-2xl relative flex justify-center items-center">
+                      <div className="w-full h-full    bg-white inset-0 rounded-2xl shadow-md flex justify-center items-center mb-8">
+                        <h2 className="xl:text-5xl text-3xl font-montserrat">
+                          {userData.name.charAt(0).toUpperCase()}
+                        </h2>
+                      </div>
+                      <div className="absolute  w-8 h-8 bg-blue-500 shadow-xl left-[-5%] -bottom-2  rounded-full flex justify-center items-center">
+                        <FontAwesomeIcon
+                          icon={faCheck}
+                          size="sm"
+                          className="w-4  h-4 text-white"
+                        />
+                      </div>
                     </div>
-                    <div className="absolute  w-8 h-8 bg-blue-500 shadow-xl left-[-5%] -bottom-2  rounded-full flex justify-center items-center">
+                  </div>
+
+                  {/* Name */}
+                  <div className="w-full  flex flex-col items-center justify-evenly">
+                    <span className="text-xs font-montserrat text-black/50">
+                      Agent
+                    </span>
+                    <span className="text-base font-montserrat tracking-4">
+                      {userData.name}
+                    </span>
+                  </div>
+                  <div className="h-1/6 w-fit">
+                    <button
+                      onClick={() => setOpenMenu(true)}
+                      className="w-8 h-8 bg-white hover:bg-gray-200/20 rounded-full shadow-md flex justify-center items-center transition duration-200 ease-in-out"
+                    >
                       <FontAwesomeIcon
-                        icon={faCheck}
+                        icon={faPenToSquare}
                         size="sm"
-                        className="w-4  h-4 text-white"
+                        className="w-4 h-4"
                       />
-                    </div>
+                    </button>
                   </div>
-                </div>
-                {/* Name */}
-                <div className="w-full  flex flex-col items-center justify-evenly">
-                  <span className="text-xs font-montserrat text-black/50">
-                    Agent
-                  </span>
-                  <span className="text-base font-montserrat tracking-4">
-                    {userData.name}
-                  </span>
                 </div>
               </div>
-            </div>
-            {/* Leads */}
-            <div className=" w-full md:w-[60%] relative bg-gray-400/10 transition ease-in-out duration-100 rounded-2xl shadow-lg">
-              <div className="h-full w-full">
-                <div className="w-full md:absolute flex  justify-between ">
-                  <h2 className="tracking-wider left-0  font-medium font-agrandir p-4">
-                    Leads
-                  </h2>
-                  <div className=" h-full flex md:p-4 p-2 gap-x-4">
-                    <div className="p-4 bg-black rounded-full shadow-lg  py-0 w-32 xl:py-[.5rem]  text-white text-xs flex flex-col items-center justify-start">
-                      <span className="text-xs">Leads</span>
-                      <span className="text-lg">{leads.length}</span>
+              {/* Leads */}
+              <div className=" w-full md:w-[60%] relative bg-gray-400/10 transition ease-in-out duration-100 rounded-2xl shadow-lg">
+                <div className="h-full w-full">
+                  <div className="w-full md:absolute flex items-center justify-between ">
+                    <h2 className="tracking-wider left-0  font-medium font-agrandir p-4">
+                      Leads
+                    </h2>
+                    <div className=" h-full flex md:p-4 p-2 gap-x-4">
+                      <div className="p-4 bg-black rounded-full shadow-lg  py-0 w-32 xl:py-4 h-8 text-white text-xs flex  items-center justify-evenly">
+                        <span className="text-base">{leads.length}</span>
+                        <span className="text-xs">Leads</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <section className="w-full h-full flex justify-evenly items-end">
-                  <div className="w-full h-[75%] rounded-2xl flex justify-center ">
-                    <div className="w-full max-h-[25rem] md:w-5/6 md:h-full  p-4  overflow-y-scroll ">
-                      {!fetchedLeadsData && loadingLeads ? (
-                        <div className="flex justify-center items-center h-full">
-                          {" "}
-                          <div className=" h-6 w-6 md:h-10 md:w-10  border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
-                        </div>
-                      ) : (
-
-                        <div>
-                          {!leadsError &&
-                            leads.map((lead) => (
-                              <div
-                                key={lead.id}
-                                className="w-full  bg-white rounded-2xl text-black shadow-lg flex justify-between items-center mb-[1rem] py-[1rem]"
-                              >
-                                {/* Client Lead */}
-                                <div className="w-1/2 h-full flex justify-evenly items-center ">
-                                  <div
-                                    className={`w-10 h-10 rounded-full flex justify-center items-center ${lead.color}`}
-                                  >
-                                    <span>{lead.name.charAt(0).toUpperCase()}</span>
-                                  </div>
-                                  <span className="text-sm tracking-wider font-montserrat">
-                                    {lead.name}
-                                  </span>
-                                </div>
-
-                                <div className="w-1/2 h-full flex justify-between items-center">
-                                  <div className="relative ">
-                                    <p className="text-semibold">
-                                      {colorizeStatus(lead.status)}
-                                    </p>
-                                  </div>
-                                  <button
-                                    onClick={() => {
-                                      setSelectedLead(lead);
-                                      handleOpenLeadInfo();
-                                    }}
-                                    className="text-lg text-blue-500 hover:text-gray-500 active:text-blue-500"
-                                  >
-                                    view
-                                  </button>
-                                  <button onClick={() => {
-                                    setSelectedLead(lead);
-                                    setShowDeleteLead(true);
-                                  }} className="w-fit px-4 tracking-wider font-montserrat h-8 rounded-full  text-red-500 text-xs">
-                                    <svg
-                                      width="24"
-                                      height="24"
-                                      viewBox="0 0 24 24"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
+                  <section className="w-full h-full flex justify-evenly items-end">
+                    <div className="w-full h-[75%] rounded-2xl flex justify-center ">
+                      <div className="w-full max-h-[25rem] md:w-5/6 md:h-full  p-4  overflow-y-scroll ">
+                        {!fetchedLeadsData && loadingLeads ? (
+                          <div className="flex justify-center items-center h-full">
+                            {" "}
+                            <div className=" h-6 w-6 md:h-10 md:w-10  border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                          </div>
+                        ) : (
+                          <div>
+                            {!leadsError &&
+                              leads.map((lead) => (
+                                <div
+                                  key={lead.id}
+                                  className="w-full  bg-white rounded-2xl text-black shadow-lg flex justify-between items-center mb-[1rem] py-[1rem]"
+                                >
+                                  {/* Client Lead */}
+                                  <div className="w-1/2 h-full flex justify-evenly items-center ">
+                                    <div
+                                      className={`w-10 h-10 rounded-full flex justify-center items-center ${lead.color}`}
                                     >
-                                      <path
-                                        d="M6.39989 18.3079L5.69189 17.5999L11.2919 11.9999L5.69189 6.39989L6.39989 5.69189L11.9999 11.2919L17.5999 5.69189L18.3079 6.39989L12.7079 11.9999L18.3079 17.5999L17.5999 18.3079L11.9999 12.7079L6.39989 18.3079Z"
-                                        fill="#FF0000"
-                                      />
-                                    </svg>
-                                  </button>
+                                      <span>
+                                        {lead.name.charAt(0).toUpperCase()}
+                                      </span>
+                                    </div>
+                                    <span className="text-sm tracking-wider font-montserrat">
+                                      {lead.name}
+                                    </span>
+                                  </div>
+
+                                  <div className="w-1/2 h-full flex justify-between items-center">
+                                    <div className="relative ">
+                                      <p className="text-semibold">
+                                        {colorizeStatus(lead.status)}
+                                      </p>
+                                    </div>
+                                    <button
+                                      onClick={() => {
+                                        setSelectedLead(lead);
+                                        handleOpenLeadInfo();
+                                      }}
+                                      className="text-lg text-blue-500 hover:text-gray-500 active:text-blue-500"
+                                    >
+                                      view
+                                    </button>
+                                    <button
+                                      onClick={() => {
+                                        setSelectedLead(lead);
+                                        setShowDeleteLead(true);
+                                      }}
+                                      className="w-fit px-4 tracking-wider font-montserrat h-8 rounded-full  text-red-500 text-xs"
+                                    >
+                                      <svg
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                      >
+                                        <path
+                                          d="M6.39989 18.3079L5.69189 17.5999L11.2919 11.9999L5.69189 6.39989L6.39989 5.69189L11.9999 11.2919L17.5999 5.69189L18.3079 6.39989L12.7079 11.9999L18.3079 17.5999L17.5999 18.3079L11.9999 12.7079L6.39989 18.3079Z"
+                                          fill="#FF0000"
+                                        />
+                                      </svg>
+                                    </button>
+                                  </div>
                                 </div>
+                              ))}
+                            {leadsError && (
+                              <div className="w-full h-full flex flex-col gap-3 justify-center items-center">
+                                <p>
+                                  Oops! Something went wrong. Please try loading
+                                  leads again.
+                                </p>
+                                <button
+                                  onClick={() => fetchLeads()}
+                                  className="w-40 h-12 text-white text-xs tracking-wider font-montserrat transition ease-in-out duration-150 bg-black hover:bg-black/60  rounded-xl  hover:shadow-lg active:bg-black"
+                                >
+                                  Retry
+                                </button>
                               </div>
-                            ))}
-                          {leadsError &&
-                            <div className="w-full h-full flex flex-col gap-3 justify-center items-center">
-                              <p>Oops! Something went wrong. Please try loading leads again.</p>
-                              <button onClick={() => fetchLeads()} className="w-40 h-12 text-white text-xs tracking-wider font-montserrat transition ease-in-out duration-150 bg-black hover:bg-black/60  rounded-xl  hover:shadow-lg active:bg-black">Retry</button>
-                            </div>
-                          }
-                        </div>
-                      )}
-                      {isLeadInfoOpen && selectedLead && (
-                        <div>
-                          <motion.section
-                            initial={{ opacity: 0, y: -100 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -100 }}
-                            transition={{ ease: "easeInOut", duration: 0.5 }}
-                            className="fixed inset-0 z-50 flex justify-center items-center "
-                          >
-                            <LeadInfo
-                              onClose={handleCloseLeadInfo}
-                              selectedLead={selectedLead}
-                            />
-                          </motion.section>
-                        </div>
-                      )}
+                            )}
+                          </div>
+                        )}
+                        {isLeadInfoOpen && selectedLead && (
+                          <div>
+                            <motion.section
+                              initial={{ opacity: 0, y: -100 }}
+                              animate={{ opacity: 1, y: 0 }}
+                              exit={{ opacity: 0, y: -100 }}
+                              transition={{ ease: "easeInOut", duration: 0.5 }}
+                              className="fixed inset-0 z-50 flex justify-center items-center "
+                            >
+                              <LeadInfo
+                                onClose={handleCloseLeadInfo}
+                                selectedLead={selectedLead}
+                              />
+                            </motion.section>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                </section>
+                  </section>
+                </div>
               </div>
-            </div>
             </div>
             {/* Listings */}
             <div className="h-[65%] bg-gray-400/10  relative  rounded-br-2xl rounded-2xl transition ease-in-out duration-100 shadow-lg mb-[10%]">
@@ -590,14 +610,21 @@ const AdminDashboard = () => {
                             </div>
                           </div>
                         </div>
-                      ))
-                    }
-                    {listingsError &&
+                      ))}
+                    {listingsError && (
                       <div className="w-full h-full flex flex-col gap-3 justify-center items-center">
-                        <p>Oops! Something went wrong. Please try loading listings again.</p>
-                        <button onClick={() => fetchListings()} className="w-40 h-12 text-white text-xs tracking-wider font-montserrat transition ease-in-out duration-150 bg-black hover:bg-black/60  rounded-xl  hover:shadow-lg active:bg-black">Retry</button>
+                        <p>
+                          Oops! Something went wrong. Please try loading
+                          listings again.
+                        </p>
+                        <button
+                          onClick={() => fetchListings()}
+                          className="w-40 h-12 text-white text-xs tracking-wider font-montserrat transition ease-in-out duration-150 bg-black hover:bg-black/60  rounded-xl  hover:shadow-lg active:bg-black"
+                        >
+                          Retry
+                        </button>
                       </div>
-                    }
+                    )}
                   </div>
                 )}
               </div>
@@ -617,9 +644,7 @@ const AdminDashboard = () => {
                   transition={{ ease: "easeInOut", duration: 1 }}
                   className="fixed left-0 top-0 bg-black/95 w-full h-full z-50"
                 >
-                  <CreateListing
-                  onClose={handleCloseCreateListing}
-                   />
+                  <CreateListing onClose={handleCloseCreateListing} />
                 </motion.div>
               </AnimatePresence>
             )}
@@ -637,9 +662,9 @@ const AdminDashboard = () => {
                   transition={{ ease: "easeInOut", duration: 1 }}
                   className="fixed left-0 top-0 bg-black/90 w-full h-full z-50"
                 >
-                  
-                  <EditListing listingId={selectedListing.id} 
-                  onClose={handleCloseEditListing}
+                  <EditListing
+                    listingId={selectedListing.id}
+                    onClose={handleCloseEditListing}
                   />
                 </motion.div>
               </AnimatePresence>
@@ -768,7 +793,9 @@ const AdminDashboard = () => {
                   undone.
                 </p>
                 <div className="mt-[2%] w-[30%]">
-                <p className="text-gray-900 font-semibold text-lg">{selectedLead.name}</p>
+                  <p className="text-gray-900 font-semibold text-lg">
+                    {selectedLead.name}
+                  </p>
 
                   <p className="text-gray-600">"{selectedLead.message}"</p>
                 </div>
@@ -804,10 +831,13 @@ const AdminDashboard = () => {
           !propertyInfo && <Footer />}
 
         {/* User Profile settings */}
-        <ProfileSettings openMenu={openMenu} setOpenMenu={setOpenMenu} userInfo={userData} setUserInfo={setUserData} />
-
+        <ProfileSettings
+          openMenu={openMenu}
+          setOpenMenu={setOpenMenu}
+          userInfo={userData}
+          setUserInfo={setUserData}
+        />
       </div>
-
     );
   }
 };
