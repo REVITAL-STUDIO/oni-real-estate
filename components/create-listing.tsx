@@ -200,7 +200,7 @@ const CreateListing: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             </div>
 
             <div className="flex flex-col xl:flex-row w-full max-h-[750px] xl:h-auto items-center justify-evenly overflow-y-scroll xl:overflow-y-hidden">
-              <form className="w-[100%] md:w-[90%] xl:w-[40%]  flex flex-col gap-4">
+              <form className="w-[90%] xl:w-[40%]  flex flex-col gap-4">
                 <div>
                   <label className="py-2 text-white">Address</label>
                   <input
