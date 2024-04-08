@@ -672,7 +672,7 @@ const AdminDashboard = () => {
           </div>
           {/* Delete Listing Modal */}
           {showDeleteListing && selectedListing && (
-            <div className="fixed left-0 top-0 bg-black/90 w-full h-full z-20 flex justify-center items-center">
+            <div className="fixed left-0 top-0 bg-black/90 w-full h-full  flex justify-center items-center z-50">
               <button
                 onClick={() => setShowDeleteListing(false)}
                 className="absolute right-2 top-2 p-4 flex justify-center items-center z-50"
@@ -685,7 +685,7 @@ const AdminDashboard = () => {
                 ></span>
               </button>
 
-              <div className="bg-white w-full md:w-[40%] flex flex-col items-center text-center py-4 rounded-md">
+              <div className="bg-white w-[90%] md:w-[40%] flex flex-col items-center text-center py-4 rounded-md">
                 {isError && (
                   <div className="p-[1rem] bg-red-100 flex gap-3 items-center rounded-lg mb-[2rem] ">
                     <p className="text-red-400">{errorMsg}</p>
@@ -713,31 +713,27 @@ const AdminDashboard = () => {
                   </svg>
                   <p className="font-semibold text-3xl">Confirm Delete</p>
                 </div>
-                <p className="mt-[5%] text-gray-400">
+                <p className="mt-[5%] w-[75%] md:w-full text-sm text-center text-gray-400">
                   Are you sure you want to delete listing? This action cannot be
                   undone.
                 </p>
-                <div className="mt-[5%] w-[30%]">
-                  <p className="text-gray-600">{selectedListing.address}</p>
+                <div className="mt-[5%] w-[50%]">
+                  <p className="text-gray-600 text-base">
+                    {selectedListing.address}
+                  </p>
                   <Image
                     src={selectedListing.pictures[0]}
                     alt="homes"
                     layout="responsive"
                     width={1}
                     height={1}
-                    className="w-[100%] object-cover brightness-50 object-center contrast-125 rounded-2xl"
+                    className="w-[100%] shadow-lg mt-4 object-cover brightness-50 object-center contrast-125 rounded-2xl"
                   />
                 </div>
                 <div className="mt-[8%] flex gap-4">
                   <button
-                    onClick={() => setShowDeleteListing(false)}
-                    className="text-lg  ring-2 ring-gray-300 px-16 py-4 rounded-md hover:bg-gray-300 active:bg-white"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    onClick={() => deleteListing(selectedListing.id)}
-                    className="text-lg text-white bg-red-500 px-16 py-4 rounded-md hover:bg-red-700 active:bg-red-500"
+                    onClick={() => deleteLead(selectedListing.id)}
+                    className="text-base text-white bg-red-500 py-4 px-6 rounded-md hover:bg-red-700 active:bg-red-500 transition duration-200 ease-in-out"
                   >
                     Delete
                   </button>
@@ -747,7 +743,7 @@ const AdminDashboard = () => {
           )}
           {/* Delete Lead Modal */}
           {showDeleteLead && selectedLead && (
-            <div className="fixed left-0 top-0 bg-black/90 w-full h-full z-20 flex justify-center items-center">
+            <div className="fixed left-0 top-0 bg-black/90 w-full h-full z-20 flex justify-center items-center z-50">
               <button
                 onClick={() => setShowDeleteLead(false)}
                 className="absolute right-2 top-2 p-4 flex justify-center items-center z-50"
@@ -760,7 +756,7 @@ const AdminDashboard = () => {
                 ></span>
               </button>
 
-              <div className="bg-white w-full md:w-[40%] flex flex-col items-center text-center py-4 rounded-md">
+              <div className="bg-white w-[90%] md:w-[40%] flex flex-col items-center text-center py-4 rounded-md">
                 {isError && (
                   <div className="p-[1rem] bg-red-100 flex gap-3 items-center rounded-lg mb-[2rem] ">
                     <p className="text-red-400">{errorMsg}</p>
@@ -788,7 +784,7 @@ const AdminDashboard = () => {
                   </svg>
                   <p className="font-semibold text-3xl">Confirm Delete</p>
                 </div>
-                <p className="mt-[5%] text-gray-400">
+                <p className="mt-[5%] w-[75%] md:w-full text-center text-sm text-gray-400">
                   Are you sure you want to delete lead? This action cannot be
                   undone.
                 </p>
@@ -801,14 +797,8 @@ const AdminDashboard = () => {
                 </div>
                 <div className="mt-[8%] flex gap-4">
                   <button
-                    onClick={() => setShowDeleteLead(false)}
-                    className="text-lg  ring-2 ring-gray-300 px-16 py-4 rounded-md hover:bg-gray-300 active:bg-white"
-                  >
-                    Cancel
-                  </button>
-                  <button
                     onClick={() => deleteLead(selectedLead.id)}
-                    className="text-lg text-white bg-red-500 px-16 py-4 rounded-md hover:bg-red-700 active:bg-red-500"
+                    className="text-base text-white bg-red-500 p-4 rounded-md hover:bg-red-700 active:bg-red-500 transition duration-200 ease-in-out"
                   >
                     Delete
                   </button>
