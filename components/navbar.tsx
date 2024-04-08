@@ -475,7 +475,7 @@ const Nav = () => {
                           className="text-left w-full p-4 h-fit flex  items-center  text-black"
                         >
                           <FontAwesomeIcon
-                            className="transform scale-x(-1) ml-4"
+                            className="ml-4"
                             icon={faArrowRightFromBracket}
                             size="lg"
                           />{" "}
