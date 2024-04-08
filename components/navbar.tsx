@@ -526,9 +526,7 @@ const Nav = () => {
                             icon={faArrowRightFromBracket}
                             size="lg"
                           />{" "}
-                          <span className="hover:text-red-500 transition ease-in-out duration-200">
-                            Log out
-                          </span>{" "}
+                          <span className="px-2  text-lg">Log out</span>
                         </button>
                       </div>
                     </div>
