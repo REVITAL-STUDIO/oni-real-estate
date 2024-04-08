@@ -10,7 +10,7 @@ interface FileExtended extends File {
   url?: string;
 }
 
-const CreateListing: React.FC<{  onClose: () => void }> = ({ onClose }) => {
+const CreateListing: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const { edgestore } = useEdgeStore();
   const [selectedFiles, setSelectedFiles] = useState<FileExtended[]>([]);
   const imageUrls: string[] = [];
@@ -110,16 +110,13 @@ const CreateListing: React.FC<{  onClose: () => void }> = ({ onClose }) => {
           location: location,
           availability: availability,
         };
-        const response = await fetch(
-          `/api/listing`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(listingData),
-          }
-        );
+        const response = await fetch(`/api/listing`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(listingData),
+        });
         if (!response.ok) {
           if (response.status == 400) {
             setErrorMsg("A listing with the given address already exits.");
@@ -182,28 +179,28 @@ const CreateListing: React.FC<{  onClose: () => void }> = ({ onClose }) => {
               visible: { opacity: 1 },
             }}
             transition={{ delay: 0.5 }} // Adding a delay of 0.8 seconds
-            className="flex overflow-y-scroll xl:overflow-y-hidden p-4 md:p-8 relative flex-col bg-white/75 w-[100%] items-center justify-start xl:justify-center py-[1rem] md:py-[3rem] rounded-3xl shadow-md max-h-[800px] md:max-h-[950px] "
+            className="flex  p-4 md:p-8 relative flex-col bg-white/75 w-[95%] xl:w-[100%] items-center justify-center xl:justify-center  rounded-3xl shadow-md max-h-[650px] md:max-h-[800px] "
           >
             <div className="w-full  ">
-            <button
-                    onClick={onClose}
-                    className="absolute right-6 top-6 p-4 flex justify-center items-center z-50"
-                  >
-                    <span
-                      className={`block w-3/4 my-0.5 border absolute border-white rotate-45 transition-transform `}
-                    ></span>
-                    <span
-                      className={`block w-3/4 my-0.5 border absolute border-white -rotate-45 transition-transform `}
-                    ></span>
-                  </button>
-              <h1 className=" p-4 w-full text-left text-3xl relative md:left-7 xl:left-10 text-white">
+              <button
+                onClick={onClose}
+                className="absolute right-6 top-6 p-4 flex justify-center items-center z-50"
+              >
+                <span
+                  className={`block w-3/4 my-0.5 border absolute border-white rotate-45 transition-transform `}
+                ></span>
+                <span
+                  className={`block w-3/4 my-0.5 border absolute border-white -rotate-45 transition-transform `}
+                ></span>
+              </button>
+              <h1 className=" p-4 w-full text-left text-xl md:text-3xl relative md:left-7 xl:left-10 text-white">
                 {" "}
                 Create a Listing
               </h1>
             </div>
 
-            <div className="flex flex-col xl:flex-row w-full h-auto items-center justify-evenly">
-              <form className="w-[100%] md:w-[90%] xl:w-[40%]  flex flex-col gap-4 p-4">
+            <div className="flex flex-col xl:flex-row w-full max-h-[750px] xl:h-auto items-center justify-evenly overflow-y-scroll xl:overflow-y-hidden">
+              <form className="w-[100%] md:w-[90%] xl:w-[40%]  flex flex-col gap-4">
                 <div>
                   <label className="py-2 text-white">Address</label>
                   <input
@@ -362,22 +359,21 @@ const CreateListing: React.FC<{  onClose: () => void }> = ({ onClose }) => {
                   )}
                 </button>
               </form>
-
-              <div className="w-[85%] md:w-[45%] xl:w-1/2 ">
+              <div className="w-[85%] md:w-[45%] xl:w-1/2 mt-4 xl:mt-0">
                 <p className="text-white">Photos</p>
                 <FileUpload onFilesSelected={handleFilesSelected} />
               </div>
+              <button
+                onClick={createListing}
+                className="md:hidden p-4 text-white text-sm tracking-wider font-montserrat transition ease-in-out duration-150 bg-forest/90 hover:bg-forest w-fit rounded-xl  hover:shadow-lg active:opacity-100 mb-[6rem]"
+              >
+                {isLoading ? (
+                  <div className="h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                ) : (
+                  "Create Listing"
+                )}
+              </button>
             </div>
-           <button
-                  onClick={createListing}
-                  className="md:hidden p-4 text-white text-sm tracking-wider font-montserrat transition ease-in-out duration-150 bg-forest/90 hover:bg-forest w-fit rounded-xl  hover:shadow-lg active:opacity-100 mb-[6rem]"
-                >
-                  {isLoading ? (
-                    <div className="h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
-                  ) : (
-                    "Create Listing"
-                  )}
-                </button>
           </motion.div>
         </div>
       </div>

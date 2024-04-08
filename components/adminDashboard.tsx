@@ -732,7 +732,7 @@ const AdminDashboard = () => {
                 </div>
                 <div className="mt-[8%] flex gap-4">
                   <button
-                    onClick={() => deleteLead(selectedListing.id)}
+                    onClick={() => deleteListing(selectedListing.id)}
                     className="text-base text-white bg-red-500 py-4 px-6 rounded-md hover:bg-red-700 active:bg-red-500 transition duration-200 ease-in-out"
                   >
                     Delete
@@ -743,7 +743,7 @@ const AdminDashboard = () => {
           )}
           {/* Delete Lead Modal */}
           {showDeleteLead && selectedLead && (
-            <div className="fixed left-0 top-0 bg-black/90 w-full h-full z-20 flex justify-center items-center z-50">
+            <div className="fixed left-0 top-0 bg-black/90 w-full h-full flex justify-center items-center z-50">
               <button
                 onClick={() => setShowDeleteLead(false)}
                 className="absolute right-2 top-2 p-4 flex justify-center items-center z-50"

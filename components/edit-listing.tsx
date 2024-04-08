@@ -23,7 +23,10 @@ interface FileExtended extends File {
   url?: string;
 }
 
-const EditListing: React.FC<{ listingId: number, onClose: () => void }> = ({ listingId, onClose }) => {
+const EditListing: React.FC<{ listingId: number; onClose: () => void }> = ({
+  listingId,
+  onClose,
+}) => {
   const { edgestore } = useEdgeStore();
   const [selectedFiles, setSelectedFiles] = useState<FileExtended[]>([]);
   const [initialFiles, setInitialFiles] = useState<FileExtended[]>([]);
@@ -73,15 +76,12 @@ const EditListing: React.FC<{ listingId: number, onClose: () => void }> = ({ lis
   // Fetch listing data based on ID
   const fetchListingData = async () => {
     try {
-      const response = await fetch(
-        `/api/listing/${listingId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`/api/listing/${listingId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       if (!response.ok) {
         throw new Error("Error retrieving listing infromation");
       }
@@ -141,362 +141,357 @@ const EditListing: React.FC<{ listingId: number, onClose: () => void }> = ({ lis
         } catch (error) {
           console.error(error, " Error deleting image: ", url);
         }
-      };
-
-    };
-  }
-
-    const handleFilesSelected = (files: File[]) => {
-      setSelectedFiles(files);
-    };
-
-
-
-    const getFilesToDelete = () => {
-      const urlsInSelected = selectedFiles.map((file) => {
-        if (file.url) {
-          return file.url;
-        }
-      });
-      const filesToDelete = initialFiles.filter(
-        (file) => !urlsInSelected.includes(file.url)
-      );
-      return filesToDelete;
-    };
-
-    const saveListing: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
-      e.preventDefault();
-      setIsError(false);
-      setIsLoading(true);
-
-      // Validation: Check if any required fields are empty
-      if (
-        listingData.address === "" ||
-        listingData.description === "" ||
-        listingData.type === "" ||
-        listingData.location === "" ||
-        listingData.availability === "" ||
-        listingData.beds === 0 ||
-        !listingData.beds ||
-        listingData.baths === 0 ||
-        !listingData.baths ||
-        listingData.area === 0 ||
-        !listingData.area ||
-        listingData.price === 0 ||
-        !listingData.price
-      ) {
-        setErrorMsg("Please fill out all required fields.");
-        setIsError(true);
-        setIsLoading(false);
-        return; // Stop further execution if validation fails
       }
+    }
+  };
 
-      //added files don't have a url yet
-      const filesToUpload = selectedFiles.filter((file) => !file.url);
-      let newUrls: string[] = [];
-      const filesToDelete = getFilesToDelete();
-      const urlsToDelete: (string | undefined)[] = filesToDelete.map((file) => file.url);
-      let urlsToStore: string[] = initialUrls;
+  const handleFilesSelected = (files: File[]) => {
+    setSelectedFiles(files);
+  };
 
-      try {
-        if (filesToUpload.length > 0) {
-          //uploading the newly added files and adding there urls to urlsToStore
-          newUrls = await uploadFiles(filesToUpload);
-          newUrls.forEach((url) => urlsToStore.push(url));
-        }
-
-        if (filesToDelete.length > 0) {
-          //removing the urls of the deleted files from urlsToStore
-          urlsToStore = urlsToStore.filter((url) => !urlsToDelete.includes(url));
-          await deleteFiles(urlsToDelete);
-        }
-
-        //storing cloud stored image urls to listingdata
-        //creating listingdata to be sent to server to edit listing
-        const data = { ...listingData, pictures: urlsToStore };
-        const response = await fetch(
-          `/api/listing/${listingId}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          }
-        );
-        if (!response.ok) {
-          setErrorMsg("Error in saving listing Changes... please try again");
-          //revert changes made in cloud storage if saving fails
-          if (filesToUpload.length > 0) {
-            await deleteFiles(newUrls);
-          }
-          if (filesToDelete.length > 0) {
-            await uploadFiles(filesToDelete);
-          }
-          throw new Error(
-            `HTTP ERROR - Error editing Listing. Status: ${response.status}`
-          );
-        }
-        setIsLoading(false);
-        setIsSuccess(true);
-      } catch (error) {
-        setIsError(true);
-        console.error(
-          "NETWORK ERROR - Unable to upload listing files to the cloud, listing was not created"
-        );
-        setIsLoading(false);
+  const getFilesToDelete = () => {
+    const urlsInSelected = selectedFiles.map((file) => {
+      if (file.url) {
+        return file.url;
       }
-    };
+    });
+    const filesToDelete = initialFiles.filter(
+      (file) => !urlsInSelected.includes(file.url)
+    );
+    return filesToDelete;
+  };
 
-    if (!fetchedListingData) {
-      // Data is still loading, you can show a loading indicator or return null
-      return (
-        <div className="flex justify-center items-center min-h-screen text-white">
-          <div className="h-8 w-8 border-4 border-white rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
-        </div>
-      );
+  const saveListing: React.MouseEventHandler<HTMLButtonElement> = async (e) => {
+    e.preventDefault();
+    setIsError(false);
+    setIsLoading(true);
+
+    // Validation: Check if any required fields are empty
+    if (
+      listingData.address === "" ||
+      listingData.description === "" ||
+      listingData.type === "" ||
+      listingData.location === "" ||
+      listingData.availability === "" ||
+      listingData.beds === 0 ||
+      !listingData.beds ||
+      listingData.baths === 0 ||
+      !listingData.baths ||
+      listingData.area === 0 ||
+      !listingData.area ||
+      listingData.price === 0 ||
+      !listingData.price
+    ) {
+      setErrorMsg("Please fill out all required fields.");
+      setIsError(true);
+      setIsLoading(false);
+      return; // Stop further execution if validation fails
     }
 
+    //added files don't have a url yet
+    const filesToUpload = selectedFiles.filter((file) => !file.url);
+    let newUrls: string[] = [];
+    const filesToDelete = getFilesToDelete();
+    const urlsToDelete: (string | undefined)[] = filesToDelete.map(
+      (file) => file.url
+    );
+    let urlsToStore: string[] = initialUrls;
+
+    try {
+      if (filesToUpload.length > 0) {
+        //uploading the newly added files and adding there urls to urlsToStore
+        newUrls = await uploadFiles(filesToUpload);
+        newUrls.forEach((url) => urlsToStore.push(url));
+      }
+
+      if (filesToDelete.length > 0) {
+        //removing the urls of the deleted files from urlsToStore
+        urlsToStore = urlsToStore.filter((url) => !urlsToDelete.includes(url));
+        await deleteFiles(urlsToDelete);
+      }
+
+      //storing cloud stored image urls to listingdata
+      //creating listingdata to be sent to server to edit listing
+      const data = { ...listingData, pictures: urlsToStore };
+      const response = await fetch(`/api/listing/${listingId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        setErrorMsg("Error in saving listing Changes... please try again");
+        //revert changes made in cloud storage if saving fails
+        if (filesToUpload.length > 0) {
+          await deleteFiles(newUrls);
+        }
+        if (filesToDelete.length > 0) {
+          await uploadFiles(filesToDelete);
+        }
+        throw new Error(
+          `HTTP ERROR - Error editing Listing. Status: ${response.status}`
+        );
+      }
+      setIsLoading(false);
+      setIsSuccess(true);
+    } catch (error) {
+      setIsError(true);
+      console.error(
+        "NETWORK ERROR - Unable to upload listing files to the cloud, listing was not created"
+      );
+      setIsLoading(false);
+    }
+  };
+
+  if (!fetchedListingData) {
+    // Data is still loading, you can show a loading indicator or return null
     return (
-      <div className="font-agrandir">
-        <div className="flex flex-col  justify-center md:justify-center items-center min-h-screen">
-          <div className=" relative flex flex-col justify-center items-center  md:mt-[0rem]  w-full md:w-[90%]  md:py-[1rem] rounded-md ">
-            {isSuccess && (
-              <div className="absolute top-[5%] p-[1rem] bg-green-100 flex gap-3 items-center rounded-lg mb-[2rem] z-[1000]">
-                <p className="text-green-700">Saved Listing changes.</p>
-                <IoIosClose
-                  className=" text-green-500 h-[2rem] w-[2rem] hover:cursor-pointer"
-                  onClick={() => setIsSuccess(false)}
-                />
-              </div>
-            )}
-            {isError && (
-              <div className="absolute top-[5%] p-[1rem] bg-red-100 flex gap-3 items-center rounded-lg mb-[2rem] z-[1000]">
-                <p className="text-red-400">{errorMsg}</p>
-                <IoIosClose
-                  className=" text-red-300 h-[2rem] w-[2rem] hover:cursor-pointer"
-                  onClick={() => setIsError(false)}
-                />
-              </div>
-            )}
-            <motion.div
-              variants={{
-                hidden: { opacity: 0 },
-                visible: { opacity: 1 },
-              }}
-              transition={{ delay: 0.5 }} // Adding a delay of 0.8 seconds
-              className="relative overflow-y-scroll flex flex-col gap-12 bg-white/75 w-[100%] items-center md:justify-center md:flex-row py-[1rem] md:py-[3rem] rounded-3xl shadow-md max-h-[800px]"
+      <div className="flex justify-center items-center min-h-screen text-white">
+        <div className="h-8 w-8 border-4 border-white rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="font-agrandir">
+      <div className="flex flex-col  justify-center md:justify-center items-center min-h-screen">
+        <div className=" relative flex flex-col justify-center items-center  md:mt-[0rem]  w-full md:w-[90%]  md:py-[1rem] rounded-md ">
+          {isSuccess && (
+            <div className="absolute top-[5%] p-[1rem] bg-green-100 flex gap-3 items-center rounded-lg mb-[2rem] z-[1000]">
+              <p className="text-green-700">Saved Listing changes.</p>
+              <IoIosClose
+                className=" text-green-500 h-[2rem] w-[2rem] hover:cursor-pointer"
+                onClick={() => setIsSuccess(false)}
+              />
+            </div>
+          )}
+          {isError && (
+            <div className="absolute top-[5%] p-[1rem] bg-red-100 flex gap-3 items-center rounded-lg mb-[2rem] z-[1000]">
+              <p className="text-red-400">{errorMsg}</p>
+              <IoIosClose
+                className=" text-red-300 h-[2rem] w-[2rem] hover:cursor-pointer"
+                onClick={() => setIsError(false)}
+              />
+            </div>
+          )}
+          <motion.div
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1 },
+            }}
+            transition={{ delay: 0.5 }} // Adding a delay of 0.8 seconds
+            className="relative overflow-y-scroll flex flex-col gap-12 bg-white/75 w-[95%] xl:w-[100%] items-center md:justify-center md:flex-row py-[1rem] md:py-[3rem] rounded-3xl shadow-md  max-h-[650px] md:max-h-[800px]"
+          >
+            <button
+              onClick={onClose}
+              className="absolute right-6 top-6 p-4 flex justify-center items-center z-50"
             >
-              <button
-                    onClick={onClose}
-                    className="absolute right-6 top-6 p-4 flex justify-center items-center z-50"
-                  >
-                    <span
-                      className={`block w-3/4 my-0.5 border absolute border-white rotate-45 transition-transform `}
-                    ></span>
-                    <span
-                      className={`block w-3/4 my-0.5 border absolute border-white -rotate-45 transition-transform `}
-                    ></span>
-                  </button>
-              <div className="w-full h-fit md:hidden flex items-center">
-                <h1 className="  block md:hidden p-4 relative left-4 text-4xl text-white ">
-                  Edit Listing
-                </h1>
-              </div>
-              <h1 className="absolute top-[10%] hidden md:block right-[10%] text-4xl text-white ">
+              <span
+                className={`block w-3/4 my-0.5 border absolute border-white rotate-45 transition-transform `}
+              ></span>
+              <span
+                className={`block w-3/4 my-0.5 border absolute border-white -rotate-45 transition-transform `}
+              ></span>
+            </button>
+            <div className="w-full h-fit md:hidden flex items-center">
+              <h1 className="  block md:hidden p-4 relative left-4 text-xl text-white ">
                 Edit Listing
               </h1>
-              <form className="w-[85%] md:w-[40%] flex flex-col gap-4">
+            </div>
+            <h1 className="absolute top-[10%] hidden md:block right-[10%] text-4xl text-white ">
+              Edit Listing
+            </h1>
+            <form className="w-[85%] md:w-[40%] flex flex-col gap-4">
+              <div>
+                <label className="py-2 text-white">Address</label>
+                <input
+                  name="address"
+                  type="text"
+                  required
+                  value={listingData.address}
+                  onChange={(e) =>
+                    setListingData({ ...listingData, address: e.target.value })
+                  }
+                  className="block w-full  py-3 px-3 text-gray-900 shadow-sm rounded-full  border border-white  focus:outline-none sm:text-sm "
+                />
+              </div>
+              <div>
+                <label className="py-2 text-white">Description</label>
+                <input
+                  name="description"
+                  type="text"
+                  required
+                  value={listingData.description}
+                  onChange={(e) =>
+                    setListingData({
+                      ...listingData,
+                      description: e.target.value,
+                    })
+                  }
+                  className="block w-full  py-3 px-3 text-gray-900 shadow-sm rounded-full  border border-white focus:outline-none sm:text-sm "
+                />
+              </div>
+              <div>
+                <label className="py-2 text-white"># Beds</label>
+                <input
+                  name="description"
+                  type="number"
+                  required
+                  value={listingData.beds}
+                  onChange={(e) =>
+                    setListingData({
+                      ...listingData,
+                      beds: parseInt(e.target.value, 10),
+                    })
+                  }
+                  className="block w-[60%]  py-3 px-3 text-gray-900 shadow-sm rounded-full  border border-white focus:outline-none sm:text-sm "
+                />
+              </div>
+              <div className="flex justify-between">
                 <div>
-                  <label className="py-2 text-white">Address</label>
+                  <label className="py-2 text-white"># Baths</label>
                   <input
-                    name="address"
-                    type="text"
+                    name="baths"
+                    type="number"
                     required
-                    value={listingData.address}
-                    onChange={(e) =>
-                      setListingData({ ...listingData, address: e.target.value })
-                    }
-                    className="block w-full  py-3 px-3 text-gray-900 shadow-sm rounded-full  border border-white  focus:outline-none sm:text-sm "
-                  />
-                </div>
-                <div>
-                  <label className="py-2 text-white">Description</label>
-                  <input
-                    name="description"
-                    type="text"
-                    required
-                    value={listingData.description}
+                    value={listingData.baths}
                     onChange={(e) =>
                       setListingData({
                         ...listingData,
-                        description: e.target.value,
+                        baths: parseInt(e.target.value, 10),
                       })
                     }
                     className="block w-full  py-3 px-3 text-gray-900 shadow-sm rounded-full  border border-white focus:outline-none sm:text-sm "
                   />
                 </div>
+                <div className="w-[35%]">
+                  <label className="py-2 text-white">Property Type</label>
+                  <select
+                    required
+                    value={listingData.type}
+                    onChange={(e) =>
+                      setListingData({ ...listingData, type: e.target.value })
+                    }
+                    className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm hover:cursor-pointer"
+                  >
+                    <option value="">Select Type</option>
+                    {propertyTypes.map((type, index) => (
+                      <option key={index} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+              <div className="flex justify-between">
                 <div>
-                  <label className="py-2 text-white"># Beds</label>
+                  <label className="py-2 text-white">Area</label>
                   <input
                     name="description"
                     type="number"
                     required
-                    value={listingData.beds}
+                    value={listingData.area}
                     onChange={(e) =>
                       setListingData({
                         ...listingData,
-                        beds: parseInt(e.target.value, 10),
+                        area: parseInt(e.target.value, 10),
                       })
                     }
-                    className="block w-[60%]  py-3 px-3 text-gray-900 shadow-sm rounded-full  border border-white focus:outline-none sm:text-sm "
+                    className="block w-full  py-3 px-3 text-gray-900 shadow-sm rounded-full  border border-white focus:outline-none sm:text-sm "
                   />
                 </div>
-                <div className="flex justify-between">
-                  <div>
-                    <label className="py-2 text-white"># Baths</label>
-                    <input
-                      name="baths"
-                      type="number"
-                      required
-                      value={listingData.baths}
-                      onChange={(e) =>
-                        setListingData({
-                          ...listingData,
-                          baths: parseInt(e.target.value, 10),
-                        })
-                      }
-                      className="block w-full  py-3 px-3 text-gray-900 shadow-sm rounded-full  border border-white focus:outline-none sm:text-sm "
-                    />
-                  </div>
-                  <div className="w-[35%]">
-                    <label className="py-2 text-white">Property Type</label>
-                    <select
-                      required
-                      value={listingData.type}
-                      onChange={(e) =>
-                        setListingData({ ...listingData, type: e.target.value })
-                      }
-                      className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm hover:cursor-pointer"
-                    >
-                      <option value="">Select Type</option>
-                      {propertyTypes.map((type, index) => (
-                        <option key={index} value={type}>
-                          {type}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+                <div className="w-[35%]">
+                  <label className="py-2 text-white">Location</label>
+                  <select
+                    required
+                    value={listingData.location}
+                    onChange={(e) =>
+                      setListingData({
+                        ...listingData,
+                        location: e.target.value,
+                      })
+                    }
+                    className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm hover:cursor-pointer"
+                  >
+                    <option value="">Select Location</option>
+                    {locations.map((type, index) => (
+                      <option key={index} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-                <div className="flex justify-between">
-                  <div>
-                    <label className="py-2 text-white">Area</label>
-                    <input
-                      name="description"
-                      type="number"
-                      required
-                      value={listingData.area}
-                      onChange={(e) =>
-                        setListingData({
-                          ...listingData,
-                          area: parseInt(e.target.value, 10),
-                        })
-                      }
-                      className="block w-full  py-3 px-3 text-gray-900 shadow-sm rounded-full  border border-white focus:outline-none sm:text-sm "
-                    />
-                  </div>
-                  <div className="w-[35%]">
-                    <label className="py-2 text-white">Location</label>
-                    <select
-                      required
-                      value={listingData.location}
-                      onChange={(e) =>
-                        setListingData({
-                          ...listingData,
-                          location: e.target.value,
-                        })
-                      }
-                      className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm hover:cursor-pointer"
-                    >
-                      <option value="">Select Location</option>
-                      {locations.map((type, index) => (
-                        <option key={index} value={type}>
-                          {type}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
+              </div>
+              <div className="flex justify-between">
+                <div>
+                  <label className="py-2 text-white">Price</label>
+                  <input
+                    name="description"
+                    type="number"
+                    required
+                    value={listingData.price}
+                    onChange={(e) =>
+                      setListingData({
+                        ...listingData,
+                        price: parseInt(e.target.value, 10),
+                      })
+                    }
+                    className="block w-full  py-3 px-3 text-gray-900 shadow-sm rounded-full placeholder:text-gray-400 border border-white focus:outline-none sm:text-sm "
+                  />
                 </div>
-                <div className="flex justify-between">
-                  <div>
-                    <label className="py-2 text-white">Price</label>
-                    <input
-                      name="description"
-                      type="number"
-                      required
-                      value={listingData.price}
-                      onChange={(e) =>
-                        setListingData({
-                          ...listingData,
-                          price: parseInt(e.target.value, 10),
-                        })
-                      }
-                      className="block w-full  py-3 px-3 text-gray-900 shadow-sm rounded-full placeholder:text-gray-400 border border-white focus:outline-none sm:text-sm "
-                    />
-                  </div>
-                  <div className="w-[35%]">
-                    <label className="py-2 text-white">Availability</label>
-                    <select
-                      required
-                      value={listingData.availability}
-                      onChange={(e) =>
-                        setListingData({
-                          ...listingData,
-                          availability: e.target.value,
-                        })
-                      }
-                      className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm hover:cursor-pointer"
-                    >
-                      <option value="">Select Availability</option>
-                      <option value="Sale">For Sale</option>
-                      <option value="Rent">For Rent</option>
-                    </select>
-                  </div>
+                <div className="w-[35%]">
+                  <label className="py-2 text-white">Availability</label>
+                  <select
+                    required
+                    value={listingData.availability}
+                    onChange={(e) =>
+                      setListingData({
+                        ...listingData,
+                        availability: e.target.value,
+                      })
+                    }
+                    className="block w-full border-0 p-2 text-gray-900 shadow-sm rounded-2xl placeholder:text-gray-400 bg-[#ECECEC] focus:outline-none sm:text-sm hover:cursor-pointer"
+                  >
+                    <option value="">Select Availability</option>
+                    <option value="Sale">For Sale</option>
+                    <option value="Rent">For Rent</option>
+                  </select>
                 </div>
-                <button
-                  onClick={saveListing}
-                  className="hidden md:block p-4 text-white text-sm tracking-wider font-montserrat mt-4 bg-forest w-fit rounded-xl hover:opacity-80 hover:shadow-lg active:opacity-100"
-                >
-                  {isLoading ? (
-                    <div className="h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
-                  ) : (
-                    "Save Changes"
-                  )}
-                </button>
-              </form>
-              <div className="w-[85%] md:w-[45%] md:mt-[12%]">
-                <p className="text-white">Photos</p>
-                <FileUpload
-                  onFilesSelected={handleFilesSelected}
-                  initialFiles={initialFiles}
-                />
               </div>
               <button
-                  onClick={saveListing}
-                  className=" md:hidden p-4 text-white text-sm tracking-wider font-montserrat mt-4 bg-forest w-fit rounded-xl hover:opacity-80 hover:shadow-lg active:opacity-100 mb-[6rem]"
-                >
-                  {isLoading ? (
-                    <div className="h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
-                  ) : (
-                    "Save Changes"
-                  )}
-                </button>
-            </motion.div>
-          </div>
+                onClick={saveListing}
+                className="hidden md:block p-4 text-white text-sm tracking-wider font-montserrat mt-4 bg-forest w-fit rounded-xl hover:opacity-80 hover:shadow-lg active:opacity-100"
+              >
+                {isLoading ? (
+                  <div className="h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+                ) : (
+                  "Save Changes"
+                )}
+              </button>
+            </form>
+            <div className="w-[85%] md:w-[45%] md:mt-[12%]">
+              <p className="text-white">Photos</p>
+              <FileUpload
+                onFilesSelected={handleFilesSelected}
+                initialFiles={initialFiles}
+              />
+            </div>
+            <button
+              onClick={saveListing}
+              className=" md:hidden p-4 text-white text-sm tracking-wider font-montserrat mt-4 bg-forest w-fit rounded-xl hover:opacity-80 hover:shadow-lg active:opacity-100 mb-[6rem]"
+            >
+              {isLoading ? (
+                <div className="h-6 w-6 border-4 border-black rounded-full border-solid border-t-0 border-r-0 border-b-4 border-l-4 animate-spin"></div>
+              ) : (
+                "Save Changes"
+              )}
+            </button>
+          </motion.div>
         </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
 
-
-  export default EditListing;
+export default EditListing;
