@@ -182,12 +182,12 @@ const Dashboard = () => {
   }
   if (!isLoading && userData && userDataEdit) {
     return (
-      <div className="w-full h-screen flex justify-center items-center ">
+      <div className="w-full h-full md:h-screen flex justify-center items-center mb-[15%] md:mb-0">
         <motion.div
           initial={{ opacity: 0, y: 75 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ ease: "easeIn", duration: 0.8 }}
-          className="w-[90%] h-[75%] md:h-90% bg-gray-200  shadow-2xl rounded-2xl flex flex-col xl:flex-row"
+          className="mt-[30%] md:mt-0 w-[90%] h-[90%] md:h-[75%] md:h-90% bg-gray-300  shadow-2xl rounded-2xl flex flex-col xl:flex-row gap-[3rem] md:gap-0 py-[10%] md:py-0"
         >
           {/* Profile */}
           <AnimatePresence>
@@ -250,10 +250,10 @@ const Dashboard = () => {
           {/* Saved Listing */}
           <AnimatePresence>
             <div className="xl:w-2/3 w-full h-full md:h-1/2 xl:h-full flex justify-center items-center">
-              <div className="xl:w-[95%] xl:h-[90%] w-3/4 h-5/6 rounded-2xl bg-white shadow-md">
+              <div className="relative xl:w-[95%] xl:h-[90%] w-3/4 h-full md:h-5/6 rounded-2xl bg-white shadow-md overflow-y-scroll">
                 <div className="w-1/4 h-1/6 xl:w-[10%] flex justify-center">
                   <FontAwesomeIcon
-                    className="text-mint p-4 w-6 h-6"
+                    className="text-mint p-4 w-6 h-6 absolute "
                     icon={faHouse}
                   />
                 </div>
@@ -274,7 +274,7 @@ const Dashboard = () => {
                     </p>
                   </div>
                 ) : (
-                  <ul className="w-full h-[75%] flex flex-col items-center overflow-y-scroll">
+                  <ul className="w-full h-full md:h-[75%] flex flex-col items-center ">
                     {homes.map((home) => (
                       <li
                         key={home.id}
