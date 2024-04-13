@@ -54,15 +54,15 @@ const Schedule = () => {
 
   return (
     <div
-      className=" bg-gradient-to-b from-mint/50 via-white to-white w-full h-screen flex justify-center items-center z-50"
+      className=" bg-gradient-to-b from-mint/50 via-white to-white w-full h-screen xl:h-700 flex justify-center items-center z-50"
       ref={parentRef}
     >
       <div
-        className="w-full xl:5/6 h-5/6  flex flex-col justify-center "
+        className="w-full xl:5/6 h-5/6  flex flex-col justify-center items-center "
         ref={ref}
       >
         <motion.h2
-          className="md:text-5xl text-3xl  font-agrandir tracking-wide w-[90%] p-4 xl:w-[80%] "
+          className="md:text-5xl text-3xl text-center font-agrandir tracking-wide w-[90%] p-4 xl:w-[80%] "
           variants={{
             hidden: { opacity: 0, y: -75 },
             visible: { opacity: 1, y: 0 },
@@ -80,7 +80,7 @@ const Schedule = () => {
           </span>
         </motion.h2>
 
-        <div className="h-1/4 w-full flex p-4 items-center">
+        <div className="h-1/4 w-full flex p-4 justify-center items-center">
           <motion.button
             onClick={handleOpen}
             className=" backdrop-filter font-montserrat  pulse-btn font-regular  text-black text-base  tracking-widest backdrop-blur-md shadow-xl shadow-black transition ease-in-out duration-300 rounded-full border border-black w-1/2 md:w-1/4 p-4"

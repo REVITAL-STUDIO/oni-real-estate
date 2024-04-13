@@ -75,7 +75,7 @@ const Contact = () => {
   return (
     <div ref={parentRef}>
       <div
-        className="xl:h-700 h-900 w-full flex flex-col xl:flex-row"
+        className=" h-900 w-full flex flex-col xl:flex-row items-center"
         ref={ref}
       >
         <motion.div
@@ -86,7 +86,7 @@ const Contact = () => {
           initial="hidden"
           animate={control}
           transition={{ duration: 0.6, delay: 0.25 }}
-          className="xl:w-1/4 xl:h-full w-full h-1/4 bg-[url('/houston-contact.jpeg')] brightness-90 bg-cover bg-center rounded-tr-2xl rounded-tl-2xl xl:rounded-tl-none"
+          className="xl:w-1/4 xl:h-5/6 w-full h-1/4 bg-[url('/houston-contact.jpeg')] brightness-90 bg-cover bg-center rounded-tr-2xl rounded-br-2xl  xl:rounded-tl-none"
         ></motion.div>
         <motion.div
           variants={{
@@ -99,7 +99,7 @@ const Contact = () => {
           className="xl:w-3/4 xl:h-full w-full h-3/4 bg-white flex flex-col justify-center items-center relative font-montserrat"
         >
           <div className="w-5/6 xl:3/4 h-[10%] flex items-center  justify-center font-agrandir text-lg  md:text-xl  lg:text-4xl text-black my-4 ">
-            <h2 className="w-fit relative left-0 text-black block tracking-wider p-4 rounded-full border ">
+            <h2 className="w-fit relative left-0 text-pine block tracking-wider p-4 rounded-full border ">
               Get in touch with us
             </h2>
           </div>
