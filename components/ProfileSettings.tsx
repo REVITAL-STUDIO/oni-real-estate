@@ -48,6 +48,7 @@ const ProfileSettings: React.FC<profileProps> = ({
   ) => {
     e.preventDefault();
     await signOut({ redirect: false });
+    setOpenMenu(false);
     router.push("/");
   };
 
