@@ -450,7 +450,7 @@ const NavPages = () => {
                         className={` ${
                           openLogOut
                             ? "h-[100px] opacity-1 transition-all duration-500 ease-in-out"
-                            : "h-0 opacity-0 transition-all duration-500 ease-in-out"
+                            : "h-0 opacity-0 transition-all duration-200 ease-in-out"
                         } `}
                       >
                         <button className="text-left w-full p-4 h-fit flex items-center text-black ">
