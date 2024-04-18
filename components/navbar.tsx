@@ -15,7 +15,7 @@ import {
   faAngleDown,
 } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
-import { IoIosClose } from "react-icons/io";
+import { IoIosClose, IoMdLogOut, IoMdSettings } from "react-icons/io";
 import ProfileSettings from "./ProfileSettings";
 
 const Nav = () => {
@@ -266,7 +266,7 @@ const Nav = () => {
           {!session && (
             <li className="relative p-4">
               <button
-                className=" rounded-full border px-4 py-1   text-white hover:text-black border-eggshell shadow-xl hover:bg-gradient-to-r hover:from-eggshell hover:via-eggshell hover:to-white transition duration-300 ease-in-out"
+                className=" rounded-full border px-4 py-1   text-white hover:text-black border-eggshell shadow-sm hover:bg-gradient-to-r hover:from-eggshell hover:via-eggshell hover:to-white transition duration-300 ease-in-out"
                 onClick={toggleLogin}
               >
                 <span className="inline-block uppercase  ">Login</span>
@@ -328,55 +328,50 @@ const Nav = () => {
             </div>
           )}
           {session && session?.user.role !== "admin" && (
-            <div className="relative  h-auto rounded-full flex z-10 justify-between  items-center px-6 py-1  text-white hover:text-black hover:bg-gradient-to-r border border-eggshell shadow-xl hover:from-eggshell hover:via-eggshell hover:to-white transition duration-300 ease-in-out">
-              <Link
-                className={`
-           
-            font-regular     
-          `}
-                href="/user"
-              >
-                <span>Property Hub</span>
-              </Link>
-              <button
-                onClick={togglelogOutMenu}
-                className="w-6 h-6 flex justify-center items-center "
-              >
-                <FontAwesomeIcon
-                  icon={faAngleDown}
-                  className={
-                    openLogOut
-                      ? "w-4 h-4 transform rotate-180 transition ease-in-out duration-300 px-2 z-20"
-                      : "w-4 h-4 transition ease-in-out duration-300 px-2 z-20"
-                  }
-                />
-              </button>
+            <div className="relative w-52 h-auto rounded-full flex z-10 justify-between  items-center px-6 py-1  text-white border border-eggshell shadow-sm  transition-all duration-300 ease-in-out">
+              <div className="w-full flex items-center justify-between">
+                <Link
+                  className={`
+       
+        font-regular w-full
+      `}
+                  href="/user"
+                >
+                  <span>Property Hub</span>
+                </Link>
+                <button
+                  onClick={togglelogOutMenu}
+                  className="w-6 h-6 flex justify-center items-center "
+                >
+                  <FontAwesomeIcon
+                    icon={faAngleDown}
+                    className={
+                      openLogOut
+                        ? "w-4 h-4 transform rotate-180 transition ease-in-out duration-300 px-2 z-20"
+                        : "w-4 h-4 transition ease-in-out duration-300 px-2 z-20"
+                    }
+                  />
+                </button>
+              </div>
               <div
-                className={` w-full ${
+                className={` w-3/4 ${
                   openLogOut
-                    ? "h-[150px]  bg-black/90 absolute right-0 top-10 rounded-lg opacity-1 flex flex-col justify-evenly items-center transition-all duration-500 ease-in-out"
-                    : "h-0 opacity-0 transition-all absolute top-full duration-500 ease-in-out flex flex-col justify-evenly items-center"
+                    ? "h-[150px]  bg-white absolute right-0 top-10 opacity-1 rounded-lg flex flex-col  border border-eggshell justify-evenly items-center transition-all duration-500 ease-in-out shadow-lg"
+                    : "h-0 opacity-0 transition-all absolute right-0 top-10  duration-200 ease-in-out flex flex-col justify-evenly items-center"
                 } `}
               >
                 <button
                   onClick={() => setOpenUserSettings(true)}
-                  className="text-left w-full  h-fit flex items-center justify-evenly text-white "
+                  className="text-left w-full p-4 h-fit flex items-center text-black justify-center "
                 >
-                  <FontAwesomeIcon icon={faGears} size="lg" />
+                  <IoMdSettings size="lg" className="px-2 w-9 h-9" />
                   Settings
                 </button>
                 <button
                   onClick={handleLogout}
-                  className="text-left w-full h-fit  flex items-center justify-evenly text-white "
+                  className="text-left  h-fit p-4 w-full border-t  flex items-center text-red-500 justify-center"
                 >
-                  <FontAwesomeIcon
-                    className="transform scale-x(-1)"
-                    icon={faArrowRightFromBracket}
-                    size="lg"
-                  />{" "}
-                  <span className="hover:text-red-500 transition ease-in-out duration-200">
-                    Log out
-                  </span>
+                  <IoMdLogOut className="px-2 w-9 h-9" size="lg" /> Log out
                 </button>
               </div>
             </div>
@@ -463,25 +458,15 @@ const Nav = () => {
                         } `}
                       >
                         <button className="text-left w-full p-4 h-fit flex items-center text-black ">
-                          <FontAwesomeIcon
-                            icon={faGears}
-                            size="lg"
-                            className="ml-4"
-                          />
+                          <IoMdSettings size="lg" className="ml-4 w-6 h-6" />
                           <span className="px-2 text-lg">Settings</span>
                         </button>
                         <button
                           onClick={handleLogout}
-                          className="text-left w-full p-4 h-fit flex  items-center  text-black"
+                          className="text-left w-full p-4 h-fit flex  items-center  text-red-500"
                         >
-                          <FontAwesomeIcon
-                            className="ml-4"
-                            icon={faArrowRightFromBracket}
-                            size="lg"
-                          />{" "}
-                          <span className="hover:text-red-500 px-2 text-lg transition ease-in-out duration-200">
-                            Log out
-                          </span>{" "}
+                          <IoMdLogOut className=" ml-4 w-6 h-6" size="lg" />{" "}
+                          <span className="px-2  text-lg">Log out</span>
                         </button>
                       </div>
                     </div>
@@ -510,22 +495,14 @@ const Nav = () => {
                         } `}
                       >
                         <button className="text-left w-full p-4 h-fit flex items-center text-black ">
-                          <FontAwesomeIcon
-                            icon={faGears}
-                            size="lg"
-                            className="ml-4"
-                          />
+                          <IoMdSettings size="lg" className="ml-4 w-6 h-6" />
                           <span className="px-2 text-lg">Settings</span>
                         </button>
                         <button
                           onClick={handleLogout}
-                          className="text-left w-full p-4 h-fit flex  items-center  text-black"
+                          className="text-left w-full p-4 h-fit flex  items-center  text-red-500"
                         >
-                          <FontAwesomeIcon
-                            className="transform scale-x(-1) ml-4"
-                            icon={faArrowRightFromBracket}
-                            size="lg"
-                          />{" "}
+                          <IoMdLogOut className=" ml-4 w-6 h-6" size="lg" />{" "}
                           <span className="px-2  text-lg">Log out</span>
                         </button>
                       </div>

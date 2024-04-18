@@ -24,32 +24,36 @@ const Footer = () => {
 
         {/* divider */}
         <div className="w-full flex-col flex justify-evenly xl:justify-center gap-y-4 items-center  ">
-          <div className="flex flex-col xl:flex-row items-center justify-center w-full h-2/5 xl:h-0">
+          <div className="flex flex-col xl:flex-row items-center justify-center w-full h-2/5 xl:h-1/6">
             <div className="border-b-2 rounded-full hidden border-black xl:w-1/2 w-5/6 xl:block xl:left-0"></div>
             <ul
-              className={` text-black text-sm xl:text-xs  p-4  font-agrandir h-full flex flex-col xl:flex-row gap-y-4 justify-evenly xl:justify-around uppercase tracking-widest xl:items-center  w-full transition-colors duration-300 ease-in
+              className={` text-black text-sm  p-4  font-agrandir h-full flex flex-col xl:flex-row gap-y-4 justify-evenly xl:justify-around uppercase tracking-widest xl:items-center  w-full transition-colors duration-300 ease-in
           `}
             >
-              <li className="relative  hover:text-gray-400 duration-200 ease-in-out transition">
-                <Link href="/">
-                  <span className="">Home</span>
-                </Link>
-              </li>
-              <li className="relative  hover:text-gray-400  duration-200 ease-in-out transition">
-                <Link href="/listings">
-                  <span className="">Properties</span>
-                </Link>
-              </li>
-              <li className="relative  hover:text-gray-400  duration-200 ease-in-out transition">
-                <Link href="/clients">
-                  <span className="">Ownership</span>
-                </Link>
-              </li>
-              <li className="relative  hover:text-gray-400  duration-200 ease-in-out transition">
-                <Link href="/">
-                  <span className="">Login</span>
-                </Link>
-              </li>
+              <Link
+                href="/"
+                className=" hover:text-gray-400 p-4  duration-200 ease-in-out transition"
+              >
+                Home
+              </Link>
+              <Link
+                href="/listings"
+                className="  hover:text-gray-400 p-4 duration-200 ease-in-out transition"
+              >
+                <span className="">Properties</span>
+              </Link>
+              <Link
+                href="/owners"
+                className="  hover:text-gray-400 p-4 duration-200 ease-in-out transition"
+              >
+                <span className="">Ownership</span>
+              </Link>
+              <Link
+                href="/"
+                className="  hover:text-gray-400 p-4 duration-200 ease-in-out transition"
+              >
+                <span className="">Login</span>
+              </Link>
             </ul>
           </div>
           <div className="flex flex-col w-full">
