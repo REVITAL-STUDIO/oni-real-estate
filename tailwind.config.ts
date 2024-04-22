@@ -93,7 +93,7 @@ const config: Config = {
         'height': 'height',
       },
       fontSize: {
-        'xxs': '10px',
+        'xxs': '8px',
       },
     },
     
