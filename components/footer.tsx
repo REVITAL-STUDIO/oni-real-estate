@@ -32,25 +32,25 @@ const Footer = () => {
             >
               <Link
                 href="/"
-                className=" hover:text-gray-400 p-4  duration-200 ease-in-out transition"
+                className=" hover:text-gray-400  xl:p-4  duration-200 ease-in-out transition"
               >
                 Home
               </Link>
               <Link
                 href="/listings"
-                className="  hover:text-gray-400 p-4 duration-200 ease-in-out transition"
+                className="  hover:text-gray-400 xl:p-4 duration-200 ease-in-out transition"
               >
                 <span className="">Properties</span>
               </Link>
               <Link
                 href="/owners"
-                className="  hover:text-gray-400 p-4 duration-200 ease-in-out transition"
+                className="  hover:text-gray-400 xl:p-4 duration-200 ease-in-out transition"
               >
                 <span className="">Ownership</span>
               </Link>
               <Link
                 href="/"
-                className="  hover:text-gray-400 p-4 duration-200 ease-in-out transition"
+                className="  hover:text-gray-400 xl:p-4 duration-200 ease-in-out transition"
               >
                 <span className="">Login</span>
               </Link>
@@ -87,7 +87,7 @@ const Footer = () => {
 
       {/* Copyright */}
       <div className="h-[8%] w-full flex font-montserrat items-center ">
-        <h2 className="text-black   text-xs tracking-wide  w-full  px-4">
+        <h2 className="text-black  text-xxs sm:text-xs tracking-wide  w-full  px-4">
           © 2024 Oni Associates. All rights Reserved. Developed by{" "}
           <span className="font-bold">REVITAL Studio</span>
         </h2>

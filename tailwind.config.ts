@@ -92,6 +92,9 @@ const config: Config = {
       transitionProperty: {
         'height': 'height',
       },
+      fontSize: {
+        'xxs': '6px',
+      },
     },
     
   },
