@@ -104,13 +104,13 @@ const Contact = () => {
             </h2>
           </div>
           {isSuccess ? (
-            <div className="h-3/4 flex justify-center items-center text-5xl text-black">
+            <div className="h-3/4 flex justify-center items-center text-2xl text-black">
               Message Sent!
             </div>
           ) : (
             <form
               onSubmit={createlead}
-              className="w-5/6 h-full flex items-center justify-center flex-col rounded-lg  gap-x-4  z-10"
+              className="w-full md:w-5/6 h-full flex items-center justify-center flex-col rounded-lg  gap-x-4  z-10"
             >
               <div className="w-full flex flex-wrap justify-center gap-4  text-sm">
                 <div className="flex flex-col w-[40%]">
